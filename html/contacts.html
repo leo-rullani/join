@@ -8,6 +8,8 @@
         <link rel="stylesheet" href="/css/contacts.css">
         <link rel="stylesheet" href="/css/fonts.css">
 
+        <script src="/js/contacts.js"></script>
+
     </head>
     <body>
         <header>
@@ -17,7 +19,7 @@
                 </div>
             </div>
         </header>
-        <main>
+        <main class="content">
             <div class="side_menu">
                 <img class="logo" src="/assets/img/join-logo-white.svg" alt="">
                 <div class="menu_bar">
@@ -33,9 +35,40 @@
                     </div>
                 </div>
             </div>
-            <section>
-                <div>
+            <section class="contact_content">
+                <div class="contact_list">
+                    Contactslist
+                    <button onclick="openOverlay()">Add new contact</button>
+                </div>
+                <div class="contact_information">
+                    Contacts
+                </div>
+                <div class="contact_overlay" id="overlay">
+                    <div class="overlay-content" id="overlayContent">
+                        <div class="close-btn" onclick="closeOverlay()"><span>✖</span></div>
+                        <div class="addContact_left">
+                            <img src="/assets/img/join-logo-white.svg" alt="">
+                            <h1>Add contact</h1>
+                            <span>Tasks are better with a team!</span>
+                            <div class="underline"></div>
+                        </div>
+                        <div class="addContact_right">
+                            <div><img src="/assets/icons/contact_pic.svg" alt=""></div>
+                            <div class="form_add">
+                                <form onsubmit="">
+                                    <input class="icon_name" type="name" name="name" id="name" placeholder="Name"><br>
+                                    <input class="icon_email" type="email" name="email" id="email"
+                                        placeholder="Email"><br>
+                                    <input class="icon_phone" type="tel" name="tel" id="tel" placeholder="Phone"><br>
 
+                                    <div class="button_div"> <button class="btn-cancel">Cancel ✖</button> <button
+                                            class="btn-create">Create
+                                            contact <img src="/assets/icons/check.svg" alt=""></button></div>
+                                </form>
+                            </div>
+
+                        </div>
+                    </div>
                 </div>
             </section>
         </main>

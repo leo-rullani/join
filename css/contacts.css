@@ -115,3 +115,222 @@ header {
   color: #29abe2ff;
   transform: scale(1.02);
 }
+
+.content {
+  display: flex;
+  max-width: 1440px;
+  height: auto;
+}
+
+.contact_content {
+  display: flex;
+}
+
+.contact_list {
+  position: relative;
+  height: 200px;
+  top: 80px;
+  padding: 20px;
+}
+
+.contact_overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-color: rgba(0, 0, 0, 0.8);
+  display: none;
+  justify-content: center;
+  align-items: center;
+  z-index: 9999;
+}
+
+.overlay-content {
+  background: rgb(0, 0, 0);
+  padding: 0px;
+  border-radius: 10px;
+  width: 950px;
+  height: 450px;
+  text-align: center;
+  position: relative;
+  display: flex;
+}
+
+.close-btn {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  text-align: center;
+  position: absolute;
+  top: 10px;
+  right: 15px;
+  cursor: pointer;
+  font-size: 20px;
+  padding: 0px;
+  margin: 0px;
+  width: 30px;
+  height: 30px;
+  border-radius: 50%;
+}
+
+.close-btn:hover {
+  background-color: rgba(199, 199, 199, 0.8);
+}
+
+.addContact_left {
+  color: white;
+  background-color: #2a3647;
+  width: 370px;
+  padding: 0;
+  margin: 0;
+  height: 450px;
+  border-radius: 10px 0px 0px 10px;
+  align-items: center;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+}
+
+.addContact_right {
+  color: black;
+  width: 580px;
+  padding: 0;
+  margin: 0;
+  height: 450px;
+  background-color: rgb(255, 255, 255);
+  border-radius: 0px 10px 10px 0px;
+  display: flex;
+  align-items: center;
+  justify-content: space-evenly;
+}
+
+.addContact_left img {
+  margin-left: 40px;
+  margin-bottom: 4px;
+  align-self: flex-start;
+  width: 50px;
+}
+
+.addContact_left h1 {
+  margin: 0;
+  padding: 0;
+  font-size: 51px;
+  margin-bottom: 4px;
+}
+
+.addContact_left span {
+  font-size: 22px;
+  margin-bottom: 10px;
+}
+
+.addContact_right img {
+  margin-bottom: 0px;
+  width: 100px;
+}
+
+.form_add {
+  display: flex;
+  flex-direction: column;
+  height: 200px;
+}
+
+.form_add input {
+  margin-bottom: 20px;
+  width: 300px;
+  height: 25px;
+  border-radius: 8px;
+  padding-left: 15px;
+  padding-top: 8px;
+  padding-bottom: 8px;
+  font-size: 16px;
+}
+
+.underline {
+  border: 1px solid #29abe2ff;
+  width: 70px;
+  align-self: flex-start;
+  margin-left: 38px;
+  border-radius: 10px;
+}
+
+.icon_name {
+  margin-top: 0;
+  background: url("/assets/icons/person.svg") no-repeat right;
+  background-size: 25px;
+  background-position: 275px 8px;
+}
+.icon_email {
+  background: url("/assets/icons/mail.svg") no-repeat right;
+  background-size: 25px;
+  background-position: 275px 8px;
+}
+.icon_phone {
+  background: url("/assets/icons/call.svg") no-repeat right;
+  background-size: 25px;
+  background-position: 275px 8px;
+}
+
+.btn-cancel {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  background-color: white;
+  border: 1px solid;
+  width: 90px;
+  height: 40px;
+  border-radius: 8px;
+  font-size: 16px;
+  padding: 0;
+}
+
+.btn-cancel img {
+  align-self: center;
+  width: 20px;
+  margin: 0;
+  margin-left: 5px;
+}
+
+.btn-create {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  background-color: #2a3647;
+  border: 1px solid;
+  width: 160px;
+  height: 41px;
+  border-radius: 8px;
+  margin-left: 15px;
+  font-size: 16px;
+  padding: 0;
+  color: white;
+  font-weight: bold;
+}
+
+.btn-create img {
+  width: 20px;
+  margin: 0;
+  margin-left: 5px;
+}
+
+.button_div {
+  display: flex;
+  justify-content: flex-start;
+  margin-top: 20px;
+}
+
+.btn-create:hover {
+  cursor: pointer;
+  background-color: #29abe2ff;
+  box-shadow: rgba(0, 0, 0, 0.16) 0px 10px 36px 0px,
+    rgba(0, 0, 0, 0.06) 0px 0px 0px 1px;
+  transition: ease-in-out 50ms;
+}
+
+.btn-cancel:hover {
+  cursor: pointer;
+  color: #29abe2ff;
+  box-shadow: rgba(0, 0, 0, 0.16) 0px 10px 36px 0px,
+    rgba(0, 0, 0, 0.06) 0px 0px 0px 1px;
+  transition: ease-in-out 50ms;
+}
