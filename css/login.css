@@ -1,19 +1,22 @@
+/* 🔹 Allgemeines Styling */
 body {
     display: flex;
     justify-content: center;
     align-items: center;
     height: 100vh;
-    background-color: #f8f9fa;
+    background-color: #F6F7F8;
     overflow: hidden;
     flex-direction: column;
     transition: all 0.5s ease-in-out;
+    scroll-behavior: smooth;
 }
 
+/* 🔹 Logo Styling */
 .logo-container {
     position: absolute;
     top: 50%;
     left: 50%;
-    transform: translate(-50%, -50%) scale(1.2);
+    transform: translate(-50%, -50%) scale(0.85);
     transition: all 0.5s ease-in-out;
 }
 
@@ -23,6 +26,17 @@ body {
     transform: scale(0.3);
 }
 
+/* 🔹 Positionierung der Top-Buttons */
+.top-right {
+    position: absolute;
+    top: 20px;
+    right: 20px;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+}
+
+/* 🔹 Formular Container */
 .form-container {
     opacity: 0;
     transition: opacity 0.5s ease-in-out;
@@ -40,24 +54,100 @@ body {
     opacity: 1;
 }
 
+/* 🔹 Login Box */
 .login-box {
     background-color: white;
-    padding: 20px;
+    padding: 30px;
     border-radius: 12px;
-    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.15);
     text-align: center;
-    width: 300px;
+    width: 380px;
 }
 
+/* 🔹 Überschriften */
+h2 {
+    font-size: 24px;
+    font-weight: bold;
+}
+
+/* 🔹 Blaue Unterstreichung */
+.underline {
+    width: 60px;
+    height: 2px;
+    background-color: #007bff;
+    margin: 8px auto 20px;
+}
+
+/* 🔹 Input Container */
+.input-container {
+    position: relative;
+    margin-bottom: 15px;
+}
+
+.input-container input {
+    width: 100%;
+    padding: 12px 40px 12px 10px;
+    border: 1px solid #d1d1d1;
+    border-radius: 6px;
+    font-size: 16px;
+}
+
+/* 🔹 Input Icon */
+.input-icon {
+    position: absolute;
+    right: 10px;
+    top: 50%;
+    transform: translateY(-50%);
+    width: 20px;
+}
+
+/* 🔹 Button Container */
 .button-container {
     display: flex;
-    justify-content: space-around;
-    margin-top: 10px;
+    justify-content: center; /* Zentriert die Buttons */
+    gap: 15px;
+    margin-top: 20px;
 }
 
+/* 🔹 Einheitliches Button-Design */
+.button, .login-btn, .guest-btn {
+    padding: 10px 15px;
+    font-size: 16px;
+    font-weight: bold;
+    border-radius: 6px;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    text-align: center;
+}
+
+/* 🔹 Login- & Sign-Up-Button */
+.button, .login-btn {
+    background-color: #2b3647;
+    color: white;
+    border: none;
+}
+
+.button:hover, .login-btn:hover {
+    background-color: #28ABE2; /* Hellblau */
+}
+
+/* 🔹 Guest Login Button */
+.guest-btn {
+    background-color: white;
+    color: #2b3647; /* Dunkelblau */
+    border: 2px solid #2b3647;
+}
+
+.guest-btn:hover {
+    color: #28ABE2;
+    border-color: #28ABE2;
+    box-shadow: 0 4px 10px rgba(40, 171, 226, 0.5);
+}
+
+/* 🔹 Footer */
 .footer {
     position: absolute;
-    bottom: 10px;
+    bottom: 30px;
     display: flex;
     justify-content: center;
     width: 100%;

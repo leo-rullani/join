@@ -3,7 +3,7 @@ const users = [];
 document.addEventListener("DOMContentLoaded", () => {
   const logo = document.querySelector(".logo-container");
   const form = document.querySelector(".form-container");
-  const guestLoginButton = document.querySelector("button[type='button']");
+  const guestLoginButton = document.querySelector(".guest-btn");
 
   setTimeout(() => {
     logo.classList.add("move-logo");
