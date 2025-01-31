@@ -1,0 +1,77 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Sign Up</title>
+    <!-- CSS-Datei für Sign Up -->
+    <link rel="stylesheet" href="/css/signup.css">
+    <link rel="stylesheet" href="/css/fonts.css">
+</head>
+
+<body>
+    <!-- Logo: bereits oben links -->
+    <div class="logo-container">
+        <img src="/assets/img/logo.png" alt="Join Logo" class="logo">
+    </div>
+
+    <!-- Keine "not a join user?" und sign-up Button hier, wie gewünscht -->
+
+    <!-- Zentrierte Box mit 4 Karten: Name, E-Mail, Password, Confirm Password -->
+    <div class="form-container">
+        <div class="signup-box">
+            <h2>Sign Up</h2>
+            <div class="underline"></div>
+            <form onsubmit="signUp(event); return false;">
+                <!-- 1) Name -->
+                <div class="input-container">
+                    <input type="text" id="name" placeholder="Name" required>
+                    <img src="/assets/icons/person.svg" class="input-icon" alt="Name Icon">
+                </div>
+                <!-- 2) E-Mail -->
+                <div class="input-container">
+                    <input type="email" id="email" placeholder="Email" required>
+                    <img src="/assets/icons/mail.svg" class="input-icon" alt="Email Icon">
+                </div>
+                <!-- 3) Password -->
+                <div class="input-container">
+                    <input type="password" id="password" placeholder="Password" required>
+                    <img src="/assets/icons/lock.svg" class="input-icon" alt="Password Icon">
+                </div>
+                <!-- 4) Confirm Password -->
+                <div class="input-container">
+                    <input type="password" id="confirm-password" placeholder="Confirm Password" required>
+                    <img src="/assets/icons/lock.svg" class="input-icon" alt="Confirm Password Icon">
+                </div>
+
+                <!-- Checkbox: Muss aktiviert werden, um sich sign up zu können -->
+                <div class="policy-container">
+                    <input type="checkbox" id="policy-checkbox" onchange="toggleSignUpButton()" />
+                    <label for="policy-checkbox">
+                        I accept
+                        <a href="/html/privacypolicy.html" target="_blank">Privacy Policy</a>
+                    </label>
+                </div>
+
+                <div class="button-container">
+                    <!-- Der Sign Up-Button ist gestylt wie der Login-Button -->
+                    <button type="submit" id="signup-btn" class="signup-action" disabled>
+                        Sign Up
+                    </button>
+                </div>
+            </form>
+        </div>
+    </div>
+
+    <!-- Footer bleibt, wie gewünscht -->
+    <div class="footer">
+        <a href="/html/privacypolicy.html">Privacy Policy</a>
+        <a href="/html/legalnotice.html">Legal Notice</a>
+    </div>
+
+    <!-- JavaScript-Datei für Sign Up -->
+    <script src="/js/signup.js"></script>
+</body>
+
+</html>

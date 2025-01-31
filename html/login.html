@@ -16,7 +16,8 @@
 
     <div class="top-right">
         <img src="/assets/img/not-a-join-user.png" alt="Not a Join User">
-        <img src="/assets/img/sign-up-button.png" alt="Sign Up">
+        <!-- Button, der beim Klick weiterleitet zur singup.html -->
+        <button class="signup-btn" onclick="window.location.href='/html/singup.html'">Sign Up</button>
     </div>
 
     <div class="form-container hidden">
@@ -26,11 +27,11 @@
             <form onsubmit="login(event); return false;">
                 <div class="input-container">
                     <input type="email" id="email" placeholder="Email" required>
-                    <img src="/assets/icons/email-icon.png" class="input-icon" alt="Email Icon">
+                    <img src="/assets/icons/mail.svg" class="input-icon" alt="Email Icon">
                 </div>
                 <div class="input-container">
                     <input type="password" id="password" placeholder="Password" required>
-                    <img src="/assets/icons/lock-icon.png" class="input-icon" alt="Password Icon">
+                    <img src="/assets/icons/lock.svg" class="input-icon" alt="Password Icon">
                 </div>
                 <div class="button-container">
                     <button type="submit" class="login-btn">Log in</button>

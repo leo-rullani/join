@@ -1,0 +1,164 @@
+/* ========== Allgemeines Styling ========== */
+body {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+    background-color: #F6F7F8;
+    overflow: hidden;
+    flex-direction: column;
+    transition: all 0.5s ease-in-out;
+    scroll-behavior: smooth;
+}
+
+/* Logo ist bereits oben links, ohne Animation */
+.logo-container {
+    position: absolute;
+    top: 20px;
+    left: 30px;
+    /* Kein transform & move-logo wie bei der Login-Animation */
+}
+
+.logo {
+    margin: 48px;
+    width: 85px; /* Falls du die Größe anpassen möchtest */
+}
+
+/* Keine top-right Sektion, da "Not a Join User?" + Button entfallen */
+
+/* ========== Form Container ========== */
+.form-container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+    /* Statt hidden/visible kannst du entscheiden, ob du Animationen willst */
+}
+
+/* ========== Sign Up Box (Weißes Panel) ========== */
+.signup-box {
+    background-color: white;
+    border-radius: 12px;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.15);
+    text-align: center;
+    /* Schmaler & etwas höher als Login – interpretieren wir mit padding */
+    width: 380px; 
+    padding: 10px 30px; 
+}
+
+/* ========== Titel "Sign Up" ========== */
+.signup-box h2 {
+    font-size: 50px; /* Größer als default */
+    font-weight: bold;
+    margin-bottom: 10px;
+}
+
+/* Blaue Unterstreichung */
+.underline {
+    width: 120px; 
+    height: 2px;
+    background-color: #28ABE2;
+    margin: 4px auto 20px;
+}
+
+/* ========== Input Container ========== */
+.input-container {
+    position: relative;
+    margin-bottom: 15px;
+    width: 85%; 
+}
+
+.input-container input {
+    width: 100%;
+    padding: 12px 45px 12px 15px; 
+    border: 1px solid #d1d1d1;
+    border-radius: 6px;
+    font-size: 16px;
+}
+
+/* Icons rechts platzieren */
+.input-icon {
+    position: absolute;
+    right: -50px;
+    top: 50%;
+    transform: translateY(-50%);
+    width: 20px;
+}
+
+/* ========== Checkbox für Privacy Policy ========== */
+.policy-container {
+    margin: 20px 0;
+    font-size: 14px;
+    color: #2b3647;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 8px;
+}
+
+/* Stilierung für Checkbox & Label (optional) */
+#policy-checkbox {
+    transform: scale(1.2);
+    cursor: pointer;
+}
+
+/* Verlinkung zur Privacy Policy */
+.policy-container a {
+    color: #2b3647; 
+    text-decoration: underline;
+}
+
+.policy-container a:hover {
+    color: #28ABE2; 
+}
+
+/* ========== Button Container ========== */
+.button-container {
+    display: flex;
+    justify-content: center; 
+    margin-top: 20px;
+}
+
+/* ========== Sign Up Action Button ========== */
+.signup-action {
+    background-color: #2b3647;
+    color: #fff;
+    border: none;
+    padding: 10px 20px;
+    font-size: 16px;
+    font-weight: bold;
+    border-radius: 6px;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+    text-decoration: none;
+}
+
+/* Startet disabled -> grauer Effekt */
+.signup-action:disabled {
+    background-color: #777; 
+    cursor: not-allowed;
+}
+
+.signup-action:hover:enabled {
+    background-color: #28ABE2; 
+}
+
+/* ========== Footer ========== */
+.footer {
+    position: absolute;
+    bottom: 30px;
+    display: flex;
+    justify-content: center;
+    width: 100%;
+    gap: 20px;
+}
+
+.footer a {
+    text-decoration: none;
+    color: gray;
+    font-size: 14px;
+}
+
+.footer a:hover {
+    color: #28ABE2;
+}

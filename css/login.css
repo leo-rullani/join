@@ -26,14 +26,32 @@ body {
     transform: scale(0.3);
 }
 
-/* 🔹 Positionierung der Top-Buttons */
+/* 🔹 Positionierung der Top-Elemente */
 .top-right {
     position: absolute;
-    top: 20px;
-    right: 20px;
+    top: 75px;
+    right: 40px; /* Abstand zum Rand wie das Logo links */
     display: flex;
     align-items: center;
-    gap: 10px;
+    gap: 30px; /* Abstand zwischen "Not a Join User?" und Sign-Up */
+}
+
+/* 🔹 Signup Button */
+.signup-btn {
+    background-color: #2b3647;
+    color: white;
+    border: none;
+    padding: 10px 20px;
+    font-size: 16px;
+    font-weight: bold;
+    border-radius: 6px;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+    text-decoration: none;
+}
+
+.signup-btn:hover {
+    background-color: #28ABE2; /* Hover-Farbe Hellblau */
 }
 
 /* 🔹 Formular Container */
@@ -54,48 +72,52 @@ body {
     opacity: 1;
 }
 
-/* 🔹 Login Box */
+/* 🔹 Login Box – minimal schmaler & weniger Abstand oben */
 .login-box {
     background-color: white;
-    padding: 30px;
+    padding: 30px 30px; /* 30px oben statt 50px */
     border-radius: 12px;
     box-shadow: 0 4px 10px rgba(0, 0, 0, 0.15);
     text-align: center;
-    width: 380px;
+    width: 420px; /* Schmaler (statt 450px) */
 }
 
-/* 🔹 Überschriften */
+/* 🔹 Überschrift „Log in“ – größer & näher am oberen Rand */
 h2 {
-    font-size: 24px;
+    font-size: 50px; /* statt 24px */
     font-weight: bold;
+    margin-bottom: 10px;
 }
 
 /* 🔹 Blaue Unterstreichung */
 .underline {
-    width: 60px;
+    width: 120px; /* Etwas breiter */
     height: 2px;
-    background-color: #007bff;
-    margin: 8px auto 20px;
+    background-color: #28ABE2;
+    margin: 4px auto 15px;
 }
 
 /* 🔹 Input Container */
 .input-container {
     position: relative;
     margin-bottom: 15px;
+    width: 85%; /* Links & rechts Abstand */
 }
 
+/* 🔹 Input Felder – minimal mehr Padding */
 .input-container input {
     width: 100%;
-    padding: 12px 40px 12px 10px;
+    /* Rechter Padding von 40px auf 45px, linker Padding von 10px auf 15px */
+    padding: 12px 45px 12px 15px;
     border: 1px solid #d1d1d1;
     border-radius: 6px;
     font-size: 16px;
 }
 
-/* 🔹 Input Icon */
+/* 🔹 Input Icon – weiter rechts (von 10px auf 15px) */
 .input-icon {
     position: absolute;
-    right: 10px;
+    right: -50px;
     top: 50%;
     transform: translateY(-50%);
     width: 20px;
@@ -118,6 +140,7 @@ h2 {
     cursor: pointer;
     transition: all 0.3s ease;
     text-align: center;
+    margin-top: 16px;
 }
 
 /* 🔹 Login- & Sign-Up-Button */
@@ -125,16 +148,17 @@ h2 {
     background-color: #2b3647;
     color: white;
     border: none;
+    margin-top: 16px;
 }
 
 .button:hover, .login-btn:hover {
-    background-color: #28ABE2; /* Hellblau */
+    background-color: #28ABE2;
 }
 
 /* 🔹 Guest Login Button */
 .guest-btn {
     background-color: white;
-    color: #2b3647; /* Dunkelblau */
+    color: #2b3647;
     border: 2px solid #2b3647;
 }
 
@@ -158,4 +182,8 @@ h2 {
     text-decoration: none;
     color: gray;
     font-size: 14px;
+}
+
+.footer a:hover {
+    color: #28ABE2;
 }
