@@ -1,0 +1,71 @@
+body {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+    background-color: #f8f9fa;
+    overflow: hidden;
+    flex-direction: column;
+    transition: all 0.5s ease-in-out;
+}
+
+.logo-container {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%) scale(1.2);
+    transition: all 0.5s ease-in-out;
+}
+
+.logo-container.move-logo {
+    top: calc(10px - 55px);
+    left: calc(10px - 30px);
+    transform: scale(0.3);
+}
+
+.form-container {
+    opacity: 0;
+    transition: opacity 0.5s ease-in-out;
+}
+
+.form-container.hidden {
+    display: none;
+}
+
+.form-container.visible {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+    opacity: 1;
+}
+
+.login-box {
+    background-color: white;
+    padding: 20px;
+    border-radius: 12px;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+    text-align: center;
+    width: 300px;
+}
+
+.button-container {
+    display: flex;
+    justify-content: space-around;
+    margin-top: 10px;
+}
+
+.footer {
+    position: absolute;
+    bottom: 10px;
+    display: flex;
+    justify-content: center;
+    width: 100%;
+    gap: 20px;
+}
+
+.footer a {
+    text-decoration: none;
+    color: gray;
+    font-size: 14px;
+}
