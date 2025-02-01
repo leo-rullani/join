@@ -1,6 +1,8 @@
 let databaseURL =
   "https://join-5d739-default-rtdb.europe-west1.firebasedatabase.app";
 
+let currentActiveContact = null;
+
 function init() {
   fetchContactsFromDatabase();
 }
@@ -33,8 +35,14 @@ async function fetchContactsFromDatabase() {
 }
 
 async function renderContacts(contactsArray) {
-  let contentRef = document.getElementById("contacts");
-  contentRef.innerHTML = "";
+  let contentRef = document.getElementById("phonebook");
+
+  for (let letter of "ABCDEFGHIJKLMNOPQRSTUVWXYZ") {
+    let section = document.getElementById(letter);
+    if (section) {
+      section.querySelector(".contacts").innerHTML = "";
+    }
+  }
 
   if (!contactsArray || contactsArray.length === 0) {
     contentRef.innerHTML = "No Contacts";
@@ -43,9 +51,47 @@ async function renderContacts(contactsArray) {
 
   console.log("Rendering contacts:", contactsArray);
 
-  contactsArray.forEach((contact) => {
-    contentRef.innerHTML += contactsTemplate(contact);
+  let groupedContacts = groupContactsByLetter(contactsArray);
+  Object.keys(groupedContacts).forEach((letter) => {
+    let section = document.getElementById(letter);
+    if (section) {
+      let contactsContainer = section.querySelector(".contacts");
+      groupedContacts[letter].forEach((contact) => {
+        contactsContainer.innerHTML += contactsTemplate(contact);
+      });
+    }
   });
+}
+
+function groupContactsByLetter(contacts) {
+  let grouped = {};
+
+  contacts.forEach((contact) => {
+    let firstLetter = contact.name.charAt(0).toUpperCase();
+    if (!grouped[firstLetter]) {
+      grouped[firstLetter] = [];
+    }
+    grouped[firstLetter].push(contact);
+  });
+
+  return grouped;
+}
+
+function selectContact(contactElement, name, email, phone) {
+  if (currentActiveContact !== null) {
+    currentActiveContact.classList.remove("is-Active");
+  }
+
+  contactElement.classList.add("is-Active");
+  showContactDetails(name, email, phone);
+  currentActiveContact = contactElement;
+}
+
+function showContactDetails(name, email, phone) {
+  let detailsContainer = document.getElementById("contact-info");
+  detailsContainer.innerHTML = "";
+
+  detailsContainer.innerHTML += contactDetailsTemplate(name, email, phone);
 }
 
 async function saveContactToDatabase(event) {
