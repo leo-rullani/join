@@ -16,15 +16,12 @@ body {
     position: absolute;
     top: 20px;
     left: 30px;
-    /* Kein transform & move-logo wie bei der Login-Animation */
 }
 
 .logo {
     margin: 48px;
-    width: 85px; /* Falls du die Größe anpassen möchtest */
+    width: 85px;
 }
-
-/* Keine top-right Sektion, da "Not a Join User?" + Button entfallen */
 
 /* ========== Form Container ========== */
 .form-container {
@@ -32,7 +29,6 @@ body {
     justify-content: center;
     align-items: center;
     flex-direction: column;
-    /* Statt hidden/visible kannst du entscheiden, ob du Animationen willst */
 }
 
 /* ========== Sign Up Box (Weißes Panel) ========== */
@@ -41,21 +37,38 @@ body {
     border-radius: 12px;
     box-shadow: 0 4px 10px rgba(0, 0, 0, 0.15);
     text-align: center;
-    /* Schmaler & etwas höher als Login – interpretieren wir mit padding */
     width: 380px; 
     padding: 10px 30px; 
 }
 
+/* ========== Neuer Header-Container für Titel und Pfeil ========== */
+.signup-header {
+    display: flex;
+    align-items: center;
+    justify-content: center; /* Zentriert Titel + Pfeil */
+    gap: 15px;              /* Abstand zwischen Titel und Pfeil */
+    margin-bottom: 10px;    /* minimaler Abstand nach unten */
+}
+
 /* ========== Titel "Sign Up" ========== */
 .signup-box h2 {
-    font-size: 50px; /* Größer als default */
+    font-size: 50px; 
     font-weight: bold;
-    margin-bottom: 10px;
+    margin: 0; /* Kein margin-bottom hier, weil wir gap nutzen */
+}
+
+/* Hellblauer Pfeil-Link */
+.back-arrow {
+    color: #28ABE2;
+    font-size: 40px;
+    text-decoration: none;
+    cursor: pointer;
+    line-height: 1;
 }
 
 /* Blaue Unterstreichung */
 .underline {
-    width: 120px; 
+    width: 120px;
     height: 2px;
     background-color: #28ABE2;
     margin: 4px auto 20px;
@@ -96,13 +109,11 @@ body {
     gap: 8px;
 }
 
-/* Stilierung für Checkbox & Label (optional) */
 #policy-checkbox {
     transform: scale(1.2);
     cursor: pointer;
 }
 
-/* Verlinkung zur Privacy Policy */
 .policy-container a {
     color: #2b3647; 
     text-decoration: underline;

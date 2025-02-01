@@ -16,13 +16,19 @@
         <img src="/assets/img/logo.png" alt="Join Logo" class="logo">
     </div>
 
-    <!-- Keine "not a join user?" und sign-up Button hier, wie gewünscht -->
-
     <!-- Zentrierte Box mit 4 Karten: Name, E-Mail, Password, Confirm Password -->
     <div class="form-container">
         <div class="signup-box">
-            <h2>Sign Up</h2>
+
+            <!-- Neuer Container für Titel + Pfeil -->
+            <div class="signup-header">
+                <h2>Sign Up</h2>
+                <!-- Hellblauer Pfeil führt zurück zu login.html -->
+                <a href="/html/login.html" class="back-arrow" title="Back to Login">←</a>
+            </div>
+
             <div class="underline"></div>
+
             <form onsubmit="signUp(event); return false;">
                 <!-- 1) Name -->
                 <div class="input-container">
@@ -64,7 +70,7 @@
         </div>
     </div>
 
-    <!-- Footer bleibt, wie gewünscht -->
+    <!-- Footer bleibt -->
     <div class="footer">
         <a href="/html/privacypolicy.html">Privacy Policy</a>
         <a href="/html/legalnotice.html">Legal Notice</a>
