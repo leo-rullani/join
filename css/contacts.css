@@ -214,12 +214,44 @@ header {
 
 .letter-section {
   margin-bottom: 20px;
+  display: flex;
+  flex-direction: column;
 }
 
 .letter-section h2 {
   font-size: 24px;
-  color: #333;
-  margin: 10px 0;
+  margin: 10px 30px;
+}
+
+.letter {
+  display: flex;
+  align-self: center;
+  width: 320px;
+  border-bottom: 1px solid rgba(0, 0, 0, 0.16);
+  margin-bottom: 8px;
+}
+
+.contact-initials {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
+  background-color: white;
+  border: 2px solid rgba(0, 0, 0, 0.1);
+  outline: 3px solid white;
+  font-weight: bold;
+  color: black;
+  font-size: 16px;
+}
+
+.initial_name_content {
+  display: flex;
+}
+
+.contact-infos {
+  margin-left: 0px;
 }
 
 .contacts {
@@ -228,14 +260,24 @@ header {
 }
 
 .contact {
+  display: flex;
   padding: 10px;
   border: none;
   border-radius: 5px;
+  justify-content: space-evenly;
   cursor: pointer;
+  align-items: center;
+  transition: background-color 0.3s ease;
 }
 
 .contact:hover {
   background-color: #a8a8a8;
+}
+
+.contact.is-Active {
+  background-color: #2a3647;
+  color: white;
+  pointer-events: none;
 }
 
 .contact p {
