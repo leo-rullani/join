@@ -4,7 +4,7 @@
 <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Sign Up</title>
+    <title>Sign up</title>
     <!-- CSS-Datei für Sign Up -->
     <link rel="stylesheet" href="/css/signup.css">
     <link rel="stylesheet" href="/css/fonts.css">
@@ -22,9 +22,11 @@
 
             <!-- Neuer Container für Titel + Pfeil -->
             <div class="signup-header">
-                <h2>Sign Up</h2>
-                <!-- Hellblauer Pfeil führt zurück zu login.html -->
-                <a href="/html/login.html" class="back-arrow" title="Back to Login">←</a>
+                <div class="arrow-container">
+                    <a href="/html/login.html" class="back-arrow" title="Back to Login">←</a>
+                </div>
+                <h2>Sign up</h2>
+                <div class="dummy"></div>
             </div>
 
             <div class="underline"></div>
@@ -69,6 +71,9 @@
             </form>
         </div>
     </div>
+
+    <!-- Toast-Notification (initial versteckt) -->
+    <div id="notification" class="notification hidden"></div>
 
     <!-- Footer bleibt -->
     <div class="footer">

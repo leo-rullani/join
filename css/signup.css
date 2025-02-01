@@ -38,38 +38,57 @@ body {
     box-shadow: 0 4px 10px rgba(0, 0, 0, 0.15);
     text-align: center;
     width: 380px; 
-    padding: 10px 30px; 
+    padding: 35px 35px; 
 }
 
 /* ========== Neuer Header-Container für Titel und Pfeil ========== */
 .signup-header {
+    display: grid;
+    grid-template-columns: 1fr auto 1fr;
+    align-items: center;
+    margin-bottom: 10px;
+}
+
+/* Zusätzliche Container für den Grid-Aufbau */
+.arrow-container {
     display: flex;
     align-items: center;
-    justify-content: center; /* Zentriert Titel + Pfeil */
-    gap: 15px;              /* Abstand zwischen Titel und Pfeil */
-    margin-bottom: 10px;    /* minimaler Abstand nach unten */
+    justify-content: flex-start;
+}
+.dummy {
+    /* Leerer Container als Platzhalter */
 }
 
 /* ========== Titel "Sign Up" ========== */
 .signup-box h2 {
     font-size: 50px; 
     font-weight: bold;
-    margin: 0; /* Kein margin-bottom hier, weil wir gap nutzen */
+    margin: 0; /* Kein margin-bottom hier, weil wir grid nutzen */
 }
 
-/* Hellblauer Pfeil-Link */
+/* Hellblauer Pfeil-Link - neu gestaltet */
 .back-arrow {
+    display: inline-block;
     color: #28ABE2;
-    font-size: 40px;
+    width: 40px;
+    height: 40px;
+    border-radius: 50%;
+    text-align: center;
+    line-height: 40px;
+    font-size: 20px;
+    transition: background-color 0.3s ease;
     text-decoration: none;
     cursor: pointer;
-    line-height: 1;
+}
+
+.back-arrow:hover {
+    background-color: #F6F7F8;
 }
 
 /* Blaue Unterstreichung */
 .underline {
     width: 120px;
-    height: 2px;
+    height: 2.5px;
     background-color: #28ABE2;
     margin: 4px auto 20px;
 }
@@ -151,7 +170,7 @@ body {
 }
 
 .signup-action:hover:enabled {
-    background-color: #28ABE2; 
+    background-color: #28ABE2;
 }
 
 /* ========== Footer ========== */
@@ -172,4 +191,27 @@ body {
 
 .footer a:hover {
     color: #28ABE2;
+}
+
+/* ========== Notification / Toast Styling ========== */
+.notification {
+    position: fixed;
+    top: 20px;
+    right: 20px;
+    background-color: #28ABE2;
+    color: #fff;
+    padding: 15px 20px;
+    border-radius: 6px;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.15);
+    opacity: 0;
+    transition: opacity 0.5s ease;
+    z-index: 1000;
+}
+
+.notification.show {
+    opacity: 1;
+}
+
+.hidden {
+    display: none;
 }

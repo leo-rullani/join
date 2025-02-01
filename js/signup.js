@@ -21,8 +21,18 @@ function signUp(event) {
   }
 
   // Hier kannst du Daten speichern oder fetch() anwenden.
-  alert("Sign Up successful!");
-  // window.location.href = '/html/welcome.html'; // Beispiel
+
+  // Statt eines Alerts zeigen wir eine freundliche Toast-Nachricht an:
+  const notification = document.getElementById("notification");
+  notification.textContent = "Sign up successful!";
+  notification.classList.remove("hidden");
+  notification.classList.add("show");
+
+  // Nach 2 Sekunden wird der Toast ausgeblendet und der Nutzer zur summary.html weitergeleitet.
+  setTimeout(() => {
+    notification.classList.remove("show");
+    window.location.href = "/html/summary.html";
+  }, 2000);
 }
 
 /**

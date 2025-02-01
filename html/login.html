@@ -27,11 +27,14 @@
             <form onsubmit="login(event); return false;">
                 <div class="input-container">
                     <input type="email" id="email" placeholder="Email" required>
-                    <img src="/assets/icons/mail.svg" class="input-icon" alt="Email Icon">
+                    <!-- Klick auf das Icon füllt automatisch die Email, falls leer -->
+                    <img src="/assets/icons/mail.svg" class="input-icon" alt="Email Icon" onclick="fillEmail()">
                 </div>
                 <div class="input-container">
                     <input type="password" id="password" placeholder="Password" required>
-                    <img src="/assets/icons/lock.svg" class="input-icon" alt="Password Icon">
+                    <!-- Klick auf das Icon toggelt die Passwortanzeige -->
+                    <img src="/assets/icons/lock.svg" class="input-icon" alt="Password Icon" id="passwordIcon"
+                        onclick="togglePassword()">
                 </div>
                 <div class="button-container">
                     <button type="submit" class="login-btn">Log in</button>
