@@ -7,11 +7,11 @@
 
         <link rel="stylesheet" href="/css/contacts.css">
         <link rel="stylesheet" href="/css/fonts.css">
-
+        <script src="/js/contactsTemplate.js"></script>
         <script src="/js/contacts.js"></script>
 
     </head>
-    <body>
+    <body onload="init()">
         <header>
             <div class="header_content">Kanban Project Management Tool <div class="header_img"><img class="help_icon"
                         src="/assets/icons/help.svg" alt="">
@@ -36,9 +36,13 @@
                 </div>
             </div>
             <section class="contact_content">
-                <div class="contact_list">
-                    Contactslist
-                    <button onclick="openOverlay()">Add new contact</button>
+                <div class="contacts_container">
+                    <div><button class="addContact_button" onclick="openOverlay()">Add new contact <img
+                                src="/assets/icons/person_add.svg" alt=""></button></div>
+                    <div class="contact_list" id="contacts">
+
+                    </div>
+
                 </div>
                 <div class="contact_information">
                     Contacts
@@ -55,14 +59,17 @@
                         <div class="addContact_right">
                             <div><img src="/assets/icons/contact_pic.svg" alt=""></div>
                             <div class="form_add">
-                                <form onsubmit="">
-                                    <input class="icon_name" type="name" name="name" id="name" placeholder="Name"><br>
-                                    <input class="icon_email" type="email" name="email" id="email"
+                                <form onsubmit="return saveContactToDatabase(event)">
+                                    <input required class="icon_name" type="name" name="name" id="name"
+                                        placeholder="Name"><br>
+                                    <input required class="icon_email" type="email" name="email" id="email"
                                         placeholder="Email"><br>
-                                    <input class="icon_phone" type="tel" name="tel" id="tel" placeholder="Phone"><br>
+                                    <input required class="icon_phone" type="phone" name="phone" id="phone"
+                                        placeholder="Phone"><br>
 
-                                    <div class="button_div"> <button class="btn-cancel">Cancel ✖</button> <button
-                                            class="btn-create">Create
+                                    <div class="button_div"> <button type="button" class="btn-cancel"
+                                            onclick="closeOverlay()">Cancel ✖</button> <button class="btn-create"
+                                            type="submit">Create
                                             contact <img src="/assets/icons/check.svg" alt=""></button></div>
                                 </form>
                             </div>

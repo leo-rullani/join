@@ -78,7 +78,7 @@ header {
   justify-content: center;
 }
 .selection span {
-  min-width: 60px;
+  min-width: 70px;
   text-align: start;
 }
 
@@ -126,11 +126,55 @@ header {
   display: flex;
 }
 
-.contact_list {
+.contacts_container {
   position: relative;
-  height: 200px;
+  height: 100%;
+  max-height: 700px;
   top: 80px;
   padding: 20px;
+}
+
+.addContact_button {
+  width: 300px;
+  font-size: 18px;
+  border-radius: 5px;
+  padding: 5px;
+  margin: 15px;
+  background-color: #2a3647;
+  color: white;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  border: none;
+}
+.addContact_button img {
+  width: 32px;
+  margin-left: 12px;
+}
+
+.addContact_button:hover {
+  cursor: pointer;
+  background-color: #29abe2ff;
+  box-shadow: rgba(0, 0, 0, 0.16) 0px 10px 36px 0px,
+    rgba(0, 0, 0, 0.06) 0px 0px 0px 1px;
+  transition: all 0.3s ease;
+}
+
+.contact_list {
+  background-color: black;
+  width: 400px;
+  color: white;
+  height: 100%;
+  padding: 20px;
+  overflow: auto;
+}
+
+.contact {
+  border: none;
+}
+
+.contact p {
+  border: none;
 }
 
 .contact_overlay {
@@ -324,7 +368,7 @@ header {
   background-color: #29abe2ff;
   box-shadow: rgba(0, 0, 0, 0.16) 0px 10px 36px 0px,
     rgba(0, 0, 0, 0.06) 0px 0px 0px 1px;
-  transition: ease-in-out 50ms;
+  transition: all 0.3s ease;
 }
 
 .btn-cancel:hover {
@@ -332,5 +376,5 @@ header {
   color: #29abe2ff;
   box-shadow: rgba(0, 0, 0, 0.16) 0px 10px 36px 0px,
     rgba(0, 0, 0, 0.06) 0px 0px 0px 1px;
-  transition: ease-in-out 50ms;
+  transition: all 0.3s ease;
 }
