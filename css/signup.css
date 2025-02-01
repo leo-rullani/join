@@ -1,4 +1,6 @@
-/* ========== Allgemeines Styling ========== */
+/* =============================
+   Allgemeines Styling
+============================= */
 body {
     display: flex;
     justify-content: center;
@@ -11,19 +13,19 @@ body {
     scroll-behavior: smooth;
 }
 
-/* Logo ist bereits oben links, ohne Animation */
 .logo-container {
     position: absolute;
     top: 20px;
     left: 30px;
 }
-
 .logo {
     margin: 48px;
     width: 85px;
 }
 
-/* ========== Form Container ========== */
+/* =============================
+   Form / Sign-up Box
+============================= */
 .form-container {
     display: flex;
     justify-content: center;
@@ -31,42 +33,38 @@ body {
     flex-direction: column;
 }
 
-/* ========== Sign Up Box (Weißes Panel) ========== */
 .signup-box {
+    /* Kein position: relative, da Toast mit position: fixed agiert */
     background-color: white;
     border-radius: 12px;
     box-shadow: 0 4px 10px rgba(0, 0, 0, 0.15);
     text-align: center;
-    width: 380px; 
-    padding: 35px 35px; 
+    width: 380px;
+    padding: 35px 35px;
 }
 
-/* ========== Neuer Header-Container für Titel und Pfeil ========== */
+/* =============================
+   Header (Pfeil, Titel)
+============================= */
 .signup-header {
     display: grid;
     grid-template-columns: 1fr auto 1fr;
     align-items: center;
     margin-bottom: 10px;
 }
-
-/* Zusätzliche Container für den Grid-Aufbau */
 .arrow-container {
     display: flex;
     align-items: center;
     justify-content: flex-start;
 }
-.dummy {
-    /* Leerer Container als Platzhalter */
-}
+.dummy { }
 
-/* ========== Titel "Sign Up" ========== */
 .signup-box h2 {
-    font-size: 50px; 
+    font-size: 50px;
     font-weight: bold;
-    margin: 0; /* Kein margin-bottom hier, weil wir grid nutzen */
+    margin: 0;
 }
 
-/* Hellblauer Pfeil-Link - neu gestaltet */
 .back-arrow {
     display: inline-block;
     color: #28ABE2;
@@ -80,12 +78,13 @@ body {
     text-decoration: none;
     cursor: pointer;
 }
-
 .back-arrow:hover {
     background-color: #F6F7F8;
 }
 
-/* Blaue Unterstreichung */
+/* =============================
+   Unterstreichung
+============================= */
 .underline {
     width: 120px;
     height: 2.5px;
@@ -93,31 +92,53 @@ body {
     margin: 4px auto 20px;
 }
 
-/* ========== Input Container ========== */
+/* =============================
+   Inputs & Icons
+============================= */
 .input-container {
     position: relative;
     margin-bottom: 15px;
-    width: 85%; 
+    width: 85%;
 }
-
 .input-container input {
     width: 100%;
-    padding: 12px 45px 12px 15px; 
+    padding: 12px 45px 12px 15px;
     border: 1px solid #d1d1d1;
     border-radius: 6px;
     font-size: 16px;
+    cursor: pointer;
+}
+.input-container input:focus {
+    outline: none;
+    border-color: #28ABE2;
+}
+.error {
+    border-color: #ff4057 !important;
 }
 
-/* Icons rechts platzieren */
 .input-icon {
     position: absolute;
     right: -50px;
     top: 50%;
     transform: translateY(-50%);
     width: 20px;
+    cursor: pointer;
 }
 
-/* ========== Checkbox für Privacy Policy ========== */
+/* =============================
+   Fehlermeldung
+============================= */
+.error-message {
+    color: rgba(255, 64, 87, 0.8);
+    font-size: 15px;
+    margin: 8px auto 10px;
+    text-align: center;
+    width: 80%;
+}
+
+/* =============================
+   Checkbox / Policy
+============================= */
 .policy-container {
     margin: 20px 0;
     font-size: 14px;
@@ -127,29 +148,27 @@ body {
     justify-content: center;
     gap: 8px;
 }
-
 #policy-checkbox {
     transform: scale(1.2);
     cursor: pointer;
 }
-
 .policy-container a {
-    color: #2b3647; 
+    color: #2b3647;
+    text-decoration: underline;
+}
+.policy-container a:hover {
+    color: #28ABE2;
     text-decoration: underline;
 }
 
-.policy-container a:hover {
-    color: #28ABE2; 
-}
-
-/* ========== Button Container ========== */
+/* =============================
+   Buttons
+============================= */
 .button-container {
     display: flex;
-    justify-content: center; 
+    justify-content: center;
     margin-top: 20px;
 }
-
-/* ========== Sign Up Action Button ========== */
 .signup-action {
     background-color: #2b3647;
     color: #fff;
@@ -162,18 +181,43 @@ body {
     transition: background-color 0.3s ease;
     text-decoration: none;
 }
-
-/* Startet disabled -> grauer Effekt */
 .signup-action:disabled {
-    background-color: #777; 
+    background-color: #777;
     cursor: not-allowed;
 }
-
 .signup-action:hover:enabled {
     background-color: #28ABE2;
 }
 
-/* ========== Footer ========== */
+/* =============================
+   Notification / Toast 
+   => Start: unterhalb der Seite
+   => End: in der Mitte der .signup-box
+============================= */
+.notification {
+    position: fixed;          /* im gesamten Viewport */
+    left: 50%;
+    bottom: -120px;           /* Start unterhalb der Seite */
+    transform: translateX(-50%);
+    background-color: #2b3647; /* Dunkelblau */
+    color: #fff;
+    padding: 15px 20px;
+    border-radius: 6px;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.15);
+    opacity: 0;
+    transition: all 0.7s ease;
+    z-index: 9999;
+}
+.notification.show {
+    opacity: 1;
+}
+.hidden {
+    display: none;
+}
+
+/* =============================
+   Footer
+============================= */
 .footer {
     position: absolute;
     bottom: 30px;
@@ -182,36 +226,11 @@ body {
     width: 100%;
     gap: 20px;
 }
-
 .footer a {
     text-decoration: none;
     color: gray;
     font-size: 14px;
 }
-
 .footer a:hover {
     color: #28ABE2;
-}
-
-/* ========== Notification / Toast Styling ========== */
-.notification {
-    position: fixed;
-    top: 20px;
-    right: 20px;
-    background-color: #28ABE2;
-    color: #fff;
-    padding: 15px 20px;
-    border-radius: 6px;
-    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.15);
-    opacity: 0;
-    transition: opacity 0.5s ease;
-    z-index: 1000;
-}
-
-.notification.show {
-    opacity: 1;
-}
-
-.hidden {
-    display: none;
 }

@@ -18,9 +18,10 @@
 
     <!-- Zentrierte Box mit 4 Karten: Name, E-Mail, Password, Confirm Password -->
     <div class="form-container">
-        <div class="signup-box">
+        <!-- EINZIGE ÄNDERUNG: id="signupBox" -->
+        <div class="signup-box" id="signupBox">
 
-            <!-- Neuer Container für Titel + Pfeil -->
+            <!-- Titel + Pfeil -->
             <div class="signup-header">
                 <div class="arrow-container">
                     <a href="/html/login.html" class="back-arrow" title="Back to Login">←</a>
@@ -31,27 +32,29 @@
 
             <div class="underline"></div>
 
+            <!-- Eingaben + Formular -->
             <form onsubmit="signUp(event); return false;">
-                <!-- 1) Name -->
                 <div class="input-container">
                     <input type="text" id="name" placeholder="Name" required>
-                    <img src="/assets/icons/person.svg" class="input-icon" alt="Name Icon">
+                    <img src="/assets/icons/person.svg" class="input-icon" alt="Name Icon" id="nameIcon">
                 </div>
-                <!-- 2) E-Mail -->
                 <div class="input-container">
                     <input type="email" id="email" placeholder="Email" required>
-                    <img src="/assets/icons/mail.svg" class="input-icon" alt="Email Icon">
+                    <img src="/assets/icons/mail.svg" class="input-icon" alt="Email Icon" id="emailIcon">
                 </div>
-                <!-- 3) Password -->
                 <div class="input-container">
                     <input type="password" id="password" placeholder="Password" required>
-                    <img src="/assets/icons/lock.svg" class="input-icon" alt="Password Icon">
+                    <img src="/assets/icons/lock.svg" class="input-icon" alt="Password Icon" id="passwordIcon"
+                        onclick="togglePassword('password', 'passwordIcon')">
                 </div>
-                <!-- 4) Confirm Password -->
                 <div class="input-container">
                     <input type="password" id="confirm-password" placeholder="Confirm Password" required>
-                    <img src="/assets/icons/lock.svg" class="input-icon" alt="Confirm Password Icon">
+                    <img src="/assets/icons/lock.svg" class="input-icon" alt="Confirm Password Icon"
+                        id="confirmPasswordIcon" onclick="togglePassword('confirm-password', 'confirmPasswordIcon')">
                 </div>
+
+                <!-- Fehlermeldung bei falschen Passwörtern -->
+                <div id="errorMessage" class="error-message"></div>
 
                 <!-- Checkbox: Muss aktiviert werden, um sich sign up zu können -->
                 <div class="policy-container">
@@ -63,7 +66,7 @@
                 </div>
 
                 <div class="button-container">
-                    <!-- Der Sign Up-Button ist gestylt wie der Login-Button -->
+                    <!-- Sign Up-Button, erst aktiv wenn Checkbox angehakt -->
                     <button type="submit" id="signup-btn" class="signup-action" disabled>
                         Sign Up
                     </button>
