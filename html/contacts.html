@@ -220,6 +220,41 @@
                     <div id="contact-info">
                     </div>
                 </div>
+
+
+
+                <div class="contact_overlay" id="editOverlay">
+                    <div class="overlay-content" id="overlayContent">
+                        <div class="close-btn" onclick="closeEditOverlay()"><span>✖</span></div>
+                        <div class="editContact_left">
+                            <img src="/assets/img/join-logo-white.svg" alt="">
+                            <h1>Edit contact</h1>
+                            <div class="editunderline"></div>
+                        </div>
+                        <div class="editContact_right">
+                            <div id="initials"></div>
+                            <div class="form_add">
+                                <form id="editContactForm" onsubmit="submitEditForm(event)">
+                                    <input required class="icon_name" type="name" name="name" id="editName"
+                                        placeholder="Name"><br>
+                                    <input required class="icon_email" type="email" name="email" id="editEmail"
+                                        placeholder="Email"><br>
+                                    <input required class="icon_phone" type="phone" name="phone" id="editPhone"
+                                        placeholder="Phone"><br>
+
+                                    <div class="button_div">
+                                        <button type="button" class="btn-cancel" onclick="closeEditOverlay()">Cancel
+                                            ✖</button>
+                                        <button class="btn-create" type="submit">Save Changes<img
+                                                src="/assets/icons/check.svg" alt=""></button>
+                                    </div>
+                                </form>
+                            </div>
+
+                        </div>
+                    </div>
+                </div>
+
                 <div class="contact_overlay" id="overlay">
                     <div class="overlay-content" id="overlayContent">
                         <div class="close-btn" onclick="closeOverlay()"><span>✖</span></div>

@@ -37,7 +37,7 @@ header {
 }
 
 .profile_initials:hover {
-  background-color: gray;
+  background-color: #f5f5f5;
 }
 
 .side_menu {
@@ -126,6 +126,10 @@ header {
 .contact_content {
   display: flex;
   width: 1920px;
+  overflow: hidden;
+  min-height: 100vh;
+  position: relative;
+  overflow-x: hidden;
 }
 
 .contacts_container {
@@ -235,23 +239,73 @@ header {
   display: flex;
   justify-content: center;
   align-items: center;
-  width: 40px;
-  height: 40px;
+  width: 35px;
+  height: 35px;
   border-radius: 50%;
   background-color: white;
   border: 2px solid rgba(0, 0, 0, 0.1);
   outline: 3px solid white;
   font-weight: bold;
-  color: black;
+  color: rgb(255, 255, 255);
   font-size: 16px;
+  flex-shrink: 0;
 }
 
 .initial_name_content {
   display: flex;
+  align-items: center;
+  margin-bottom: 50px;
+}
+
+.contact_name {
+  display: flex;
+  flex-direction: column;
+}
+
+.contact_name h1 {
+  margin: 0px;
+}
+
+.contact_links {
+  margin-top: 7px;
+  display: flex;
+  justify-content: space-between;
+  width: 150px;
+  text-decoration: none;
+}
+
+.contact_links a {
+  text-decoration: none;
+  color: #9096a0ff;
+}
+
+.contact_links i {
+  margin-right: 7px;
+}
+
+.contact_links a:hover {
+  cursor: pointer;
+  color: #29abe2ff;
+}
+
+.big-initials {
+  width: 100px;
+  height: 100px;
+  border-radius: 50%;
+  background-color: white;
+  border: 2px solid rgba(0, 0, 0, 0.1);
+  outline: 3px solid white;
+  font-weight: bold;
+  color: rgb(255, 255, 255);
+  font-size: 35px;
+  margin-right: 50px;
 }
 
 .contact-infos {
   margin-left: 0px;
+  flex-grow: 1;
+  min-width: 0;
+  overflow: hidden;
 }
 
 .contacts {
@@ -261,17 +315,18 @@ header {
 
 .contact {
   display: flex;
+  align-items: center;
   padding: 10px;
   border: none;
   border-radius: 5px;
-  justify-content: space-evenly;
+  min-width: 0;
   cursor: pointer;
-  align-items: center;
   transition: background-color 0.3s ease;
+  gap: 30px;
 }
 
 .contact:hover {
-  background-color: #a8a8a8;
+  background-color: #eeeeeecb;
 }
 
 .contact.is-Active {
@@ -345,14 +400,30 @@ header {
 .contact_overlay {
   position: fixed;
   top: 0;
-  left: 0;
+  right: -100%; /* Overlay startet außerhalb des Bildschirms */
   width: 100%;
   height: 100%;
-  background-color: rgba(0, 0, 0, 0.8);
-  display: none;
+  background-color: rgba(0, 0, 0, 0.2);
+  visibility: hidden;
+  opacity: 0;
+  display: flex;
   justify-content: center;
   align-items: center;
   z-index: 9999;
+  transition: right 0.5s ease-in-out, opacity 0.5s ease-in-out; /* Übergänge für beide Eigenschaften */
+}
+
+.contact_overlay.active {
+  right: 0; /* Overlay wird in den sichtbaren Bereich verschoben */
+  visibility: visible;
+  opacity: 1;
+  transform: translateX(0); /* Position auf sichtbar setzen */
+}
+
+/* Zusätzlicher Zustand für das Schließen */
+.contact_overlay.closing {
+  right: -100%; /* Verschiebt das Overlay nach rechts zurück */
+  opacity: 0; /* Setzt die Deckkraft auf 0 */
 }
 
 .overlay-content {
@@ -414,6 +485,59 @@ header {
   justify-content: space-evenly;
 }
 
+.editContact_left {
+  color: white;
+  background-color: #2a3647;
+  width: 370px;
+  padding: 0;
+  margin: 0;
+  height: 450px;
+  border-radius: 10px 0px 0px 10px;
+  align-items: center;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+}
+
+.editContact_right {
+  color: black;
+  width: 580px;
+  padding: 0;
+  margin: 0;
+  height: 450px;
+  background-color: rgb(255, 255, 255);
+  border-radius: 0px 10px 10px 0px;
+  display: flex;
+  align-items: center;
+  justify-content: space-evenly;
+}
+
+.editContact_left img {
+  margin-left: 40px;
+  margin-bottom: 4px;
+  align-self: flex-start;
+  width: 50px;
+}
+
+.editContact_left img {
+  margin-left: 40px;
+  margin-bottom: 25px;
+  align-self: flex-start;
+  width: 50px;
+}
+
+.editContact_left h1 {
+  margin: 0;
+  padding: 0;
+  font-size: 51px;
+  margin-bottom: 4px;
+}
+
+.addContact_right img {
+  margin-bottom: 0px;
+  width: 100px;
+}
+
 .addContact_left img {
   margin-left: 40px;
   margin-bottom: 4px;
@@ -461,6 +585,15 @@ header {
   align-self: flex-start;
   margin-left: 38px;
   border-radius: 10px;
+}
+
+.editunderline {
+  border: 1px solid #29abe2ff;
+  width: 70px;
+  align-self: flex-start;
+  margin-left: 42px;
+  border-radius: 10px;
+  margin-top: 5px;
 }
 
 .icon_name {

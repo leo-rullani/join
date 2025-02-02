@@ -2,6 +2,7 @@ let databaseURL =
   "https://join-5d739-default-rtdb.europe-west1.firebasedatabase.app";
 
 let currentActiveContact = null;
+let contactToDelete = null;
 
 function init() {
   fetchContactsFromDatabase();
@@ -77,26 +78,32 @@ function groupContactsByLetter(contacts) {
   return grouped;
 }
 
-function selectContact(contactElement, name, email, phone) {
+function selectContact(contactElement, contactId, name, email, phone) {
   if (currentActiveContact !== null) {
     currentActiveContact.classList.remove("is-Active");
   }
 
   contactElement.classList.add("is-Active");
-  showContactDetails(name, email, phone);
+
+  showContactDetails(contactId, name, email, phone);
+
   currentActiveContact = contactElement;
 }
 
-function showContactDetails(name, email, phone) {
+function showContactDetails(id, name, email, phone) {
   let detailsContainer = document.getElementById("contact-info");
   detailsContainer.innerHTML = "";
 
-  detailsContainer.innerHTML += contactDetailsTemplate(name, email, phone);
+  detailsContainer.innerHTML += contactDetailsTemplate(id, name, email, phone);
 }
 
 function getInitials(fullName) {
   let names = fullName.trim().split(" ");
   let initials = names.map((name) => name.charAt(0).toUpperCase()).join("");
+  let bgColor = getColorForLetter(initials.charAt(0));
+  document.getElementById(
+    "initials"
+  ).innerHTML = `<div class="contact-initials big-initials" style="background-color: ${bgColor};">${initials}</div>`;
   return initials;
 }
 
@@ -139,6 +146,10 @@ async function saveContactToDatabase(event) {
   let name = document.getElementById("name").value.trim();
   let email = document.getElementById("email").value.trim();
   let phone = document.getElementById("phone").value.trim();
+  document.getElementById("name").value =
+    document.getElementById("email").value =
+    document.getElementById("phone").value =
+      "";
 
   let newContact = { name, email, phone };
 
@@ -165,12 +176,12 @@ async function saveContactToDatabase(event) {
   return false;
 }
 
-async function updateContact(id, name, email, phone) {
+async function updateContact(contactId, name, email, phone) {
   let updatedContact = { name, email, phone };
 
   try {
-    let response = await fetch(`${databaseURL}/contacts/${id}.json`, {
-      method: "PATCH",
+    let response = await fetch(`${databaseURL}/contacts/${contactId}.json`, {
+      method: "PUT",
       headers: { "Content-Type": "application/json" },
       body: JSON.stringify(updatedContact),
     });
@@ -186,27 +197,97 @@ async function updateContact(id, name, email, phone) {
   }
 }
 
-async function deleteContact(id) {
-  try {
-    let response = await fetch(`${databaseURL}/contacts/${id}.json`, {
-      method: "DELETE",
-    });
+function openEditOverlay(contactId, name, email, phone) {
+  document.getElementById("editOverlay").style.display = "flex";
 
-    if (!response.ok) {
-      throw new Error("Fehler beim Löschen des Kontakts.");
+  document.getElementById("editName").value = name;
+  document.getElementById("editEmail").value = email;
+  document.getElementById("editPhone").value = phone;
+
+  document
+    .getElementById("editContactForm")
+    .setAttribute("data-contact-id", contactId);
+}
+
+function closeEditOverlay() {
+  document.getElementById("editOverlay").style.display = "none";
+}
+
+function submitEditForm(event) {
+  event.preventDefault();
+
+  let form = document.getElementById("editContactForm");
+  let contactId = form.getAttribute("data-contact-id");
+  let name = document.getElementById("editName").value.trim();
+  let email = document.getElementById("editEmail").value.trim();
+  let phone = document.getElementById("editPhone").value.trim();
+
+  updateContact(contactId, name, email, phone);
+  closeEditOverlay();
+}
+
+async function deleteContact(contactId) {
+  if (contactId) {
+    try {
+      console.log(`Deleting contact with ID: ${contactId}`);
+
+      const response = await fetch(
+        `${databaseURL}/contacts/${contactId}.json`,
+        { method: "DELETE" }
+      );
+
+      if (!response.ok) {
+        throw new Error(
+          `Failed to delete contact with ID ${contactId}: ${response.statusText}`
+        );
+      }
+
+      console.log("Contact successfully deleted!");
+
+      fetchContactsFromDatabase();
+    } catch (error) {
+      console.error("Error during deletion:", error);
+      alert(
+        "There was a problem deleting the contact. Please try again later."
+      );
     }
-
-    console.log("Kontakt erfolgreich gelöscht!");
-    fetchContactsFromDatabase();
-  } catch (error) {
-    console.error("Fehler beim Löschen:", error);
   }
 }
 
 function openOverlay() {
-  document.getElementById("overlay").style.display = "flex";
+  let overlay = document.getElementById("overlay");
+  overlay.classList.add("active");
+  overlay.classList.remove("closing");
 }
 
 function closeOverlay() {
-  document.getElementById("overlay").style.display = "none";
+  let overlay = document.getElementById("overlay");
+  overlay.classList.add("closing");
+
+  setTimeout(() => {
+    overlay.classList.remove("active");
+    overlay.classList.remove("closing");
+  }, 500);
+}
+
+function openEditOverlay(contactId, name, email, phone) {
+  let overlay = document.getElementById("editOverlay");
+  overlay.classList.add("active");
+  overlay.classList.remove("closing");
+
+  document.getElementById("editName").value = name;
+  document.getElementById("editEmail").value = email;
+  document.getElementById("editPhone").value = phone;
+
+  document.getElementById("editContactForm").dataset.contactId = contactId;
+}
+
+function closeEditOverlay() {
+  let overlay = document.getElementById("editOverlay");
+  overlay.classList.add("closing");
+
+  setTimeout(() => {
+    overlay.classList.remove("active");
+    overlay.classList.remove("closing");
+  }, 500);
 }
