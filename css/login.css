@@ -114,7 +114,7 @@ body {
   
   /* 🔹 Input Felder – minimal mehr Padding */
   .input-container input {
-    width: 100%;
+    width: 95%;
     padding: 12px 45px 12px 15px;
     border: 1px solid #d1d1d1;
     border-radius: 6px;
@@ -137,7 +137,7 @@ body {
   /* 🔹 Input Icon */
   .input-icon {
     position: absolute;
-    right: -50px;
+    right: -35px;
     top: 50%;
     transform: translateY(-50%);
     width: 20px;
@@ -228,6 +228,12 @@ body {
         gap: 0px;
     }
 
+    .logo-container.move-logo {
+      top: calc(-10px - 65px);
+      left: calc(-20px - 30px);
+      transform: scale(0.25);
+  }
+
     .button-container button {
         width: auto; /* Verhindert, dass die Buttons sich auf volle Breite ausdehnen */
         min-width: 150px; /* Setzt eine Mindestbreite */
@@ -265,5 +271,59 @@ body {
 @media (max-width: 420px) {
   .login-box {
     padding: 48px 30px;
+  }
+}
+
+@media (max-width: 375px) {
+  .login-box {
+    padding: 48px 20px;
+  }
+}
+
+@media (max-width: 375px) {
+  .input-container input {
+    width: 95%;
+  }
+  .input-icon {
+    position: absolute;
+    right: -35px;
+    top: 50%;
+    transform: translateY(-50%);
+    width: 20px;
+    cursor: pointer;
+  }
+}
+
+@media (max-width: 350px) {
+  .input-container input {
+    width: 90%;
+  }
+  .login-box {
+    padding: 48px 10px;
+  }
+  .input-icon {
+    position: absolute;
+    right: -25px;
+    top: 50%;
+    transform: translateY(-50%);
+    width: 20px;
+    cursor: pointer;
+  }
+}
+
+@media (max-width: 330px) {
+  .input-container input {
+    width: 90%;
+  }
+  .login-box {
+    padding: 48px 5px;
+  }
+  .input-icon {
+    position: absolute;
+    right: -15px;
+    top: 50%;
+    transform: translateY(-50%);
+    width: 20px;
+    cursor: pointer;
   }
 }
