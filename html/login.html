@@ -5,6 +5,9 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Login</title>
+
+    <link rel="icon" type="image/png" href="/assets/img/join-logo-blue.svg">
+
     <link rel="stylesheet" href="/css/login.css">
     <link rel="stylesheet" href="/css/fonts.css">
 </head>
@@ -16,8 +19,7 @@
 
     <div class="top-right">
         <img src="/assets/img/not-a-join-user.png" alt="Not a Join User">
-        <!-- Button, der beim Klick weiterleitet zur singup.html -->
-        <button class="signup-btn" onclick="window.location.href='/html/singup.html'">Sign Up</button>
+        <button class="signup-btn" onclick="window.location.href='/html/signup.html'">Sign Up</button>
     </div>
 
     <div class="form-container hidden">
@@ -27,16 +29,13 @@
             <form onsubmit="login(event); return false;">
                 <div class="input-container">
                     <input type="email" id="email" placeholder="Email" required>
-                    <!-- Klick auf das Icon füllt automatisch die Email, falls leer -->
                     <img src="/assets/icons/mail.svg" class="input-icon" alt="Email Icon" onclick="fillEmail()">
                 </div>
                 <div class="input-container">
                     <input type="password" id="password" placeholder="Password" required>
-                    <!-- Klick auf das Icon toggelt die Passwortanzeige -->
                     <img src="/assets/icons/lock.svg" class="input-icon" alt="Password Icon" id="passwordIcon"
                         onclick="togglePassword()">
                 </div>
-                <!-- Fehlerbereich: Wird im Fehlerfall sichtbar -->
                 <div id="errorMessage" class="error-message"></div>
                 <div class="button-container">
                     <button type="submit" class="login-btn">Log in</button>
@@ -52,6 +51,7 @@
     </div>
 
     <script src="/js/login.js"></script>
+    <script src="/js/api.js"></script>
 </body>
 
 </html>
