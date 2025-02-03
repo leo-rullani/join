@@ -1,257 +1,266 @@
 /* 🔹 Allgemeines Styling */
 body {
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    height: 100vh;
-    background-color: #F6F7F8;
-    overflow: hidden;
-    flex-direction: column;
-    transition: all 0.5s ease-in-out;
-    scroll-behavior: smooth;
-    font-family: "Inter", serif;
-  }
-  
-  /* 🔹 Logo Styling */
-  .logo-container {
-    position: absolute;
-    top: 50%;
-    left: 50%;
-    transform: translate(-50%, -50%) scale(0.85);
-    transition: all 0.5s ease-in-out;
-  }
-  
-  .logo-container.move-logo {
-    top: calc(10px - 55px);
-    left: calc(10px - 30px);
-    transform: scale(0.3);
-  }
-  
-  /* 🔹 Positionierung der Top-Elemente */
-  .top-right {
-    position: absolute;
-    top: 75px;
-    right: 40px; /* Abstand zum Rand wie das Logo links */
-    display: flex;
-    align-items: center;
-    gap: 30px; /* Abstand zwischen "Not a Join User?" und Sign-Up */
-  }
-  
-  /* 🔹 Signup Button */
-  .signup-btn {
-    background-color: #2b3647;
-    color: white;
-    border: none;
-    padding: 10px 20px;
-    font-size: 16px;
-    font-weight: bold;
-    border-radius: 6px;
-    cursor: pointer;
-    transition: background-color 0.3s ease;
-    text-decoration: none;
-  }
-  
-  .signup-btn:hover {
-    background-color: #28ABE2; /* Hover-Farbe Hellblau */
-  }
-  
-  /* 🔹 Formular Container */
-  .form-container {
-    opacity: 0;
-    transition: opacity 0.5s ease-in-out;
-  }
-  
-  .form-container.hidden {
-    display: none;
-  }
-  
-  .form-container.visible {
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    flex-direction: column;
-    opacity: 1;
-  }
-  
-  /* 🔹 Login Box – minimal schmaler & weniger Abstand oben */
-  .login-box {
-    background-color: white;
-    padding: 48px 80px;
-    border-radius: 16px;
-    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.15);
-    text-align: center;
-    max-width: 450px;
-    min-width: 300px;
-    width: 80%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 100vh;
+  background-color: #F6F7F8;
+  overflow: hidden;
+  flex-direction: column;
+  transition: all 0.5s ease-in-out;
+  scroll-behavior: smooth;
+  font-family: "Inter", serif;
+}
 
-  }
-  
-  /* 🔹 Überschrift „Log in“ – größer & näher am oberen Rand */
-  h2 {
-    font-size: 50px;
-    font-weight: bolder;
-    margin-bottom: 10px;
-    margin-block-start: 0;
-    margin-block-end: 0;
-    margin-inline-start: 0;
-    margin-inline-end: 0;
-  }
-  
-  /* 🔹 Blaue Unterstreichung */
-  .underline {
-    width: 120px;
-    height: 2.5px;
-    background-color: #28ABE2;
-    margin: 4px auto 24px;
-  }
-  
-  /* 🔹 Input Container */
-  .input-container {
-    position: relative;
-    margin-bottom: 32px;
-    width: 85%;
-  }
-  
-  /* 🔹 Input Felder – minimal mehr Padding */
-  .input-container input {
-    width: 95%;
-    padding: 12px 45px 12px 15px;
-    border: 1px solid #d1d1d1;
-    border-radius: 6px;
-    font-size: 16px;
-    cursor: pointer;
-    transition: border-color 0.3s ease;
-  }
-  
-  /* Beim Fokussieren: Rahmen hellblau */
-  .input-container input:focus {
-    outline: none;
-    border-color: #28ABE2;
-  }
-  
-  /* Bei Fehler: Rahmen rot */
-  .input-container input.error {
-    border-color: #ff4057;
-  }
-  
-  /* 🔹 Input Icon */
-  .input-icon {
-    position: absolute;
-    right: -35px;
-    top: 50%;
-    transform: translateY(-50%);
-    width: 20px;
-    cursor: pointer; /* Zeigt beim Überfahren einen Pointer */
-  }
-  
-  /* 🔹 Fehlernachricht */
-  .error-message {
-    color: #ff7a8b;
-    font-size: 14px;
-    text-align: left;
-    margin: 5px 0 5px 0;
-  }
-  
-  /* 🔹 Button Container */
+/* 🔹 Logo Styling */
+.logo-container {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%) scale(0.85);
+  transition: all 0.5s ease-in-out;
+}
+
+/* Hier neue Endposition & Skalierung fürs Logo */
+.logo-container.move-logo {
+  top: 0px;       /* 40px Abstand vom oberen Rand */
+  left: 0px;      /* 40px Abstand vom linken Rand */
+  transform: scale(0.4); /* leicht größere Skalierung als 0.3 */
+}
+
+/* 🔹 Positionierung der Top-Elemente */
+.top-right {
+  position: absolute;
+  top: 75px;
+  right: 40px; /* Abstand zum Rand wie das Logo links */
+  display: flex;
+  align-items: center;
+  gap: 30px; /* Abstand zwischen "Not a Join User?" und Sign-Up */
+}
+
+/* 🔹 Signup Button */
+.signup-btn {
+  background-color: #2b3647;
+  color: white;
+  border: none;
+  padding: 10px 20px;
+  font-size: 16px;
+  font-weight: bold;
+  border-radius: 6px;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+  text-decoration: none;
+}
+
+.signup-btn:hover {
+  background-color: #28ABE2; /* Hover-Farbe Hellblau */
+}
+
+/* 🔹 Formular Container */
+.form-container {
+  opacity: 0;
+  transition: opacity 0.5s ease-in-out;
+}
+
+.form-container.hidden {
+  display: none;
+}
+
+.form-container.visible {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-direction: column;
+  opacity: 1;
+}
+
+/* 🔹 Login Box – minimal schmaler & weniger Abstand oben */
+.login-box {
+  background-color: white;
+  padding: 48px 80px;
+  border-radius: 16px;
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.15);
+  text-align: center;
+  max-width: 450px;
+  min-width: 300px;
+  width: 80%;
+}
+
+/* 🔹 Überschrift „Log in“ – größer & näher am oberen Rand */
+h2 {
+  font-size: 50px;
+  font-weight: bolder;
+  margin-bottom: 10px;
+  margin-block-start: 0;
+  margin-block-end: 0;
+  margin-inline-start: 0;
+  margin-inline-end: 0;
+}
+
+/* 🔹 Blaue Unterstreichung */
+.underline {
+  width: 120px;
+  height: 2.5px;
+  background-color: #28ABE2;
+  margin: 4px auto 24px;
+}
+
+/* 🔹 Input Container */
+.input-container {
+  position: relative;
+  margin-bottom: 32px;
+  width: 85%;
+}
+
+/* 🔹 Input Felder – minimal mehr Padding */
+.input-container input {
+  width: 95%;
+  padding: 12px 45px 12px 15px;
+  border: 1px solid #d1d1d1;
+  border-radius: 6px;
+  font-size: 16px;
+  cursor: pointer;
+  transition: border-color 0.3s ease;
+}
+
+/* Beim Fokussieren: Rahmen hellblau */
+.input-container input:focus {
+  outline: none;
+  border-color: #28ABE2;
+}
+
+/* Bei Fehler: Rahmen rot */
+.input-container input.error {
+  border-color: #ff4057;
+}
+
+/* 🔹 Input Icon */
+.input-icon {
+  position: absolute;
+  right: -35px;
+  top: 50%;
+  transform: translateY(-50%);
+  width: 20px;
+  cursor: pointer; /* Zeigt beim Überfahren einen Pointer */
+}
+
+/* 🔹 Fehlernachricht */
+.error-message {
+  color: #ff7a8b;
+  font-size: 14px;
+  text-align: left;
+  margin: 5px 0 5px 0;
+}
+
+/* 🔹 Button Container */
+.button-container {
+  display: flex;
+  justify-content: center;
+  gap: 15px;
+  margin-top: 20px;
+}
+
+/* 🔹 Einheitliches Button-Design */
+.button, .login-btn, .guest-btn {
+  padding: 10px 15px;
+  font-size: 16px;
+  font-weight: bold;
+  border-radius: 6px;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  text-align: center;
+  margin-top: 24px;
+}
+
+/* 🔹 Login- & Sign-Up-Button */
+.button, .login-btn {
+  background-color: #2b3647;
+  color: white;
+  border: none;
+  margin-top: 24px;
+}
+
+.button:hover, .login-btn:hover {
+  background-color: #28ABE2;
+}
+
+/* 🔹 Guest Login Button */
+.guest-btn {
+  background-color: white;
+  color: #2b3647;
+  border: 2px solid #2b3647;
+}
+
+.guest-btn:hover {
+  color: #28ABE2;
+  border-color: #28ABE2;
+  box-shadow: 0 4px 10px rgba(40, 171, 226, 0.5);
+}
+
+/* 🔹 Footer */
+.footer {
+  position: absolute;
+  bottom: 30px;
+  display: flex;
+  justify-content: center;
+  width: 100%;
+  gap: 20px;
+}
+
+.footer a {
+  text-decoration: none;
+  color: gray;
+  font-size: 14px;
+  transition: all 0.3s ease;
+  display: inline-block;
+}
+
+.footer a:hover {
+  color: #28ABE2;
+  font-weight: bold;
+  transform: scale(1.05);
+}
+
+/* Logo-Größe insgesamt */
+.logo-container img {
+  width: 180px;
+  height: auto;
+}
+
+/* Globale "hidden"-Klasse */
+.hidden {
+  display: none !important;
+}
+
+/* 🔹 Media Queries: ab 600px stufenweise Anpassungen */
+@media (max-width: 600px) {
   .button-container {
-    display: flex;
-    justify-content: center;
-    gap: 15px;
-    margin-top: 20px;
+    flex-direction: column;
+    align-items: center;
+    gap: 0px;
   }
-  
-  /* 🔹 Einheitliches Button-Design */
-  .button, .login-btn, .guest-btn {
-    padding: 10px 15px;
-    font-size: 16px;
-    font-weight: bold;
-    border-radius: 6px;
-    cursor: pointer;
-    transition: all 0.3s ease;
+  h2 {
+    font-size: 40px;
+  }
+  /*
+    Entfernt bzw. überschrieben:
+    .logo-container.move-logo { ... } war hier nochmals definiert,
+    das kann zu Konflikten führen. => Entfernt
+  */
+  .button-container button {
+    width: auto; 
+    min-width: 150px; 
+    max-width: 200px;
+  }
+  .top-right {
+    top: auto;
+    right: auto;
+    margin-top: 600px;
+    display: flex;
+    align-items: center;
     text-align: center;
-    margin-top: 24px;
   }
-  
-  /* 🔹 Login- & Sign-Up-Button */
-  .button, .login-btn {
-    background-color: #2b3647;
-    color: white;
-    border: none;
-    margin-top: 24px;
-  }
-  
-  .button:hover, .login-btn:hover {
-    background-color: #28ABE2;
-  }
-  
-  /* 🔹 Guest Login Button */
-  .guest-btn {
-    background-color: white;
-    color: #2b3647;
-    border: 2px solid #2b3647;
-  }
-  
-  .guest-btn:hover {
-    color: #28ABE2;
-    border-color: #28ABE2;
-    box-shadow: 0 4px 10px rgba(40, 171, 226, 0.5);
-  }
-  
-  /* 🔹 Footer */
-  .footer {
-    position: absolute;
-    bottom: 30px;
-    display: flex;
-    justify-content: center;
-    width: 100%;
-    gap: 20px;
-  }
-  
-  .footer a {
-    text-decoration: none;
-    color: gray;
-    font-size: 14px;
-    transition: all 0.3s ease;
-    display: inline-block;
-  }
-  
-  .footer a:hover {
-    color: #28ABE2;
-    font-weight: bold;
-    transform: scale(1.05);
-  } 
-
-  @media (max-width: 600px) {
-    .button-container {
-        flex-direction: column;
-        align-items: center; /* Zentriert die Buttons */
-        gap: 0px;
-    }
-    h2 {
-      font-size: 40px;
-    }
-
-    .logo-container.move-logo {
-      top: calc(-10px - 65px);
-      left: calc(-20px - 30px);
-      transform: scale(0.25);
-  }
-
-    .button-container button {
-        width: auto; /* Verhindert, dass die Buttons sich auf volle Breite ausdehnen */
-        min-width: 150px; /* Setzt eine Mindestbreite */
-        max-width: 200px; /* Optional: Maximale Breite festlegen */
-    }
-
-    .top-right {
-      top: auto;
-      right: auto;
-      margin-top: 600px;
-      display: flex;
-      align-items: center;
-      text-align: center;
-    }
-  }
+}
 
 @media (max-width: 560px) {
   .login-box {
@@ -281,9 +290,6 @@ body {
   .login-box {
     padding: 48px 20px;
   }
-}
-
-@media (max-width: 375px) {
   .input-container input {
     width: 95%;
   }
@@ -328,5 +334,12 @@ body {
     transform: translateY(-50%);
     width: 20px;
     cursor: pointer;
+  }
+}
+
+/* Sofort für Bildschirme <= 400px: Body = dunkelblau */
+@media (max-width: 500px) {
+  body {
+    background-color: #2b3647;
   }
 }

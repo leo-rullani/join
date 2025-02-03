@@ -1,15 +1,71 @@
 "use strict";
 
+/**
+ * Splash & Responsive Logik wie bei der Login-Seite,
+ * plus deine vorhandenen Sign-Up-Funktionen (signUp, toggleSignUpButton, etc.).
+ */
+document.addEventListener("DOMContentLoaded", init);
+
+/**
+ * init()
+ * - Ermittelt Elemente
+ * - Unterscheidet kleine/große Screens
+ * - Startet Logo-Animation
+ */
+function init() {
+  const logoContainer = document.querySelector(".logo-container"),
+    formContainer = document.querySelector(".form-container"),
+    footer = document.querySelector(".footer");
+
+  if (window.innerWidth <= 500) {
+    // Kleiner Bildschirm => Splash
+    footer.classList.add("hidden");
+    // body-Hintergrund & Logo-Farbe setzen wir in initLogoAnimation()
+  } else {
+    // Größerer Bildschirm => sofort sichtbar
+    formContainer.classList.remove("hidden");
+    footer.classList.remove("hidden");
+  }
+  initLogoAnimation(logoContainer, formContainer);
+}
+
+/**
+ * initLogoAnimation()
+ * - Bei ≤ 400px: Body = blau, Logo = weiß
+ * - move-logo => fliegt nach oben/links
+ * - Nach Transition => Body = hell, Logo = "logo.png", form & footer einblenden
+ */
+function initLogoAnimation(logoContainer, formContainer) {
+  if (window.innerWidth <= 500) {
+    document.body.style.backgroundColor = "#2b3647";
+    logoContainer.querySelector("img").src = "/assets/img/join-logo-white.svg";
+  }
+  setTimeout(() => logoContainer.classList.add("move-logo"), 500);
+
+  logoContainer.addEventListener("transitionend", () => {
+    if (window.innerWidth <= 500) {
+      document.body.style.backgroundColor = "#F6F7F8";
+      logoContainer.querySelector("img").src = "/assets/img/logo.png";
+      document.querySelector(".footer").classList.remove("hidden");
+    }
+    formContainer.classList.remove("hidden");
+    formContainer.classList.add("visible");
+  });
+}
+
+/* 
+   Restliche Originalfunktionen, unverändert: signUp, toggleSignUpButton, 
+   togglePassword, showToast, showErrorStyles, clearErrorStyles 
+*/
+
 function signUp(event) {
   event.preventDefault();
-
   const passField = document.getElementById("password");
   const confirmField = document.getElementById("confirm-password");
   const policyCheckbox = document.getElementById("policy-checkbox");
   const errorMsg = document.getElementById("errorMessage");
 
   clearErrorStyles(passField, confirmField, errorMsg);
-
   if (passField.value.trim() !== confirmField.value.trim()) {
     showErrorStyles(
       passField,
@@ -19,14 +75,11 @@ function signUp(event) {
     );
     return;
   }
-
   if (!policyCheckbox.checked) {
     alert("You must accept the Privacy Policy to sign up!");
     return;
   }
-
   showToast("You signed up successfully!");
-
   setTimeout(() => {
     window.location.href = "/html/summary.html";
   }, 2000);
@@ -41,7 +94,6 @@ function toggleSignUpButton() {
 function togglePassword(inputId, iconId) {
   const passInput = document.getElementById(inputId);
   const passIcon = document.getElementById(iconId);
-
   if (passIcon.src.includes("lock.svg")) {
     passIcon.src = "/assets/icons/eye-crossed.svg";
     passInput.type = "password";
@@ -56,30 +108,17 @@ function togglePassword(inputId, iconId) {
 
 /**
  * showToast()
- * Ermittelt die Box-Mitte => Toast fliegt von unten (outside page)
- * hoch bis zur Mitte der Box.
+ * Ermittelt die Box-Mitte => Toast fliegt von unten hoch.
  */
 function showToast(message) {
   const notification = document.getElementById("notification");
   notification.textContent = message;
   notification.classList.remove("hidden");
-
-  // Start-Position: bottom: -120px (per CSS)
-  // => wir aktualisieren es hier, um re-animieren zu können
-  notification.style.bottom = `-120px`;
-
-  // Position der Box ermitteln
+  notification.style.bottom = "-120px";
   const boxRect = document.getElementById("signupBox").getBoundingClientRect();
   const boxMiddleY = boxRect.top + boxRect.height / 2;
-
-  // Errechne, wie viele px vom unteren Viewport-Rand
-  // bis zur Box-Mitte
   const fromBottom = window.innerHeight - boxMiddleY;
-
-  // Reflow auslösen, damit browser den Start-Frame kennt
-  notification.getBoundingClientRect();
-
-  // Ziel-Position: float up to the box center
+  notification.getBoundingClientRect(); // Reflow
   notification.style.bottom = `${fromBottom}px`;
   notification.classList.add("show");
 }

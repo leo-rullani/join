@@ -1,31 +1,44 @@
 "use strict";
 
 /*
- * Beispielliste für Demo-User.
- * In einer echten Anwendung würdest du hier
+ * Beispielliste für Demo-User (Demo).
+ * In einer echten Anwendung würdest du
  * z.B. einen Server oder eine Datenbank nutzen.
  */
 const dummyUsers = [{ email: "test@user.com", password: "test123" }];
 
 /**
- * Seite initialisieren, sobald DOM geladen ist.
+ * Sobald der DOM geladen ist, Initialisierung starten.
  */
 document.addEventListener("DOMContentLoaded", init);
 
 /**
  * init()
- * Ruft einzelne Setup-Funktionen auf,
- * um Event-Listener und Animationen zu initialisieren.
+ * - Element-Referenzen holen
+ * - Bei ≤ 400px: topRight & footer verborgen lassen
+ * - Logo-Animation und weitere Listener initialisieren
  */
 function init() {
-  const logo = document.querySelector(".logo-container");
-  const form = document.querySelector(".form-container");
-  const guestLoginBtn = document.querySelector(".guest-btn");
-  const emailInput = document.getElementById("email");
-  const passwordInput = document.getElementById("password");
-  const errorDiv = document.getElementById("errorMessage");
+  const logoContainer = document.querySelector(".logo-container"),
+        form          = document.querySelector(".form-container"),
+        topRight      = document.querySelector(".top-right"),
+        footer        = document.querySelector(".footer"),
+        guestLoginBtn = document.querySelector(".guest-btn"),
+        emailInput    = document.getElementById("email"),
+        passwordInput = document.getElementById("password"),
+        errorDiv      = document.getElementById("errorMessage");
 
-  initLogoAnimation(logo, form);
+  if (window.innerWidth <= 500) {
+    // Kleiner Screen => Splash => topRight und footer bleiben versteckt
+    topRight.classList.add("hidden");
+    footer.classList.add("hidden");
+  } else {
+    // Großer Screen => direkt sichtbar
+    topRight.classList.remove("hidden");
+    footer.classList.remove("hidden");
+  }
+
+  initLogoAnimation(logoContainer, form);
   initGuestLogin(guestLoginBtn);
   initFocusClear(emailInput, errorDiv);
   initFocusClear(passwordInput, errorDiv);
@@ -33,12 +46,24 @@ function init() {
 
 /**
  * initLogoAnimation()
- * Startet die Logo-Animation und zeigt das Formular nach Ende der Transition.
+ * - Bei ≤ 400px: Body = blau, Logo = weiß
+ * - Nach Transition: Body = hell, Logo = blau
+ * - Form, topRight, footer einblenden
  */
 function initLogoAnimation(logo, form) {
+  if (window.innerWidth <= 500) {
+    document.body.style.backgroundColor = "#2b3647";
+    logo.querySelector("img").src = "/assets/img/join-logo-white.svg";
+  }
   setTimeout(() => logo.classList.add("move-logo"), 500);
 
   logo.addEventListener("transitionend", () => {
+    if (window.innerWidth <= 500) {
+      document.body.style.backgroundColor = "#F6F7F8";
+      logo.querySelector("img").src = "/assets/img/join-logo-blue.svg";
+      document.querySelector(".top-right").classList.remove("hidden");
+      document.querySelector(".footer").classList.remove("hidden");
+    }
     form.classList.remove("hidden");
     form.classList.add("visible");
   });
@@ -46,17 +71,18 @@ function initLogoAnimation(logo, form) {
 
 /**
  * initGuestLogin()
- * Aktiviert den Klick auf den Guest-Login-Button.
+ * Klick auf Guest-Login-Button -> weiter zur summary.html
  */
 function initGuestLogin(guestLoginBtn) {
-  guestLoginBtn.addEventListener("click", () => {
-    window.location.href = "summary.html";
-  });
+  guestLoginBtn.addEventListener(
+    "click",
+    () => (window.location.href = "summary.html")
+  );
 }
 
 /**
  * initFocusClear()
- * Entfernt Fehlerstile und Meldungen beim Fokussieren eines Input-Feldes.
+ * Entfernt Fehlermeldungen & Styles beim Fokussieren.
  */
 function initFocusClear(inputElement, errorDiv) {
   inputElement.addEventListener("focus", () => {
@@ -67,18 +93,15 @@ function initFocusClear(inputElement, errorDiv) {
 
 /**
  * login()
- * Wird beim Absenden des Login-Formulars aufgerufen.
- * Überprüft die Eingaben gegen dummyUsers und zeigt Erfolg oder Fehler an.
+ * Wird beim Absenden des Formulars aufgerufen. Prüft dummyUsers.
  */
 function login(event) {
   event.preventDefault();
-
-  const emailInput = document.getElementById("email");
-  const passwordInput = document.getElementById("password");
-  const errorDiv = document.getElementById("errorMessage");
-  const { value: email } = emailInput;
-  const { value: password } = passwordInput;
-
+  const emailInput = document.getElementById("email"),
+    passwordInput = document.getElementById("password"),
+    errorDiv = document.getElementById("errorMessage"),
+    email = emailInput.value.trim(),
+    password = passwordInput.value.trim();
   const user = dummyUsers.find(
     (u) => u.email === email && u.password === password
   );
@@ -92,7 +115,7 @@ function login(event) {
 
 /**
  * fillEmail()
- * Füllt das E-Mail-Feld mit einem Standardwert, falls es leer ist.
+ * Füllt E-Mail-Feld mit Standardwert test@user.com, falls leer.
  */
 function fillEmail() {
   const emailInput = document.getElementById("email");
@@ -103,13 +126,11 @@ function fillEmail() {
 
 /**
  * togglePassword()
- * Wechselt zwischen verborgener und sichtbarer Passwortanzeige
- * und passt das Icon entsprechend an.
+ * Wechselt zw. verborgener & sichtbarer Passwortanzeige + Icon.
  */
 function togglePassword() {
-  const passInput = document.getElementById("password");
-  const passIcon = document.getElementById("passwordIcon");
-
+  const passInput = document.getElementById("password"),
+    passIcon = document.getElementById("passwordIcon");
   if (passIcon.src.includes("lock.svg")) {
     passIcon.src = "/assets/icons/eye-crossed.svg";
     passInput.type = "password";
@@ -134,7 +155,7 @@ function clearErrorStyles(emailInput, passwordInput, errorDiv) {
 
 /**
  * showErrorStyles()
- * Setzt rote Umrandungen und zeigt eine Fehlermeldung an.
+ * Rote Umrandung + Fehlermeldung.
  */
 function showErrorStyles(emailInput, passwordInput, errorDiv) {
   emailInput.classList.add("error");
@@ -144,7 +165,7 @@ function showErrorStyles(emailInput, passwordInput, errorDiv) {
 
 /**
  * loginSuccess()
- * Zeigt einen Erfolgshinweis und leitet anschließend weiter.
+ * Zeigt Erfolgsmeldung an, leitet zu summary.html weiter.
  */
 function loginSuccess() {
   alert("Login successful!");
