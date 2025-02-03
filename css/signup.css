@@ -235,3 +235,47 @@ body {
 .footer a:hover {
     color: #28ABE2;
 }
+
+@media (max-width: 600px) {
+    .signup-box {
+        padding: 30px 30px;
+    }
+    .logo {
+        margin-top: 32px;
+        margin-left: 22px;
+        width: 68px;
+    }
+}
+
+@media (max-width: 460px) {
+    .signup-box {
+        padding: 25px 25px;
+        width: 350px;
+    }
+}
+
+@media (max-width: 420px) {
+    .signup-box {
+        padding: 20px 20px;
+        width: 300px;
+    }
+    .input-container input {
+        width: 94%
+    }
+    .input-icon {
+        right: -35px;
+    }
+}
+
+@media (max-width: 360px) {
+    .signup-box {
+        padding: 20px 20px;
+        width: 250px;
+    }
+    .input-container input {
+        width: 90%
+    }
+    .input-icon {
+        right: -30px;
+    }
+}
