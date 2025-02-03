@@ -227,6 +227,9 @@ body {
         align-items: center; /* Zentriert die Buttons */
         gap: 0px;
     }
+    h2 {
+      font-size: 40px;
+    }
 
     .logo-container.move-logo {
       top: calc(-10px - 65px);

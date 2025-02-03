@@ -245,6 +245,9 @@ body {
         margin-left: 22px;
         width: 68px;
     }
+    .signup-box h2 {
+        font-size: 40px;
+    }
 }
 
 @media (max-width: 460px) {
