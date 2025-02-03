@@ -176,7 +176,7 @@ header {
   display: flex;
   width: 1920px;
   overflow: hidden;
-  min-height: 100vh;
+  min-height: 100%;
   overflow-x: hidden;
 }
 
@@ -194,7 +194,7 @@ header {
 .contacts_div {
   width: 400px;
   color: white;
-  height: 1000px;
+  height: 100%;
   overflow-y: auto;
   box-shadow: rgba(0, 0, 0, 0.15) 5px 0px 8px 0px;
   border: none;
@@ -392,7 +392,7 @@ header {
   top: 76px;
   width: 100%;
   display: flex;
-  max-height: 700px;
+  max-height: 100%;
   flex-direction: column;
   background-color: #f6f7f8;
   padding: 50px;
@@ -722,4 +722,24 @@ header {
   box-shadow: rgba(0, 0, 0, 0.16) 0px 10px 36px 0px,
     rgba(0, 0, 0, 0.06) 0px 0px 0px 1px;
   transition: all 0.3s ease;
+}
+
+.notification {
+  position: fixed;
+  transform: translateX(0);
+  background-color: #2b3647;
+  right: 150px;
+  color: #fff;
+  padding: 15px 20px;
+  border-radius: 6px;
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.15);
+  opacity: 0;
+  z-index: 9999;
+  transition: right 0.5s ease-in-out, opacity 0.5s ease-in-out;
+}
+
+.notification.show {
+  opacity: 1;
+  right: -200%;
+  transform: translateX(-200%);
 }

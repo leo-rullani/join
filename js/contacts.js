@@ -163,8 +163,21 @@ async function saveContactToDatabase(event) {
   clearContactForm();
 
   try {
-    await saveContactToServer(newContact);
-    fetchContactsFromDatabase();
+    let contactId = await saveContactToServer(newContact);
+    await fetchContactsFromDatabase();
+    showToast("Contact successfully created!");
+    let newContactElement = document.querySelector(
+      `[data-contact-id="${contactId}"]`
+    );
+    if (newContactElement) {
+      selectContact(
+        newContactElement,
+        contactId,
+        newContact.name,
+        newContact.email,
+        newContact.phone
+      );
+    }
     closeOverlay();
   } catch (error) {
     console.error("Error saving contact:", error);
@@ -201,6 +214,8 @@ async function saveContactToServer(contact) {
     const errorData = await response.text();
     throw new Error(`Failed to save contact: ${errorData}`);
   }
+  let data = await response.json();
+  return data.name;
 }
 
 async function updateContact(contactId, name, email, phone) {
@@ -331,4 +346,22 @@ function toggleRespMenu() {
   let menu = document.getElementById("resp_menu");
   menu.classList.toggle("resp_menu_closed");
   menu.classList.toggle("resp_menu_open");
+}
+
+function showToast(message) {
+  const notification = document.getElementById("add_notification");
+  notification.textContent = message;
+  notification.classList.add("show");
+  notification.style.right = "-50px";
+  notification.style.bottom = "150px";
+  notification.offsetHeight;
+  notification.style.transition = "right 0.3s ease-in-out";
+  notification.style.right = "150px";
+  setTimeout(() => {
+    notification.style.transition = "right 0.3s ease-in-out";
+    notification.style.right = "-500px";
+  }, 3000);
+  setTimeout(() => {
+    notification.classList.remove("show");
+  }, 3300);
 }
