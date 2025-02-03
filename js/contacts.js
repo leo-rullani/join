@@ -10,49 +10,64 @@ function init() {
 
 async function fetchContactsFromDatabase() {
   try {
-    let response = await fetch(`${databaseURL}/contacts.json`);
-    if (!response.ok) {
-      throw new Error("Data can not be found");
-    }
-    let contactsData = await response.json();
-    console.log("Fetched contacts data:", contactsData);
-
-    if (!contactsData || typeof contactsData !== "object") {
-      renderContacts([]);
-    }
-
-    let contactsArray = Object.entries(contactsData).map(([id, data]) => ({
-      id,
-      ...data,
-    }));
-
-    console.log("Converted contacts array:", contactsArray);
-    contactsArray.sort((a, b) => a.name.localeCompare(b.name));
-
+    let contactsData = await getContactsFromServer();
+    let contactsArray = processContactsData(contactsData);
     renderContacts(contactsArray);
   } catch (error) {
     console.error("Error: Contacts can not be found", error);
   }
 }
 
-async function renderContacts(contactsArray) {
-  let contentRef = document.getElementById("phonebook");
+async function getContactsFromServer() {
+  let response = await fetch(`${databaseURL}/contacts.json`);
+  if (!response.ok) {
+    throw new Error("Data can not be found");
+  }
+  return await response.json();
+}
 
+function processContactsData(contactsData) {
+  if (!contactsData || typeof contactsData !== "object") {
+    return [];
+  }
+
+  let contactsArray = Object.entries(contactsData).map(([id, data]) => ({
+    id,
+    ...data,
+  }));
+
+  contactsArray.sort((a, b) => a.name.localeCompare(b.name));
+
+  return contactsArray;
+}
+
+async function renderContacts(contactsArray) {
+  clearContactsList();
+
+  if (!contactsArray || contactsArray.length === 0) {
+    displayNoContactsMessage();
+    return;
+  }
+
+  let groupedContacts = groupContactsByLetter(contactsArray);
+  renderGroupedContacts(groupedContacts);
+}
+
+function clearContactsList() {
   for (let letter of "ABCDEFGHIJKLMNOPQRSTUVWXYZ") {
     let section = document.getElementById(letter);
     if (section) {
       section.querySelector(".contacts").innerHTML = "";
     }
   }
+}
 
-  if (!contactsArray || contactsArray.length === 0) {
-    contentRef.innerHTML = "No Contacts";
-    return;
-  }
+function displayNoContactsMessage() {
+  let contentRef = document.getElementById("phonebook");
+  contentRef.innerHTML = "No Contacts";
+}
 
-  console.log("Rendering contacts:", contactsArray);
-
-  let groupedContacts = groupContactsByLetter(contactsArray);
+function renderGroupedContacts(groupedContacts) {
   Object.keys(groupedContacts).forEach((letter) => {
     let section = document.getElementById(letter);
     if (section) {
@@ -85,9 +100,9 @@ function selectContact(contactElement, contactId, name, email, phone) {
 
   contactElement.classList.add("is-Active");
 
-  showContactDetails(contactId, name, email, phone);
-
   currentActiveContact = contactElement;
+
+  showContactDetails(contactId, name, email, phone);
 }
 
 function showContactDetails(id, name, email, phone) {
@@ -143,37 +158,49 @@ function getColorForLetter(letter) {
 
 async function saveContactToDatabase(event) {
   event.preventDefault();
-  let name = document.getElementById("name").value.trim();
-  let email = document.getElementById("email").value.trim();
-  let phone = document.getElementById("phone").value.trim();
-  document.getElementById("name").value =
-    document.getElementById("email").value =
-    document.getElementById("phone").value =
-      "";
 
-  let newContact = { name, email, phone };
+  let newContact = getContactFormData();
+  clearContactForm();
 
   try {
-    let response = await fetch(`${databaseURL}/contacts.json`, {
-      method: "POST",
-      headers: {
-        "Content-Type": "application/json",
-      },
-      body: JSON.stringify(newContact),
-    });
-
-    if (!response.ok) {
-      const errorData = await response.text();
-      throw new Error(`Failed to save contact: ${errorData}`);
-    }
-
-    console.log("Contact saved successfully!");
+    await saveContactToServer(newContact);
     fetchContactsFromDatabase();
     closeOverlay();
   } catch (error) {
     console.error("Error saving contact:", error);
   }
+
   return false;
+}
+
+function getContactFormData() {
+  return {
+    name: document.getElementById("name").value.trim(),
+    email: document.getElementById("email").value.trim(),
+    phone: document.getElementById("phone").value.trim(),
+  };
+}
+
+function clearContactForm() {
+  document.getElementById("name").value =
+    document.getElementById("email").value =
+    document.getElementById("phone").value =
+      "";
+}
+
+async function saveContactToServer(contact) {
+  let response = await fetch(`${databaseURL}/contacts.json`, {
+    method: "POST",
+    headers: {
+      "Content-Type": "application/json",
+    },
+    body: JSON.stringify(contact),
+  });
+
+  if (!response.ok) {
+    const errorData = await response.text();
+    throw new Error(`Failed to save contact: ${errorData}`);
+  }
 }
 
 async function updateContact(contactId, name, email, phone) {
@@ -187,13 +214,10 @@ async function updateContact(contactId, name, email, phone) {
     });
 
     if (!response.ok) {
-      throw new Error("Fehler beim Aktualisieren des Kontakts.");
+      throw new Error("Update Contact Failed.");
     }
-
-    console.log("Kontakt erfolgreich aktualisiert!");
-    fetchContactsFromDatabase();
   } catch (error) {
-    console.error("Fehler beim Aktualisieren:", error);
+    console.error("Update Error:", error);
   }
 }
 
@@ -213,7 +237,7 @@ function closeEditOverlay() {
   document.getElementById("editOverlay").style.display = "none";
 }
 
-function submitEditForm(event) {
+async function submitEditForm(event) {
   event.preventDefault();
 
   let form = document.getElementById("editContactForm");
@@ -222,35 +246,45 @@ function submitEditForm(event) {
   let email = document.getElementById("editEmail").value.trim();
   let phone = document.getElementById("editPhone").value.trim();
 
-  updateContact(contactId, name, email, phone);
+  await updateContact(contactId, name, email, phone);
+
   closeEditOverlay();
+  await fetchContactsFromDatabase();
+  restoreActiveContact(contactId, name, email, phone);
+}
+
+function restoreActiveContact(contactId, name, email, phone) {
+  let contactElement = document.getElementById(`contact-${contactId}`);
+
+  if (contactElement) {
+    contactElement.classList.add("is-Active");
+    currentActiveContact = contactElement;
+  }
+
+  showContactDetails(contactId, name, email, phone);
 }
 
 async function deleteContact(contactId) {
-  if (contactId) {
-    try {
-      console.log(`Deleting contact with ID: ${contactId}`);
+  if (!contactId) return;
 
-      const response = await fetch(
-        `${databaseURL}/contacts/${contactId}.json`,
-        { method: "DELETE" }
-      );
+  try {
+    await deleteContactFromServer(contactId);
+    document.getElementById("contact-info").innerHTML = "";
+    fetchContactsFromDatabase();
+  } catch (error) {
+    console.error("Error during deletion:", error);
+  }
+}
 
-      if (!response.ok) {
-        throw new Error(
-          `Failed to delete contact with ID ${contactId}: ${response.statusText}`
-        );
-      }
+async function deleteContactFromServer(contactId) {
+  const response = await fetch(`${databaseURL}/contacts/${contactId}.json`, {
+    method: "DELETE",
+  });
 
-      console.log("Contact successfully deleted!");
-
-      fetchContactsFromDatabase();
-    } catch (error) {
-      console.error("Error during deletion:", error);
-      alert(
-        "There was a problem deleting the contact. Please try again later."
-      );
-    }
+  if (!response.ok) {
+    throw new Error(
+      `Failed to delete contact with ID ${contactId}: ${response.statusText}`
+    );
   }
 }
 
@@ -280,6 +314,7 @@ function openEditOverlay(contactId, name, email, phone) {
   document.getElementById("editPhone").value = phone;
 
   document.getElementById("editContactForm").dataset.contactId = contactId;
+  getInitials(name);
 }
 
 function closeEditOverlay() {
@@ -290,4 +325,10 @@ function closeEditOverlay() {
     overlay.classList.remove("active");
     overlay.classList.remove("closing");
   }, 500);
+}
+
+function toggleRespMenu() {
+  let menu = document.getElementById("resp_menu");
+  menu.classList.toggle("resp_menu_closed");
+  menu.classList.toggle("resp_menu_open");
 }

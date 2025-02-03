@@ -3,7 +3,7 @@ function contactsTemplate(contact) {
   let bgColor = getColorForLetter(initials.charAt(0));
 
   return `
-    <div class="contact" onclick="selectContact(this, '${contact.id}', '${contact.name}', '${contact.email}', '${contact.phone}')">
+    <div class="contact" id="contact-${contact.id}" onclick="selectContact(this, '${contact.id}', '${contact.name}', '${contact.email}', '${contact.phone}')">
       <div class="contact-initials" style="background-color: ${bgColor};">${initials}</div>
       <div class="contact-infos">
         <p style="font-size: 17px">${contact.name}</p>

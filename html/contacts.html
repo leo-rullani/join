@@ -4,7 +4,7 @@
         <meta charset="UTF-8">
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
         <title>Contacts</title>
-        
+
         <link rel="icon" type="image/png" href="/assets/img/join-logo-blue.svg">
 
         <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css">
@@ -21,7 +21,8 @@
         <header>
             <div class="header_content">Kanban Project Management Tool <div class="header_img"><img class="help_icon"
                         src="/assets/icons/help.svg" alt="">
-                    <img class="profile_initials" src="/assets/icons/User profile initials.svg" alt="">
+                    <img onclick="toggleRespMenu()" class="profile_initials"
+                        src="/assets/icons/User profile initials.svg" alt="">
                 </div>
             </div>
         </header>
@@ -40,6 +41,8 @@
                         <a href="http://">Legal notice</a>
                     </div>
                 </div>
+
+            </div>
             </div>
             <section class="contact_content">
                 <div class="contacts_container">
@@ -290,6 +293,13 @@
                     </div>
                 </div>
             </section>
+            <div class="menu_header resp_menu_closed" id="resp_menu">
+                <div class="menu_links">
+                    <a href="/html/legalnotice.html">Legal Notice</a>
+                    <a href="/html/privacypolicy.html">Privacy Policy</a>
+                    <a href="/html/login.html">Log out</a>
+                </div>
+            </div>
         </main>
     </body>
 </html>
