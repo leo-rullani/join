@@ -255,18 +255,16 @@ a:active {
   margin-left: 100px; 
 }
 
-/* Jede einzelne Card */
 .summary_card {
   background-color: #ffffff;
   width: 210px;
   height: 136px;
   border-radius: 20px;
   box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
-
-  /* Neue Flex-Ausrichtung */
   display: flex;
   align-items: center;
-  justify-content: space-around;
+  justify-content: center;
+  gap: 20px;
 }
 
 /* Container für Zahl & Label untereinander */
@@ -278,20 +276,19 @@ a:active {
 
 /* Icon-Größe in Cards & Longbox */
 .icon_small {
-  width: 40px; 
+  width: 50px; 
   height: auto;
 }
 
 /* Zahl & Label */
 .box_number {
-  font-size: 1.5rem;
+  font-size: 20px;
   font-weight: bold;
   text-align: center;
 }
 .box_label {
-  color: #29abe2; 
-  margin-top: 8px; 
-  font-weight: bold;
+  color: #2A3647;; 
+  font-size: 16px;
   text-align: center;
 }
 
