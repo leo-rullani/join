@@ -11,12 +11,72 @@
         <link rel="stylesheet" href="/css/fonts.css" />
     </head>
 
+<<<<<<< Updated upstream
     <body>
         <!-- Logo-Container: Default-Bild = dein "logo.png" -->
         <div class="logo-container">
             <img src="/assets/img/logo.png" alt="Join Logo" class="logo" />
+=======
+<body>
+    <!-- logo-container: default-image = "logo.png" -->
+    <div class="logo-container">
+        <img src="/assets/img/logo.png" alt="Join Logo" class="logo" />
+    </div>
+
+    <!-- form-container: start (hidden) -->
+    <div class="form-container hidden">
+        <div class="signup-box" id="signupBox">
+            <!-- Titel + Pfeil -->
+            <div class="signup-header">
+                <div class="arrow-container">
+                    <a href="/html/login.html" class="back-arrow" title="Back to Login">←</a>
+                </div>
+                <h2>Sign up</h2>
+                <div class="dummy"></div>
+            </div>
+            <div class="underline"></div>
+
+            <!-- inputs + form sheet -->
+            <form onsubmit="signUp(event); return false;">
+                <div class="input-container">
+                    <input type="text" id="name" placeholder="Name" required />
+                    <img src="/assets/icons/person.svg" class="input-icon" alt="Name Icon" id="nameIcon" />
+                </div>
+                <div class="input-container">
+                    <input type="email" id="email" placeholder="Email" required />
+                    <img src="/assets/icons/mail.svg" class="input-icon" alt="Email Icon" id="emailIcon" />
+                </div>
+                <div class="input-container">
+                    <input type="password" id="password" placeholder="Password" required />
+                    <img src="/assets/icons/lock.svg" class="input-icon" alt="Password Icon" id="passwordIcon"
+                        onclick="togglePassword('password','passwordIcon')" />
+                </div>
+                <div class="input-container">
+                    <input type="password" id="confirm-password" placeholder="Confirm Password" required />
+                    <img src="/assets/icons/lock.svg" class="input-icon" alt="Confirm Password Icon"
+                        id="confirmPasswordIcon" onclick="togglePassword('confirm-password','confirmPasswordIcon')" />
+                </div>
+
+                <!-- error message -->
+                <div id="errorMessage" class="error-message"></div>
+
+                <!-- checkbox -->
+                <div class="policy-container">
+                    <input type="checkbox" id="policy-checkbox" onchange="toggleSignUpButton()" />
+                    <label for="policy-checkbox">
+                        I accept <a href="/html/privacypolicy.html" target="_blank">Privacy Policy</a>
+                    </label>
+                </div>
+
+                <div class="button-container">
+                    <!-- sign up-button, only active if checkbox is ticked -->
+                    <button type="submit" id="signup-btn" class="signup-action" disabled>Sign Up</button>
+                </div>
+            </form>
+>>>>>>> Stashed changes
         </div>
 
+<<<<<<< Updated upstream
         <!-- Form-Container: Start ausgeblendet (hidden) -->
         <div class="form-container hidden">
             <div class="signup-box" id="signupBox">
@@ -83,5 +143,19 @@
         <!-- JavaScript-Datei für Sign Up -->
         <script src="/js/signup.js"></script>
     </body>
+=======
+    <!-- toast-notification (initial hidden) -->
+    <div id="notification" class="notification hidden"></div>
+
+    <!-- footer (startet hidden) -->
+    <div class="footer hidden">
+        <a href="/html/privacypolicy.html">Privacy Policy</a>
+        <a href="/html/legalnotice.html">Legal Notice</a>
+    </div>
+
+    <!-- JavaScript-File for sign up -->
+    <script src="/js/signup.js"></script>
+</body>
+>>>>>>> Stashed changes
 
 </html>

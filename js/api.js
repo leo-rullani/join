@@ -4,7 +4,7 @@ const databaseURL =
   "https://join-5d739-default-rtdb.europe-west1.firebasedatabase.app";
 
 /**
- * Holt alle Kontakte aus der Firebase Realtime Database
+ * Retrieves all contacts from the Firebase Realtime Database
  */
 async function fetchContacts() {
   try {
@@ -22,7 +22,7 @@ async function fetchContacts() {
 }
 
 /**
- * Fügt einen neuen Kontakt in die Firebase Realtime Database hinzu
+ * Adds a new contact to the Firebase Realtime Database
  */
 async function addContact(name, email, phone) {
   let newContact = { name, email, phone };
@@ -43,7 +43,7 @@ async function addContact(name, email, phone) {
 }
 
 /**
- * Aktualisiert einen bestehenden Kontakt in Firebase
+ * Updates an existing contact in Firebase
  */
 async function updateContact(contactId, name, email, phone) {
   let updatedContact = { name, email, phone };
@@ -64,7 +64,7 @@ async function updateContact(contactId, name, email, phone) {
 }
 
 /**
- * Löscht einen Kontakt aus Firebase
+ * Deletes a contact from Firebase
  */
 async function deleteContact(contactId) {
   if (!contactId) return false;

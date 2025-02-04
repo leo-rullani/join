@@ -1,4 +1,3 @@
-/* 🔹 Allgemeines Styling */
 body {
   display: flex;
   justify-content: center;
@@ -12,7 +11,6 @@ body {
   font-family: "Inter", serif;
 }
 
-/* 🔹 Logo Styling */
 .logo-container {
   position: absolute;
   top: 50%;
@@ -21,24 +19,21 @@ body {
   transition: all 0.5s ease-in-out;
 }
 
-/* Hier neue Endposition & Skalierung fürs Logo */
 .logo-container.move-logo {
-  top: 0px;       /* 40px Abstand vom oberen Rand */
-  left: 0px;      /* 40px Abstand vom linken Rand */
-  transform: scale(0.4); /* leicht größere Skalierung als 0.3 */
+  top: 0px;     
+  left: 0px;    
+  transform: scale(0.4); 
 }
 
-/* 🔹 Positionierung der Top-Elemente */
 .top-right {
   position: absolute;
   top: 75px;
-  right: 40px; /* Abstand zum Rand wie das Logo links */
+  right: 40px; 
   display: flex;
   align-items: center;
-  gap: 30px; /* Abstand zwischen "Not a Join User?" und Sign-Up */
+  gap: 30px; 
 }
 
-/* 🔹 Signup Button */
 .signup-btn {
   background-color: #2b3647;
   color: white;
@@ -53,10 +48,9 @@ body {
 }
 
 .signup-btn:hover {
-  background-color: #28ABE2; /* Hover-Farbe Hellblau */
+  background-color: #28ABE2; 
 }
 
-/* 🔹 Formular Container */
 .form-container {
   opacity: 0;
   transition: opacity 0.5s ease-in-out;
@@ -74,7 +68,6 @@ body {
   opacity: 1;
 }
 
-/* 🔹 Login Box – minimal schmaler & weniger Abstand oben */
 .login-box {
   background-color: white;
   padding: 48px 80px;
@@ -86,7 +79,6 @@ body {
   width: 80%;
 }
 
-/* 🔹 Überschrift „Log in“ – größer & näher am oberen Rand */
 h2 {
   font-size: 50px;
   font-weight: bolder;
@@ -97,7 +89,6 @@ h2 {
   margin-inline-end: 0;
 }
 
-/* 🔹 Blaue Unterstreichung */
 .underline {
   width: 120px;
   height: 2.5px;
@@ -105,14 +96,12 @@ h2 {
   margin: 4px auto 24px;
 }
 
-/* 🔹 Input Container */
 .input-container {
   position: relative;
   margin-bottom: 32px;
   width: 85%;
 }
 
-/* 🔹 Input Felder – minimal mehr Padding */
 .input-container input {
   width: 95%;
   padding: 12px 45px 12px 15px;
@@ -123,28 +112,24 @@ h2 {
   transition: border-color 0.3s ease;
 }
 
-/* Beim Fokussieren: Rahmen hellblau */
 .input-container input:focus {
   outline: none;
   border-color: #28ABE2;
 }
 
-/* Bei Fehler: Rahmen rot */
 .input-container input.error {
   border-color: #ff4057;
 }
 
-/* 🔹 Input Icon */
 .input-icon {
   position: absolute;
   right: -35px;
   top: 50%;
   transform: translateY(-50%);
   width: 20px;
-  cursor: pointer; /* Zeigt beim Überfahren einen Pointer */
+  cursor: pointer; 
 }
 
-/* 🔹 Fehlernachricht */
 .error-message {
   color: #ff7a8b;
   font-size: 14px;
@@ -152,7 +137,6 @@ h2 {
   margin: 5px 0 5px 0;
 }
 
-/* 🔹 Button Container */
 .button-container {
   display: flex;
   justify-content: center;
@@ -160,7 +144,6 @@ h2 {
   margin-top: 20px;
 }
 
-/* 🔹 Einheitliches Button-Design */
 .button, .login-btn, .guest-btn {
   padding: 10px 15px;
   font-size: 16px;
@@ -172,7 +155,6 @@ h2 {
   margin-top: 24px;
 }
 
-/* 🔹 Login- & Sign-Up-Button */
 .button, .login-btn {
   background-color: #2b3647;
   color: white;
@@ -184,7 +166,6 @@ h2 {
   background-color: #28ABE2;
 }
 
-/* 🔹 Guest Login Button */
 .guest-btn {
   background-color: white;
   color: #2b3647;
@@ -197,7 +178,6 @@ h2 {
   box-shadow: 0 4px 10px rgba(40, 171, 226, 0.5);
 }
 
-/* 🔹 Footer */
 .footer {
   position: absolute;
   bottom: 30px;
@@ -221,18 +201,17 @@ h2 {
   transform: scale(1.05);
 }
 
-/* Logo-Größe insgesamt */
 .logo-container img {
   width: 180px;
   height: auto;
 }
 
-/* Globale "hidden"-Klasse */
 .hidden {
   display: none !important;
 }
 
-/* 🔹 Media Queries: ab 600px stufenweise Anpassungen */
+/* responsive-login.css */
+
 @media (max-width: 600px) {
   .button-container {
     flex-direction: column;
@@ -242,11 +221,7 @@ h2 {
   h2 {
     font-size: 40px;
   }
-  /*
-    Entfernt bzw. überschrieben:
-    .logo-container.move-logo { ... } war hier nochmals definiert,
-    das kann zu Konflikten führen. => Entfernt
-  */
+
   .button-container button {
     width: auto; 
     min-width: 150px; 
@@ -337,7 +312,6 @@ h2 {
   }
 }
 
-/* Sofort für Bildschirme <= 400px: Body = dunkelblau */
 @media (max-width: 500px) {
   body {
     background-color: #2b3647;

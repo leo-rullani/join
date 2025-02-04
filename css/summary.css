@@ -1,15 +1,17 @@
-/* === Allgemeine Seite / Grundlayout === */
 body {
   margin: 0;
   padding: 0;
   font-family: "Inter", serif;
-  background-color: #F6F7F8; /* Grau wie gewünscht */
+  background-color: #F6F7F8;
   overflow-x: hidden;
 }
 
-/* === Header === */
+/* ==================================================
+   ================ HEADER-BEREICH ==================
+   ================================================== */
+
 header {
-  background-color: #ffffff; /* Header jetzt weiß */
+  background-color: #ffffff;
   height: 75px;
   position: absolute;
   width: 100%; 
@@ -45,12 +47,15 @@ header {
   cursor: pointer;
 }
 
-/* === Kleines Profil-Menü rechts oben === */
+/* ==================================================
+   ================ RESPONSIVE MENU =================
+   ================================================== */
+
 .menu_header {
   border-radius: 20px 0 20px 20px;
   box-shadow: rgba(0, 0, 0, 0.05) 0px 6px 10px 0px;
   background: #2a3647;
-  display: flex; /* Standard, im Wechsel mit .resp_menu_closed */
+  display: flex; 
   flex-direction: column;
   width: 130px;
   height: 130px;
@@ -69,7 +74,6 @@ header {
   max-height: 130px;
 }
 
-/* Links im Profil-Menü */
 .menu_header a {
   display: flex;
   align-items: center;
@@ -85,7 +89,6 @@ header {
   transform: scale(1.03);
 }
 
-/* Geschlossen vs. offen */
 .resp_menu_closed {
   display: none;
 }
@@ -93,7 +96,10 @@ header {
   display: flex;
 }
 
-/* === Side-Menu (links) === */
+/* ==================================================
+   ================ SIDE MENU =======================
+   ================================================== */
+
 .side_menu {
   background-color: #2a3647;
   width: 204px; 
@@ -101,7 +107,6 @@ header {
   display: flex;
   flex-direction: column;
   align-items: center;
-  /* Damit das Side-Menü "unter" dem weißen Header durchläuft */
   position: relative;
   z-index: 1; 
 }
@@ -127,7 +132,6 @@ header {
   height: auto;
 }
 
-/* Ein einzelner Menüpunkt */
 .selection {
   display: flex;
   align-items: center;
@@ -143,19 +147,16 @@ header {
   text-align: start;
 }
 
-/* Hover-Effekt auf einen Menüpunkt */
 .selection:hover {
   width: 96%;
   transform: scale(1.01);
   background-color: #2c4972;
 }
 
-/* Markierter Menüpunkt (z. B. Summary) */
 .isActive {
   background-color: #091931;
 }
 
-/* Privacy/Legal links unten in der Side-Bar */
 .policy_docs {
   display: flex;
   flex-direction: column;
@@ -163,29 +164,22 @@ header {
   text-align: start;
   position: relative;
   top: 300px;
-  left: 40px;
 }
 
 .policy_docs a {
   cursor: pointer;
   text-decoration: none;
   color: #a8a8a8;
-  margin: 8px;
 }
 
 .policy_docs a:hover {
-  color: #29abe2ff;
   transform: scale(1.02);
 }
 
-/* Hauptinhalt (optional, wenn du Inhalt einfügst) */
-.content {
-  display: flex;
-  max-width: 1920px;
-  height: auto;
-}
+/* ==================================================
+   ================ CONTENT/LAYOUT ==================
+   ================================================== */
 
-/* Alle Links ohne Unterstrich */
 a,
 a:visited,
 a:hover,
@@ -195,25 +189,173 @@ a:active {
 }
 
 .profile_initials {
-  /* Feste Kreisgröße */
   width: 40px;
   height: 40px;
-  
-  /* Rundung */
   border-radius: 50%;
-  
-  /* Falls dein SVG/Bild teils transparent ist, 
-     schimmert die hover-Farbe durch */
   background-color: transparent;
-  
-  /* Bild skalieren */
-  object-fit: cover; /* Wirkt erst richtig bei <img>, Chrome/FF */
-  
+  object-fit: cover; 
   cursor: pointer;
   transition: background-color 0.3s ease;
 }
 
-/* Hover-Effekt => Füllt den Kreis mit Hellgrau */
 .profile_initials:hover {
   background-color: #f5f5f5;
+}
+
+.content {
+  display: flex;
+  max-width: 1920px;
+  height: auto;
+  min-height: calc(100vh - 60px);
+}
+
+.side_menu {
+  width: 250px;
+}
+
+.summary_content {
+  flex: 1;
+  padding: 20px;
+}
+
+/* ==================================================
+   ================ TITLE-BEREICH ===================
+   ================================================== */
+
+.summary_details_header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  width: 500px; 
+  margin-top: 190px; 
+  margin-left: 100px;
+}
+
+.summary_details_header .details_header h1 {
+  margin: 0;
+  font-size: 50px;
+}
+
+.blue_line {
+  display: flex;
+  align-self: center;
+  height: 50px;
+  border-radius: 5px;
+}
+
+.details_motivation {
+  font-size: 20px; 
+  color: #2b3647;
+}
+
+/* ==================================================
+   ================ BOXEN OBEN (TO-DO & DONE) =======
+   ================================================== */
+
+.summary_cards {
+  display: flex;
+  gap: 30px;
+  margin-top: 69px; 
+  margin-left: 100px; 
+}
+
+.summary_card {
+  background-color: #ffffff;
+  width: 210px;
+  height: 120px;
+  border-radius: 8px;
+  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+  display: flex;
+  flex-direction: column; 
+  align-items: center;    
+  justify-content: center;
+}
+
+.box_content {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.icon_small {
+  width: 24px;
+  height: auto;
+}
+
+.box_number {
+  font-size: 1.5rem;
+  font-weight: bold;
+}
+
+.box_label {
+  color: #29abe2; 
+  margin-top: 8px; 
+  font-weight: bold;
+  text-align: center;
+}
+
+/* ==================================================
+   ================ LÄNGLICHE BOX (PLATZHALTER) =====
+   ================================================== */
+
+.summary_longbox {
+  width: 450px;
+  height: 116px;
+  margin-left: 100px;
+  margin-top: 30px;
+  background: #ffffff;
+  box-shadow: 0px 0px 4px rgba(0, 0, 0, 0.1);
+  border-radius: 20px;
+
+  /* Zentriert Inhalt in der Box */
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.longbox_content {
+  /* Nur ein Beispiel-Wrapper für eigenen Inhalt */
+  text-align: center;
+}
+
+/* ==================================================
+   ================ DREI KLEINE BOXEN UNTEN =========
+   ================================================== */
+
+.summary_smallboxes {
+  display: flex;
+  gap: 20px;
+  margin-top: 20px;
+  margin-left: 100px;
+}
+
+.summary_smallbox {
+  width: 136px;
+  height: 136px;
+  background: #ffffff;
+  box-shadow: 0px 0px 4px rgba(0, 0, 0, 0.1);
+  border-radius: 20px;
+  
+  /* Zentrierter Inhalt */
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+}
+
+/* Beispiel-Zahl */
+.smallbox_number {
+  font-size: 47px;
+  font-weight: 600;
+  color: #000;
+  line-height: 120%;
+  text-align: center;
+}
+
+/* Kleines Label darunter */
+.smallbox_label {
+  font-size: 14px;
+  color: #2A3647;
+  line-height: 120%;
+  text-align: center;
 }

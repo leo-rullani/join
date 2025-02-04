@@ -7,78 +7,150 @@
     <title>Summary</title>
 
     <link rel="icon" type="image/png" href="/assets/img/join-logo-blue.svg" />
-    <link rel="stylesheet" href="/css/summary.css"> <!-- Nur Side-Bar & Header-Styles -->
+
+    <!-- CSS-Dateien -->
+    <link rel="stylesheet" href="/css/template.css">
+    <link rel="stylesheet" href="/css/summary.css">
     <link rel="stylesheet" href="/css/fonts.css">
-    <!-- Font Awesome Icons -->
+
+    <!-- font awesome icons -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css">
+
 </head>
 
-<body>
-    <!-- Header -->
+<body onload="init()">
+
+    <!-- HEADER -->
     <header>
         <div class="header_content">
             Kanban Project Management Tool
             <div class="header_img">
-                <img class="help_icon" src="/assets/icons/help.svg" alt="Help Icon">
-                <!-- Klick auf Profil-Icon => öffnet/Schließt Menü -->
+                <!-- Link zum Help-Icon -->
+                <a href="/html/help.html">
+                    <img class="help_icon" src="/assets/icons/help.svg" alt="Help Icon">
+                </a>
+                <!-- Klick auf Profil-Icon => Menü ein-/ausblenden -->
                 <img class="profile_initials" src="/assets/icons/User profile initials.svg" alt="User Profile"
                     onclick="toggleRespMenu()">
             </div>
         </div>
     </header>
 
-    <!-- Kleines Profil-Menü (zunächst geschlossen) -->
-    <div class="menu_header resp_menu_closed" id="resp_menu">
-        <div class="menu_links">
-            <a href="/html/legalnotice.html">Legal Notice</a>
-            <a href="/html/privacypolicy.html">Privacy Policy</a>
-            <a href="/html/login.html">Logout</a>
-        </div>
-    </div>
+    <!-- Hauptbereich: Side-Bar links und Inhalt rechts -->
+    <main class="content">
 
-    <!-- Seitliches Menü / Side-Bar -->
-    <div class="side_menu">
-        <img class="logo" src="/assets/img/join-logo-white.svg" alt="Join Logo">
+        <!-- SIDE MENU -->
+        <div class="side_menu">
+            <img class="logo" src="/assets/img/join-logo-white.svg" alt="Join Logo">
 
-        <div class="menu_bar">
-            <!-- Summary (aktuelle Seite) -->
-            <a class="selection isActive" href="/html/summary.html">
-                <img src="/assets/icons/Icon-summary.svg" alt="Summary Icon">
-                <span>Summary</span>
-            </a>
+            <div class="menu_bar">
+                <!-- summary (active page) -->
+                <div class="selection isActive">
+                    <img src="/assets/icons/Icon-summary.svg" alt="Summary Icon">
+                    <a href="/html/summary.html"><span>Summary</span></a>
+                </div>
 
-            <!-- Add Task -->
-            <a class="selection" href="/html/addtask.html">
-                <img src="/assets/icons/Icon-addtask.svg" alt="Add Task Icon">
-                <span>Add Task</span>
-            </a>
+                <!-- add task -->
+                <div class="selection">
+                    <img src="/assets/icons/Icon-addtask.svg" alt="Add Task Icon">
+                    <a href="/html/addtask.html"><span>Add Task</span></a>
+                </div>
 
-            <!-- Board -->
-            <a class="selection" href="/html/board.html">
-                <img src="/assets/icons/Icon-board.svg" alt="Board Icon">
-                <span>Board</span>
-            </a>
+                <!-- board -->
+                <div class="selection">
+                    <img src="/assets/icons/Icon-board.svg" alt="Board Icon">
+                    <a href="/html/board.html"><span>Board</span></a>
+                </div>
 
-            <!-- Contacts -->
-            <a class="selection" href="/html/contacts.html">
-                <img src="/assets/icons/Icon-contacts.svg" alt="Contacts Icon">
-                <span>Contacts</span>
-            </a>
+                <!-- contacts -->
+                <div class="selection">
+                    <img src="/assets/icons/Icon-contacts.svg" alt="Contacts Icon">
+                    <a href="/html/contacts.html"><span>Contacts</span></a>
+                </div>
 
-            <!-- Privacy/Legal -->
-            <div class="policy_docs">
-                <a href="/html/privacypolicy.html">Privacy Policy</a>
-                <a href="/html/legalnotice.html">Legal notice</a>
+                <!-- privacy/legal -->
+                <div class="policy_docs">
+                    <a href="/html/privacypolicy.html">Privacy Policy</a>
+                    <a href="/html/legalnotice.html">Legal Notice</a>
+                </div>
             </div>
         </div>
-    </div>
 
-    <!-- Optionaler Content-Bereich; bei Bedarf ausbauen -->
-    <div class="content">
-        <!-- Hier könnte eine Zusammenfassung oder anderer Inhalt stehen -->
-    </div>
+        <!-- INHALTSBEREICH (Summary rechts) -->
+        <section class="summary_content">
+            <!-- Titel: Join 360, Blaue Linie & Key metrics -->
+            <div class="summary_details_header">
+                <div class="details_header">
+                    <h1><b>Join 360</b></h1>
+                </div>
+                <!-- Blaue Linie -->
+                <img src="/assets/icons/blue-line.svg" alt="Blue Line" class="blue_line">
+                <div class="details_motivation">
+                    Key Metrics at a Glance
+                </div>
+            </div>
 
-    <!-- Skript zum Öffnen/Schließen des Profil-Menüs -->
+            <!-- Zwei weiße Boxen (To-do / Done) -->
+            <div class="summary_cards">
+                <!-- Erste Box (To-do) -->
+                <div class="summary_card">
+                    <div class="box_content">
+                        <img src="/assets/icons/todo.svg" alt="Todo Icon" class="icon_small">
+                        <div class="box_number">1</div>
+                    </div>
+                    <div class="box_label">To-do</div>
+                </div>
+
+                <!-- Zweite Box (Done) -->
+                <div class="summary_card">
+                    <div class="box_content">
+                        <img src="/assets/icons/done.svg" alt="Done Icon" class="icon_small">
+                        <div class="box_number">1</div>
+                    </div>
+                    <div class="box_label">Done</div>
+                </div>
+            </div>
+
+            <!-- Längliche Box (Platzhalter) -->
+            <div class="summary_longbox">
+                <div class="longbox_content">
+                    <h2>Lange Box</h2>
+                    <p>Platzhalter-Inhalt, kann frei gestaltet werden.</p>
+                </div>
+            </div>
+
+            <!-- Drei weitere kleine Boxen nebeneinander (Platzhalter) -->
+            <div class="summary_smallboxes">
+                <div class="summary_smallbox">
+                    <div class="smallbox_number">6</div>
+                    <div class="smallbox_label">Tasks in Board</div>
+                </div>
+
+                <div class="summary_smallbox">
+                    <div class="smallbox_number">2</div>
+                    <div class="smallbox_label">In Backlog</div>
+                </div>
+
+                <div class="summary_smallbox">
+                    <div class="smallbox_number">1</div>
+                    <div class="smallbox_label">Done</div>
+                </div>
+            </div>
+
+        </section>
+
+        <!-- KLEINES PROFILMENÜ (Mobil/Responsive) -->
+        <div class="menu_header resp_menu_closed" id="resp_menu">
+            <div class="menu_links">
+                <a href="/html/legalnotice.html">Legal Notice</a>
+                <a href="/html/privacypolicy.html">Privacy Policy</a>
+                <a href="/html/login.html">Logout</a>
+            </div>
+        </div>
+
+    </main>
+
+    <!-- JavaScript -->
     <script src="/js/summary.js"></script>
 </body>
 
