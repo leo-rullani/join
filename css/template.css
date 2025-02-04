@@ -172,19 +172,41 @@ header {
   text-align: start;
   position: relative;
   top: 300px;
-  left: 40px;
+  left: 0px;
+}
+
+.menu_bar_login {
+  width: 100%;
+  position: relative;
+  top: 300px;
+  display: flex;
+  flex-direction: column;
+  gap: 150px;
+}
+
+.menu_bar_login img {
+  width: 30px;
+  margin-right: 10px;
+  height: auto;
 }
 
 .policy_docs a {
+  display: flex;
+  align-items: start;
+  justify-content: flex-start;
+  padding: 5px;
+  padding-left: 60px;
   cursor: pointer;
-  text-decoration: none;
   color: #a8a8a8;
-  margin: 8px;
+  margin: 0px;
+  padding-top: 10px;
+  padding-bottom: 10px;
 }
 
 .policy_docs a:hover {
-  color: #29abe2ff;
-  transform: scale(1.02);
+  width: 73%;
+  transform: scale(1.01);
+  background-color: #2c4972;
 }
 
 /* Hauptinhalt (optional, wenn du Inhalt einfügst) */
