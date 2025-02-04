@@ -1,5 +1,8 @@
 "use strict";
 
+let databaseURL =
+  "https://join-5d739-default-rtdb.europe-west1.firebasedatabase.app";
+
 /**
  * Splash & Responsive Logik wie bei der Login-Seite,
  * plus deine vorhandenen Sign-Up-Funktionen (signUp, toggleSignUpButton, etc.).
@@ -58,8 +61,26 @@ function initLogoAnimation(logoContainer, formContainer) {
    togglePassword, showToast, showErrorStyles, clearErrorStyles 
 */
 
+async function registerUser(userData) {
+  let response = await fetch(`${databaseURL}/users.json`, {
+    method: "POST",
+    headers: {
+      "Content-Type": "application/json",
+    },
+    body: JSON.stringify(userData),
+  });
+  if (!response.ok) {
+    const errorData = await response.text();
+    throw new Error(`Network response was not ok ${errorData}`);
+  }
+  let data = await response.json();
+  return data.name;
+}
+
 function signUp(event) {
   event.preventDefault();
+  const usernameField = document.getElementById("name");
+  const email = document.getElementById("email");
   const passField = document.getElementById("password");
   const confirmField = document.getElementById("confirm-password");
   const policyCheckbox = document.getElementById("policy-checkbox");
@@ -79,10 +100,28 @@ function signUp(event) {
     alert("You must accept the Privacy Policy to sign up!");
     return;
   }
-  showToast("You signed up successfully!");
-  setTimeout(() => {
-    window.location.href = "/html/summary.html";
-  }, 2000);
+  const userData = {
+    userName: usernameField.value.trim(),
+    userEmail: email.value.trim(),
+    password: passField.value.trim(),
+  };
+
+  registerUser(userData)
+    .then((Data) => {
+      showToast("You have successfully signed up!");
+      setTimeout(() => {
+        window.location.href = "/html/summary.html";
+      }, 2000);
+    })
+    .catch((error) => {
+      console.error("There was a problem with the fetch operation:", error);
+      showErrorStyles(
+        null,
+        null,
+        errorMsg,
+        "Ein Fehler ist aufgetreten. Bitte versuche es später erneut."
+      );
+    });
 }
 
 function toggleSignUpButton() {

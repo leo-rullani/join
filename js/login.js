@@ -20,13 +20,14 @@ document.addEventListener("DOMContentLoaded", init);
  */
 function init() {
   const logoContainer = document.querySelector(".logo-container"),
-        form          = document.querySelector(".form-container"),
-        topRight      = document.querySelector(".top-right"),
-        footer        = document.querySelector(".footer"),
-        guestLoginBtn = document.querySelector(".guest-btn"),
-        emailInput    = document.getElementById("email"),
-        passwordInput = document.getElementById("password"),
-        errorDiv      = document.getElementById("errorMessage");
+    form = document.querySelector(".form-container"),
+    topRight = document.querySelector(".top-right"),
+    footer = document.querySelector(".footer"),
+    guestLoginBtn = document.querySelector(".guest-btn"),
+    emailInput = document.getElementById("email"),
+    passwordInput = document.getElementById("password"),
+    errorDiv = document.getElementById("errorMessage");
+  getUserData();
 
   if (window.innerWidth <= 500) {
     // Kleiner Screen => Splash => topRight und footer bleiben versteckt
@@ -42,6 +43,23 @@ function init() {
   initGuestLogin(guestLoginBtn);
   initFocusClear(emailInput, errorDiv);
   initFocusClear(passwordInput, errorDiv);
+}
+
+async function getUserData() {
+  try {
+    let response = await fetch(`${databaseURL}/users.json`);
+    if (!response.ok) {
+      throw new Error(`Response status: ${response.status}`);
+    }
+
+    let users = await response.json();
+    if (!users || typeof users !== "object") {
+      return [];
+    }
+    console.log(users);
+  } catch (error) {
+    console.error(error.message);
+  }
 }
 
 /**
@@ -95,16 +113,14 @@ function initFocusClear(inputElement, errorDiv) {
  * login()
  * Wird beim Absenden des Formulars aufgerufen. Prüft dummyUsers.
  */
-function login(event) {
+function login(event, users) {
   event.preventDefault();
   const emailInput = document.getElementById("email"),
     passwordInput = document.getElementById("password"),
     errorDiv = document.getElementById("errorMessage"),
     email = emailInput.value.trim(),
     password = passwordInput.value.trim();
-  const user = dummyUsers.find(
-    (u) => u.email === email && u.password === password
-  );
+  const user = users.find((u) => u.email === email && u.password === password);
   if (user) {
     clearErrorStyles(emailInput, passwordInput, errorDiv);
     loginSuccess();

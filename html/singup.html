@@ -1,86 +1,87 @@
 <!DOCTYPE html>
 <html lang="en">
 
-<head>
-    <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Sign up</title>
+    <head>
+        <meta charset="UTF-8" />
+        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+        <title>Sign up</title>
 
-    <link rel="icon" type="image/png" href="/assets/img/join-logo-blue.svg" />
-    <link rel="stylesheet" href="/css/signup.css" />
-    <link rel="stylesheet" href="/css/fonts.css" />
-</head>
+        <link rel="icon" type="image/png" href="/assets/img/join-logo-blue.svg" />
+        <link rel="stylesheet" href="/css/signup.css" />
+        <link rel="stylesheet" href="/css/fonts.css" />
+    </head>
 
-<body>
-    <!-- Logo-Container: Default-Bild = dein "logo.png" -->
-    <div class="logo-container">
-        <img src="/assets/img/logo.png" alt="Join Logo" class="logo" />
-    </div>
-
-    <!-- Form-Container: Start ausgeblendet (hidden) -->
-    <div class="form-container hidden">
-        <div class="signup-box" id="signupBox">
-            <!-- Titel + Pfeil -->
-            <div class="signup-header">
-                <div class="arrow-container">
-                    <a href="/html/login.html" class="back-arrow" title="Back to Login">←</a>
-                </div>
-                <h2>Sign up</h2>
-                <div class="dummy"></div>
-            </div>
-            <div class="underline"></div>
-
-            <!-- Eingaben + Formular -->
-            <form onsubmit="signUp(event); return false;">
-                <div class="input-container">
-                    <input type="text" id="name" placeholder="Name" required />
-                    <img src="/assets/icons/person.svg" class="input-icon" alt="Name Icon" id="nameIcon" />
-                </div>
-                <div class="input-container">
-                    <input type="email" id="email" placeholder="Email" required />
-                    <img src="/assets/icons/mail.svg" class="input-icon" alt="Email Icon" id="emailIcon" />
-                </div>
-                <div class="input-container">
-                    <input type="password" id="password" placeholder="Password" required />
-                    <img src="/assets/icons/lock.svg" class="input-icon" alt="Password Icon" id="passwordIcon"
-                        onclick="togglePassword('password','passwordIcon')" />
-                </div>
-                <div class="input-container">
-                    <input type="password" id="confirm-password" placeholder="Confirm Password" required />
-                    <img src="/assets/icons/lock.svg" class="input-icon" alt="Confirm Password Icon"
-                        id="confirmPasswordIcon" onclick="togglePassword('confirm-password','confirmPasswordIcon')" />
-                </div>
-
-                <!-- Fehlermeldung -->
-                <div id="errorMessage" class="error-message"></div>
-
-                <!-- Checkbox -->
-                <div class="policy-container">
-                    <input type="checkbox" id="policy-checkbox" onchange="toggleSignUpButton()" />
-                    <label for="policy-checkbox">
-                        I accept <a href="/html/privacypolicy.html" target="_blank">Privacy Policy</a>
-                    </label>
-                </div>
-
-                <div class="button-container">
-                    <!-- Sign Up-Button, erst aktiv wenn Checkbox angehakt -->
-                    <button type="submit" id="signup-btn" class="signup-action" disabled>Sign Up</button>
-                </div>
-            </form>
+    <body>
+        <!-- Logo-Container: Default-Bild = dein "logo.png" -->
+        <div class="logo-container">
+            <img src="/assets/img/logo.png" alt="Join Logo" class="logo" />
         </div>
-    </div>
 
-    <!-- Toast-Notification (initial versteckt) -->
-    <div id="notification" class="notification hidden"></div>
+        <!-- Form-Container: Start ausgeblendet (hidden) -->
+        <div class="form-container hidden">
+            <div class="signup-box" id="signupBox">
+                <!-- Titel + Pfeil -->
+                <div class="signup-header">
+                    <div class="arrow-container">
+                        <a href="/html/login.html" class="back-arrow" title="Back to Login">←</a>
+                    </div>
+                    <h2>Sign up</h2>
+                    <div class="dummy"></div>
+                </div>
+                <div class="underline"></div>
 
-    <!-- Footer (startet hidden) -->
-    <div class="footer hidden">
-        <a href="/html/privacypolicy.html">Privacy Policy</a>
-        <a href="/html/legalnotice.html">Legal Notice</a>
-    </div>
+                <!-- Eingaben + Formular -->
+                <form onsubmit="signUp(event); return false;">
+                    <div class="input-container">
+                        <input type="text" id="name" placeholder="Name" required />
+                        <img src="/assets/icons/person.svg" class="input-icon" alt="Name Icon" id="nameIcon" />
+                    </div>
+                    <div class="input-container">
+                        <input type="email" id="email" placeholder="Email" required />
+                        <img src="/assets/icons/mail.svg" class="input-icon" alt="Email Icon" id="emailIcon" />
+                    </div>
+                    <div class="input-container">
+                        <input type="password" id="password" placeholder="Password" required />
+                        <img src="/assets/icons/lock.svg" class="input-icon" alt="Password Icon" id="passwordIcon"
+                            onclick="togglePassword('password','passwordIcon')" />
+                    </div>
+                    <div class="input-container">
+                        <input type="password" id="confirm-password" placeholder="Confirm Password" required />
+                        <img src="/assets/icons/lock.svg" class="input-icon" alt="Confirm Password Icon"
+                            id="confirmPasswordIcon"
+                            onclick="togglePassword('confirm-password','confirmPasswordIcon')" />
+                    </div>
 
-    <!-- JavaScript-Datei für Sign Up -->
-    <script src="/js/signup.js"></script>
-</body>
+                    <!-- Fehlermeldung -->
+                    <div id="errorMessage" class="error-message"></div>
+
+                    <!-- Checkbox -->
+                    <div class="policy-container">
+                        <input type="checkbox" id="policy-checkbox" onchange="toggleSignUpButton()" />
+                        <label for="policy-checkbox">
+                            I accept <a href="/html/privacypolicy_login.html" target="_blank">Privacy Policy</a>
+                        </label>
+                    </div>
+
+                    <div class="button-container">
+                        <!-- Sign Up-Button, erst aktiv wenn Checkbox angehakt -->
+                        <button type="submit" id="signup-btn" class="signup-action" disabled>Sign Up</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+
+        <!-- Toast-Notification (initial versteckt) -->
+        <div id="notification" class="notification hidden"></div>
+
+        <!-- Footer (startet hidden) -->
+        <div class="footer hidden">
+            <a href="/html/privacypolicy_login.html">Privacy Policy</a>
+            <a href="/html/legalnotice_login.html">Legal Notice</a>
+        </div>
+
+        <!-- JavaScript-Datei für Sign Up -->
+        <script src="/js/signup.js"></script>
+    </body>
 
 </html>
