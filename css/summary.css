@@ -13,7 +13,7 @@ header {
   background-color: #ffffff;
   height: 75px;
   position: absolute;
-  width: 100%; 
+  width: 100%;
   box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.1);
   display: flex;
   justify-content: flex-end;
@@ -53,7 +53,7 @@ header {
   border-radius: 20px 0 20px 20px;
   box-shadow: rgba(0, 0, 0, 0.05) 0px 6px 10px 0px;
   background: #2a3647;
-  display: flex; 
+  display: flex;
   flex-direction: column;
   width: 130px;
   height: 130px;
@@ -90,6 +90,7 @@ header {
 .resp_menu_closed {
   display: none;
 }
+
 .resp_menu_open {
   display: flex;
 }
@@ -99,13 +100,13 @@ header {
    ================================================== */
 .side_menu {
   background-color: #2a3647;
-  width: 204px; 
+  width: 204px;
   height: 100vh;
   display: flex;
   flex-direction: column;
   align-items: center;
   position: relative;
-  z-index: 1; 
+  z-index: 1;
 }
 
 .logo {
@@ -189,7 +190,7 @@ a:active {
   height: 40px;
   border-radius: 50%;
   background-color: transparent;
-  object-fit: cover; 
+  object-fit: cover;
   cursor: pointer;
   transition: background-color 0.3s ease;
 }
@@ -221,8 +222,8 @@ a:active {
   display: flex;
   justify-content: space-between;
   align-items: center;
-  width: 500px; 
-  margin-top: 190px; 
+  width: 500px;
+  margin-top: 190px;
   margin-left: 100px;
 }
 
@@ -239,20 +240,18 @@ a:active {
 }
 
 .details_motivation {
-  font-size: 20px; 
+  font-size: 20px;
   color: #2b3647;
 }
 
 /* ==================================================
-   ================ ZENTRIERUNG BOXEN ===============
+   ================ SUMMARY CARDS ===================
    ================================================== */
-
-/* Für die Summary Cards */
 .summary_cards {
   display: flex;
   gap: 30px;
-  margin-top: 69px; 
-  margin-left: 100px; 
+  margin-top: 69px;
+  margin-left: 100px;
 }
 
 .summary_card {
@@ -261,33 +260,32 @@ a:active {
   height: 136px;
   border-radius: 20px;
   box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+
   display: flex;
   align-items: center;
   justify-content: center;
   gap: 20px;
 }
 
-/* Container für Zahl & Label untereinander */
 .box_number_label {
   display: flex;
   flex-direction: column;
   align-items: center;
 }
 
-/* Icon-Größe in Cards & Longbox */
 .icon_small {
-  width: 50px; 
+  width: 50px;
   height: auto;
 }
 
-/* Zahl & Label */
 .box_number {
   font-size: 20px;
   font-weight: bold;
   text-align: center;
 }
+
 .box_label {
-  color: #2A3647;; 
+  color: #2A3647;
   font-size: 16px;
   text-align: center;
 }
@@ -295,23 +293,33 @@ a:active {
 /* ==================================================
    ================ LÄNGLICHE BOX ===================
    ================================================== */
-.summary_longbox {
-  display: flex;
-  align-items: center;
-  justify-content: space-between; /* oder space-around */
-  width: 430px;
-  height: 136px;
-  margin-left: 100px;
-  margin-top: 30px;
-  background: #ffffff;
-  box-shadow: 0px 0px 4px rgba(0, 0, 0, 0.1);
-  border-radius: 20px;
-  padding: 10px;
+   .summary_longbox {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 20px;
+    width: 410px;
+    height: 136px;
+    margin-left: 100px;
+    margin-top: 30px;
+    background: #ffffff;
+    box-shadow: 0px 0px 4px rgba(0, 0, 0, 0.1);
+    border-radius: 20px;
+    padding: 10px 20px;
 }
-
 .grey_line {
   height: 80px;
   width: auto;
+  margin: 0 15px; /* Zusätzlicher Abstand zur Trennung */
+}
+
+/* Falls das letzte Box-Label-Paar (Upcoming Date) exakt linksbündig untereinander sein soll: */
+.summary_longbox .box_number_label:last-of-type {
+  align-items: flex-start;
+}
+.summary_longbox .box_number_label:last-of-type .box_number,
+.summary_longbox .box_number_label:last-of-type .box_label {
+  text-align: left;
 }
 
 /* ==================================================
@@ -330,8 +338,7 @@ a:active {
   background: #ffffff;
   box-shadow: 0px 0px 4px rgba(0, 0, 0, 0.1);
   border-radius: 20px;
-  
-  /* Zentrierter Inhalt */
+
   display: flex;
   flex-direction: column;
   justify-content: center;
