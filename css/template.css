@@ -1,28 +1,109 @@
+/* === Allgemeine Seite / Grundlayout === */
 body {
-  padding: 0;
   margin: 0;
-  font-family: "Inter";
+  padding: 0;
+  font-family: "Inter", serif;
+  background-color: #f6f7f8; /* Grau wie gewünscht */
   overflow-x: hidden;
 }
 
+/* === Header === */
+header {
+  background-color: #ffffff; /* Header jetzt weiß */
+  height: 75px;
+  position: absolute;
+  width: 100%;
+  box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.1);
+  display: flex;
+  justify-content: flex-end;
+  align-items: center;
+}
+
+.header_content {
+  width: 70%;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  font-size: 18px;
+}
+
+.header_img {
+  width: 11%;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin: 20px;
+}
+
+.help_icon:hover {
+  transform: scale(1.1);
+  cursor: pointer;
+}
+
+.profile_initials:hover {
+  background-color: #f5f5f5;
+  cursor: pointer;
+}
+
+/* === Kleines Profil-Menü rechts oben === */
+.menu_header {
+  border-radius: 20px 0 20px 20px;
+  box-shadow: rgba(0, 0, 0, 0.05) 0px 6px 10px 0px;
+  background: #2a3647;
+  display: flex; /* Standard, im Wechsel mit .resp_menu_closed */
+  flex-direction: column;
+  width: 130px;
+  height: 130px;
+  position: absolute;
+  top: 75px;
+  right: 15px;
+  font-size: 14px;
+  margin: 0;
+}
+
+.menu_links {
+  display: flex;
+  flex-direction: column;
+  margin: 0 auto;
+  padding: 10px;
+  max-height: 130px;
+}
+
+/* Links im Profil-Menü */
+.menu_header a {
+  display: flex;
+  align-items: center;
+  text-decoration: none;
+  color: #a8a8a8;
+  padding: 10px;
+  font-size: 13px;
+  transition: all 0.2s ease;
+}
+
+.menu_header a:hover {
+  background-color: #2c4972;
+  transform: scale(1.03);
+}
+
+/* Geschlossen vs. offen */
+.resp_menu_closed {
+  display: none;
+}
+.resp_menu_open {
+  display: flex;
+}
+
+/* === Side-Menu (links) === */
 .side_menu {
   background-color: #2a3647;
-  width: 350px;
+  width: 204px;
   height: 100vh;
   display: flex;
   flex-direction: column;
   align-items: center;
-}
-
-.profile_initials:hover {
-  background-color: #8b2c2c;
-  cursor: pointer;
-}
-
-.content {
-  display: flex;
-  max-width: 1920px;
-  height: auto;
+  /* Damit das Side-Menü "unter" dem weißen Header durchläuft */
+  position: relative;
+  z-index: 1;
 }
 
 .logo {
@@ -42,112 +123,39 @@ body {
 
 .menu_bar img {
   width: 30px;
-  display: flex;
   margin-right: 10px;
   height: auto;
 }
 
+/* Ein einzelner Menüpunkt */
 .selection {
   display: flex;
-  color: #a8a8a8;
   align-items: center;
-  padding: 3px;
   justify-content: center;
+  padding: 3px;
+  color: #a8a8a8;
+  cursor: pointer;
+  transition: transform 0.3s ease;
 }
+
 .selection span {
   min-width: 70px;
   text-align: start;
 }
 
+/* Hover-Effekt auf einen Menüpunkt */
 .selection:hover {
   width: 96%;
-  cursor: pointer;
   transform: scale(1.01);
   background-color: #2c4972;
 }
 
-.resp_menu_open {
-  display: flex;
-}
-
-.resp_menu_closed {
-  display: none;
-}
-
-.menu_header {
-  border-radius: 20px 0px 20px 20px;
-  box-shadow: rgba(0, 0, 0, 0.05) 0px 6px 10px 0px;
-  background: #2a3647;
-  flex-direction: column;
-  width: 130px;
-  height: 130px;
-  padding: 0;
-  position: absolute;
-  top: 75px;
-  right: 15px;
-  font-size: 14px;
-  margin: 0px;
-}
-
-.menu_links {
-  display: flex;
-  flex-direction: column;
-  margin: 0 auto;
-  padding: 10px;
-  max-height: 130px;
-}
-
-.menu_header a {
-  display: flex;
-  align-items: center;
-  text-decoration: none;
-  color: #a8a8a8;
-  padding: 10px;
-  font-size: 13px;
-  transition: all 0.2s ease;
-}
-
-.menu_header a:hover {
-  background-color: #2c4972;
-  transform: scale(1.03);
-  border-bottom: none;
-}
-
+/* Markierter Menüpunkt (z. B. Summary) */
 .isActive {
   background-color: #091931;
 }
 
-header {
-  height: 75px;
-  position: absolute;
-  width: 100%;
-  box-shadow: rgba(0, 0, 0, 0.05) 0px 0px 0px 1px;
-  display: flex;
-  justify-content: flex-end;
-  align-items: center;
-}
-
-.header_content {
-  width: 70%;
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  font-size: 18px;
-}
-
-.header_img {
-  width: 11%;
-  align-items: center;
-  display: flex;
-  justify-content: space-between;
-  margin: 20px;
-}
-
-.help_icon:hover {
-  transform: scale(1.1);
-  cursor: pointer;
-}
-
+/* Privacy/Legal links unten in der Side-Bar */
 .policy_docs {
   display: flex;
   flex-direction: column;
@@ -163,7 +171,6 @@ header {
   text-decoration: none;
   color: #a8a8a8;
   margin: 8px;
-  text-align: start;
 }
 
 .policy_docs a:hover {
@@ -171,6 +178,47 @@ header {
   transform: scale(1.02);
 }
 
+/* Hauptinhalt (optional, wenn du Inhalt einfügst) */
+.content {
+  display: flex;
+  max-width: 1920px;
+  height: auto;
+}
+
+/* Alle Links ohne Unterstrich */
+a,
+a:visited,
+a:hover,
+a:focus,
+a:active {
+  text-decoration: none;
+}
+
+.profile_initials {
+  /* Feste Kreisgröße */
+  width: 40px;
+  height: 40px;
+
+  /* Rundung */
+  border-radius: 50%;
+
+  /* Falls dein SVG/Bild teils transparent ist, 
+       schimmert die hover-Farbe durch */
+  background-color: transparent;
+
+  /* Bild skalieren */
+  object-fit: cover; /* Wirkt erst richtig bei <img>, Chrome/FF */
+
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+}
+
+/* Hover-Effekt => Füllt den Kreis mit Hellgrau */
+.profile_initials:hover {
+  background-color: #f5f5f5;
+}
+
+/* Return Button auf Help , Privacy Policy und Legal notice*/
 .return_button {
   align-items: center;
   width: 30px;

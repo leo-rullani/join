@@ -2,10 +2,12 @@
 <html lang="de">
 
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Summary</title>
-    <link rel="stylesheet" href="/css/summary.css">
+
+    <link rel="icon" type="image/png" href="/assets/img/join-logo-blue.svg" />
+    <link rel="stylesheet" href="/css/summary.css"> <!-- Nur Side-Bar & Header-Styles -->
     <link rel="stylesheet" href="/css/fonts.css">
     <!-- Font Awesome Icons -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css">
@@ -18,42 +20,66 @@
             Kanban Project Management Tool
             <div class="header_img">
                 <img class="help_icon" src="/assets/icons/help.svg" alt="Help Icon">
-                <img class="profile_initials" src="/assets/icons/User profile initials.svg" alt="User Profile">
+                <!-- Klick auf Profil-Icon => öffnet/Schließt Menü -->
+                <img class="profile_initials" src="/assets/icons/User profile initials.svg" alt="User Profile"
+                    onclick="toggleRespMenu()">
             </div>
         </div>
     </header>
 
-    <!-- Side Menu -->
+    <!-- Kleines Profil-Menü (zunächst geschlossen) -->
+    <div class="menu_header resp_menu_closed" id="resp_menu">
+        <div class="menu_links">
+            <a href="/html/legalnotice.html">Legal Notice</a>
+            <a href="/html/privacypolicy.html">Privacy Policy</a>
+            <a href="/html/login.html">Logout</a>
+        </div>
+    </div>
+
+    <!-- Seitliches Menü / Side-Bar -->
     <div class="side_menu">
-        <img class="logo" src="/assets/img/join-logo-white.svg" alt="Logo">
+        <img class="logo" src="/assets/img/join-logo-white.svg" alt="Join Logo">
+
         <div class="menu_bar">
-            <div class="selection isActive">
+            <!-- Summary (aktuelle Seite) -->
+            <a class="selection isActive" href="/html/summary.html">
                 <img src="/assets/icons/Icon-summary.svg" alt="Summary Icon">
                 <span>Summary</span>
-            </div>
-            <div class="selection">
+            </a>
+
+            <!-- Add Task -->
+            <a class="selection" href="/html/addtask.html">
                 <img src="/assets/icons/Icon-addtask.svg" alt="Add Task Icon">
                 <span>Add Task</span>
-            </div>
-            <div class="selection">
+            </a>
+
+            <!-- Board -->
+            <a class="selection" href="/html/board.html">
                 <img src="/assets/icons/Icon-board.svg" alt="Board Icon">
                 <span>Board</span>
-            </div>
-            <div class="selection">
+            </a>
+
+            <!-- Contacts -->
+            <a class="selection" href="/html/contacts.html">
                 <img src="/assets/icons/Icon-contacts.svg" alt="Contacts Icon">
                 <span>Contacts</span>
-            </div>
+            </a>
+
+            <!-- Privacy/Legal -->
             <div class="policy_docs">
-                <a href="#">Privacy Policy</a>
-                <a href="#">Legal notice</a>
+                <a href="/html/privacypolicy.html">Privacy Policy</a>
+                <a href="/html/legalnotice.html">Legal notice</a>
             </div>
         </div>
     </div>
 
-    <!-- Platzhalter für deinen eigenen Content -->
+    <!-- Optionaler Content-Bereich; bei Bedarf ausbauen -->
     <div class="content">
-        <!-- Hier kommt dein eigener Inhalt hin -->
+        <!-- Hier könnte eine Zusammenfassung oder anderer Inhalt stehen -->
     </div>
+
+    <!-- Skript zum Öffnen/Schließen des Profil-Menüs -->
+    <script src="/js/summary.js"></script>
 </body>
 
 </html>
