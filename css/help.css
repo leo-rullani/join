@@ -6,11 +6,12 @@
   height: 100%;
   margin: 0 auto;
   width: 100%;
+  margin-top: 5px;
 }
 
 .help_header {
   width: 100%;
-  height: 92vh;
+  height: 90vh;
   overflow-y: auto;
   border: none;
   z-index: 1;

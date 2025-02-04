@@ -96,7 +96,8 @@ header {
 /* === Side-Menu (links) === */
 .side_menu {
   background-color: #2a3647;
-  width: 204px;
+  width: 250px;
+  min-width: 250px;
   height: 100vh;
   display: flex;
   flex-direction: column;
@@ -141,6 +142,13 @@ header {
 .selection span {
   min-width: 70px;
   text-align: start;
+}
+
+.selection a {
+  color: #a8a8a8;
+  display: flex;
+  align-items: center;
+  justify-content: center;
 }
 
 /* Hover-Effekt auf einen Menüpunkt */
