@@ -1,4 +1,33 @@
 @font-face {
   font-family: "Inter";
   src: url(/assets/fonts/Inter/Inter_18pt-Regular.ttf);
+  font-weight: 400;
+}
+
+@font-face {
+  font-family: "Inter";
+  src: url("/assets/fonts/Inter/Inter_18pt-Bold.ttf") format("woff2");
+  font-weight: 700; /* Fett */
+  font-style: normal;
+}
+
+@font-face {
+  font-family: "Inter";
+  src: url("/assets/fonts/Inter/Inter_24pt-Bold.ttf") format("woff2");
+  font-weight: 900; /* Sehr dick */
+  font-style: normal;
+}
+
+@font-face {
+  font-family: "Inter";
+  src: url("/assets/fonts/Inter/Inter_18pt-ExtraBold.ttf") format("woff2");
+  font-weight: 900; /* Sehr dick */
+  font-style: normal;
+}
+
+@font-face {
+  font-family: "Inter";
+  src: url("/assets/fonts/Inter/Inter_24pt-ExtraBold.ttf") format("woff2");
+  font-weight: 900; /* Sehr dick */
+  font-style: normal;
 }

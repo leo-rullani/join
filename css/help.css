@@ -1,0 +1,99 @@
+.help_section {
+  display: flex;
+  flex-direction: column;
+  position: relative;
+  top: 70px;
+  height: 100%;
+  margin: 0 auto;
+  width: 100%;
+}
+
+.help_header {
+  width: 100%;
+  height: 92vh;
+  overflow-y: auto;
+  border: none;
+  z-index: 1;
+  padding: 0;
+  margin: 0;
+}
+
+.help_header::-webkit-scrollbar-track {
+  -webkit-box-shadow: inset 0 0 6px rgba(0, 0, 0, 0.3);
+  border-radius: 10px;
+  background-color: #f5f5f5;
+}
+
+.help_header::-webkit-scrollbar {
+  width: 8px;
+  background-color: #f5f5f5;
+}
+
+.help_header::-webkit-scrollbar-thumb {
+  border-radius: 10px;
+  -webkit-box-shadow: inset 0 0 6px rgba(0, 0, 0, 0.3);
+  background-color: #a0a0a0;
+}
+
+.help_section h1 {
+  font-size: 3.5rem;
+  padding: 0px;
+  margin: 90px 0px 10px 0px;
+  font-weight: 900;
+}
+
+.help_content {
+  display: flex;
+  flex-direction: column;
+  padding-left: 100px;
+  padding-right: 180px;
+}
+
+.how_to_use_content {
+  margin-bottom: 10px;
+}
+
+.help_content h2 {
+  font-weight: 900;
+  font-size: 28px;
+}
+
+.help_content span {
+  color: #29abe2ff;
+}
+
+.how_to_use_content h3 {
+  margin: 0px 0px 0px 36px;
+  font-weight: 700;
+  font-size: 22px;
+}
+
+.help p {
+  font-size: 16px;
+}
+
+.how_to_use_content p {
+  margin: 0px 0px 0px 36px;
+  font-size: 16px;
+}
+
+ol {
+  list-style: none;
+  padding-left: 0;
+}
+
+li {
+  display: flex;
+  counter-increment: my-counter;
+  grid-template-columns: 150px auto;
+  align-items: flex-start;
+  font-size: 18px;
+  margin-bottom: 10px;
+}
+
+li::before {
+  content: counter(my-counter) ".";
+  font-size: 24px;
+  font-weight: 900;
+  text-align: left;
+}
