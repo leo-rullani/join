@@ -4,7 +4,7 @@
 <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Summary</title>
+    <title>Summary Guest</title>
 
     <link rel="icon" type="image/png" href="/assets/img/join-logo-blue.svg" />
 
@@ -40,7 +40,7 @@
             <div class="menu_bar">
                 <div class="selection isActive">
                     <img src="/assets/icons/Icon-summary.svg" alt="Summary Icon">
-                    <a href="/html/summary.html"><span>Summary</span></a>
+                    <a href="/html/summaryguest.html"><span>Summary</span></a>
                 </div>
                 <div class="selection">
                     <img src="/assets/icons/Icon-addtask.svg" alt="Add Task Icon">
@@ -70,7 +70,7 @@
                 <div class="details_motivation">Key Metrics at a Glance</div>
             </div>
 
-            <!-- ==================== ANGEPASSTE SUMMARY_CARDS ==================== -->
+            <!-- ==================== SUMMARY CARDS ==================== -->
             <div class="summary_cards">
                 <a href="/html/board.html" class="summary_card_link">
                     <div class="summary_card">
@@ -92,21 +92,26 @@
                 </a>
             </div>
 
-            <!-- ==================== ANGEPASSTE LONGBOX ==================== -->
-            <a href="/html/board.html" class="summary_card_link">
-                <div class="summary_longbox">
-                    <img src="/assets/icons/urgent.svg" alt="Urgent Icon" class="icon_small">
-                    <div class="box_number_label">
-                        <div class="box_number">1</div>
-                        <div class="box_label">Urgent</div>
+            <!-- ==================== LONGBOX & GREETING TEXT ==================== -->
+            <div class="longbox_wrapper">
+                <a href="/html/board.html" class="summary_card_link">
+                    <div class="summary_longbox">
+                        <img src="/assets/icons/urgent.svg" alt="Urgent Icon" class="icon_small">
+                        <div class="box_number_label">
+                            <div class="box_number">1</div>
+                            <div class="box_label">Urgent</div>
+                        </div>
+                        <img src="/assets/icons/grey-line.svg" alt="Grey Line" class="grey_line">
+                        <div class="box_number_label">
+                            <div class="box_date"><b>16. October 2024</b></div>
+                            <div class="longbox_label">Upcoming Deadline</div>
+                        </div>
                     </div>
-                    <img src="/assets/icons/grey-line.svg" alt="Grey Line" class="grey_line">
-                    <div class="box_number_label">
-                        <div class="box_date"><b>16. October 2024</b></div>
-                        <div class="longbox_label">Upcoming Deadline</div>
-                    </div>
-                </div>
-            </a>
+                </a>
+
+                <!-- NEU: Begrüßungstext -->
+                <div class="greeting_text" id="greeting_text"></div>
+            </div>
 
             <div class="summary_smallboxes">
                 <a href="/html/board.html" class="summary_card_link">
@@ -138,7 +143,10 @@
             </div>
         </div>
     </main>
+
     <script src="/js/summary.js"></script>
+    <script src="/js/guestlogin.js"></script>
+
 </body>
 
 </html>

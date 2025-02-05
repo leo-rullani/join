@@ -38,5 +38,4 @@ function setGreeting() {
   greetingText.textContent = greeting;
 }
 
-// Begrüßung setzen, sobald die Seite geladen ist
 document.addEventListener("DOMContentLoaded", setGreeting);
