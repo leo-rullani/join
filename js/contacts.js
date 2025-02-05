@@ -10,7 +10,13 @@ function init() {
 
 async function fetchContactsFromDatabase() {
   try {
-    let contactsData = await getContactsFromServer();
+    const userId = JSON.parse(sessionStorage.getItem("loggedInUser")).id;
+    if (!userId) {
+      console.error("User ID not found in sessionStorage.");
+      return;
+    }
+
+    let contactsData = await getContactsFromServer(userId);
     let contactsArray = processContactsData(contactsData);
     renderContacts(contactsArray);
   } catch (error) {
@@ -18,8 +24,8 @@ async function fetchContactsFromDatabase() {
   }
 }
 
-async function getContactsFromServer() {
-  let response = await fetch(`${databaseURL}/contacts.json`);
+async function getContactsFromServer(userId) {
+  let response = await fetch(`${databaseURL}/users/${userId}/contacts.json`);
   if (!response.ok) {
     throw new Error("Data can not be found");
   }
@@ -45,7 +51,6 @@ async function renderContacts(contactsArray) {
   clearContactsList();
 
   if (!contactsArray || contactsArray.length === 0) {
-    displayNoContactsMessage();
     return;
   }
 
@@ -60,11 +65,6 @@ function clearContactsList() {
       section.querySelector(".contacts").innerHTML = "";
     }
   }
-}
-
-function displayNoContactsMessage() {
-  let contentRef = document.getElementById("phonebook");
-  contentRef.innerHTML = "No Contacts";
 }
 
 function renderGroupedContacts(groupedContacts) {
@@ -163,27 +163,58 @@ async function saveContactToDatabase(event) {
   clearContactForm();
 
   try {
-    let contactId = await saveContactToServer(newContact);
-    await fetchContactsFromDatabase();
+    let userId = getUserId();
+    if (!userId) return;
+
+    let contactId = await saveContactToServer(newContact, userId);
     showToast("Contact successfully created!");
-    let newContactElement = document.querySelector(
-      `[data-contact-id="${contactId}"]`
-    );
-    if (newContactElement) {
-      selectContact(
-        newContactElement,
-        contactId,
-        newContact.name,
-        newContact.email,
-        newContact.phone
-      );
-    }
+
+    addContactToGroup(contactId, newContact);
+    selectNewContact(contactId, newContact);
+
     closeOverlay();
   } catch (error) {
     console.error("Error saving contact:", error);
   }
 
   return false;
+}
+
+function getUserId() {
+  let userId = JSON.parse(sessionStorage.getItem("loggedInUser"))?.id;
+  if (!userId) {
+    console.error("User ID not found in sessionStorage.");
+  }
+  return userId;
+}
+
+function addContactToGroup(contactId, contact) {
+  let firstLetter = contact.name.charAt(0).toUpperCase();
+  let section = document.getElementById(firstLetter);
+
+  if (section) {
+    section.querySelector(".contacts").innerHTML += contactsTemplate({
+      id: contactId,
+      ...contact,
+    });
+  } else {
+    createNewGroup(firstLetter, contactId, contact);
+  }
+}
+
+function selectNewContact(contactId, newContact) {
+  let newContactElement = document.querySelector(
+    `[data-contact-id="${contactId}"]`
+  );
+  if (newContactElement) {
+    selectContact(
+      newContactElement,
+      contactId,
+      newContact.name,
+      newContact.email,
+      newContact.phone
+    );
+  }
 }
 
 function getContactFormData() {
@@ -201,8 +232,8 @@ function clearContactForm() {
       "";
 }
 
-async function saveContactToServer(contact) {
-  let response = await fetch(`${databaseURL}/contacts.json`, {
+async function saveContactToServer(contact, userId) {
+  let response = await fetch(`${databaseURL}/users/${userId}/contacts.json`, {
     method: "POST",
     headers: {
       "Content-Type": "application/json",
@@ -222,11 +253,20 @@ async function updateContact(contactId, name, email, phone) {
   let updatedContact = { name, email, phone };
 
   try {
-    let response = await fetch(`${databaseURL}/contacts/${contactId}.json`, {
-      method: "PUT",
-      headers: { "Content-Type": "application/json" },
-      body: JSON.stringify(updatedContact),
-    });
+    const userId = JSON.parse(sessionStorage.getItem("loggedInUser")).id;
+    if (!userId) {
+      console.error("User ID not found in sessionStorage.");
+      return;
+    }
+
+    let response = await fetch(
+      `${databaseURL}/users/${userId}/contacts/${contactId}.json`,
+      {
+        method: "PUT",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify(updatedContact),
+      }
+    );
 
     if (!response.ok) {
       throw new Error("Update Contact Failed.");
@@ -283,7 +323,13 @@ async function deleteContact(contactId) {
   if (!contactId) return;
 
   try {
-    await deleteContactFromServer(contactId);
+    const userId = JSON.parse(sessionStorage.getItem("loggedInUser")).id;
+    if (!userId) {
+      console.error("User ID not found in sessionStorage.");
+      return;
+    }
+
+    await deleteContactFromServer(userId, contactId);
     document.getElementById("contact-info").innerHTML = "";
     fetchContactsFromDatabase();
   } catch (error) {
@@ -291,10 +337,13 @@ async function deleteContact(contactId) {
   }
 }
 
-async function deleteContactFromServer(contactId) {
-  const response = await fetch(`${databaseURL}/contacts/${contactId}.json`, {
-    method: "DELETE",
-  });
+async function deleteContactFromServer(userId, contactId) {
+  const response = await fetch(
+    `${databaseURL}/users/${userId}/contacts/${contactId}.json`,
+    {
+      method: "DELETE",
+    }
+  );
 
   if (!response.ok) {
     throw new Error(
