@@ -56,9 +56,15 @@ async function getUserData() {
     if (!users || typeof users !== "object") {
       return [];
     }
-    console.log(users);
+    let usersArray = Object.entries(users).map(([id, data]) => ({
+      id,
+      ...data,
+    }));
+    console.log("Converted usersArray:", usersArray);
+    return usersArray;
   } catch (error) {
     console.error(error.message);
+    return [];
   }
 }
 
@@ -113,17 +119,33 @@ function initFocusClear(inputElement, errorDiv) {
  * login()
  * Wird beim Absenden des Formulars aufgerufen. Prüft dummyUsers.
  */
-function login(event, users) {
+async function handleLogin(event) {
+  event.preventDefault();
+
+  let users = await getUserData(); // WICHTIG: `await` benutzen!
+  if (!Array.isArray(users)) {
+    console.error("Error: users is not an array.");
+    return;
+  }
+
+  login(event, users);
+}
+
+async function login(event, users) {
   event.preventDefault();
   const emailInput = document.getElementById("email"),
     passwordInput = document.getElementById("password"),
     errorDiv = document.getElementById("errorMessage"),
     email = emailInput.value.trim(),
     password = passwordInput.value.trim();
-  const user = users.find((u) => u.email === email && u.password === password);
+  const user = users.find(
+    (u) => u.userEmail === email && u.password === password
+  );
   if (user) {
     clearErrorStyles(emailInput, passwordInput, errorDiv);
     loginSuccess();
+    sessionStorage.setItem("loggedInUser", JSON.stringify(user));
+    window.location.href = "summary.html";
   } else {
     showErrorStyles(emailInput, passwordInput, errorDiv);
   }

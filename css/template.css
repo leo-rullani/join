@@ -226,27 +226,21 @@ a:active {
 }
 
 .profile_initials {
-  /* Feste Kreisgröße */
-  width: 40px;
-  height: 40px;
-
-  /* Rundung */
+  width: 50px;
+  height: 50px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
   border-radius: 50%;
-
-  /* Falls dein SVG/Bild teils transparent ist, 
-       schimmert die hover-Farbe durch */
-  background-color: transparent;
-
-  /* Bild skalieren */
-  object-fit: cover; /* Wirkt erst richtig bei <img>, Chrome/FF */
-
-  cursor: pointer;
+  font-weight: bold;
   transition: background-color 0.3s ease;
+  border: 3px solid rgb(0, 0, 0);
 }
 
 /* Hover-Effekt => Füllt den Kreis mit Hellgrau */
 .profile_initials:hover {
   background-color: #f5f5f5;
+  cursor: pointer;
 }
 
 /* Return Button auf Help , Privacy Policy und Legal notice*/

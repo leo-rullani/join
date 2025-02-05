@@ -2,7 +2,7 @@ body {
   margin: 0;
   padding: 0;
   font-family: "Inter", serif;
-  background-color: #F6F7F8;
+  background-color: #f6f7f8;
   overflow-x: hidden;
 }
 
@@ -35,11 +35,6 @@ header {
 
 .help_icon:hover {
   transform: scale(1.1);
-  cursor: pointer;
-}
-
-.profile_initials:hover {
-  background-color: #f5f5f5;
   cursor: pointer;
 }
 
@@ -173,20 +168,6 @@ a:active {
   text-decoration: none;
 }
 
-.profile_initials {
-  width: 40px;
-  height: 40px;
-  border-radius: 50%;
-  background-color: transparent;
-  object-fit: cover;
-  cursor: pointer;
-  transition: background-color 0.3s ease;
-}
-
-.profile_initials:hover {
-  background-color: #f5f5f5;
-}
-
 .content {
   display: flex;
   max-width: 1920px;
@@ -235,7 +216,7 @@ a:active {
   margin-top: 69px;
   margin-left: 100px;
 }
-  
+
 .summary_card {
   background-color: #ffffff;
   width: 210px;
@@ -248,23 +229,23 @@ a:active {
   gap: 20px;
   transition: background-color 0.3s ease, transform 0.3s ease;
 }
-  
+
 .box_number_label {
   display: flex;
   flex-direction: column;
   align-items: center;
 }
-  
+
 .icon_small {
   width: 50px;
   height: auto;
 }
-  
+
 .box_number {
   font-size: 47px;
   font-weight: bold;
   text-align: center;
-  color: #000; 
+  color: #000;
 }
 
 .box_date {
@@ -273,41 +254,38 @@ a:active {
   text-align: center;
   color: #000; /* Default schwarz */
 }
-  
+
 .box_label {
-  color: #2A3647;
+  color: #2a3647;
   font-size: 16px;
   text-align: center;
 }
 
 .longbox_label {
-  color: #2A3647;
+  color: #2a3647;
   font-size: 16px;
   text-align: center;
   margin-top: 8px;
 }
-  
 
 .summary_card:hover {
   background-color: #2a3647; /* Dunkelblau */
   transform: scale(1.03);
   cursor: pointer;
 }
-  
 
 .summary_card:hover .box_number,
 .summary_card:hover .box_label {
   color: #ffffff;
 }
-  
 
 .summary_card:hover .icon_small.todo {
   content: url("/assets/icons/todo_inverted.svg");
 }
-  
+
 .summary_card:hover .icon_small.done {
   content: url("/assets/icons/done_inverted.svg");
-}  
+}
 
 .summary_longbox {
   display: flex;
@@ -385,7 +363,7 @@ a:active {
 
 .smallbox_label {
   font-size: 14px;
-  color: #2A3647;
+  color: #2a3647;
   line-height: 120%;
   text-align: center;
 }
@@ -406,9 +384,24 @@ a:active {
   gap: 30px;
 }
 
+.greeting_div {
+  display: flex;
+  flex-direction: column;
+  margin-left: 50px;
+}
+
 #greeting_text {
-  font-size: 40px;
+  font-size: 47px;
   font-weight: 500;
-  color: #2A3647;
-  margin-left: 30px;
+  color: #2a3647;
+  padding: 0;
+  margin: 0;
+}
+
+#userName {
+  font-size: 55px;
+  font-weight: 700;
+  color: #2a3647;
+  padding: 0;
+  margin: 0;
 }

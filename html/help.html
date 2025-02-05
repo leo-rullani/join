@@ -12,8 +12,7 @@
         <link rel="stylesheet" href="/css/help.css">
         <link rel="stylesheet" href="/css/template.css">
         <link rel="stylesheet" href="/css/fonts.css">
-
-        <script src="/js/contacts.js"></script>
+        <script src="/js/template.js"></script>
 
 
     </head>
@@ -21,10 +20,10 @@
         <header>
             <div class="header_content">Kanban Project Management Tool <div class="header_img"><a
                         href="/html/help.html"><img class="help_icon" src="/assets/icons/help.svg" alt=""></a>
-                    <img onclick="toggleRespMenu()" class="profile_initials"
-                        src="/assets/icons/User profile initials.svg" alt="">
+                    <div onclick="toggleRespMenu()">
+                        <div class="profile_initials" id="userInitials"></div>
+                    </div>
                 </div>
-            </div>
         </header>
         <main class="content">
             <div class="side_menu">

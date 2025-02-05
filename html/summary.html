@@ -1,149 +1,154 @@
 <!DOCTYPE html>
 <html lang="de">
 
-<head>
-    <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Summary</title>
+    <head>
+        <meta charset="UTF-8" />
+        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+        <title>Summary</title>
 
-    <link rel="icon" type="image/png" href="/assets/img/join-logo-blue.svg" />
+        <link rel="icon" type="image/png" href="/assets/img/join-logo-blue.svg" />
 
-    <!-- CSS-Dateien -->
-    <link rel="stylesheet" href="/css/template.css">
-    <link rel="stylesheet" href="/css/summary.css">
-    <link rel="stylesheet" href="/css/fonts.css">
+        <!-- CSS-Dateien -->
+        <link rel="stylesheet" href="/css/template.css">
+        <link rel="stylesheet" href="/css/summary.css">
+        <link rel="stylesheet" href="/css/fonts.css">
 
-    <!-- font awesome icons -->
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css">
-</head>
+        <!-- font awesome icons -->
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css">
+    </head>
 
-<body onload="init()">
+    <body onload="init()">
 
-    <!-- HEADER -->
-    <header>
-        <div class="header_content">
-            Kanban Project Management Tool
-            <div class="header_img">
-                <a href="/html/help.html">
-                    <img class="help_icon" src="/assets/icons/help.svg" alt="Help Icon">
-                </a>
-                <img class="profile_initials" src="/assets/icons/User profile initials.svg" alt="User Profile"
-                    onclick="toggleRespMenu()">
+        <!-- HEADER -->
+        <header>
+            <div class="header_content">
+                Kanban Project Management Tool
+                <div class="header_img">
+                    <a href="/html/help.html">
+                        <img class="help_icon" src="/assets/icons/help.svg" alt="Help Icon">
+                    </a>
+                    <div onclick="toggleRespMenu()">
+                        <div class="profile_initials" id="userInitials"></div>
+                    </div>
+                </div>
             </div>
-        </div>
-    </header>
+        </header>
 
-    <!-- Hauptbereich: Side-Bar links und Inhalt rechts -->
-    <main class="content">
-        <div class="side_menu">
-            <img class="logo" src="/assets/img/join-logo-white.svg" alt="Join Logo">
-            <div class="menu_bar">
-                <div class="selection isActive">
-                    <img src="/assets/icons/Icon-summary.svg" alt="Summary Icon">
-                    <a href="/html/summary.html"><span>Summary</span></a>
+        <!-- Hauptbereich: Side-Bar links und Inhalt rechts -->
+        <main class="content">
+            <div class="side_menu">
+                <img class="logo" src="/assets/img/join-logo-white.svg" alt="Join Logo">
+                <div class="menu_bar">
+                    <div class="selection isActive">
+                        <img src="/assets/icons/Icon-summary.svg" alt="Summary Icon">
+                        <a href="/html/summary.html"><span>Summary</span></a>
+                    </div>
+                    <div class="selection">
+                        <img src="/assets/icons/Icon-addtask.svg" alt="Add Task Icon">
+                        <a href="/html/addtask.html"><span>Add Task</span></a>
+                    </div>
+                    <div class="selection">
+                        <img src="/assets/icons/Icon-board.svg" alt="Board Icon">
+                        <a href="/html/board.html"><span>Board</span></a>
+                    </div>
+                    <div class="selection">
+                        <img src="/assets/icons/Icon-contacts.svg" alt="Contacts Icon">
+                        <a href="/html/contacts.html"><span>Contacts</span></a>
+                    </div>
+                    <div class="policy_docs">
+                        <a href="/html/privacypolicy.html">Privacy Policy</a>
+                        <a href="/html/legalnotice.html">Legal Notice</a>
+                    </div>
                 </div>
-                <div class="selection">
-                    <img src="/assets/icons/Icon-addtask.svg" alt="Add Task Icon">
-                    <a href="/html/addtask.html"><span>Add Task</span></a>
+            </div>
+
+            <section class="summary_content">
+                <div class="summary_details_header">
+                    <div class="details_header">
+                        <h1><b>Join 360</b></h1>
+                    </div>
+                    <img src="/assets/icons/blue-line.svg" alt="Blue Line" class="blue_line">
+                    <div class="details_motivation">Key Metrics at a Glance</div>
                 </div>
-                <div class="selection">
-                    <img src="/assets/icons/Icon-board.svg" alt="Board Icon">
-                    <a href="/html/board.html"><span>Board</span></a>
+
+                <!-- ==================== SUMMARY CARDS ==================== -->
+                <div class="summary_cards">
+                    <a href="/html/board.html" class="summary_card_link">
+                        <div class="summary_card">
+                            <img src="/assets/icons/todo.svg" alt="Todo Icon" class="icon_small todo">
+                            <div class="box_number_label">
+                                <div class="box_number">1</div>
+                                <div class="box_label">To-do</div>
+                            </div>
+                        </div>
+                    </a>
+                    <a href="/html/board.html" class="summary_card_link">
+                        <div class="summary_card">
+                            <img src="/assets/icons/done.svg" alt="Done Icon" class="icon_small done">
+                            <div class="box_number_label">
+                                <div class="box_number">1</div>
+                                <div class="box_label">Done</div>
+                            </div>
+                        </div>
+                    </a>
                 </div>
-                <div class="selection">
-                    <img src="/assets/icons/Icon-contacts.svg" alt="Contacts Icon">
-                    <a href="/html/contacts.html"><span>Contacts</span></a>
+
+                <!-- ==================== LONGBOX & GREETING TEXT ==================== -->
+                <div class="longbox_wrapper">
+                    <a href="/html/board.html" class="summary_card_link">
+                        <div class="summary_longbox">
+                            <img src="/assets/icons/urgent.svg" alt="Urgent Icon" class="icon_small">
+                            <div class="box_number_label">
+                                <div class="box_number">1</div>
+                                <div class="box_label">Urgent</div>
+                            </div>
+                            <img src="/assets/icons/grey-line.svg" alt="Grey Line" class="grey_line">
+                            <div class="box_number_label">
+                                <div class="box_date"><b>16. October 2024</b></div>
+                                <div class="longbox_label">Upcoming Deadline</div>
+                            </div>
+                        </div>
+                    </a>
+
+                    <!-- NUR TEXT OHNE BOX -->
+                    <div class="greeting_div">
+                        <h2 id="greeting_text"></h2>
+                        <h3 id="userName"></h3>
+                    </div>
                 </div>
-                <div class="policy_docs">
-                    <a href="/html/privacypolicy.html">Privacy Policy</a>
+
+                <div class="summary_smallboxes">
+                    <a href="/html/board.html" class="summary_card_link">
+                        <div class="summary_smallbox">
+                            <div class="smallbox_number">5</div>
+                            <div class="smallbox_label">Tasks in<br>Board</div>
+                        </div>
+                    </a>
+                    <a href="/html/board.html" class="summary_card_link">
+                        <div class="summary_smallbox">
+                            <div class="smallbox_number">2</div>
+                            <div class="smallbox_label">Tasks in<br>Progress</div>
+                        </div>
+                    </a>
+                    <a href="/html/board.html" class="summary_card_link">
+                        <div class="summary_smallbox">
+                            <div class="smallbox_number">2</div>
+                            <div class="smallbox_label">Awaiting<br>Feedback</div>
+                        </div>
+                    </a>
+                </div>
+            </section>
+
+            <div class="menu_header resp_menu_closed" id="resp_menu">
+                <div class="menu_links">
                     <a href="/html/legalnotice.html">Legal Notice</a>
+                    <a href="/html/privacypolicy.html">Privacy Policy</a>
+                    <a onclick="logout()" href="#">Logout</a>
                 </div>
             </div>
-        </div>
-
-        <section class="summary_content">
-            <div class="summary_details_header">
-                <div class="details_header">
-                    <h1><b>Join 360</b></h1>
-                </div>
-                <img src="/assets/icons/blue-line.svg" alt="Blue Line" class="blue_line">
-                <div class="details_motivation">Key Metrics at a Glance</div>
-            </div>
-
-            <!-- ==================== SUMMARY CARDS ==================== -->
-            <div class="summary_cards">
-                <a href="/html/board.html" class="summary_card_link">
-                    <div class="summary_card">
-                        <img src="/assets/icons/todo.svg" alt="Todo Icon" class="icon_small todo">
-                        <div class="box_number_label">
-                            <div class="box_number">1</div>
-                            <div class="box_label">To-do</div>
-                        </div>
-                    </div>
-                </a>
-                <a href="/html/board.html" class="summary_card_link">
-                    <div class="summary_card">
-                        <img src="/assets/icons/done.svg" alt="Done Icon" class="icon_small done">
-                        <div class="box_number_label">
-                            <div class="box_number">1</div>
-                            <div class="box_label">Done</div>
-                        </div>
-                    </div>
-                </a>
-            </div>
-
-            <!-- ==================== LONGBOX & GREETING TEXT ==================== -->
-            <div class="longbox_wrapper">
-                <a href="/html/board.html" class="summary_card_link">
-                    <div class="summary_longbox">
-                        <img src="/assets/icons/urgent.svg" alt="Urgent Icon" class="icon_small">
-                        <div class="box_number_label">
-                            <div class="box_number">1</div>
-                            <div class="box_label">Urgent</div>
-                        </div>
-                        <img src="/assets/icons/grey-line.svg" alt="Grey Line" class="grey_line">
-                        <div class="box_number_label">
-                            <div class="box_date"><b>16. October 2024</b></div>
-                            <div class="longbox_label">Upcoming Deadline</div>
-                        </div>
-                    </div>
-                </a>
-
-                <!-- NUR TEXT OHNE BOX -->
-                <div class="greeting_text" id="greeting_text">Good morning</div>
-            </div>
-
-            <div class="summary_smallboxes">
-                <a href="/html/board.html" class="summary_card_link">
-                    <div class="summary_smallbox">
-                        <div class="smallbox_number">5</div>
-                        <div class="smallbox_label">Tasks in<br>Board</div>
-                    </div>
-                </a>
-                <a href="/html/board.html" class="summary_card_link">
-                    <div class="summary_smallbox">
-                        <div class="smallbox_number">2</div>
-                        <div class="smallbox_label">Tasks in<br>Progress</div>
-                    </div>
-                </a>
-                <a href="/html/board.html" class="summary_card_link">
-                    <div class="summary_smallbox">
-                        <div class="smallbox_number">2</div>
-                        <div class="smallbox_label">Awaiting<br>Feedback</div>
-                    </div>
-                </a>
-            </div>
-        </section>
-
-        <div class="menu_header resp_menu_closed" id="resp_menu">
-            <div class="menu_links">
-                <a href="/html/legalnotice.html">Legal Notice</a>
-                <a href="/html/privacypolicy.html">Privacy Policy</a>
-                <a href="/html/login.html">Logout</a>
-            </div>
-        </div>
-    </main>
-    <script src="/js/summary.js"></script>
-</body>
+        </main>
+        <script src="/js/summary.js"></script>
+        <script src="/js/template.js"></script>
+    </body>
 
 </html>
