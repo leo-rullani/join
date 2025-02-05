@@ -6,9 +6,6 @@ body {
   overflow-x: hidden;
 }
 
-/* ==================================================
-   ================ HEADER-BEREICH ==================
-   ================================================== */
 header {
   background-color: #ffffff;
   height: 75px;
@@ -46,9 +43,6 @@ header {
   cursor: pointer;
 }
 
-/* ==================================================
-   ================ RESPONSIVE MENU =================
-   ================================================== */
 .menu_header {
   border-radius: 20px 0 20px 20px;
   box-shadow: rgba(0, 0, 0, 0.05) 0px 6px 10px 0px;
@@ -95,9 +89,6 @@ header {
   display: flex;
 }
 
-/* ==================================================
-   ================ SIDE MENU =======================
-   ================================================== */
 .side_menu {
   background-color: #2a3647;
   width: 204px;
@@ -174,9 +165,6 @@ header {
   transform: scale(1.02);
 }
 
-/* ==================================================
-   ================ CONTENT/LAYOUT ==================
-   ================================================== */
 a,
 a:visited,
 a:hover,
@@ -215,9 +203,6 @@ a:active {
   padding: 20px;
 }
 
-/* ==================================================
-   ================ TITLE-BEREICH ===================
-   ================================================== */
 .summary_details_header {
   display: flex;
   justify-content: space-between;
@@ -244,100 +229,86 @@ a:active {
   color: #2b3647;
 }
 
-/* ==================================================
-   ================ SUMMARY CARDS ===================
-   ================================================== */
-/* ==================================================
-   ================ SUMMARY CARDS ===================
-   ================================================== */
+.summary_cards {
+  display: flex;
+  gap: 30px;
+  margin-top: 69px;
+  margin-left: 100px;
+}
+  
+.summary_card {
+  background-color: #ffffff;
+  width: 210px;
+  height: 136px;
+  border-radius: 20px;
+  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 20px;
+  transition: background-color 0.3s ease, transform 0.3s ease;
+}
+  
+.box_number_label {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+  
+.icon_small {
+  width: 50px;
+  height: auto;
+}
+  
+.box_number {
+  font-size: 47px;
+  font-weight: bold;
+  text-align: center;
+  color: #000; 
+}
 
-   .summary_cards {
-    display: flex;
-    gap: 30px;
-    margin-top: 69px;
-    margin-left: 100px;
-  }
+.box_date {
+  font-size: 20px;
+  font-weight: bold;
+  text-align: center;
+  color: #000; /* Default schwarz */
+}
   
-  .summary_card {
-    background-color: #ffffff;
-    width: 210px;
-    height: 136px;
-    border-radius: 20px;
-    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
-  
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    gap: 20px;
-  
-    /* Animation-Vorbereitung */
-    transition: background-color 0.3s ease, transform 0.3s ease;
-  }
-  
-  .box_number_label {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-  }
-  
-  .icon_small {
-    width: 50px;
-    height: auto;
-  }
-  
-  /* ========== Schrift-Styles normal ========== */
-  .box_number {
-    font-size: 47px;
-    font-weight: bold;
-    text-align: center;
-    color: #000; /* Default schwarz */
-  }
+.box_label {
+  color: #2A3647;
+  font-size: 16px;
+  text-align: center;
+}
 
-  .box_date {
-    font-size: 20px;
-    font-weight: bold;
-    text-align: center;
-    color: #000; /* Default schwarz */
-  }
+.longbox_label {
+  color: #2A3647;
+  font-size: 16px;
+  text-align: center;
+  margin-top: 8px;
+}
   
-  .box_label {
-    color: #2A3647;
-    font-size: 16px;
-    text-align: center;
-  }
 
-  .longbox_label {
-    color: #2A3647;
-    font-size: 16px;
-    text-align: center;
-    margin-top: 8px;
-  }
+.summary_card:hover {
+  background-color: #2a3647; /* Dunkelblau */
+  transform: scale(1.03);
+  cursor: pointer;
+}
   
-  /* ========== Hover-Effekt nur für SUMMARY_CARDS ========== */
-  .summary_card:hover {
-    background-color: #2a3647; /* Dunkelblau */
-    transform: scale(1.03);
-    cursor: pointer;
-  }
-  
-  /* Schrift invertieren */
-  .summary_card:hover .box_number,
-  .summary_card:hover .box_label {
-    color: #ffffff;
-  }
-  
-  /* SVG-Wechsel bei Hover */
-  .summary_card:hover .icon_small.todo {
-    content: url("/assets/icons/todo_inverted.svg");
-  }
-  
-  .summary_card:hover .icon_small.done {
-    content: url("/assets/icons/done_inverted.svg");
-  }  
 
-/* ==================================================
-   ================ LÄNGLICHE BOX ===================
-   ================================================== */
+.summary_card:hover .box_number,
+.summary_card:hover .box_label {
+  color: #ffffff;
+}
+  
+
+.summary_card:hover .icon_small.todo {
+  content: url("/assets/icons/todo_inverted.svg");
+}
+  
+.summary_card:hover .icon_small.done {
+  content: url("/assets/icons/done_inverted.svg");
+}  
+
 .summary_longbox {
   display: flex;
   align-items: center;
@@ -362,10 +333,6 @@ a:active {
   margin: 0 15px;
 }
 
-/* 
-   Letztes Box-Label-Paar (Upcoming Date) 
-   -> linksbündig untereinander 
-*/
 .summary_longbox .box_number_label:last-of-type {
   align-items: flex-start;
 }
@@ -374,7 +341,6 @@ a:active {
   text-align: left;
 }
 
-/* Hover-Effekt: Box dunkelblau, Text weiß */
 .summary_longbox:hover {
   background-color: #2a3647;
   transform: scale(1.03);
@@ -387,9 +353,6 @@ a:active {
   color: #ffffff;
 }
 
-/* ==================================================
-   ================ DREI KLEINE BOXEN UNTEN =========
-   ================================================== */
 .summary_smallboxes {
   display: flex;
   gap: 20px;
@@ -409,8 +372,6 @@ a:active {
   justify-content: center;
   align-items: center;
   text-align: center;
-
-  /* Gleiche Animation */
   transition: background-color 0.3s ease, transform 0.3s ease;
 }
 
@@ -429,7 +390,6 @@ a:active {
   text-align: center;
 }
 
-/* Hover-Effekt: Box dunkelblau, Text weiß */
 .summary_smallbox:hover {
   background-color: #2a3647;
   transform: scale(1.03);
@@ -440,7 +400,6 @@ a:active {
   color: #ffffff;
 }
 
-/* Container für LONGBOX + GREETING BOX */
 .longbox_wrapper {
   display: flex;
   align-items: center;
