@@ -11,38 +11,26 @@ function toggleRespMenu() {
   menu.classList.toggle("resp_menu_open");
 }
 
-// Optional: Aktionen beim Laden der Seite
-document.addEventListener("DOMContentLoaded", function () {
-  console.log("Summary page loaded. Header & Side-Bar ready!");
-});
-
 document.addEventListener("DOMContentLoaded", function () {
   const userData = sessionStorage.getItem("loggedInUser");
-  if (!userData) {
-    console.warn("⚠ Kein Nutzer gefunden!");
-    return;
-  }
 
-  const user = JSON.parse(userData);
+  const isGuest = !userData;
+  const user = isGuest ? { userName: "Gast" } : JSON.parse(userData);
   const userName = user.userName || "User";
 
-  // Initialen und Farbe berechnen
-  const initials = getInitials(userName);
+  const initials = isGuest ? "G" : getInitials(userName);
   const firstLetter = initials.charAt(0);
   const textColor = getColorForLetter(firstLetter);
 
-  // Initialen setzen
   const initialsDiv = document.getElementById("userInitials");
   if (initialsDiv) {
     initialsDiv.textContent = initials;
     initialsDiv.style.color = textColor;
   }
 
-  // Rückgabe der Initialen und der Farbe für die Verwendung in anderen JS-Dateien
   return { initials, textColor, userName };
 });
 
-// Funktion zur Berechnung der Initialen
 function getInitials(name) {
   return name
     .split(" ")
@@ -50,7 +38,6 @@ function getInitials(name) {
     .join("");
 }
 
-// Funktion zur Bestimmung der Farbe für den ersten Buchstaben
 function getColorForLetter(letter) {
   const colors = {
     A: "#FF5733",
@@ -82,10 +69,20 @@ function getColorForLetter(letter) {
   };
 
   let upperLetter = letter.toUpperCase();
-  return colors[upperLetter] || "#999999"; // Default-Farbe
+  return colors[upperLetter] || "#999999";
 }
 
 function logout() {
-  sessionStorage.removeItem("loggedInUser");
+  sessionStorage.clear();
   window.location.href = "login.html";
 }
+
+document.addEventListener("DOMContentLoaded", function () {
+  let summaryLink = document.getElementById("summaryLink");
+
+  if (!summaryLink) return;
+
+  if (isGuest()) {
+    summaryLink.href = "summaryguest.html";
+  }
+});

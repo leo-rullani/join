@@ -11,41 +11,31 @@ function toggleRespMenu() {
   menu.classList.toggle("resp_menu_open");
 }
 
-// Optional: Aktionen beim Laden der Seite
 document.addEventListener("DOMContentLoaded", function () {
   const headerName = document.getElementById("userName");
   const greetingDiv = document.getElementById("userName");
   const userData = sessionStorage.getItem("loggedInUser");
 
   if (!headerName || !greetingDiv) {
-    console.error("❌ Elemente nicht gefunden!");
+    console.error("Elemente nicht gefunden!");
     return;
   }
 
-  if (!userData) {
-    console.warn("⚠ Kein Nutzer gefunden! Weiterleitung zur Login-Seite...");
-    window.location.href = "login.html";
-    return;
-  }
-
-  const user = JSON.parse(userData);
+  const isGuest = !userData;
+  const user = isGuest ? { userName: "Guest" } : JSON.parse(userData);
   const userName = user.userName || "User";
-  const { textColor } = getProfileData();
+  const { textColor } = getProfileData(isGuest);
+
   headerName.style.color = textColor;
   greetingDiv.textContent = `${userName}`;
   headerName.textContent = userName;
 });
 
-function getProfileData() {
+function getProfileData(isGuest) {
   const userData = sessionStorage.getItem("loggedInUser");
-  if (!userData) {
-    console.warn("⚠ Kein Nutzer gefunden!");
-    return { initials: "U", textColor: "#999999", userName: "User" };
-  }
-
-  const user = JSON.parse(userData);
+  const user = isGuest ? { userName: "Guest" } : JSON.parse(userData);
   const userName = user.userName || "User";
-  const initials = getInitials(userName);
+  const initials = isGuest ? "G" : getInitials(userName);
   const firstLetter = initials.charAt(0);
   const textColor = getColorForLetter(firstLetter);
 

@@ -1,69 +1,69 @@
 <!DOCTYPE html>
 <html lang="en">
 
-<head>
-    <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Login</title>
+    <head>
+        <meta charset="UTF-8" />
+        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+        <title>Login</title>
 
-    <link rel="icon" type="image/png" href="/assets/img/join-logo-blue.svg" />
-    <link rel="stylesheet" href="/css/login.css" />
-    <link rel="stylesheet" href="/css/fonts.css" />
-</head>
+        <link rel="icon" type="image/png" href="/assets/img/join-logo-blue.svg" />
+        <link rel="stylesheet" href="/css/login.css" />
+        <link rel="stylesheet" href="/css/fonts.css" />
+    </head>
 
-<body>
-    <!-- Logo-Container: Default-Bild = blaues Logo -->
-    <div class="logo-container">
-        <img src="/assets/img/join-logo-blue.svg" alt="Join Logo" class="logo" />
-    </div>
-
-    <!-- Top-Rechter Bereich (zuerst hidden) -->
-    <div class="top-right hidden">
-        <img src="/assets/img/not-a-join-user.png" alt="Not a Join User" />
-        <button class="signup-btn" onclick="window.location.href='/html/singup.html'">
-            Sign Up
-        </button>
-    </div>
-
-    <!-- Login-Formular-Container (zuerst hidden) -->
-    <div class="form-container hidden">
-        <div class="login-box">
-            <h2>Log in</h2>
-            <div class="underline"></div>
-
-            <form onsubmit="handleLogin(event); return false;">
-                <div class="input-container">
-                    <input type="email" id="email" placeholder="Email" required />
-                    <img src="/assets/icons/mail.svg" class="input-icon" alt="Email Icon" onclick="fillEmail()" />
-                </div>
-                <div class="input-container">
-                    <input type="password" id="password" placeholder="Password" required />
-                    <img src="/assets/icons/lock.svg" class="input-icon" alt="Password Icon" id="passwordIcon"
-                        onclick="togglePassword()" />
-                </div>
-                <div id="errorMessage" class="error-message"></div>
-                <div class="button-container">
-                    <button type="submit" class="login-btn">Log in</button>
-                    <button type="button" class="guest-btn">Guest Log in</button>
-                </div>
-            </form>
+    <body>
+        <!-- Logo-Container: Default-Bild = blaues Logo -->
+        <div class="logo-container">
+            <img src="/assets/img/join-logo-blue.svg" alt="Join Logo" class="logo" />
         </div>
-    </div>
 
-    <!-- NEU: Toast-Notification für Erfolgsmeldung -->
-    <div id="notification" class="notification hidden"></div>
+        <!-- Top-Rechter Bereich (zuerst hidden) -->
+        <div class="top-right hidden">
+            <img src="/assets/img/not-a-join-user.png" alt="Not a Join User" />
+            <button class="signup-btn" onclick="window.location.href='/html/singup.html'">
+                Sign Up
+            </button>
+        </div>
 
-    <!-- Footer (zuerst hidden) -->
-    <div class="footer hidden">
-        <a href="/html/privacypolicy.html">Privacy Policy</a>
-        <a href="/html/legalnotice.html">Legal Notice</a>
-    </div>
+        <!-- Login-Formular-Container (zuerst hidden) -->
+        <div class="form-container hidden">
+            <div class="login-box">
+                <h2>Log in</h2>
+                <div class="underline"></div>
 
-    <!-- Skripte -->
-    <script src="/js/login.js"></script>
-    <script src="/js/api.js"></script>
-    <script src="/js/guestlogin.js"></script>
-    <script src="/js/toast.js"></script> <!-- NEU: Toast-Notification Skript -->
-</body>
+                <form onsubmit="handleLogin(event); return false;">
+                    <div class="input-container">
+                        <input type="email" id="email" placeholder="Email" required />
+                        <img src="/assets/icons/mail.svg" class="input-icon" alt="Email Icon" onclick="fillEmail()" />
+                    </div>
+                    <div class="input-container">
+                        <input type="password" id="password" placeholder="Password" required />
+                        <img src="/assets/icons/lock.svg" class="input-icon" alt="Password Icon" id="passwordIcon"
+                            onclick="togglePassword()" />
+                    </div>
+                    <div id="errorMessage" class="error-message"></div>
+                    <div class="button-container">
+                        <button type="submit" class="login-btn">Log in</button>
+                        <button onclick=" guestLogin()" type="button" class="guest-btn">Guest Log in</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+
+        <!-- NEU: Toast-Notification für Erfolgsmeldung -->
+        <div id="notification" class="notification hidden"></div>
+
+        <!-- Footer (zuerst hidden) -->
+        <div class="footer hidden">
+            <a href="/html/privacypolicy.html">Privacy Policy</a>
+            <a href="/html/legalnotice.html">Legal Notice</a>
+        </div>
+
+        <!-- Skripte -->
+        <script src="/js/login.js"></script>
+        <script src="/js/api.js"></script>
+        <script src="/js/guestlogin.js"></script>
+        <script src="/js/toast.js"></script> <!-- NEU: Toast-Notification Skript -->
+    </body>
 
 </html>

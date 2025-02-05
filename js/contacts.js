@@ -8,20 +8,57 @@ function init() {
   fetchContactsFromDatabase();
 }
 
+function getContactsPath() {
+  if (isGuest()) {
+    return `${databaseURL}/contacts`;
+  }
+
+  let user = JSON.parse(sessionStorage.getItem("loggedInUser"));
+  if (!user) {
+    console.error("No logged-in user found.");
+    return null;
+  }
+  return `${databaseURL}/users/${user.id}/contacts`;
+}
+
 async function fetchContactsFromDatabase() {
   try {
-    const userId = JSON.parse(sessionStorage.getItem("loggedInUser")).id;
-    if (!userId) {
-      console.error("User ID not found in sessionStorage.");
-      return;
-    }
+    let contactsPath = getContactsPath();
+    if (!contactsPath) return;
 
-    let contactsData = await getContactsFromServer(userId);
+    let response = await fetch(`${contactsPath}.json`);
+    let contactsData = await response.json();
+
     let contactsArray = processContactsData(contactsData);
     renderContacts(contactsArray);
   } catch (error) {
-    console.error("Error: Contacts can not be found", error);
+    console.error("Error fetching contacts:", error);
   }
+}
+
+async function fetchGuestContacts() {
+  try {
+    let guestId = sessionStorage.getItem("guestSession");
+    if (!guestId) {
+      console.error("No guest session found.");
+      return;
+    }
+    const contactsData = await getGuestContactsFromServer();
+
+    let contactsArray = processContactsData(contactsData);
+    renderContacts(contactsArray);
+  } catch (error) {
+    console.error("Error fetching guest contacts", error);
+  }
+}
+
+async function getGuestContactsFromServer() {
+  const response = await fetch(`${databaseURL}/contacts.json`);
+  return await response.json();
+}
+
+function isGuest() {
+  return sessionStorage.getItem("guestSession") !== null;
 }
 
 async function getContactsFromServer(userId) {
@@ -163,15 +200,25 @@ async function saveContactToDatabase(event) {
   clearContactForm();
 
   try {
-    let userId = getUserId();
-    if (!userId) return;
+    let contactsPath = getContactsPath();
+    if (!contactsPath) return;
 
-    let contactId = await saveContactToServer(newContact, userId);
+    let response = await fetch(`${contactsPath}.json`, {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify(newContact),
+    });
+
+    if (!response.ok) {
+      throw new Error("Failed to save contact.");
+    }
+
+    let data = await response.json();
     showToast("Contact successfully created!");
-
-    addContactToGroup(contactId, newContact);
-    selectNewContact(contactId, newContact);
-
+    addContactToGroup(data.name, newContact);
+    selectNewContact(data.name, newContact);
     closeOverlay();
   } catch (error) {
     console.error("Error saving contact:", error);
@@ -251,45 +298,24 @@ async function saveContactToServer(contact, userId) {
 
 async function updateContact(contactId, name, email, phone) {
   let updatedContact = { name, email, phone };
+  const contactsPath = getContactsPath();
+  if (!contactsPath) return;
 
   try {
-    const userId = JSON.parse(sessionStorage.getItem("loggedInUser")).id;
-    if (!userId) {
-      console.error("User ID not found in sessionStorage.");
-      return;
-    }
-
-    let response = await fetch(
-      `${databaseURL}/users/${userId}/contacts/${contactId}.json`,
-      {
-        method: "PUT",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify(updatedContact),
-      }
-    );
+    const response = await fetch(`${contactsPath}/${contactId}.json`, {
+      method: "PUT",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify(updatedContact),
+    });
 
     if (!response.ok) {
       throw new Error("Update Contact Failed.");
     }
+
+    await fetchContactsFromDatabase(); // UI aktualisieren
   } catch (error) {
     console.error("Update Error:", error);
   }
-}
-
-function openEditOverlay(contactId, name, email, phone) {
-  document.getElementById("editOverlay").style.display = "flex";
-
-  document.getElementById("editName").value = name;
-  document.getElementById("editEmail").value = email;
-  document.getElementById("editPhone").value = phone;
-
-  document
-    .getElementById("editContactForm")
-    .setAttribute("data-contact-id", contactId);
-}
-
-function closeEditOverlay() {
-  document.getElementById("editOverlay").style.display = "none";
 }
 
 async function submitEditForm(event) {
@@ -323,17 +349,34 @@ async function deleteContact(contactId) {
   if (!contactId) return;
 
   try {
-    const userId = JSON.parse(sessionStorage.getItem("loggedInUser")).id;
-    if (!userId) {
-      console.error("User ID not found in sessionStorage.");
-      return;
+    const contactsPath = getContactsPath();
+    if (!contactsPath) return;
+
+    const response = await fetch(`${contactsPath}/${contactId}.json`, {
+      method: "DELETE",
+    });
+
+    if (!response.ok) {
+      throw new Error(`Failed to delete contact: ${response.statusText}`);
     }
 
-    await deleteContactFromServer(userId, contactId);
+    // UI aktualisieren
     document.getElementById("contact-info").innerHTML = "";
-    fetchContactsFromDatabase();
+    await fetchContactsFromDatabase(); // Kontakte direkt neu laden
   } catch (error) {
-    console.error("Error during deletion:", error);
+    console.error("Error deleting contact:", error);
+  }
+}
+
+async function deleteGuestContacts(contactId) {
+  const response = await fetch(`${databaseURL}/contacts/${contactId}.json`, {
+    method: "DELETE",
+  });
+
+  if (!response.ok) {
+    throw new Error(
+      `Failed to delete contact with ID ${contactId}: ${response.statusText}`
+    );
   }
 }
 
@@ -350,6 +393,22 @@ async function deleteContactFromServer(userId, contactId) {
       `Failed to delete contact with ID ${contactId}: ${response.statusText}`
     );
   }
+}
+
+function openEditOverlay(contactId, name, email, phone) {
+  document.getElementById("editOverlay").style.display = "flex";
+
+  document.getElementById("editName").value = name;
+  document.getElementById("editEmail").value = email;
+  document.getElementById("editPhone").value = phone;
+
+  document
+    .getElementById("editContactForm")
+    .setAttribute("data-contact-id", contactId);
+}
+
+function closeEditOverlay() {
+  document.getElementById("editOverlay").style.display = "none";
 }
 
 function openOverlay() {

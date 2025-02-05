@@ -5,7 +5,6 @@
  */
 
 document.addEventListener("DOMContentLoaded", () => {
-  initGuestLogin();
   setGreeting();
 });
 
@@ -13,13 +12,13 @@ document.addEventListener("DOMContentLoaded", () => {
  * initGuestLogin()
  * Klick auf Guest-Login-Button -> weiter zur summaryguest.html
  */
-function initGuestLogin() {
-  const guestLoginBtn = document.querySelector(".guest-btn");
-  if (guestLoginBtn) {
-    guestLoginBtn.addEventListener("click", () => {
-      window.location.href = "/html/summaryguest.html";
-    });
-  }
+function guestLogin() {
+  let guestId = generateGuestId();
+  sessionStorage.setItem("guestSession", guestId);
+  window.location.href = "summaryguest.html";
+}
+function generateGuestId() {
+  return "guest_" + Math.random().toString(36).substr(2, 9);
 }
 
 /**

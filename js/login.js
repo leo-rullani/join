@@ -25,7 +25,6 @@ function init() {
     form,
     topRight,
     footer,
-    guestLoginBtn,
     emailInput,
     passwordInput,
     errorDiv,
@@ -33,7 +32,6 @@ function init() {
   getUserData();
   handleScreenSize(topRight, footer);
   initLogoAnimation(logoContainer, form);
-  initGuestLogin(guestLoginBtn);
   initFocusClear(emailInput, errorDiv);
   initFocusClear(passwordInput, errorDiv);
 }
@@ -100,17 +98,11 @@ function initLogoAnimation(logo, form) {
  * Redirects to the summary page on guest login click.
  * @param {HTMLElement} guestLoginBtn - The "guest login" button
  */
-function initGuestLogin(guestLoginBtn) {
-  guestLoginBtn.addEventListener(
-    "click",
-    () => (window.location.href = "summary.html")
-  );
-}
 
 /**
  * initFocusClear
  * Removes error styles and messages when focusing on an input element.
- * 
+ *
  * @param {HTMLInputElement} inputElement - The input field
  * @param {HTMLElement} errorDiv - The container for error messages
  */

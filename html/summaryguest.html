@@ -28,7 +28,7 @@
                         <img class="help_icon" src="/assets/icons/help.svg" alt="Help Icon">
                     </a>
                     <div onclick="toggleRespMenu()">
-                        <div class="profile_initials" id="userInitials">G</div>
+                        <div class="profile_initials" id="userInitials"></div>
                     </div>
                 </div>
         </header>
@@ -110,9 +110,11 @@
                     </a>
 
                     <!-- NEU: Begrüßungstext -->
-                    <div class="greeting_text" id="greeting_text"></div>
+                    <div class="greeting_div">
+                        <h2 id="greeting_text"></h2>
+                        <h3 id="userName"></h3>
+                    </div>
                 </div>
-
                 <div class="summary_smallboxes">
                     <a href="/html/board.html" class="summary_card_link">
                         <div class="summary_smallbox">
@@ -139,13 +141,14 @@
                 <div class="menu_links">
                     <a href="/html/legalnotice.html">Legal Notice</a>
                     <a href="/html/privacypolicy.html">Privacy Policy</a>
-                    <a onclick="logout()" href="">Logout</a>
+                    <a onclick="logout()" href="#">Logout</a>
                 </div>
             </div>
         </main>
 
         <script src="/js/summary.js"></script>
         <script src="/js/guestlogin.js"></script>
+        <script src="/js/template.js"></script>
 
     </body>
 
