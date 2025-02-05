@@ -439,3 +439,17 @@ a:active {
 .summary_smallbox:hover .smallbox_label {
   color: #ffffff;
 }
+
+/* Container für LONGBOX + GREETING BOX */
+.longbox_wrapper {
+  display: flex;
+  align-items: center;
+  gap: 30px;
+}
+
+#greeting_text {
+  font-size: 40px;
+  font-weight: 500;
+  color: #2A3647;
+  margin-left: 30px;
+}
