@@ -164,6 +164,9 @@
 }
 
 .big-initials {
+  display: flex;
+  justify-content: center;
+  align-items: center;
   width: 100px;
   height: 100px;
   border-radius: 50%;
@@ -174,6 +177,7 @@
   color: rgb(255, 255, 255);
   font-size: 35px;
   margin-right: 50px;
+  flex-shrink: 0;
 }
 
 .contact-infos {
@@ -253,6 +257,19 @@
   border: 1px solid #29abe2ff;
   height: 50px;
   border-radius: 5px;
+}
+
+.contact-name-h1 {
+  font-size: 35px;
+}
+
+.contact_name {
+  font-size: 17px;
+}
+
+.contact_email {
+  font-size: 14px;
+  color: #29abe2ff;
 }
 
 #contact-info {

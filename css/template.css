@@ -153,11 +153,6 @@ header {
 }
 
 /* Hover-Effekt auf einen Menüpunkt */
-.selection:hover {
-  width: 96%;
-  transform: scale(1.01);
-  background-color: #2c4972;
-}
 
 /* Markierter Menüpunkt (z. B. Summary) */
 .isActive {

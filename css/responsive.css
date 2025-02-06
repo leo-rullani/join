@@ -1,0 +1,200 @@
+@media (max-width: 1210px) {
+  .details_header {
+    font-size: 26px;
+  }
+
+  .blue_line {
+    display: flex;
+    align-self: center;
+    border: 1px solid #29abe2ff;
+    height: 50px;
+    border-radius: 5px;
+  }
+  .contact_details_header {
+    width: 400px;
+  }
+
+  .contact-name-h1 {
+    font-size: 24px;
+  }
+}
+
+@media (max-width: 1110px) {
+  .contacts_div {
+    width: 350px;
+  }
+  .contact_name {
+    font-size: 14px;
+  }
+
+  .contact_email {
+    font-size: 12px;
+    color: #29abe2ff;
+  }
+
+  .details_header {
+    font-size: 24px;
+  }
+
+  .details_motivation {
+    font-size: 17px;
+  }
+
+  .contact_details_header {
+    justify-content: start;
+  }
+
+  .blue_line {
+    margin-right: 20px;
+    margin-left: 20px;
+  }
+  .big-initials {
+    margin-right: 20px;
+  }
+}
+
+@media (max-width: 1000px) {
+  .header_content span {
+    margin-right: 100px;
+  }
+
+  .header_content {
+    display: flex;
+    justify-content: flex-end;
+  }
+
+  .header_img {
+    margin-right: 50px;
+  }
+
+  .side_menu {
+    width: 200px;
+    min-width: 200px;
+  }
+
+  .selection {
+    font-size: 14px;
+  }
+
+  .logo {
+    width: 80px;
+  }
+
+  .menu_bar img {
+    width: 20px;
+  }
+
+  .policy_docs {
+    font-size: 14px;
+    width: 182px;
+  }
+  .contacts_div {
+    width: 300px;
+  }
+  .contact_name {
+    font-size: 13px;
+  }
+
+  .contact_email {
+    font-size: 12px;
+    color: #29abe2ff;
+  }
+
+  .contact-initials {
+    width: 30px;
+    height: 30px;
+    font-size: 12px;
+  }
+
+  .addContact_button {
+    width: 250px;
+    font-size: 15px;
+    padding: 5px;
+    margin: 10px;
+  }
+
+  .letter {
+    width: 250px;
+  }
+
+  .details_header {
+    font-size: 22px;
+  }
+
+  .details_motivation {
+    font-size: 17px;
+  }
+
+  .contact_details_header {
+    justify-content: start;
+  }
+
+  .blue_line {
+    margin-right: 20px;
+    margin-left: 20px;
+  }
+  .big-initials {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 80px;
+    height: 80px;
+    font-size: 25px;
+  }
+  .contact-details-container {
+    padding-left: 25px;
+  }
+}
+
+@media (max-width: 860px) {
+  .side_menu {
+    background-color: #2a3647;
+    width: 100%;
+    height: 100px;
+    display: flex;
+    position: fixed;
+    z-index: 9999;
+    bottom: 0px;
+  }
+
+  .logo {
+    top: 15px;
+    left: 0;
+    width: 35px;
+    margin-left: 30px;
+    content: url(/assets/img/join-logo-blue.svg);
+  }
+
+  .menu_bar {
+    width: 100%;
+    top: 0px;
+    display: flex;
+    flex-direction: row;
+  }
+  .menu_bar img {
+    width: 20px;
+    margin: 0;
+    margin-bottom: 3px;
+  }
+  .selection {
+    display: flex;
+    flex-direction: column;
+    width: 150px;
+    pointer-events: auto;
+  }
+
+  .selection:hover {
+  }
+
+  .selection span {
+    min-width: 100%;
+    text-align: center;
+  }
+
+  .selection a {
+    display: block;
+    align-items: center;
+    text-align: center;
+    justify-content: center;
+  }
+}
