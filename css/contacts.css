@@ -163,6 +163,16 @@
   color: #29abe2ff;
 }
 
+.contact-details p {
+  font-size: 14px;
+  color: #29abe2ff;
+}
+
+.contact-details span {
+  font-size: 14px;
+  font-weight: medium;
+}
+
 .big-initials {
   display: flex;
   justify-content: center;

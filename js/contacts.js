@@ -473,3 +473,8 @@ function showToast(message) {
     notification.classList.remove("show");
   }, 3300);
 }
+
+function showContactDetails() {
+  const contactDetails = document.getElementById("contact-details");
+  contactDetails.classList.add("show");
+}

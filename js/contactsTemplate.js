@@ -17,7 +17,7 @@ function contactDetailsTemplate(id, name, email, phone) {
   let initials = getInitials(name);
   let bgColor = getColorForLetter(initials.charAt(0));
   return `
-    <div >
+    <div class="contact-details" >
          <div class="initial_name_content">
          <div class=" big-initials" style="background-color: ${bgColor};">${initials}</div>
             <div class="contact_name"><h1 class="contact-name-h1">${name}</h1>
@@ -30,8 +30,8 @@ function contactDetailsTemplate(id, name, email, phone) {
    <br>
    <strong>Email</strong> <br>
     <p style="font-size: 14px; color:#29abe2ff">${email}</p>
-    <strong>Phone</strong><br>
-    <p>${phone}</p>
+    <strong>Phone</strong><br><br>
+    ${phone}
     </div>
   `;
 }

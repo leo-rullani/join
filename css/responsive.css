@@ -147,14 +147,20 @@
 }
 
 @media (max-width: 860px) {
+  .policy_docs {
+    display: none;
+  }
+
   .side_menu {
     background-color: #2a3647;
     width: 100%;
-    height: 100px;
+    height: 70px;
     display: flex;
     position: fixed;
     z-index: 9999;
     bottom: 0px;
+    align-items: center;
+    justify-content: center;
   }
 
   .logo {
@@ -170,20 +176,33 @@
     top: 0px;
     display: flex;
     flex-direction: row;
+    margin: 10px;
   }
   .menu_bar img {
     width: 20px;
     margin: 0;
     margin-bottom: 3px;
   }
+
+  .width {
+    width: 100px !important;
+    padding: 10px 0px 10px 0px;
+    height: 45px;
+  }
+
   .selection {
-    display: flex;
-    flex-direction: column;
-    width: 150px;
-    pointer-events: auto;
+    display: inline-block;
+    width: auto;
+    text-align: center;
+    margin: 0 auto;
+    align-items: center;
+    border-radius: 10px;
+    font-size: 14px;
   }
 
   .selection:hover {
+    transition: background-color 0.3s ease-in-out;
+    width: fit-content;
   }
 
   .selection span {
@@ -191,10 +210,183 @@
     text-align: center;
   }
 
+  .selection img {
+    width: 25px;
+    margin: 0;
+  }
+
   .selection a {
     display: block;
     align-items: center;
     text-align: center;
     justify-content: center;
+  }
+  .header_content span {
+    margin-right: 30px;
+  }
+  .contacts_container {
+    position: relative;
+    height: 86%;
+    max-height: 1000px;
+  }
+  .contact_list {
+    height: 800px;
+  }
+  #phonebook {
+    height: 700px;
+  }
+}
+
+@media (max-width: 660px) {
+  .initial_name_content h1 {
+    font-size: 17px;
+  }
+  .contact_links {
+    margin-top: 7px;
+    width: 120px;
+  }
+  .details_header {
+    font-size: 18px;
+  }
+  .blue_line {
+    margin: 5px;
+  }
+  .big-initials {
+    width: 50px;
+    height: 50px;
+    font-size: 16px;
+  }
+  .contact-details h3 {
+    font-size: 16px;
+  }
+  .contact-details strong {
+    font-size: 14px;
+  }
+
+  .contact-details p {
+    font-size: 14px;
+  }
+}
+
+@media (max-width: 605px) {
+  .policy_docs {
+    display: none;
+  }
+
+  .header_content span {
+    display: none;
+  }
+
+  .header_img a {
+    display: none;
+  }
+
+  .contacts_container {
+    width: 100%;
+    display: block;
+  }
+
+  .contact_list {
+    width: 100%;
+    display: block;
+  }
+  .contacts_div {
+    width: 100%;
+  }
+
+  .contact-details-container {
+    display: none;
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: rgba(0, 0, 0, 0.5);
+    justify-content: center;
+    align-items: center;
+  }
+
+  .contact-details-container.show {
+    display: flex;
+  }
+
+  .contact_list {
+    height: 800px;
+  }
+  #phonebook {
+    height: 700px;
+  }
+
+  .side_menu {
+    background-color: #2a3647;
+    width: 100%;
+    height: 70px;
+    display: flex;
+    position: fixed;
+    z-index: 9999;
+    bottom: 0px;
+    align-items: center;
+    justify-content: center;
+  }
+
+  .logo {
+    top: 15px;
+    left: 0;
+    width: 35px;
+    margin-left: 30px;
+    content: url(/assets/img/join-logo-blue.svg);
+  }
+
+  .menu_bar {
+    width: 100%;
+    top: 0px;
+    display: flex;
+    flex-direction: row;
+    margin: 10px;
+  }
+  .menu_bar img {
+    width: 20px;
+    margin: 0;
+    margin-bottom: 3px;
+  }
+
+  .width {
+    width: 60px !important;
+    padding: 10px 0px 10px 0px;
+  }
+
+  .selection {
+    display: inline-block;
+    width: auto;
+    text-align: center;
+    margin: 0 auto;
+    align-items: center;
+    border-radius: 10px;
+    font-size: 12px;
+  }
+
+  .selection:hover {
+    transition: background-color 0.3s ease-in-out;
+    width: fit-content;
+  }
+
+  .selection span {
+    min-width: 100%;
+    text-align: center;
+  }
+
+  .selection img {
+    width: 16px;
+    margin: 0;
+  }
+
+  .selection a {
+    display: block;
+    align-items: center;
+    text-align: center;
+    justify-content: center;
+  }
+  .header_content span {
+    margin-right: 30px;
   }
 }
