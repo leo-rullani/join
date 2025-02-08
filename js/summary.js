@@ -2,8 +2,6 @@
 
 /**
  * Öffnet/Schließt das kleine Menü am Profil-Icon.
- * Wird aufgerufen, wenn der Nutzer
- * auf das .profile_initials-Bild klickt.
  */
 function toggleRespMenu() {
   let menu = document.getElementById("resp_menu");
@@ -11,6 +9,9 @@ function toggleRespMenu() {
   menu.classList.toggle("resp_menu_open");
 }
 
+/**
+ * Lädt User-Daten und aktualisiert UI.
+ */
 document.addEventListener("DOMContentLoaded", function () {
   const headerName = document.getElementById("userName");
   const greetingDiv = document.getElementById("userName");
@@ -27,10 +28,19 @@ document.addEventListener("DOMContentLoaded", function () {
   const { textColor } = getProfileData(isGuest);
 
   headerName.style.color = textColor;
-  greetingDiv.textContent = `${userName}`;
+  greetingDiv.textContent = userName;
   headerName.textContent = userName;
+
+  // Begrüßung basierend auf Uhrzeit
+  setGreeting();
+
+  // Prüfe Overlay-Bedingung
+  init();
 });
 
+/**
+ * Gibt Profil-Daten zurück (Farbe etc.).
+ */
 function getProfileData(isGuest) {
   const userData = sessionStorage.getItem("loggedInUser");
   const user = isGuest ? { userName: "Guest" } : JSON.parse(userData);
@@ -38,18 +48,16 @@ function getProfileData(isGuest) {
   const initials = isGuest ? "G" : getInitials(userName);
   const firstLetter = initials.charAt(0);
   const textColor = getColorForLetter(firstLetter);
-
   return { initials, textColor, userName };
 }
 
 /**
- * Setzt die Begrüßung basierend auf der aktuellen Uhrzeit.
+ * Setzt die Begrüßung (Morgen/Nachmittag/Abend/Nacht).
  */
 function setGreeting() {
   const greetingText = document.getElementById("greeting_text");
   const currentHour = new Date().getHours();
-
-  let greeting;
+  let greeting = "Good night,";
 
   if (currentHour >= 5 && currentHour < 12) {
     greeting = "Good morning,";
@@ -57,11 +65,94 @@ function setGreeting() {
     greeting = "Good afternoon,";
   } else if (currentHour >= 18 && currentHour < 22) {
     greeting = "Good evening,";
-  } else {
-    greeting = "Good night,";
   }
-
-  greetingText.textContent = greeting;
+  if (greetingText) greetingText.textContent = greeting;
 }
 
-document.addEventListener("DOMContentLoaded", setGreeting);
+/**
+ * Prüft die Bildschirmbreite und zeigt ggf. den Overlay.
+ */
+function init() {
+  const w = window.innerWidth;
+  if (w <= 910 && w >= 300) {
+    showGreetingOverlay();
+  }
+}
+
+/**
+ * Zeigt das Begrüßungs-Overlay mit dynamischen Texten.
+ */
+function showGreetingOverlay() {
+  const overlay = document.getElementById("greetingOverlay");
+  if (!overlay) return;
+
+  const overlayGreetingText = document.getElementById("overlayGreetingText");
+  const overlayGreetingName = document.getElementById("overlayGreetingName");
+  const greetingTextEl = document.getElementById("greeting_text");
+  const userNameEl = document.getElementById("userName");
+
+  // Übernimmt den Text aus greeting_text und userName
+  if (overlayGreetingText && greetingTextEl) {
+    overlayGreetingText.textContent = greetingTextEl.textContent;
+  }
+  if (overlayGreetingName && userNameEl) {
+    overlayGreetingName.textContent = userNameEl.textContent;
+  }
+
+  // Overlay einblenden
+  overlay.classList.remove("hidden");
+
+  // Nach 2 Sek. -> Fadeout
+  setTimeout(() => {
+    overlay.classList.add("fadeOut");
+    // Nach 0.5 Sek. -> komplett verstecken
+    setTimeout(() => {
+      overlay.classList.add("hidden");
+      overlay.classList.remove("fadeOut");
+    }, 500);
+  }, 2000);
+}
+
+/* Hilfsfunktionen (Beispiel) */
+function getInitials(name) {
+  if (typeof name !== "string" || name.length === 0) return "U";
+  const parts = name.trim().split(" ");
+  let initials = parts[0].charAt(0).toUpperCase();
+  if (parts.length > 1) {
+    initials += parts[parts.length - 1].charAt(0).toUpperCase();
+  }
+  return initials;
+}
+
+function getColorForLetter(letter) {
+  // Beispielhafte Farblogik
+  const colorMap = {
+    A: "#FF5733",
+    B: "#33FF57",
+    C: "#5733FF",
+    D: "#FF33A8",
+    E: "#33A8FF",
+    F: "#A8FF33",
+    G: "#FF8C33",
+    H: "#8C33FF",
+    I: "#33FFD7",
+    J: "#FFD733",
+    K: "#33FF8C",
+    L: "#D733FF",
+    M: "#FF336E",
+    N: "#338CFF",
+    O: "#33FFBD",
+    P: "#FFBD33",
+    Q: "#8CFF33",
+    R: "#FF338C",
+    S: "#336EFF",
+    T: "#33FF57",
+    U: "#FF5733",
+    V: "#5733FF",
+    W: "#FF33A8",
+    X: "#33A8FF",
+    Y: "#A8FF33",
+    Z: "#FF8C33",
+  };
+  return colorMap[letter] || "#000";
+}
