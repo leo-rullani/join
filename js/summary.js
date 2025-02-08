@@ -109,7 +109,7 @@ function showGreetingOverlay() {
     setTimeout(() => {
       overlay.classList.add("hidden");
       overlay.classList.remove("fadeOut");
-    }, 500);
+    }, 100);
   }, 2000);
 }
 
