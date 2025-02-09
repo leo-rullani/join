@@ -4,6 +4,7 @@ body {
   font-family: "Inter", serif;
   background-color: #f6f7f8;
   overflow-x: hidden;
+  visibility: hidden;
 }
 
 header {
@@ -198,7 +199,7 @@ a:active {
   font-size: 50px;
 }
 
-.blue_line {
+.blue_line_summary {
   display: flex;
   align-self: center;
   height: 50px;
@@ -489,3 +490,25 @@ a:active {
     display: none;
   }
 }
+
+@media (max-width: 715px) {
+  .summary_details_header {
+      display: flex;
+      flex-direction: column;
+  }
+
+  .details_motivation {
+      order: 2;
+  }
+
+  .blue_line_summary {
+      order: 3;
+      width: 75px; 
+      height: 3px; 
+      background-color: #28ABE2; 
+      border-radius: 5px;
+      margin-top: 16px; 
+      margin-left: 0; 
+      align-self: flex-start; 
+    }
+  }

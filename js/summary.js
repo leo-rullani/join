@@ -36,6 +36,8 @@ document.addEventListener("DOMContentLoaded", function () {
 
   // Prüfe Overlay-Bedingung
   init();
+
+  document.body.style.visibility = "visible";
 });
 
 /**
@@ -91,11 +93,15 @@ function showGreetingOverlay() {
   const greetingTextEl = document.getElementById("greeting_text");
   const userNameEl = document.getElementById("userName");
 
+  // 1. Text kopieren
   if (overlayGreetingText && greetingTextEl) {
     overlayGreetingText.textContent = greetingTextEl.textContent;
   }
   if (overlayGreetingName && userNameEl) {
     overlayGreetingName.textContent = userNameEl.textContent;
+
+    // 2. Farbe übernehmen
+    overlayGreetingName.style.color = userNameEl.style.color;
   }
 
   // Overlay einblenden
@@ -112,11 +118,6 @@ function showGreetingOverlay() {
   }, 2000);
 }
 
-/* 
-===============================
-NEU: Logout -> GoodNightOverlay
-===============================
-*/
 function logout() {
   const userData = sessionStorage.getItem("loggedInUser");
   if (!userData) {
