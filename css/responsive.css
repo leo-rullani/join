@@ -592,6 +592,7 @@
 
   .blue_line {
     margin-top: 5px; 
+    display: none;
   }
 
   .summary_details_header {

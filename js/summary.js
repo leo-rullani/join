@@ -46,7 +46,7 @@ function getProfileData(isGuest) {
   const user = isGuest ? { userName: "Guest" } : JSON.parse(userData);
   const userName = user.userName || "User";
   const initials = isGuest ? "G" : getInitials(userName);
-  const firstLetter = initials.charAt(0);
+  const firstLetter = initials.charAt(0).toUpperCase();
   const textColor = getColorForLetter(firstLetter);
   return { initials, textColor, userName };
 }
@@ -91,7 +91,6 @@ function showGreetingOverlay() {
   const greetingTextEl = document.getElementById("greeting_text");
   const userNameEl = document.getElementById("userName");
 
-  // Übernimmt den Text aus greeting_text und userName
   if (overlayGreetingText && greetingTextEl) {
     overlayGreetingText.textContent = greetingTextEl.textContent;
   }
@@ -109,7 +108,49 @@ function showGreetingOverlay() {
     setTimeout(() => {
       overlay.classList.add("hidden");
       overlay.classList.remove("fadeOut");
-    }, 100);
+    }, 500);
+  }, 2000);
+}
+
+/* 
+===============================
+NEU: Logout -> GoodNightOverlay
+===============================
+*/
+function logout() {
+  const userData = sessionStorage.getItem("loggedInUser");
+  if (!userData) {
+    // Falls schon Guest? -> Direkt zur Login-Seite
+    window.location.href = "/html/login.html";
+    return;
+  }
+  const user = JSON.parse(userData);
+  const userName = user.userName || "User";
+
+  // GoodNightOverlay befüllen
+  const overlay = document.getElementById("goodNightOverlay");
+  const goodNightText = document.getElementById("goodNightText");
+  const goodNightName = document.getElementById("goodNightName");
+  if (!overlay || !goodNightText || !goodNightName) {
+    // Fallback: Einfach Redirect
+    window.location.href = "/html/login.html";
+    return;
+  }
+
+  // Bsp.: "Good night," + userName
+  goodNightName.textContent = userName;
+  overlay.classList.remove("hidden"); // Overlay sichtbar
+
+  // Nach 2 Sek. FadeOut, dann Logout
+  setTimeout(() => {
+    overlay.classList.add("fadeOut");
+    setTimeout(() => {
+      overlay.classList.add("hidden");
+      overlay.classList.remove("fadeOut");
+      // userData entfernen & redirect
+      sessionStorage.removeItem("loggedInUser");
+      window.location.href = "/html/login.html";
+    }, 500);
   }, 2000);
 }
 
