@@ -236,7 +236,7 @@ function showErrorStyles(emailInput, passwordInput, errorDiv) {
  * Displays a success toast message and redirects to the summary page.
  */
 function loginSuccess() {
-  showToast("You have successfully logged in!");
+  showToast("Login successful!");
   setTimeout(() => (window.location.href = "summary.html"), 2000);
 }
 

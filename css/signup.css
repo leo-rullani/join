@@ -191,6 +191,7 @@ body {
   opacity: 0;
   transition: all 0.7s ease;
   z-index: 9999;
+  font-size: 12px;
 }
 .notification.show {
   opacity: 1;
@@ -266,5 +267,11 @@ body {
 @media (max-width: 400px) {
   body {
     background-color: #2b3647;
+  }
+}
+
+@media (max-width: 600px) {
+  .notification {
+    font-size: 12px;
   }
 }

@@ -338,3 +338,9 @@ h2 {
     background-color: #2b3647;
   }
 }
+
+@media (max-width: 600px) {
+  .notification {
+    font-size: 12px;
+  }
+}

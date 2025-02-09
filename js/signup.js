@@ -104,7 +104,7 @@ function signUp(event) {
   };
   registerUser(userData)
     .then(() => {
-      showToast("You have successfully signed up!");
+      showToast("You signed up successfully!");
       setTimeout(() => (window.location.href = "/html/summary.html"), 2000);
     })
     .catch((er) => {
