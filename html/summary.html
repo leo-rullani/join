@@ -25,6 +25,7 @@
         <div class="header_content">
             <span class="kanban-project">Kanban Project Management Tool</span>
             <div class="header_img">
+                <!-- Help-Icon sichtbar > 605px per CSS -->
                 <a href="/html/help.html">
                     <img class="help_icon" src="/assets/icons/help.svg" alt="Help Icon">
                 </a>
@@ -140,35 +141,30 @@
             </div>
         </section>
 
+        <!-- Toggle-Menü -->
         <div class="menu_header resp_menu_closed" id="resp_menu">
             <div class="menu_links">
+                <!-- Neuer Eintrag HELP für < 605px -->
+                <a href="/html/help.html" class="help_text_link">Help</a>
+
                 <a href="/html/legalnotice.html">Legal Notice</a>
                 <a href="/html/privacypolicy.html">Privacy Policy</a>
-                <!-- Wichtig: logout ruft logout() im JS auf -->
                 <a onclick="logout()" href="#">Logout</a>
             </div>
         </div>
     </main>
 
-    <!-- =========== GRAUER OVERLAY FÜR BEGRÜSSUNG =========== -->
+    <!-- GREETING OVERLAY -->
     <div id="greetingOverlay" class="greeting_overlay hidden">
         <div class="greeting_overlay_content">
-            <!-- Dynamische Begrüßung aus JS -->
             <h2 class="overlay_greeting_text" id="overlayGreetingText"></h2>
             <h3 class="overlay_greeting_name" id="overlayGreetingName"></h3>
         </div>
     </div>
 
-    <!-- =========== GOOD NIGHT OVERLAY =========== -->
-    <div id="goodNightOverlay" class="goodnight_overlay hidden">
-        <div class="greeting_overlay_content">
-            <h2 id="goodNightText">Good night,</h2>
-            <h3 id="goodNightName"></h3>
-        </div>
-    </div>
-
     <script src="/js/summary.js"></script>
     <script src="/js/template.js"></script>
+    <script src="/js/responsive.js"></script>
 </body>
 
 </html>

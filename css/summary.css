@@ -406,6 +406,39 @@ a:active {
   margin: 0;
 }
 
+.help_text_link {
+  display: none;
+}
+
+/* Standard: help_icon sichtbar */
+.help_icon {
+  width: 40px;
+  cursor: pointer;
+}
+
+/* Ab 605px: 
+   - Icon weg
+   - Textlink angezeigt 
+*/
+@media (max-width: 605px) {
+  .help_icon {
+    display: none;
+  }
+  .help_text_link {
+    display: block;
+    color: #a8a8a8; /* Deine Textfarbe */
+    text-decoration: none;
+    padding: 10px;
+  }
+  .help_text_link:hover {
+    background-color: #2c4972;
+    transform: scale(1.03);
+  }
+  .menu_header {
+    height: 160px;
+  }
+}
+
 @media (max-width: 910px) and (min-width: 300px) {
   .greeting_overlay {
     position: fixed;
