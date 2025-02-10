@@ -1,8 +1,7 @@
 "use strict";
 /**
  * @file signup.js
- * Contains splash/responsive logic similar to the login page,
- * plus your existing sign-up functions (signUp, toggleSignUpButton, etc.).
+ * Manages sign-up functionality, including form validation and DB storage.
  */
 
 // Global database URL
@@ -15,8 +14,7 @@ let databaseURL =
 document.addEventListener("DOMContentLoaded", init);
 
 /**
- * init
- * Collects elements, checks screen size, starts logo animation.
+ * Collects elements, checks screen size, and starts logo animation.
  */
 function init() {
   const logoContainer = document.querySelector(".logo-container"),
@@ -32,10 +30,9 @@ function init() {
 }
 
 /**
- * initLogoAnimation
- * Animates logo for small screens, then shows the form and footer.
- * @param {HTMLElement} logoContainer - The container with the logo
- * @param {HTMLElement} formContainer - The form container
+ * Animates the logo for small screens, then reveals the form and footer.
+ * @param {HTMLElement} logoContainer - Container holding the logo
+ * @param {HTMLElement} formContainer - Container holding the form
  */
 function initLogoAnimation(logoContainer, formContainer) {
   if (window.innerWidth <= 500) {
@@ -55,10 +52,9 @@ function initLogoAnimation(logoContainer, formContainer) {
 }
 
 /**
- * registerUser
  * Sends a POST request to store user data in the database.
  * @async
- * @param {Object} userData - The user data to be saved
+ * @param {Object} userData - The user data (name, email, password)
  * @returns {Promise<string>} - The newly created record ID (Firebase Key)
  */
 async function registerUser(userData) {
@@ -72,11 +68,10 @@ async function registerUser(userData) {
     throw new Error(`Network response was not ok ${errorData}`);
   }
   const data = await response.json();
-  return data.name; // Firebase generiert hier einen eindeutigen Key
+  return data.name;
 }
 
 /**
- * signUp
  * Validates form fields, checks password match, and sends data to the server.
  * @param {Event} event - The form submit event
  */
@@ -88,38 +83,26 @@ function signUp(event) {
     c = document.getElementById("confirm-password"),
     chk = document.getElementById("policy-checkbox"),
     err = document.getElementById("errorMessage");
-
   clearErrorStyles(p, c, err);
-
-  // 1) Passwort-Abgleich
   if (p.value.trim() !== c.value.trim()) {
     showErrorStyles(p, c, err, "Your passwords don’t match. Please try again.");
     return;
   }
-
-  // 2) Privacy Policy akzeptiert?
   if (!chk.checked) {
     alert("You must accept the Privacy Policy to sign up!");
     return;
   }
-
-  // 3) User-Objekt vorbereiten
   const userData = {
     userName: n.value.trim(),
     userEmail: e.value.trim(),
     password: p.value.trim(),
   };
-
-  // 4) Registrierung
   registerUser(userData)
     .then((newUserKey) => {
-      // Optional: in sessionStorage ablegen
-      // Falls du es NICHT brauchst, lösche diese Zeile:
       sessionStorage.setItem(
         "loggedInUser",
         JSON.stringify({ ...userData, userId: newUserKey })
       );
-
       showToast("You signed up successfully!");
       setTimeout(() => (window.location.href = "/html/summary.html"), 2000);
     })
@@ -135,8 +118,7 @@ function signUp(event) {
 }
 
 /**
- * toggleSignUpButton
- * Enables/disables the signup button based on the checkbox state.
+ * Enables or disables the sign-up button based on checkbox state.
  */
 function toggleSignUpButton() {
   const checkbox = document.getElementById("policy-checkbox"),
@@ -145,10 +127,9 @@ function toggleSignUpButton() {
 }
 
 /**
- * togglePassword
  * Toggles password visibility and updates the icon.
- * @param {string} inputId - The ID of the password input
- * @param {string} iconId - The ID of the icon element
+ * @param {string} inputId - ID of the password input field
+ * @param {string} iconId - ID of the icon element
  */
 function togglePassword(inputId, iconId) {
   const passInput = document.getElementById(inputId),
@@ -166,9 +147,8 @@ function togglePassword(inputId, iconId) {
 }
 
 /**
- * showToast
- * Determines the box center and moves the toast from below.
- * @param {string} message - The message to display
+ * Shows a toast notification moving from below the container.
+ * @param {string} message - The message to be displayed
  */
 function showToast(message) {
   const notification = document.getElementById("notification");
@@ -178,19 +158,17 @@ function showToast(message) {
   const boxRect = document.getElementById("signupBox").getBoundingClientRect(),
     boxMiddleY = boxRect.top + boxRect.height / 2,
     fromBottom = window.innerHeight - boxMiddleY;
-
-  notification.getBoundingClientRect(); // Reflow
+  notification.getBoundingClientRect();
   notification.style.bottom = `${fromBottom}px`;
   notification.classList.add("show");
 }
 
 /**
- * showErrorStyles
- * Adds an error class and sets the error message text.
- * @param {HTMLElement|null} passField - The password field
- * @param {HTMLElement|null} confirmField - The confirm password field
- * @param {HTMLElement} errorMsg - The error message container
- * @param {string} msgText - The text of the error message
+ * Adds error classes and sets the error message text.
+ * @param {HTMLElement|null} passField - Password field
+ * @param {HTMLElement|null} confirmField - Confirm password field
+ * @param {HTMLElement} errorMsg - Container for error message
+ * @param {string} msgText - Error text
  */
 function showErrorStyles(passField, confirmField, errorMsg, msgText) {
   if (passField) passField.classList.add("error");
@@ -199,11 +177,10 @@ function showErrorStyles(passField, confirmField, errorMsg, msgText) {
 }
 
 /**
- * clearErrorStyles
- * Removes error classes and clears the error message.
- * @param {HTMLElement} passField - The password field
- * @param {HTMLElement} confirmField - The confirm password field
- * @param {HTMLElement} errorMsg - The error message container
+ * Clears error classes and removes the error message text.
+ * @param {HTMLElement} passField - Password field
+ * @param {HTMLElement} confirmField - Confirm password field
+ * @param {HTMLElement} errorMsg - Container for error message
  */
 function clearErrorStyles(passField, confirmField, errorMsg) {
   passField.classList.remove("error");
