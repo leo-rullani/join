@@ -149,48 +149,20 @@ function showContactDetails(id, name, email, phone) {
   detailsContainer.innerHTML += contactDetailsTemplate(id, name, email, phone);
 }
 
-function getInitials(fullName) {
-  let names = fullName.trim().split(" ");
-  let initials = names.map((name) => name.charAt(0).toUpperCase()).join("");
+function getContactInitials(fullName) {
+  let initialEdit = document.getElementById("initials-edit");
+
+  let initials = fullName
+    .trim()
+    .split(" ")
+    .map((word) => word.charAt(0).toUpperCase())
+    .join("");
   let bgColor = getColorForLetter(initials.charAt(0));
-  document.getElementById(
-    "initials"
-  ).innerHTML = `<div class="contact-initials big-initials" style="background-color: ${bgColor};">${initials}</div>`;
+  initialEdit.innerHTML = `
+    <div class="edit-initials" style="background-color: ${bgColor};">${initials}</div>
+  `;
+
   return initials;
-}
-
-function getColorForLetter(letter) {
-  const colors = {
-    A: "#FF5733",
-    B: "#33FF57",
-    C: "#5733FF",
-    D: "#FF33A8",
-    E: "#33A8FF",
-    F: "#A8FF33",
-    G: "#FF8C33",
-    H: "#8C33FF",
-    I: "#33FFD7",
-    J: "#FFD733",
-    K: "#33FF8C",
-    L: "#D733FF",
-    M: "#FF336E",
-    N: "#338CFF",
-    O: "#33FFBD",
-    P: "#FFBD33",
-    Q: "#8CFF33",
-    R: "#FF338C",
-    S: "#336EFF",
-    T: "#33FF57",
-    U: "#FF5733",
-    V: "#5733FF",
-    W: "#FF33A8",
-    X: "#33A8FF",
-    Y: "#A8FF33",
-    Z: "#FF8C33",
-  };
-
-  let upperLetter = letter.toUpperCase();
-  return colors[upperLetter] || "#999999";
 }
 
 async function saveContactToDatabase(event) {
@@ -437,7 +409,6 @@ function openEditOverlay(contactId, name, email, phone) {
   document.getElementById("editPhone").value = phone;
 
   document.getElementById("editContactForm").dataset.contactId = contactId;
-  getInitials(name);
 }
 
 function closeEditOverlay() {

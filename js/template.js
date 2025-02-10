@@ -11,6 +11,13 @@ function toggleRespMenu() {
   menu.classList.toggle("resp_menu_open");
 }
 
+function getUserInitials(name) {
+  return name
+    .split(" ")
+    .map((word) => word.charAt(0).toUpperCase())
+    .join("");
+}
+
 document.addEventListener("DOMContentLoaded", function () {
   const userData = sessionStorage.getItem("loggedInUser");
 
@@ -18,7 +25,7 @@ document.addEventListener("DOMContentLoaded", function () {
   const user = isGuest ? { userName: "Gast" } : JSON.parse(userData);
   const userName = user.userName || "User";
 
-  const initials = isGuest ? "G" : getInitials(userName);
+  const initials = isGuest ? "G" : getUserInitials(userName);
   const firstLetter = initials.charAt(0);
   const textColor = getColorForLetter(firstLetter);
 
@@ -30,13 +37,6 @@ document.addEventListener("DOMContentLoaded", function () {
 
   return { initials, textColor, userName };
 });
-
-function getInitials(name) {
-  return name
-    .split(" ")
-    .map((word) => word.charAt(0).toUpperCase())
-    .join("");
-}
 
 function getColorForLetter(letter) {
   const colors = {
