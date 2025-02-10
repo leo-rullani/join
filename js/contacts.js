@@ -474,7 +474,35 @@ function showToast(message) {
   }, 3300);
 }
 
-function showContactDetails() {
-  const contactDetails = document.getElementById("contact-details");
-  contactDetails.classList.add("show");
+function openContactDetails() {
+  let contactDetails = document.getElementById("contact-details");
+  contactDetails.style.display = "block";
 }
+
+function closeContactDetails() {
+  let contactDetails = document.getElementById("contact-details");
+  contactDetails.style.display = "none";
+}
+
+function openSeeMore() {
+  let contactLinks = document.getElementById("seeMoreLinks");
+
+  if (contactLinks.style.display === "flex") {
+    contactLinks.style.display = "none";
+  } else {
+    contactLinks.style.display = "flex";
+  }
+}
+
+document.addEventListener("click", function (event) {
+  let contactLinks = document.getElementById("seeMoreLinks");
+  let button = document.getElementById("seeMoreButton");
+
+  if (
+    contactLinks.style.display === "flex" &&
+    !contactLinks.contains(event.target) &&
+    !button.contains(event.target)
+  ) {
+    contactLinks.style.display = "none";
+  }
+});

@@ -54,8 +54,8 @@
             <section class="contact_content">
                 <div class="contacts_container">
                     <div class="addContact_button_container"> <button class="addContact_button"
-                            onclick="openOverlay()">Add
-                            new contact
+                            onclick="openOverlay()"><span>Add
+                                new contact</span>
                             <img src="/assets/icons/person_add.svg" alt=""></button></div>
                     <div class="contacts_div">
 
@@ -223,84 +223,90 @@
                     </div>
                 </div>
                 <div id="contact-details" class="contact-details-container">
+                    <button onclick="closeContactDetails()" class="return_button_contacts"><i
+                            class="fa-solid fa-arrow-left"></i></button>
                     <div class="contact_details_header">
                         <div class="details_header">
                             <h1><b>Contacts</b></h1>
                         </div>
-                        <div class="blue_line"></div>
-                        <div class="details_motivation">
-                            Better with a team
+                        <div class="team_header">
+                            <div class="blue_line"></div>
+                            <div class="details_motivation">
+                                Better with a team
+                            </div>
+                        </div>
+                        <div class="resp_edit_delete_menu">
+                            <button class="seeMore_button" id="seeMoreButton" onclick="openSeeMore()"><img
+                                    src="/assets/icons/more_vert.svg" alt=""></button>
                         </div>
                     </div>
                     <div id="contact-info">
                     </div>
-                </div>
 
-                <div id="add_notification" class="notification"></div>
+                    <div id="add_notification" class="notification"></div>
 
-                <div class="contact_overlay" id="editOverlay">
-                    <div class="overlay-content" id="overlayContent">
-                        <div class="close-btn" onclick="closeEditOverlay()"><span>✖</span></div>
-                        <div class="editContact_left">
-                            <img src="/assets/img/join-logo-white.svg" alt="">
-                            <h1>Edit contact</h1>
-                            <div class="editunderline"></div>
-                        </div>
-                        <div class="editContact_right">
-                            <div id="initials"></div>
-                            <div class="form_add">
-                                <form id="editContactForm" onsubmit="submitEditForm(event)">
-                                    <input required class="icon_name" type="name" name="name" id="editName"
-                                        placeholder="Name"><br>
-                                    <input required class="icon_email" type="email" name="email" id="editEmail"
-                                        placeholder="Email"><br>
-                                    <input required class="icon_phone" type="phone" name="phone" id="editPhone"
-                                        placeholder="Phone"><br>
-
-                                    <div class="button_div">
-                                        <button type="button" class="btn-cancel" onclick="closeEditOverlay()">Cancel
-                                            ✖</button>
-                                        <button class="btn-create" type="submit">Save Changes<img
-                                                src="/assets/icons/check.svg" alt=""></button>
-                                    </div>
-                                </form>
+                    <div class="contact_overlay" id="editOverlay">
+                        <div class="overlay-content" id="overlayContent">
+                            <div class="close-btn" onclick="closeEditOverlay()"><span>✖</span></div>
+                            <div class="editContact_left">
+                                <img src="/assets/img/join-logo-white.svg" alt="">
+                                <h1>Edit contact</h1>
+                                <div class="editunderline"></div>
                             </div>
+                            <div class="editContact_right">
+                                <div id="initials"></div>
+                                <div class="form_add">
+                                    <form id="editContactForm" onsubmit="submitEditForm(event)">
+                                        <input required class="icon_name" type="name" name="name" id="editName"
+                                            placeholder="Name"><br>
+                                        <input required class="icon_email" type="email" name="email" id="editEmail"
+                                            placeholder="Email"><br>
+                                        <input required class="icon_phone" type="phone" name="phone" id="editPhone"
+                                            placeholder="Phone"><br>
 
+                                        <div class="button_div">
+                                            <button type="button" class="btn-cancel" onclick="closeEditOverlay()">Cancel
+                                                ✖</button>
+                                            <button class="btn-create" type="submit">Save Changes<img
+                                                    src="/assets/icons/check.svg" alt=""></button>
+                                        </div>
+                                    </form>
+                                </div>
+
+                            </div>
                         </div>
                     </div>
-                </div>
-
-                <div class="contact_overlay" id="overlay">
-                    <div class="overlay-content" id="overlayContent">
-                        <div class="close-btn" onclick="closeOverlay()"><span>✖</span></div>
-                        <div class="addContact_left">
-                            <img src="/assets/img/join-logo-white.svg" alt="">
-                            <h1>Add contact</h1>
-                            <span>Tasks are better with a team!</span>
-                            <div class="underline"></div>
-                        </div>
-                        <div class="addContact_right">
-                            <div><img src="/assets/icons/contact_pic.svg" alt=""></div>
-                            <div class="form_add">
-                                <form onsubmit="return saveContactToDatabase(event)">
-                                    <input required class="icon_name" type="name" name="name" id="name"
-                                        placeholder="Name"><br>
-                                    <input required class="icon_email" type="email" name="email" id="email"
-                                        placeholder="Email"><br>
-                                    <input required class="icon_phone" type="phone" name="phone" id="phone"
-                                        placeholder="Phone"><br>
-
-                                    <div class="button_div"> <button type="button" class="btn-cancel"
-                                            onclick="closeOverlay()">Cancel ✖</button> <button class="btn-create"
-                                            type="submit">Create
-                                            contact <img src="/assets/icons/check.svg" alt=""></button></div>
-                                </form>
-                            </div>
-
-                        </div>
-                    </div>
-                </div>
             </section>
+            <div class="contact_overlay" id="overlay">
+                <div class="overlay-content" id="overlayContent">
+                    <div class="close-btn" onclick="closeOverlay()"><span>✖</span></div>
+                    <div class="addContact_left">
+                        <img src="/assets/img/join-logo-white.svg" alt="">
+                        <h1>Add contact</h1>
+                        <span>Tasks are better with a team!</span>
+                        <div class="underline"></div>
+                    </div>
+                    <div class="addContact_right">
+                        <div><img class="addContact_right_img" src="/assets/icons/contact_pic.svg" alt=""></div>
+                        <div class="form_add">
+                            <form onsubmit="return saveContactToDatabase(event)">
+                                <input required class="icon_name" type="name" name="name" id="name"
+                                    placeholder="Name"><br>
+                                <input required class="icon_email" type="email" name="email" id="email"
+                                    placeholder="Email"><br>
+                                <input required class="icon_phone" type="phone" name="phone" id="phone"
+                                    placeholder="Phone"><br>
+
+                                <div class="button_div"> <button type="button" class="btn-cancel"
+                                        onclick="closeOverlay()">Cancel
+                                        ✖</button> <button class="btn-create" type="submit">Create
+                                        contact <img src="/assets/icons/check.svg" alt=""></button></div>
+                            </form>
+                        </div>
+
+                    </div>
+                </div>
+            </div>
             <div class="menu_header resp_menu_closed" id="resp_menu">
                 <div class="menu_links">
                     <a href="/html/legalnotice.html">Legal Notice</a>

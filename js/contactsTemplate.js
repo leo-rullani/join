@@ -3,7 +3,7 @@ function contactsTemplate(contact) {
   let bgColor = getColorForLetter(initials.charAt(0));
 
   return `
-    <div class="contact" data-contact-id="${contact.id}" id="contact-${contact.id}" onclick="selectContact(this, '${contact.id}', '${contact.name}', '${contact.email}', '${contact.phone}')">
+    <div class="contact" data-contact-id="${contact.id}" id="contact-${contact.id}" onclick="openContactDetails(); selectContact(this, '${contact.id}', '${contact.name}', '${contact.email}', '${contact.phone}')">
       <div class="contact-initials" style="background-color: ${bgColor};">${initials}</div>
       <div class="contact-infos">
         <p class="contact_name">${contact.name}</p>
@@ -21,7 +21,8 @@ function contactDetailsTemplate(id, name, email, phone) {
          <div class="initial_name_content">
          <div class=" big-initials" style="background-color: ${bgColor};">${initials}</div>
             <div class="contact_name"><h1 class="contact-name-h1">${name}</h1>
-                <div class="contact_links"><a href="#" onclick="openEditOverlay('${id}', '${name}', '${email}', '${phone}')"><i class="fa-solid fa-pen"></i>Edit</a>
+                <div id="seeMoreLinks" class="contact_links">
+                <a href="#" onclick="openEditOverlay('${id}', '${name}', '${email}', '${phone}')"><i class="fa-solid fa-pen"></i>Edit</a>
                     <a href="#" onclick="deleteContact('${id}')" ><i class="fa-solid fa-trash"> </i>Delete</a>
             </div></div>
         </div>
