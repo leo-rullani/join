@@ -1233,3 +1233,41 @@
     align-self: flex-start;
   }
 }
+
+
+/* legal notice & privacy policy responsive */
+
+@media (max-width: 650px) {
+
+  .privacypolicy_content {
+    padding-left: 40px;
+    padding-right: 40px;
+    padding-bottom: 20px;  
+}
+
+.privacypolicy_header{
+  height: 85vh;
+}
+
+.privacypolicy_section h1{
+  font-size: 32px;
+}
+
+h2 {
+  font-size: 20px !important;
+}
+h3{
+  font-size: 18px !important;
+}
+}
+
+@media (max-width: 450px){
+  .privacypolicy_content {
+    padding-left: 12px;
+    padding-right: 12px;
+}
+
+p{
+  font-size: 16px;
+}
+}

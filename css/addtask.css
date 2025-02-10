@@ -1,4 +1,3 @@
-
 .container.add-task {
   padding: 80px 64px;
 }
@@ -148,7 +147,7 @@ input:focus {
   cursor: pointer;
 }
 
-.add-task-star {
+.add-task-required {
   color: red;
 }
 
@@ -260,6 +259,7 @@ input:focus {
   width: 40px;
   height: 40px;
 }
+
 .category-container {
   background-color: #ffffff;
   display: flex;
@@ -608,7 +608,7 @@ li:hover {
   width: 100%;
 }
 
-.checkbox-dropdown :has(input[type="text"]:focus) + ul {
+.checkbox-dropdown :has(input[type="text"]:focus)+ul {
   display: block;
 }
 
@@ -618,7 +618,7 @@ li:hover {
   gap: 8px;
 }
 
-.checkbox-dropdown .search > input {
+.checkbox-dropdown .search>input {
   border: 1px solid #d7d7d7;
   border-radius: 10px;
   padding: 12px 21px 12px 21px;
@@ -629,7 +629,7 @@ li:hover {
   transition: all 200ms;
 }
 
-.checkbox-dropdown .search > input:focus {
+.checkbox-dropdown .search>input:focus {
   background-image: url("/assets/icons/drop_down_arrow.svg");
 }
 

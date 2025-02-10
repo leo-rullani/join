@@ -67,162 +67,171 @@
 
         <form onsubmit="addTaskCreateTask(); return false;" class="add-task-all-content" id="add-task-form">
             <div class="add-task-h1-container">
-              <h1 class="add-task-h1">Add Task</h1>
+                <h1 class="add-task-h1">Add Task</h1>
             </div>
             <div class="add-task-container">
-              <div class="add-task-left-side">
-                <div class="add-task-title">
-                  <label for="add-task-title-input">Title<span class="add-task-star">*</span></label>
-                  <input required id="add-task-title-input" class="add-task-title-input" type="text" autocomplete="off"
-                    placeholder="Enter a title" value="" />
-                </div>
-      
-                <div class="add-task-description">
-                  <label for="add-task-textarea">Description<span class="add-task-star">*</span></label>
-                  <textarea required id="add-task-textarea" class="add-task-textarea"
-                    placeholder="Enter a description"></textarea>
-                </div>
-      
-                <div class="add-task-assigned-to">
-                  <div class="checkbox-dropdown">
-                    <div class="search">
-                      <label for="find-person">Assigned to</label>
-                      <input type="text" name="find-person" id="find-person" autocomplete="off"
-                        placeholder="Select contacts to assign" onkeyup="addTaskAssignedToSearch()" />
+                <div class="add-task-left-side">
+                    <div class="add-task-title">
+                        <label for="add-task-title-input">Title<span class="add-task-required">*</span></label>
+                        <input required id="add-task-title-input" class="add-task-title-input" type="text"
+                            autocomplete="off" placeholder="Enter a title" value="" />
                     </div>
-                    <ul id="add-task-contact"></ul>
-                  </div>
-                </div>
-                <div id="add-task-assigned-avatar" class="add-task-assigned-avatar"></div>
-              </div>
-      
-              <div class="add-task-right-left-between"></div>
-      
-              <div class="add-task-right-side">
-                <div class="add-task-due-date">
-                  <label for="date">Due date<span class="add-task-star">*</span></label>
-                  <input required type="date" class="add-task-due-date-input" id="date" name="date"
-                    onclick="addTaskMinimumDate()" />
-                </div>
-      
-                <div class="add-task-urgent-medium-low-container">
-                  <div>Prio</div>
-      
-                  <div id="add-task-urgent-medium-low-buttons" class="add-task-urgent-medium-low-buttons">
-                    <button id="add-task-urgent" class="add-task-urgent" name="prio"
-                      onclick="addTaskPrio('urgent', 'add-task-urgent-medium-low-buttons', event)" data-priority="urgent">
-                      <div class="add-task-important">
-                        <div class="add-task-important-name">Urgent</div>
-                        <img id="prio-urgent" src="/assets/icons/urgent.svg" />
-                      </div>
-                    </button>
-                    <button id="add-task-medium" class="add-task-medium add-task-clicked"
-                      onclick="addTaskPrio('medium', 'add-task-urgent-medium-low-buttons', event)" data-priority="medium">
-                      <div class="add-task-important">
-                        <div class="add-task-important-name">Medium</div>
-                        <img id="prio-medium" src="/assets/icons/medium.svg" />
-                      </div>
-                    </button>
-                    <button id="add-task-low" class="add-task-low"
-                      onclick="addTaskPrio('low', 'add-task-urgent-medium-low-buttons', event)" data-priority="low">
-                      <div class="add-task-important">
-                        <div class="add-task-important-name">Low</div>
-                        <img id="prio-low" src="/assets/icons/low.svg" />
-                      </div>
-                    </button>
-                  </div>
-                </div>
-      
-                <div class="add-task-category">
-                  <div class="checkbox-dropdown">
-                    <div class="search">
-                      <label for="add-task-category">Category<span class="add-task-star">*</span></label>
-                      <input required type="text" id="add-task-category" autocomplete="off"
-                        placeholder="Select task category" />
+
+                    <div class="add-task-description">
+                        <label for="add-task-textarea">Description<span class="add-task-required">*</span></label>
+                        <textarea required id="add-task-textarea" class="add-task-textarea"
+                            placeholder="Enter a description"></textarea>
                     </div>
-                    <ul>
-                      <li>
-                        <label for="technical-task">Technical Task<input class="add-task-radio" type="radio" name="category"
-                            id="technical-task" value="Technical Task" onclick="addTaskChoseCategory(this.value)" /></label>
-                      </li>
-                      <li>
-                        <label for="user-story">User Story<input class="add-task-radio" type="radio" name="category"
-                            id="user-story" value="User Story" onclick="addTaskChoseCategory(this.value)" /></label>
-                      </li>
-                    </ul>
-                  </div>
-                </div>
-      
-                <div class="add-task-subtasks">
-                  <div class="add-task-subtasks-input-container">
-                    <label for="add-task-subtasks-input">Subtasks</label>
-                    <input id="add-task-subtasks-input" name="add-task-subtasks-input" class="add-task-subtasks-input"
-                      type="text" placeholder="Add new subtask" autocomplete="off" onclick="addTaskSubtasksClicked()"
-                      onkeypress="addTaskSubtasks(event)" />
-      
-                    <div id="add-task-subtasks-icon-plus" class="add-task-subtasks-icon-plus">
-                      <button onclick="addSubtasksPlus(event)" id="add-task-subtasks-input-plus">
-                        <img class="add-task-subtasks-input-plus" src="/assets/icons/add_task_check.svg" alt="" />
-                      </button>
+
+                    <div class="add-task-assigned-to">
+                        <div class="checkbox-dropdown">
+                            <div class="search">
+                                <label for="find-person">Assigned to</label>
+                                <input type="text" name="find-person" id="find-person" autocomplete="off"
+                                    placeholder="Select contacts to assign" onkeyup="addTaskAssignedToSearch()" />
+                            </div>
+                            <ul id="add-task-contact"></ul>
+                        </div>
                     </div>
-      
-                    <div id="add-task-subtasks-icon-plus-check" class="add-task-subtasks-icon-plus-check d-none">
-                      <button id="add-task-subtasks-input-clear" onclick="clearSubtasks(event)">
-                        <img src="/assets/icons/add_task_clear.svg" />
-                      </button>
-                      <div class="add-tasks-border"></div>
-                      <button onclick="addTaskSubtasks(event)">
-                        <svg class="add-task-subtasks-input-check" width="14" height="14" viewBox="0 0 38 30" fill="none"
-                          xmlns="http://www.w3.org/2000/svg">
-                          <path d="M4.02832 15.0001L15.2571 26.0662L33.9717 3.93408" stroke="black" stroke-width="7"
-                            stroke-linecap="round" stroke-linejoin="round" />
-                        </svg>
-                      </button>
+                    <div id="add-task-assigned-avatar" class="add-task-assigned-avatar"></div>
+                </div>
+
+                <div class="add-task-right-left-between"></div>
+
+                <div class="add-task-right-side">
+                    <div class="add-task-due-date">
+                        <label for="date">Due date<span class="add-task-required">*</span></label>
+                        <input required type="date" class="add-task-due-date-input" id="date" name="date"
+                            onclick="addTaskMinimumDate()" />
                     </div>
-                  </div>
+
+                    <div class="add-task-urgent-medium-low-container">
+                        <div>Prio</div>
+
+                        <div id="add-task-urgent-medium-low-buttons" class="add-task-urgent-medium-low-buttons">
+                            <button id="add-task-urgent" class="add-task-urgent" name="prio"
+                                onclick="addTaskPrio('urgent', 'add-task-urgent-medium-low-buttons', event)"
+                                data-priority="urgent">
+                                <div class="add-task-important">
+                                    <div class="add-task-important-name">Urgent</div>
+                                    <img id="prio-urgent" src="/assets/icons/urgent.svg" />
+                                </div>
+                            </button>
+                            <button id="add-task-medium" class="add-task-medium add-task-clicked"
+                                onclick="addTaskPrio('medium', 'add-task-urgent-medium-low-buttons', event)"
+                                data-priority="medium">
+                                <div class="add-task-important">
+                                    <div class="add-task-important-name">Medium</div>
+                                    <img id="prio-medium" src="/assets/icons/medium.svg" />
+                                </div>
+                            </button>
+                            <button id="add-task-low" class="add-task-low"
+                                onclick="addTaskPrio('low', 'add-task-urgent-medium-low-buttons', event)"
+                                data-priority="low">
+                                <div class="add-task-important">
+                                    <div class="add-task-important-name">Low</div>
+                                    <img id="prio-low" src="/assets/icons/low.svg" />
+                                </div>
+                            </button>
+                        </div>
+                    </div>
+
+                    <div class="add-task-category">
+                        <div class="checkbox-dropdown">
+                            <div class="search">
+                                <label for="add-task-category">Category<span class="add-task-required">*</span></label>
+                                <input required type="text" id="add-task-category" autocomplete="off"
+                                    placeholder="Select task category" />
+                            </div>
+                            <ul>
+                                <li>
+                                    <label for="technical-task">Technical Task<input class="add-task-radio" type="radio"
+                                            name="category" id="technical-task" value="Technical Task"
+                                            onclick="addTaskChoseCategory(this.value)" /></label>
+                                </li>
+                                <li>
+                                    <label for="user-story">User Story<input class="add-task-radio" type="radio"
+                                            name="category" id="user-story" value="User Story"
+                                            onclick="addTaskChoseCategory(this.value)" /></label>
+                                </li>
+                            </ul>
+                        </div>
+                    </div>
+
+                    <div class="add-task-subtasks">
+                        <div class="add-task-subtasks-input-container">
+                            <label for="add-task-subtasks-input">Subtasks</label>
+                            <input id="add-task-subtasks-input" name="add-task-subtasks-input"
+                                class="add-task-subtasks-input" type="text" placeholder="Add new subtask"
+                                autocomplete="off" onclick="addTaskSubtasksClicked()"
+                                onkeypress="addTaskSubtasks(event)" />
+
+                            <div id="add-task-subtasks-icon-plus" class="add-task-subtasks-icon-plus">
+                                <button onclick="addSubtasksPlus(event)" id="add-task-subtasks-input-plus">
+                                    <img class="add-task-subtasks-input-plus" src="/assets/icons/add_task_check.svg"
+                                        alt="" />
+                                </button>
+                            </div>
+
+                            <div id="add-task-subtasks-icon-plus-check"
+                                class="add-task-subtasks-icon-plus-check d-none">
+                                <button id="add-task-subtasks-input-clear" onclick="clearSubtasks(event)">
+                                    <img src="/assets/icons/add_task_clear.svg" />
+                                </button>
+                                <div class="add-tasks-border"></div>
+                                <button onclick="addTaskSubtasks(event)">
+                                    <svg class="add-task-subtasks-input-check" width="14" height="14"
+                                        viewBox="0 0 38 30" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                        <path d="M4.02832 15.0001L15.2571 26.0662L33.9717 3.93408" stroke="black"
+                                            stroke-width="7" stroke-linecap="round" stroke-linejoin="round" />
+                                    </svg>
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                    <div id="add-task-subtasks-choosen" class="add-task-subtasks-choosen">
+                        <ul id="add-task-subtasks-list" class="add-task-subtasks-list"></ul>
+                    </div>
                 </div>
-                <div id="add-task-subtasks-choosen" class="add-task-subtasks-choosen">
-                  <ul id="add-task-subtasks-list" class="add-task-subtasks-list"></ul>
-                </div>
-              </div>
             </div>
             <div class="add-task-bottom">
-              <div><span class="add-task-star">*</span> This field is required</div>
-              <div>
-                <button class="add-task-bottom-clear-button" onclick="addTaskClearFormular(event)">
-                  <div class="add-task-bottom-clear">
-                    Clear
-                    <img class="close-button" src="/assets/icons/add_task_clear.svg" />
-                  </div>
-                </button>
-      
-                <button class="add-task-bottom-create-button">
-                  <div class="add-task-bottom-create-task">
-                    Create Task
-                    <img class="add-task-create-task" src="/assets/icons/add_task_check.svg" alt="check" />
-                  </div>
-                </button>
-              </div>
+                <div><span class="add-task-required">*</span> This field is required</div>
+                <div>
+                    <button class="add-task-bottom-clear-button" onclick="addTaskClearFormular(event)">
+                        <div class="add-task-bottom-clear">
+                            Clear
+                            <img class="close-button" src="/assets/icons/add_task_clear.svg" />
+                        </div>
+                    </button>
+
+                    <button class="add-task-bottom-create-button">
+                        <div class="add-task-bottom-create-task">
+                            Create Task
+                            <img class="add-task-create-task" src="/assets/icons/add_task_check.svg" alt="check" />
+                        </div>
+                    </button>
+                </div>
             </div>
-          </form>
-      
-          </section>
-      
-          <!-- KLEINES PROFILMENÜ (zuständig für Mobil/Responsive) -->
-          <div class="menu_header resp_menu_closed" id="resp_menu">
+        </form>
+
+        </section>
+
+        <!-- KLEINES PROFILMENÜ (zuständig für Mobil/Responsive) -->
+        <div class="menu_header resp_menu_closed" id="resp_menu">
             <div class="menu_links">
-              <a href="/html/legalnotice.html">Legal Notice</a>
-              <a href="/html/privacypolicy.html">Privacy Policy</a>
-              <a href="/html/login.html">Logout</a>
+                <a href="/html/legalnotice.html">Legal Notice</a>
+                <a href="/html/privacypolicy.html">Privacy Policy</a>
+                <a href="/html/login.html">Logout</a>
             </div>
-          </div>
-      
-        </main>
-      
-        <script src="/js/add_task.js"></script>
-        <script src="/js/add_task_support.js"></script>
-        <script src="/js/contacts.js"></script>
-      
-      </body>
-      
-      </html>
+        </div>
+
+    </main>
+
+    <script src="/js/template.js"></script>
+    <script src="/js/add_task.js"></script>
+    <script src="/js/add_task_support.js"></script>
+    <script src="/js/contacts.js"></script>
+
+</body>
+
+</html>
