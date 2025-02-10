@@ -1,5 +1,5 @@
 function contactsTemplate(contact) {
-  let initials = getInitials(contact.name);
+  let initials = getContactInitials(contact.name);
   let bgColor = getColorForLetter(initials.charAt(0));
 
   return `
@@ -14,7 +14,7 @@ function contactsTemplate(contact) {
 }
 
 function contactDetailsTemplate(id, name, email, phone) {
-  let initials = getInitials(name);
+  let initials = getContactInitials(name);
   let bgColor = getColorForLetter(initials.charAt(0));
   return `
     <div class="contact-details" >
