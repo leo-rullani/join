@@ -62,6 +62,10 @@ header {
   z-index: 999;
 }
 
+.help-link {
+  display: none !important;
+}
+
 .menu_links {
   display: flex;
   flex-direction: column;

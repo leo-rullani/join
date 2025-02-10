@@ -460,6 +460,10 @@
 }
 
 @media (max-width: 605px) {
+  .help-link {
+    display: flex !important;
+  }
+
   .policy_docs {
     display: none;
   }
