@@ -253,7 +253,7 @@ a:active {
   font-size: 20px;
   font-weight: bold;
   text-align: center;
-  color: #000; /* Default schwarz */
+  color: #000;
 }
 
 .box_label {
@@ -270,7 +270,7 @@ a:active {
 }
 
 .summary_card:hover {
-  background-color: #2a3647; /* Dunkelblau */
+  background-color: #2a3647; 
   transform: scale(1.03);
   cursor: pointer;
 }
@@ -301,8 +301,6 @@ a:active {
   box-shadow: 0px 0px 4px rgba(0, 0, 0, 0.1);
   border-radius: 20px;
   padding: 10px 20px;
-
-  /* Gleiche Animation wie bei summary_card */
   transition: background-color 0.3s ease, transform 0.3s ease;
 }
 
@@ -411,23 +409,18 @@ a:active {
   display: none;
 }
 
-/* Standard: help_icon sichtbar */
 .help_icon {
   width: 40px;
   cursor: pointer;
 }
 
-/* Ab 605px: 
-   - Icon weg
-   - Textlink angezeigt 
-*/
 @media (max-width: 605px) {
   .help_icon {
     display: none;
   }
   .help_text_link {
     display: block;
-    color: #a8a8a8; /* Deine Textfarbe */
+    color: #a8a8a8;
     text-decoration: none;
     padding: 10px;
   }
@@ -458,19 +451,16 @@ a:active {
     z-index: 99999;
   }
 
-  /* Versteckt Overlay */
   .hidden {
     display: none !important;
   }
 
-  /* Fade-Out-Klasse: Übergang von 1 zu 0 Opacity */
   .fadeOut {
     opacity: 0;
   }
 
-  /* Inhalt im Overlay: weißer Kasten, zentriert */
   .greeting_overlay_content {
-    text-align: center; /* Zentrierter Text */
+    text-align: center; 
   }
 
   .overlay_greeting_text {
