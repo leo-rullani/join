@@ -385,17 +385,23 @@ function closeEditOverlay() {
 
 function openOverlay() {
   let overlay = document.getElementById("overlay");
-  overlay.classList.add("active");
+  // Schließen-Klasse entfernen, damit keine Störwerte bleiben
   overlay.classList.remove("closing");
+  // Öffnen-Klasse hinzufügen
+  overlay.classList.add("active");
 }
 
 function closeOverlay() {
   let overlay = document.getElementById("overlay");
+  // Startet die Animation (top: 100%, opacity: 0)
   overlay.classList.add("closing");
 
+  // Nach 0,5s (gleich deiner CSS-Transition)
   setTimeout(() => {
+    // Jetzt Overlay in Grundzustand zurücksetzen:
     overlay.classList.remove("active");
     overlay.classList.remove("closing");
+    // => landet wieder bei visibility: hidden, top: -100%, opacity: 0
   }, 500);
 }
 
