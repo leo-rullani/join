@@ -1,0 +1,88 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Board</title>
+
+    <link rel="icon" type="image/png" href="/assets/img/join-logo-blue.svg">
+    <link rel="stylesheet" href="/css/board.css">
+    <link rel="stylesheet" href="/css/template.css">
+    <link rel="stylesheet" href="/css/fonts.css">
+    <link rel="stylesheet" href="/css/responsive.css">
+</head>
+
+<body onload="initBoard()">
+
+    <header>
+        <div class="header_content">
+            Kanban Project Management Tool
+            <div class="header_img">
+                <a href="/html/help.html">
+                    <img class="help_icon" src="/assets/icons/help.svg" alt="Help Icon">
+                </a>
+                <div onclick="toggleRespMenu()">
+                    <div class="profile_initials" id="userInitials"></div>
+                </div>
+            </div>
+    </header>
+
+    <main class="content">
+        <div class="side_menu">
+            <img class="logo" src="/assets/img/join-logo-white.svg" alt="Join Logo">
+            <div class="menu_bar">
+                <div class="selection"><img src="/assets/icons/Icon-summary.svg" alt=""><a
+                        href="/html/summary.html"><span>Summary</span></a></div>
+                <div class="selection"><img src="/assets/icons/Icon-addtask.svg" alt=""><a
+                        href="/html/addtask.html"><span>Add Task</span></a></div>
+                <div class="selection active"><img src="/assets/icons/Icon-board.svg" alt=""><a
+                        href="/html/board.html"><span>Board</span></a></div>
+                <div class="selection"><img src="/assets/icons/Icon-contacts.svg" alt=""><a
+                        href="/html/contacts.html"><span>Contacts</span></a></div>
+
+                <div class="policy_docs">
+                    <a href="/html/privacypolicy.html">Privacy Policy</a>
+                    <a href="/html/legalnotice.html">Legal Notice</a>
+                </div>
+            </div>
+        </div>
+
+        <!-- Board mit Spalten für Tasks -->
+        <section class="board_section">
+            <h1>Board</h1>
+            <div class="board_container">
+                <div class="board_column" id="todo">
+                    <h2>To Do</h2>
+                    <div class="task_list" ondrop="drop(event)" ondragover="allowDrop(event)"></div>
+                </div>
+                <div class="board_column" id="doing">
+                    <h2>In progress</h2>
+                    <div class="task_list" ondrop="drop(event)" ondragover="allowDrop(event)"></div>
+                </div>
+                <div class="board_column" id="feedback">
+                    <h2>Await feedback</h2>
+                    <div class="task_list" ondrop="drop(event)" ondragover="allowDrop(event)"></div>
+                </div>
+                <div class="board_column" id="done">
+                    <h2>Done</h2>
+                    <div class="task_list" ondrop="drop(event)" ondragover="allowDrop(event)"></div>
+                </div>
+            </div>
+        </section>
+
+        <div class="menu_header resp_menu_closed" id="resp_menu">
+            <div class="menu_links">
+                <a href="/html/legalnotice.html">Legal Notice</a>
+                <a href="/html/privacypolicy.html">Privacy Policy</a>
+                <a href="/html/login.html">Log out</a>
+            </div>
+        </div>
+    </main>
+
+    <script src="/js/template.js"></script>
+    <script src="/js/board.js"></script>
+
+</body>
+
+</html>
