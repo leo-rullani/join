@@ -1,0 +1,315 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <title>JSDoc: Source: login.js</title>
+
+    <script src="scripts/prettify/prettify.js"> </script>
+    <script src="scripts/prettify/lang-css.js"> </script>
+    <!--[if lt IE 9]>
+      <script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script>
+    <![endif]-->
+    <link type="text/css" rel="stylesheet" href="styles/prettify-tomorrow.css">
+    <link type="text/css" rel="stylesheet" href="styles/jsdoc-default.css">
+</head>
+
+<body>
+
+<div id="main">
+
+    <h1 class="page-title">Source: login.js</h1>
+
+    
+
+
+
+    
+    <section>
+        <article>
+            <pre class="prettyprint source linenums"><code>"use strict";
+/**
+ * @file login.js
+ * Contains all logic for initialization, data fetching, authentication, and UI helpers.
+ */
+
+/**
+ * A sample list of dummy users for demo purposes.
+ * In a real app, you'd typically fetch from a server/db.
+ */
+const dummyUsers = [{ email: "test@user.com", password: "test123" }];
+
+/**
+ * Fires once the DOM is fully loaded.
+ */
+document.addEventListener("DOMContentLoaded", init);
+
+/**
+ * init
+ * Gathers elements, fetches user data, adjusts layout, and initializes listeners.
+ */
+function init() {
+  const {
+    logoContainer,
+    form,
+    topRight,
+    footer,
+    emailInput,
+    passwordInput,
+    errorDiv,
+  } = getElements();
+  getUserData();
+  handleScreenSize(topRight, footer);
+  initLogoAnimation(logoContainer, form);
+  initFocusClear(emailInput, errorDiv);
+  initFocusClear(passwordInput, errorDiv);
+}
+
+/**
+ * getElements
+ * @returns {Object} An object containing references to DOM elements.
+ */
+function getElements() {
+  return {
+    logoContainer: document.querySelector(".logo-container"),
+    form: document.querySelector(".form-container"),
+    topRight: document.querySelector(".top-right"),
+    footer: document.querySelector(".footer"),
+    guestLoginBtn: document.querySelector(".guest-btn"),
+    emailInput: document.getElementById("email"),
+    passwordInput: document.getElementById("password"),
+    errorDiv: document.getElementById("errorMessage"),
+  };
+}
+
+/**
+ * handleScreenSize
+ * Shows or hides elements based on screen width (≤ 500px).
+ * @param {HTMLElement} topRight - The top-right element
+ * @param {HTMLElement} footer - The footer element
+ */
+function handleScreenSize(topRight, footer) {
+  if (window.innerWidth &lt;= 500) {
+    topRight.classList.add("hidden");
+    footer.classList.add("hidden");
+  } else {
+    topRight.classList.remove("hidden");
+    footer.classList.remove("hidden");
+  }
+}
+
+/**
+ * initLogoAnimation
+ * Handles logo animation and color changes for small screens, then shows the form.
+ * @param {HTMLElement} logo - The logo container
+ * @param {HTMLElement} form - The form container
+ */
+function initLogoAnimation(logo, form) {
+  if (window.innerWidth &lt;= 500) {
+    document.body.style.backgroundColor = "#2b3647";
+    logo.querySelector("img").src = "/assets/img/join-logo-white.svg";
+  }
+  setTimeout(() => logo.classList.add("move-logo"), 500);
+  logo.addEventListener("transitionend", () => {
+    if (window.innerWidth &lt;= 500) {
+      document.body.style.backgroundColor = "#F6F7F8";
+      logo.querySelector("img").src = "/assets/img/join-logo-blue.svg";
+      document.querySelector(".top-right").classList.remove("hidden");
+      document.querySelector(".footer").classList.remove("hidden");
+    }
+    form.classList.remove("hidden");
+    form.classList.add("visible");
+  });
+}
+
+/**
+ * initGuestLogin
+ * Redirects to the summary page on guest login click.
+ * @param {HTMLElement} guestLoginBtn - The "guest login" button
+ */
+
+/**
+ * initFocusClear
+ * Removes error styles and messages when focusing on an input element.
+ *
+ * @param {HTMLInputElement} inputElement - The input field
+ * @param {HTMLElement} errorDiv - The container for error messages
+ */
+function initFocusClear(inputElement, errorDiv) {
+  inputElement.addEventListener("focus", () => {
+    inputElement.classList.remove("error");
+    errorDiv.textContent = "";
+  });
+}
+
+/**
+ * getUserData
+ * Fetches user data from the database and converts it to an array.
+ * @async
+ * @returns {Promise&lt;Array>} An array of user objects
+ */
+async function getUserData() {
+  try {
+    const response = await fetch(`${databaseURL}/users.json`);
+    if (!response.ok) throw new Error(`Response status: ${response.status}`);
+    const users = await response.json();
+    if (!users || typeof users !== "object") return [];
+    const usersArray = Object.entries(users).map(([id, data]) => ({
+      id,
+      ...data,
+    }));
+    console.log("Converted usersArray:", usersArray);
+    return usersArray;
+  } catch (error) {
+    console.error(error.message);
+    return [];
+  }
+}
+
+/**
+ * handleLogin
+ * Form submission handler that fetches user data and calls the login logic.
+ * @async
+ * @param {Event} event - The form submit event
+ */
+async function handleLogin(event) {
+  event.preventDefault();
+  const users = await getUserData();
+  if (!Array.isArray(users)) {
+    console.error("Error: users is not an array.");
+    return;
+  }
+  login(event, users);
+}
+
+/**
+ * login
+ * Verifies user credentials and triggers success or error feedback.
+ * @async
+ * @param {Event} event - The form submit event
+ * @param {Array} users - The list of user objects
+ */
+async function login(event, users) {
+  event.preventDefault();
+  const e = document.getElementById("email"),
+    p = document.getElementById("password"),
+    err = document.getElementById("errorMessage"),
+    email = e.value.trim(),
+    pass = p.value.trim(),
+    user = users.find((u) => u.userEmail === email &amp;&amp; u.password === pass);
+  if (user) {
+    clearErrorStyles(e, p, err);
+    loginSuccess();
+    sessionStorage.setItem("loggedInUser", JSON.stringify(user));
+  } else {
+    showErrorStyles(e, p, err);
+  }
+}
+
+/**
+ * fillEmail
+ * Fills the email input with a default value if empty.
+ */
+function fillEmail() {
+  const emailInput = document.getElementById("email");
+  if (emailInput.value.trim() === "") emailInput.value = "test@user.com";
+}
+
+/**
+ * togglePassword
+ * Toggles password visibility and updates the icon.
+ */
+function togglePassword() {
+  const p = document.getElementById("password"),
+    i = document.getElementById("passwordIcon");
+  if (i.src.includes("lock.svg")) {
+    i.src = "/assets/icons/eye-crossed.svg";
+    p.type = "password";
+  } else if (i.src.includes("eye-crossed.svg")) {
+    p.type = "text";
+    i.src = "/assets/icons/eye-thin.svg";
+  } else if (i.src.includes("eye-thin.svg")) {
+    p.type = "password";
+    i.src = "/assets/icons/eye-crossed.svg";
+  }
+}
+
+/**
+ * clearErrorStyles
+ * Removes error classes and clears the error message.
+ * @param {HTMLInputElement} emailInput - The email input element
+ * @param {HTMLInputElement} passwordInput - The password input element
+ * @param {HTMLElement} errorDiv - The container for error messages
+ */
+function clearErrorStyles(emailInput, passwordInput, errorDiv) {
+  emailInput.classList.remove("error");
+  passwordInput.classList.remove("error");
+  errorDiv.textContent = "";
+}
+
+/**
+ * showErrorStyles
+ * Adds error classes and sets the error message text.
+ * @param {HTMLInputElement} emailInput - The email input element
+ * @param {HTMLInputElement} passwordInput - The password input element
+ * @param {HTMLElement} errorDiv - The container for error messages
+ */
+function showErrorStyles(emailInput, passwordInput, errorDiv) {
+  emailInput.classList.add("error");
+  passwordInput.classList.add("error");
+  errorDiv.textContent = "Check your email and password. Please try again.";
+}
+
+/**
+ * loginSuccess
+ * Displays a success toast message and redirects to the summary page.
+ */
+function loginSuccess() {
+  showToast("Login successful!");
+  setTimeout(() => (window.location.href = "summary.html"), 2000);
+}
+
+/**
+ * showToast
+ * Displays an animated toast message.
+ * @param {string} message - The message to display
+ */
+function showToast(message) {
+  const n = document.getElementById("notification");
+  if (!n) return;
+  n.textContent = message;
+  n.classList.remove("hidden");
+  n.style.bottom = "-120px";
+  const r = document.querySelector(".login-box").getBoundingClientRect();
+  const mY = r.top + r.height / 2;
+  const fB = window.innerHeight - mY;
+  n.getBoundingClientRect(); // Force reflow
+  n.style.bottom = `${fB}px`;
+  n.classList.add("show");
+  setTimeout(() => {
+    n.classList.remove("show");
+    setTimeout(() => n.classList.add("hidden"), 500);
+  }, 3000);
+}
+</code></pre>
+        </article>
+    </section>
+
+
+
+
+</div>
+
+<nav>
+    <h2><a href="index.html">Home</a></h2><h3>Global</h3><ul><li><a href="global.html#addContact">addContact</a></li><li><a href="global.html#clearErrorStyles">clearErrorStyles</a></li><li><a href="global.html#deleteContact">deleteContact</a></li><li><a href="global.html#dummyUsers">dummyUsers</a></li><li><a href="global.html#fetchContacts">fetchContacts</a></li><li><a href="global.html#fillEmail">fillEmail</a></li><li><a href="global.html#getElements">getElements</a></li><li><a href="global.html#getProfileData">getProfileData</a></li><li><a href="global.html#getUserData">getUserData</a></li><li><a href="global.html#guestLogin">guestLogin</a></li><li><a href="global.html#handleLogin">handleLogin</a></li><li><a href="global.html#handleScreenSize">handleScreenSize</a></li><li><a href="global.html#init">init</a></li><li><a href="global.html#initFocusClear">initFocusClear</a></li><li><a href="global.html#initLogoAnimation">initLogoAnimation</a></li><li><a href="global.html#login">login</a></li><li><a href="global.html#loginSuccess">loginSuccess</a></li><li><a href="global.html#registerUser">registerUser</a></li><li><a href="global.html#setGreeting">setGreeting</a></li><li><a href="global.html#showErrorStyles">showErrorStyles</a></li><li><a href="global.html#showGreetingOverlay">showGreetingOverlay</a></li><li><a href="global.html#showToast">showToast</a></li><li><a href="global.html#signUp">signUp</a></li><li><a href="global.html#togglePassword">togglePassword</a></li><li><a href="global.html#toggleRespMenu">toggleRespMenu</a></li><li><a href="global.html#toggleSignUpButton">toggleSignUpButton</a></li><li><a href="global.html#updateContact">updateContact</a></li></ul>
+</nav>
+
+<br class="clear">
+
+<footer>
+    Documentation generated by <a href="https://github.com/jsdoc/jsdoc">JSDoc 4.0.4</a> on Mon Feb 10 2025 12:59:09 GMT+0100 (Mitteleuropäische Normalzeit)
+</footer>
+
+<script> prettyPrint(); </script>
+<script src="scripts/linenumber.js"> </script>
+</body>
+</html>
