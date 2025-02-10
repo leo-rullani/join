@@ -414,6 +414,10 @@ a:active {
   cursor: pointer;
 }
 
+.greeting_overlay_content {
+  display: none;
+}
+
 @media (max-width: 605px) {
   .help_icon {
     display: none;
@@ -461,6 +465,8 @@ a:active {
 
   .greeting_overlay_content {
     text-align: center; 
+    display: flex !important;
+    flex-direction: column;
   }
 
   .overlay_greeting_text {
