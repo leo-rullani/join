@@ -1,0 +1,250 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <title>JSDoc: Source: summary.js</title>
+
+    <script src="scripts/prettify/prettify.js"> </script>
+    <script src="scripts/prettify/lang-css.js"> </script>
+    <!--[if lt IE 9]>
+      <script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script>
+    <![endif]-->
+    <link type="text/css" rel="stylesheet" href="styles/prettify-tomorrow.css">
+    <link type="text/css" rel="stylesheet" href="styles/jsdoc-default.css">
+</head>
+
+<body>
+
+<div id="main">
+
+    <h1 class="page-title">Source: summary.js</h1>
+
+    
+
+
+
+    
+    <section>
+        <article>
+            <pre class="prettyprint source linenums"><code>"use strict";
+
+/**
+ * Öffnet/Schließt das kleine Menü am Profil-Icon.
+ */
+function toggleRespMenu() {
+  let menu = document.getElementById("resp_menu");
+  menu.classList.toggle("resp_menu_closed");
+  menu.classList.toggle("resp_menu_open");
+}
+
+/**
+ * Lädt User-Daten und aktualisiert UI.
+ */
+document.addEventListener("DOMContentLoaded", function () {
+  const headerName = document.getElementById("userName");
+  const greetingDiv = document.getElementById("userName");
+  const userData = sessionStorage.getItem("loggedInUser");
+
+  if (!headerName || !greetingDiv) {
+    console.error("Elemente nicht gefunden!");
+    return;
+  }
+
+  const isGuest = !userData;
+  const user = isGuest ? { userName: "Guest" } : JSON.parse(userData);
+  const userName = user.userName || "User";
+  const { textColor } = getProfileData(isGuest);
+
+  headerName.style.color = textColor;
+  greetingDiv.textContent = userName;
+  headerName.textContent = userName;
+
+  // Begrüßung basierend auf Uhrzeit
+  setGreeting();
+
+  // Prüfe Overlay-Bedingung
+  init();
+
+  document.body.style.visibility = "visible";
+});
+
+/**
+ * Gibt Profil-Daten zurück (Farbe etc.).
+ */
+function getProfileData(isGuest) {
+  const userData = sessionStorage.getItem("loggedInUser");
+  const user = isGuest ? { userName: "Guest" } : JSON.parse(userData);
+  const userName = user.userName || "User";
+  const initials = isGuest ? "G" : getInitials(userName);
+  const firstLetter = initials.charAt(0).toUpperCase();
+  const textColor = getColorForLetter(firstLetter);
+  return { initials, textColor, userName };
+}
+
+/**
+ * Setzt die Begrüßung (Morgen/Nachmittag/Abend/Nacht).
+ */
+function setGreeting() {
+  const greetingText = document.getElementById("greeting_text");
+  const currentHour = new Date().getHours();
+  let greeting = "Good night,";
+
+  if (currentHour >= 5 &amp;&amp; currentHour &lt; 12) {
+    greeting = "Good morning,";
+  } else if (currentHour >= 12 &amp;&amp; currentHour &lt; 18) {
+    greeting = "Good afternoon,";
+  } else if (currentHour >= 18 &amp;&amp; currentHour &lt; 22) {
+    greeting = "Good evening,";
+  }
+  if (greetingText) greetingText.textContent = greeting;
+}
+
+/**
+ * Prüft die Bildschirmbreite und zeigt ggf. den Overlay.
+ */
+function init() {
+  const w = window.innerWidth;
+  if (w &lt;= 910 &amp;&amp; w >= 300) {
+    showGreetingOverlay();
+  }
+}
+
+/**
+ * Zeigt das Begrüßungs-Overlay mit dynamischen Texten.
+ */
+function showGreetingOverlay() {
+  const overlay = document.getElementById("greetingOverlay");
+  if (!overlay) return;
+
+  const overlayGreetingText = document.getElementById("overlayGreetingText");
+  const overlayGreetingName = document.getElementById("overlayGreetingName");
+  const greetingTextEl = document.getElementById("greeting_text");
+  const userNameEl = document.getElementById("userName");
+
+  // 1. Text kopieren
+  if (overlayGreetingText &amp;&amp; greetingTextEl) {
+    overlayGreetingText.textContent = greetingTextEl.textContent;
+  }
+  if (overlayGreetingName &amp;&amp; userNameEl) {
+    overlayGreetingName.textContent = userNameEl.textContent;
+
+    // 2. Farbe übernehmen
+    overlayGreetingName.style.color = userNameEl.style.color;
+  }
+
+  // Overlay einblenden
+  overlay.classList.remove("hidden");
+
+  // Nach 2 Sek. -> Fadeout
+  setTimeout(() => {
+    overlay.classList.add("fadeOut");
+    // Nach 0.5 Sek. -> komplett verstecken
+    setTimeout(() => {
+      overlay.classList.add("hidden");
+      overlay.classList.remove("fadeOut");
+    }, 500);
+  }, 2000);
+}
+
+function logout() {
+  const userData = sessionStorage.getItem("loggedInUser");
+  if (!userData) {
+    // Falls schon Guest? -> Direkt zur Login-Seite
+    window.location.href = "/html/login.html";
+    return;
+  }
+  const user = JSON.parse(userData);
+  const userName = user.userName || "User";
+
+  // GoodNightOverlay befüllen
+  const overlay = document.getElementById("goodNightOverlay");
+  const goodNightText = document.getElementById("goodNightText");
+  const goodNightName = document.getElementById("goodNightName");
+  if (!overlay || !goodNightText || !goodNightName) {
+    // Fallback: Einfach Redirect
+    window.location.href = "/html/login.html";
+    return;
+  }
+
+  // Bsp.: "Good night," + userName
+  goodNightName.textContent = userName;
+  overlay.classList.remove("hidden"); // Overlay sichtbar
+
+  // Nach 2 Sek. FadeOut, dann Logout
+  setTimeout(() => {
+    overlay.classList.add("fadeOut");
+    setTimeout(() => {
+      overlay.classList.add("hidden");
+      overlay.classList.remove("fadeOut");
+      // userData entfernen &amp; redirect
+      sessionStorage.removeItem("loggedInUser");
+      window.location.href = "/html/login.html";
+    }, 500);
+  }, 2000);
+}
+
+/* Hilfsfunktionen (Beispiel) */
+function getInitials(name) {
+  if (typeof name !== "string" || name.length === 0) return "U";
+  const parts = name.trim().split(" ");
+  let initials = parts[0].charAt(0).toUpperCase();
+  if (parts.length > 1) {
+    initials += parts[parts.length - 1].charAt(0).toUpperCase();
+  }
+  return initials;
+}
+
+function getColorForLetter(letter) {
+  // Beispielhafte Farblogik
+  const colorMap = {
+    A: "#FF5733",
+    B: "#33FF57",
+    C: "#5733FF",
+    D: "#FF33A8",
+    E: "#33A8FF",
+    F: "#A8FF33",
+    G: "#FF8C33",
+    H: "#8C33FF",
+    I: "#33FFD7",
+    J: "#FFD733",
+    K: "#33FF8C",
+    L: "#D733FF",
+    M: "#FF336E",
+    N: "#338CFF",
+    O: "#33FFBD",
+    P: "#FFBD33",
+    Q: "#8CFF33",
+    R: "#FF338C",
+    S: "#336EFF",
+    T: "#33FF57",
+    U: "#FF5733",
+    V: "#5733FF",
+    W: "#FF33A8",
+    X: "#33A8FF",
+    Y: "#A8FF33",
+    Z: "#FF8C33",
+  };
+  return colorMap[letter] || "#000";
+}</code></pre>
+        </article>
+    </section>
+
+
+
+
+</div>
+
+<nav>
+    <h2><a href="index.html">Home</a></h2><h3>Global</h3><ul><li><a href="global.html#addContact">addContact</a></li><li><a href="global.html#clearErrorStyles">clearErrorStyles</a></li><li><a href="global.html#deleteContact">deleteContact</a></li><li><a href="global.html#dummyUsers">dummyUsers</a></li><li><a href="global.html#fetchContacts">fetchContacts</a></li><li><a href="global.html#fillEmail">fillEmail</a></li><li><a href="global.html#getElements">getElements</a></li><li><a href="global.html#getProfileData">getProfileData</a></li><li><a href="global.html#getUserData">getUserData</a></li><li><a href="global.html#guestLogin">guestLogin</a></li><li><a href="global.html#handleLogin">handleLogin</a></li><li><a href="global.html#handleScreenSize">handleScreenSize</a></li><li><a href="global.html#init">init</a></li><li><a href="global.html#initFocusClear">initFocusClear</a></li><li><a href="global.html#initLogoAnimation">initLogoAnimation</a></li><li><a href="global.html#login">login</a></li><li><a href="global.html#loginSuccess">loginSuccess</a></li><li><a href="global.html#registerUser">registerUser</a></li><li><a href="global.html#setGreeting">setGreeting</a></li><li><a href="global.html#showErrorStyles">showErrorStyles</a></li><li><a href="global.html#showGreetingOverlay">showGreetingOverlay</a></li><li><a href="global.html#showToast">showToast</a></li><li><a href="global.html#signUp">signUp</a></li><li><a href="global.html#togglePassword">togglePassword</a></li><li><a href="global.html#toggleRespMenu">toggleRespMenu</a></li><li><a href="global.html#toggleSignUpButton">toggleSignUpButton</a></li><li><a href="global.html#updateContact">updateContact</a></li></ul>
+</nav>
+
+<br class="clear">
+
+<footer>
+    Documentation generated by <a href="https://github.com/jsdoc/jsdoc">JSDoc 4.0.4</a> on Mon Feb 10 2025 12:59:09 GMT+0100 (Mitteleuropäische Normalzeit)
+</footer>
+
+<script> prettyPrint(); </script>
+<script src="scripts/linenumber.js"> </script>
+</body>
+</html>

@@ -1,7 +1,12 @@
 "use strict";
 
 /**
- * Öffnet/Schließt das kleine Menü am Profil-Icon.
+ * @file summary.js
+ * Handles UI updates for the summary page, including greeting overlays.
+ */
+
+/**
+ * Toggles the small menu at the profile icon.
  */
 function toggleRespMenu() {
   let menu = document.getElementById("resp_menu");
@@ -10,165 +15,145 @@ function toggleRespMenu() {
 }
 
 /**
- * Lädt User-Daten und aktualisiert UI.
+ * Initializes the summary page after the DOM content is loaded.
  */
-document.addEventListener("DOMContentLoaded", function () {
-  const headerName = document.getElementById("userName");
-  const greetingDiv = document.getElementById("userName");
-  const userData = sessionStorage.getItem("loggedInUser");
+document.addEventListener("DOMContentLoaded", initSummary);
 
+/**
+ * Initializes summary view: checks user data, sets greeting, reveals page.
+ */
+function initSummary() {
+  const headerName = document.getElementById("userName"),
+    greetingDiv = document.getElementById("userName"),
+    userData = sessionStorage.getItem("loggedInUser");
   if (!headerName || !greetingDiv) {
-    console.error("Elemente nicht gefunden!");
+    console.error("Elements not found!");
     return;
   }
-
-  const isGuest = !userData;
-  const user = isGuest ? { userName: "Guest" } : JSON.parse(userData);
-  const userName = user.userName || "User";
-  const { textColor } = getProfileData(isGuest);
-
+  const isGuest = !userData,
+    user = isGuest ? { userName: "Guest" } : JSON.parse(userData),
+    userName = user.userName || "User",
+    { textColor } = getProfileData(isGuest);
   headerName.style.color = textColor;
   greetingDiv.textContent = userName;
   headerName.textContent = userName;
-
-  // Begrüßung basierend auf Uhrzeit
   setGreeting();
-
-  // Prüfe Overlay-Bedingung
-  init();
-
+  initOverlayCheck();
   document.body.style.visibility = "visible";
-});
+}
 
 /**
- * Gibt Profil-Daten zurück (Farbe etc.).
+ * Returns profile data (initials, color) for guest or logged-in user.
+ * @param {boolean} isGuest - True if no user data is found
+ * @returns {{ initials: string, textColor: string, userName: string }}
  */
 function getProfileData(isGuest) {
-  const userData = sessionStorage.getItem("loggedInUser");
-  const user = isGuest ? { userName: "Guest" } : JSON.parse(userData);
-  const userName = user.userName || "User";
-  const initials = isGuest ? "G" : getInitials(userName);
-  const firstLetter = initials.charAt(0).toUpperCase();
-  const textColor = getColorForLetter(firstLetter);
-  return { initials, textColor, userName };
+  const ud = sessionStorage.getItem("loggedInUser"),
+    u = isGuest ? { userName: "Guest" } : JSON.parse(ud || "{}"),
+    nm = u.userName || "User",
+    init = isGuest ? "G" : getInitials(nm),
+    first = init.charAt(0).toUpperCase(),
+    clr = getColorForLetter(first);
+  return { initials: init, textColor: clr, userName: nm };
 }
 
 /**
- * Setzt die Begrüßung (Morgen/Nachmittag/Abend/Nacht).
+ * Determines the greeting based on the current time of day.
  */
 function setGreeting() {
-  const greetingText = document.getElementById("greeting_text");
-  const currentHour = new Date().getHours();
-  let greeting = "Good night,";
-
-  if (currentHour >= 5 && currentHour < 12) {
-    greeting = "Good morning,";
-  } else if (currentHour >= 12 && currentHour < 18) {
-    greeting = "Good afternoon,";
-  } else if (currentHour >= 18 && currentHour < 22) {
-    greeting = "Good evening,";
-  }
-  if (greetingText) greetingText.textContent = greeting;
+  const greetingText = document.getElementById("greeting_text"),
+    h = new Date().getHours();
+  let g = "Good night,";
+  if (h >= 5 && h < 12) g = "Good morning,";
+  else if (h >= 12 && h < 18) g = "Good afternoon,";
+  else if (h >= 18 && h < 22) g = "Good evening,";
+  if (greetingText) greetingText.textContent = g;
 }
 
 /**
- * Prüft die Bildschirmbreite und zeigt ggf. den Overlay.
+ * Checks screen size and shows the greeting overlay if within range.
  */
-function init() {
+function initOverlayCheck() {
   const w = window.innerWidth;
-  if (w <= 910 && w >= 300) {
-    showGreetingOverlay();
-  }
+  if (w <= 910 && w >= 300) showGreetingOverlay();
 }
 
 /**
- * Zeigt das Begrüßungs-Overlay mit dynamischen Texten.
+ * Displays the greeting overlay and hides it after 2 seconds.
  */
 function showGreetingOverlay() {
-  const overlay = document.getElementById("greetingOverlay");
-  if (!overlay) return;
-
-  const overlayGreetingText = document.getElementById("overlayGreetingText");
-  const overlayGreetingName = document.getElementById("overlayGreetingName");
-  const greetingTextEl = document.getElementById("greeting_text");
-  const userNameEl = document.getElementById("userName");
-
-  // 1. Text kopieren
-  if (overlayGreetingText && greetingTextEl) {
-    overlayGreetingText.textContent = greetingTextEl.textContent;
+  const ov = document.getElementById("greetingOverlay");
+  if (!ov) return;
+  const ogt = document.getElementById("overlayGreetingText"),
+    ogn = document.getElementById("overlayGreetingName"),
+    gt = document.getElementById("greeting_text"),
+    un = document.getElementById("userName");
+  if (ogt && gt) ogt.textContent = gt.textContent;
+  if (ogn && un) {
+    ogn.textContent = un.textContent;
+    ogn.style.color = un.style.color;
   }
-  if (overlayGreetingName && userNameEl) {
-    overlayGreetingName.textContent = userNameEl.textContent;
-
-    // 2. Farbe übernehmen
-    overlayGreetingName.style.color = userNameEl.style.color;
-  }
-
-  // Overlay einblenden
-  overlay.classList.remove("hidden");
-
-  // Nach 2 Sek. -> Fadeout
+  ov.classList.remove("hidden");
   setTimeout(() => {
-    overlay.classList.add("fadeOut");
-    // Nach 0.5 Sek. -> komplett verstecken
+    ov.classList.add("fadeOut");
     setTimeout(() => {
-      overlay.classList.add("hidden");
-      overlay.classList.remove("fadeOut");
+      ov.classList.add("hidden");
+      ov.classList.remove("fadeOut");
     }, 500);
   }, 2000);
 }
 
+/**
+ * Logs out the user or redirects a guest to the login page.
+ */
 function logout() {
-  const userData = sessionStorage.getItem("loggedInUser");
-  if (!userData) {
-    // Falls schon Guest? -> Direkt zur Login-Seite
+  const ud = sessionStorage.getItem("loggedInUser");
+  if (!ud) {
     window.location.href = "/html/login.html";
     return;
   }
-  const user = JSON.parse(userData);
-  const userName = user.userName || "User";
-
-  // GoodNightOverlay befüllen
-  const overlay = document.getElementById("goodNightOverlay");
-  const goodNightText = document.getElementById("goodNightText");
-  const goodNightName = document.getElementById("goodNightName");
-  if (!overlay || !goodNightText || !goodNightName) {
-    // Fallback: Einfach Redirect
+  const u = JSON.parse(ud),
+    n = u.userName || "User",
+    ov = document.getElementById("goodNightOverlay"),
+    gnt = document.getElementById("goodNightText"),
+    gnn = document.getElementById("goodNightName");
+  if (!ov || !gnt || !gnn) {
     window.location.href = "/html/login.html";
     return;
   }
-
-  // Bsp.: "Good night," + userName
-  goodNightName.textContent = userName;
-  overlay.classList.remove("hidden"); // Overlay sichtbar
-
-  // Nach 2 Sek. FadeOut, dann Logout
+  gnn.textContent = n;
+  ov.classList.remove("hidden");
   setTimeout(() => {
-    overlay.classList.add("fadeOut");
+    ov.classList.add("fadeOut");
     setTimeout(() => {
-      overlay.classList.add("hidden");
-      overlay.classList.remove("fadeOut");
-      // userData entfernen & redirect
+      ov.classList.add("hidden");
+      ov.classList.remove("fadeOut");
       sessionStorage.removeItem("loggedInUser");
       window.location.href = "/html/login.html";
     }, 500);
   }, 2000);
 }
 
-/* Hilfsfunktionen (Beispiel) */
+/**
+ * Extracts initials from a full name (e.g. "John Doe" -> "JD").
+ * @param {string} name - The full name
+ * @returns {string} The uppercase initials
+ */
 function getInitials(name) {
-  if (typeof name !== "string" || name.length === 0) return "U";
-  const parts = name.trim().split(" ");
-  let initials = parts[0].charAt(0).toUpperCase();
-  if (parts.length > 1) {
-    initials += parts[parts.length - 1].charAt(0).toUpperCase();
-  }
-  return initials;
+  if (typeof name !== "string" || !name.trim()) return "U";
+  const p = name.trim().split(" ");
+  let i = p[0].charAt(0).toUpperCase();
+  if (p.length > 1) i += p[p.length - 1].charAt(0).toUpperCase();
+  return i;
 }
 
-function getColorForLetter(letter) {
-  // Beispielhafte Farblogik
-  const colorMap = {
+/**
+ * Returns a color code based on the first letter.
+ * @param {string} l - The first letter
+ * @returns {string} The corresponding hex color
+ */
+function getColorForLetter(l) {
+  const m = {
     A: "#FF5733",
     B: "#33FF57",
     C: "#5733FF",
@@ -196,5 +181,5 @@ function getColorForLetter(letter) {
     Y: "#A8FF33",
     Z: "#FF8C33",
   };
-  return colorMap[letter] || "#000";
+  return m[l] || "#000";
 }
