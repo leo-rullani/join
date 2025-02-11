@@ -5,9 +5,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Board</title>
-
     <link rel="icon" type="image/png" href="/assets/img/join-logo-blue.svg">
-    <!-- Deine CSS-Dateien (Reihenfolge unverändert) -->
     <link rel="stylesheet" href="/css/board.css">
     <link rel="stylesheet" href="/css/template.css">
     <link rel="stylesheet" href="/css/fonts.css">
@@ -15,7 +13,6 @@
 </head>
 
 <body onload="initBoard()">
-
     <header>
         <div class="header_content">
             Kanban Project Management Tool
@@ -29,7 +26,6 @@
             </div>
         </div>
     </header>
-
     <main class="content">
         <div class="side_menu">
             <img class="logo" src="/assets/img/join-logo-white.svg" alt="Join Logo">
@@ -50,74 +46,75 @@
                     <img src="/assets/icons/Icon-contacts.svg" alt="">
                     <a href="/html/contacts.html"><span>Contacts</span></a>
                 </div>
-
                 <div class="policy_docs">
                     <a href="/html/privacypolicy.html">Privacy Policy</a>
                     <a href="/html/legalnotice.html">Legal Notice</a>
                 </div>
             </div>
         </div>
-
-        <!-- Board Sektion -->
         <section class="board_section">
-            <!-- Oberer Bereich mit Titel, Suchfeld & Add-Button -->
             <div class="board_header">
                 <h1 class="board-title">Board</h1>
                 <div class="board_header_actions">
-                    <!-- Suchfeld -->
                     <div class="search_container">
-                        <img class="search_icon" src="/assets/icons/search.svg" alt="Search">
-                        <input type="text" id="searchInput" placeholder="Find Task"
-                            onkeyup="handleSearch(event)" />
+                        <input type="text" id="searchInput" placeholder="Find Task" onkeyup="handleSearch(event)">
+                        <img class="search_icon" src="/assets/icons/search-icon-board.svg" alt="Search Icon">
                     </div>
-                    <!-- Add Task Button -->
                     <button class="btn_add_task" onclick="openAddTask()">
-                        Add Task +
+                        Add Task
+                        <img src="/assets/icons/plus-button-board.svg" class="plus_icon">
                     </button>
                 </div>
             </div>
-
-            <!-- Board-Spalten -->
             <div class="board_container">
-                <!-- Spalte 1: To Do -->
-                <div class="board_column" id="todo">
-                    <div class="column_header">
+                <div class="column_wrapper">
+                    <div class="column_header_outside">
                         <h2>To Do</h2>
-                        <button class="col_add_btn" onclick="addNewTask('todo')">+</button>
+                        <button class="col_add_btn" onclick="addNewTask('todo')">
+                            <img src="/assets/icons/plus-button.svg" alt="+">
+                        </button>
                     </div>
-                    <div class="task_list" ondrop="drop(event)" ondragover="allowDrop(event)"></div>
+                    <div class="board_column" id="todo">
+                        <div class="task_list" ondrop="drop(event)" ondragover="allowDrop(event)">
+                            <div class="no_tasks">No tasks to do</div>
+                        </div>
+                    </div>
                 </div>
-
-                <!-- Spalte 2: In progress -->
-                <div class="board_column" id="doing">
-                    <div class="column_header">
+                <div class="column_wrapper">
+                    <div class="column_header_outside">
                         <h2>In progress</h2>
-                        <button class="col_add_btn" onclick="addNewTask('doing')">+</button>
+                        <button class="col_add_btn" onclick="addNewTask('doing')">
+                            <img src="/assets/icons/plus-button.svg" alt="+">
+                        </button>
                     </div>
-                    <div class="task_list" ondrop="drop(event)" ondragover="allowDrop(event)"></div>
+                    <div class="board_column" id="doing">
+                        <div class="task_list" ondrop="drop(event)" ondragover="allowDrop(event)"></div>
+                    </div>
                 </div>
-
-                <!-- Spalte 3: Await feedback -->
-                <div class="board_column" id="feedback">
-                    <div class="column_header">
+                <div class="column_wrapper">
+                    <div class="column_header_outside">
                         <h2>Await feedback</h2>
-                        <button class="col_add_btn" onclick="addNewTask('feedback')">+</button>
+                        <button class="col_add_btn" onclick="addNewTask('feedback')">
+                            <img src="/assets/icons/plus-button.svg" alt="+">
+                        </button>
                     </div>
-                    <div class="task_list" ondrop="drop(event)" ondragover="allowDrop(event)"></div>
+                    <div class="board_column" id="feedback">
+                        <div class="task_list" ondrop="drop(event)" ondragover="allowDrop(event)"></div>
+                    </div>
                 </div>
-
-                <!-- Spalte 4: Done -->
-                <div class="board_column" id="done">
-                    <div class="column_header">
+                <div class="column_wrapper">
+                    <div class="column_header_outside">
                         <h2>Done</h2>
-                        <button class="col_add_btn" onclick="addNewTask('done')">+</button>
+                        <button class="col_add_btn" onclick="addNewTask('done')">
+                            <img src="/assets/icons/plus-button.svg" alt="+">
+                        </button>
                     </div>
-                    <div class="task_list" ondrop="drop(event)" ondragover="allowDrop(event)"></div>
+                    <div class="board_column" id="done">
+                        <div class="task_list" ondrop="drop(event)" ondragover="allowDrop(event)"></div>
+                    </div>
                 </div>
             </div>
         </section>
-
-        <!-- Responsive Menu -->
         <div class="menu_header resp_menu_closed" id="resp_menu">
             <div class="menu_links">
                 <a href="/html/legalnotice.html">Legal Notice</a>
@@ -126,11 +123,16 @@
             </div>
         </div>
     </main>
-
-    <!-- Deine JS-Dateien -->
+    <div class="add_task_overlay" id="addTaskOverlay">
+        <div class="overlay_content">
+            <button class="close_overlay_btn" onclick="closeAddTaskOverlay()">X</button>
+            <h3>Create new Task</h3>
+            <input type="text" id="newTaskInput" placeholder="Task name">
+            <button class="save_task_btn" onclick="saveNewTask()">Save</button>
+        </div>
+    </div>
     <script src="/js/template.js"></script>
     <script src="/js/board.js"></script>
-
 </body>
 
 </html>

@@ -1,90 +1,66 @@
-"use strict"; // Falls gewünscht, um strengere Fehlerprüfung zu aktivieren
-
+"use strict";
 function initBoard() {
-  console.log("Board initialized");
   loadTasks();
 }
-
-function allowDrop(event) {
-  event.preventDefault(); // Verhindert Standardverhalten
+function allowDrop(e) {
+  e.preventDefault();
 }
-
-function drag(event) {
-  event.dataTransfer.setData("text", event.target.id);
+function drag(e) {
+  e.dataTransfer.setData("text", e.target.id);
 }
-
-function drop(event) {
-  event.preventDefault();
-  const data = event.dataTransfer.getData("text");
-  const draggedTask = document.getElementById(data);
-  event.target.appendChild(draggedTask);
+function drop(e) {
+  e.preventDefault();
+  let data = e.dataTransfer.getData("text");
+  let dragged = document.getElementById(data);
+  if (e.target.classList.contains("task_list")) {
+    e.target.appendChild(dragged);
+  }
 }
-
-/**
- * Lädt Demo-Tasks.
- */
 function loadTasks() {
-  const tasks = [
+  let tasks = [
     { id: "task1", text: "Task 1", column: "todo" },
     { id: "task2", text: "Task 2", column: "doing" },
   ];
-  tasks.forEach((task) => {
-    const taskElement = document.createElement("div");
-    taskElement.id = task.id;
-    taskElement.className = "task";
-    taskElement.draggable = true;
-    taskElement.ondragstart = drag;
-    taskElement.innerText = task.text;
+  tasks.forEach((t) => {
+    let el = document.createElement("div");
+    el.id = t.id;
+    el.className = "task";
+    el.draggable = true;
+    el.ondragstart = drag;
+    el.innerText = t.text;
     document
-      .getElementById(task.column)
+      .getElementById(t.column)
       .querySelector(".task_list")
-      .appendChild(taskElement);
+      .appendChild(el);
   });
 }
-
-/**
- * Öffnet ein Prompt, um eine neue Task für die "todo"-Spalte hinzuzufügen.
- */
+function handleSearch(e) {
+  let q = e.target.value.toLowerCase();
+  let all = document.querySelectorAll(".task");
+  all.forEach((task) => {
+    task.style.display = task.innerText.toLowerCase().includes(q) ? "" : "none";
+  });
+}
 function openAddTask() {
-  const text = prompt("Enter new task");
-  if (text === null || text.trim() === "") return;
-  createTask(text.trim(), "todo");
+  document.getElementById("addTaskOverlay").classList.add("active");
 }
-
-/**
- * Fügt über Prompt eine neue Task in der angegebenen Spalte (columnId) hinzu.
- */
-function addNewTask(columnId) {
-  const text = prompt("Enter new task");
-  if (text === null || text.trim() === "") return;
-  createTask(text.trim(), columnId);
+function closeAddTaskOverlay() {
+  document.getElementById("addTaskOverlay").classList.remove("active");
 }
-
-/**
- * Erzeugt ein neues Task-Element und hängt es an die jeweilige Spalte an.
- */
-function createTask(text, columnId) {
-  const newId = "task_" + Date.now();
-  const newTask = document.createElement("div");
-  newTask.id = newId;
-  newTask.className = "task";
-  newTask.draggable = true;
-  newTask.ondragstart = drag;
-  newTask.innerText = text;
-  document
-    .getElementById(columnId)
-    .querySelector(".task_list")
-    .appendChild(newTask);
+function saveNewTask() {
+  let val = document.getElementById("newTaskInput").value.trim();
+  if (!val) return;
+  let el = document.createElement("div");
+  el.id = "task_" + Date.now();
+  el.className = "task";
+  el.draggable = true;
+  el.ondragstart = drag;
+  el.innerText = val;
+  document.getElementById("todo").querySelector(".task_list").appendChild(el);
+  document.getElementById("newTaskInput").value = "";
+  closeAddTaskOverlay();
 }
-
-/**
- * Suchfunktion: Versteckt Tasks, deren Text nicht zum Suchbegriff passt.
- */
-function handleSearch(event) {
-  const query = event.target.value.toLowerCase();
-  const allTasks = document.querySelectorAll(".task");
-  allTasks.forEach((task) => {
-    const isVisible = task.innerText.toLowerCase().includes(query);
-    task.style.display = isVisible ? "" : "none";
-  });
+function addNewTask(col) {
+  document.getElementById("addTaskOverlay").classList.add("active");
+  document.getElementById("saveTaskBtnColumn").value = col;
 }
