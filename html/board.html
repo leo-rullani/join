@@ -121,10 +121,10 @@
         </main>
         <div class="add_task_overlay" id="addTaskOverlay">
             <div class="overlay_content">
-                <button class="close_overlay_btn" onclick="closeAddTaskOverlay()">X</button>
                 <form onsubmit="addTaskCreateTask(); return false;" class="add-task-overlay-content" id="add-task-form">
                     <div class="add-task-overlay-h1-container">
                         <h1>Add Task</h1>
+                        <div class="close_overlay_btn"><button onclick="closeAddTaskOverlay()">&times;</button></div>
                     </div>
                     <div class="add-task-overlay-container">
                         <div class="add-task-overlay-left-side">
@@ -219,29 +219,29 @@
                                 </div>
                             </div>
 
-                            <div class="add-task-subtasks">
-                                <div class="add-task-subtasks-input-container">
+                            <div class="add-task-overlay-subtasks">
+                                <div class="add-task-overlay-subtasks-input-container">
                                     <label for="add-task-subtasks-input">Subtasks</label>
                                     <input id="add-task-subtasks-input" name="add-task-subtasks-input"
-                                        class="add-task-subtasks-input" type="text" placeholder="Add new subtask"
-                                        autocomplete="off" onclick="addTaskSubtasksClicked()"
-                                        onkeypress="addTaskSubtasks(event)" />
+                                        class="add-task-overlay-subtasks-input" type="text"
+                                        placeholder="Add new subtask" autocomplete="off"
+                                        onclick="addTaskSubtasksClicked()" onkeypress="addTaskSubtasks(event)" />
 
-                                    <div id="add-task-subtasks-icon-plus" class="add-task-subtasks-icon-plus">
+                                    <div id="add-task-subtasks-icon-plus" class="add-task-overlay-subtasks-icon-plus">
                                         <button onclick="addSubtasksPlus(event)" id="add-task-subtasks-input-plus">
-                                            <img class="add-task-subtasks-input-plus"
+                                            <img class="add-task-overlay-subtasks-icon-plus"
                                                 src="/assets/icons/add_task_check.svg" alt="" />
                                         </button>
                                     </div>
 
                                     <div id="add-task-subtasks-icon-plus-check"
-                                        class="add-task-subtasks-icon-plus-check d-none">
+                                        class="add-task-overlay-subtasks-icon-plus-check d-none">
                                         <button id="add-task-subtasks-input-clear" onclick="clearSubtasks(event)">
                                             <img src="/assets/icons/add_task_clear.svg" />
                                         </button>
                                         <div class="add-tasks-border"></div>
                                         <button onclick="addTaskSubtasks(event)">
-                                            <svg class="add-task-subtasks-input-check" width="14" height="14"
+                                            <svg class="add-task-overlay-subtasks-input-check" width="14" height="14"
                                                 viewBox="0 0 38 30" fill="none" xmlns="http://www.w3.org/2000/svg">
                                                 <path d="M4.02832 15.0001L15.2571 26.0662L33.9717 3.93408"
                                                     stroke="black" stroke-width="7" stroke-linecap="round"
@@ -251,17 +251,17 @@
                                     </div>
                                 </div>
                             </div>
-                            <div id="add-task-subtasks-choosen" class="add-task-subtasks-choosen">
-                                <ul id="add-task-subtasks-list" class="add-task-subtasks-list"></ul>
+                            <div id="add-task-subtasks-choosen" class="add-task-overlay-subtasks-choosen">
+                                <ul id="add-task-subtasks-list" class="add-task-overlay-subtasks-list"></ul>
                             </div>
                         </div>
                     </div>
                     <div class="add-task-bottom">
                         <div><span class="add-task-required">*</span> This field is required</div>
                         <div>
-                            <button class="add-task-bottom-clear-button" onclick="addTaskClearFormular(event)">
+                            <button class="add-task-bottom-clear-button" onclick="closeAddTaskOverlay()">
                                 <div class="add-task-bottom-clear">
-                                    Clear
+                                    Cancel
                                     <img class="close-button" src="/assets/icons/add_task_clear.svg" />
                                 </div>
                             </button>
@@ -281,6 +281,8 @@
         </div>
         <script src="/js/template.js"></script>
         <script src="/js/board.js"></script>
+        <script src="/js/add_task.js"></script>
+        <script src="/js/add_task_support.js"></script>
     </body>
 
 </html>

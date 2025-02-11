@@ -188,7 +188,7 @@
   background: #fff;
   border-radius: 10px;
   padding: 20px;
-  width: 70%;
+  width: 1000px;
   position: relative;
   display: flex;
   flex-direction: column;
@@ -198,6 +198,10 @@
   display: flex;
   flex-direction: column;
   padding: 20px;
+}
+.add-task-overlay-h1-container {
+  display: flex;
+  justify-content: space-between;
 }
 
 .add-task-overlay-h1-container h1 {
@@ -273,12 +277,77 @@
   background-repeat: no-repeat;
   transition: all 200ms;
   width: 78%;
+  font-size: 18px;
 }
 
 .checkbox-overlay-dropdown .search-overlay {
   display: flex;
   flex-direction: column;
   gap: 8px;
+}
+
+.checkbox-overlay-dropdown :has(input[type="text"]:focus) + ul {
+  display: block;
+}
+
+.checkbox-overlay-dropdown .search-overlay > input:focus {
+  background-image: url("/assets/icons/drop_down_arrow.svg");
+}
+.checkbox-overlay-dropdown ul {
+  background: #fff;
+  padding: 0;
+  list-style: none;
+  max-height: 250px;
+  overflow-y: auto;
+  position: absolute;
+  top: 100%;
+  width: 89%;
+  display: none;
+  z-index: 1;
+  border-radius: 0 0 10px 10px;
+  box-shadow: 0 4px 4px 0 rgba(0, 0, 0, 0.1);
+}
+
+.checkbox-overlay-dropdown ul:hover {
+  display: block;
+}
+
+.checkbox-overlay-dropdown ul li {
+  padding: 8px;
+  border-radius: 8px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.checkbox-overlay-dropdown ul li label {
+  cursor: pointer;
+  width: 100%;
+  display: flex;
+  align-items: center;
+}
+
+.checkbox-overlay-dropdown ul li:hover {
+  background-color: #eeeeee;
+}
+
+.checkbox-overlay-dropdown ul li .avatar {
+  display: inline-flex;
+  justify-content: center;
+  align-items: center;
+  height: 42px;
+  width: 42px;
+  border-radius: 50%;
+  margin-right: 10px;
+  border: 0.1rem solid #fff;
+  font-size: 75%;
+  color: #fff;
+}
+
+.checkbox-overlay-dropdown ul li .add-task-checkbox,
+.checkbox-overlay-dropdown ul li .add-task-checkbox-edit {
+  opacity: 1;
+  cursor: pointer;
 }
 
 .search-overlay label {
@@ -332,7 +401,7 @@
   border: none;
   background-color: #ffffff;
   cursor: pointer;
-  width: 125px;
+  width: 28%;
 }
 
 .add-task-overlay-urgent:hover,
@@ -363,14 +432,221 @@
   margin: 10px;
 }
 
+.add-task-overlay-subtasks-icon-plus-check {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  position: absolute;
+  left: 370px;
+  bottom: 2px;
+  cursor: pointer;
+  gap: 5px;
+}
+
+.add-task-overlay-subtasks {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  margin: 10px;
+}
+
+.add-task-overlay-subtasks-input {
+  padding: 10px 15px 10px 15px;
+  border-radius: 10px;
+  border: 1px solid #bbb9b9;
+  width: 80%;
+  font-size: 18px;
+}
+
+.add-task-overlay-subtasks-input-container {
+  display: flex;
+  flex-direction: column;
+  position: relative;
+  gap: 8px;
+}
+
+.add-task-overlay-subtasks-icon-plus {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  position: absolute;
+  right: 10%;
+  bottom: 4px;
+  cursor: pointer;
+  gap: 5px;
+}
+
+.add-task-overlay-subtasks-li-edit {
+  margin-inline: 0 !important;
+}
+
+.add-task-overlay-subtasks-input-edit {
+  background-color: #ffffff;
+  border: none;
+  border-bottom: 1px solid #29abe2;
+  border-radius: 0;
+  padding-right: 75px;
+  padding-left: 10px;
+  outline: none;
+  height: 40px;
+  width: 100%;
+}
+
+.add-task-overlay-subtasks-input-edit-div {
+  position: relative;
+  width: 100%;
+}
+
+.add-task-overlay-subtasks-icons-edit {
+  position: absolute;
+  right: 19px;
+  bottom: 10px;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.add-tasks-border {
+  width: 1px;
+  height: 26px;
+  border: 1px solid #bbb9b9;
+}
+
+.add-task-overlay-subtasks-icon-plus button {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  border-radius: 50%;
+  background-color: #ffffff;
+  border: none;
+  padding: 10px;
+  cursor: pointer;
+}
+
+.add-task-overlay-subtasks-icon-plus button:hover {
+  background-color: #ededef;
+}
+
+.add-task-overlay-subtasks-icon-plus-check {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  position: absolute;
+  right: 50px;
+  bottom: 4px;
+  cursor: pointer;
+  gap: 5px;
+}
+
+.add-task-overlay-subtasks-icon-plus-check button {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  border-radius: 50%;
+  background-color: #ffffff;
+  border: none;
+  padding: 10px;
+  cursor: pointer;
+}
+
+.add-task-overlay-subtasks-icon-plus-check button:hover {
+  background-color: #ededef;
+}
+
+.add-task-overlay-subtasks-icon-plus-check img {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  border-radius: 50%;
+  border: none;
+  width: 14px;
+  height: 14px;
+}
+
+.add-task-overlay-subtasks-choosen {
+  max-height: 200px;
+  overflow-y: auto;
+}
+
+.add-task-overlay-subtasks-choosen li {
+  list-style: inside;
+  display: flex;
+  justify-content: space-between;
+  padding-inline: 15px;
+}
+
+.add-task-overlay-subtasks-choosen ul {
+  padding-inline: 10px;
+}
+
+.add-task-overlay-subtasks-extra-task {
+  position: relative;
+  word-break: break-all;
+  padding-left: 10px;
+  padding-right: 70px;
+}
+
+.add-task-overlay-subtasks-extra-task::before {
+  content: "";
+  background-color: black;
+  position: absolute;
+  left: -8px;
+  top: 12px;
+  border-radius: 50%;
+  display: block;
+  width: 5px;
+  height: 5px;
+}
+
+.add-task-overlay-subtasks-icons {
+  position: absolute;
+  right: 10px;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.add-task-overlay-subtasks-icons {
+  display: none;
+  padding-right: 16px;
+}
+
+.add-task-overlay-subtasks-list li {
+  position: relative;
+}
+
+.add-task-overlay-subtasks-list li:hover,
+.add-task-overlay-subtasks-icons {
+  display: flex;
+}
+
 .close_overlay_btn {
+  border: none;
+  height: 30px;
+  width: 30px;
+  border-radius: 50%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding: 0;
+  margin: 0;
+}
+.close_overlay_btn button {
   background-color: transparent;
   border: none;
-  font-size: 18px;
+  font-size: 35px;
+  height: 30px;
+  width: 30px;
+  border-radius: 50%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding: 0;
+  margin: 0;
+}
+.close_overlay_btn button:hover {
+  background-color: #aaa;
   cursor: pointer;
-  position: absolute;
-  top: 10px;
-  right: 10px;
 }
 .save_task_btn {
   background-color: #2b3647;
