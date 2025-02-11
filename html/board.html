@@ -7,6 +7,7 @@
     <title>Board</title>
 
     <link rel="icon" type="image/png" href="/assets/img/join-logo-blue.svg">
+    <!-- Deine CSS-Dateien (Reihenfolge unverändert) -->
     <link rel="stylesheet" href="/css/board.css">
     <link rel="stylesheet" href="/css/template.css">
     <link rel="stylesheet" href="/css/fonts.css">
@@ -26,20 +27,29 @@
                     <div class="profile_initials" id="userInitials"></div>
                 </div>
             </div>
+        </div>
     </header>
 
     <main class="content">
         <div class="side_menu">
             <img class="logo" src="/assets/img/join-logo-white.svg" alt="Join Logo">
             <div class="menu_bar">
-                <div class="selection"><img src="/assets/icons/Icon-summary.svg" alt=""><a
-                        href="/html/summary.html"><span>Summary</span></a></div>
-                <div class="selection"><img src="/assets/icons/Icon-addtask.svg" alt=""><a
-                        href="/html/addtask.html"><span>Add Task</span></a></div>
-                <div class="selection active"><img src="/assets/icons/Icon-board.svg" alt=""><a
-                        href="/html/board.html"><span>Board</span></a></div>
-                <div class="selection"><img src="/assets/icons/Icon-contacts.svg" alt=""><a
-                        href="/html/contacts.html"><span>Contacts</span></a></div>
+                <div class="selection">
+                    <img src="/assets/icons/Icon-summary.svg" alt="">
+                    <a href="/html/summary.html"><span>Summary</span></a>
+                </div>
+                <div class="selection">
+                    <img src="/assets/icons/Icon-addtask.svg" alt="">
+                    <a href="/html/addtask.html"><span>Add Task</span></a>
+                </div>
+                <div class="selection active">
+                    <img src="/assets/icons/Icon-board.svg" alt="">
+                    <a href="/html/board.html"><span>Board</span></a>
+                </div>
+                <div class="selection">
+                    <img src="/assets/icons/Icon-contacts.svg" alt="">
+                    <a href="/html/contacts.html"><span>Contacts</span></a>
+                </div>
 
                 <div class="policy_docs">
                     <a href="/html/privacypolicy.html">Privacy Policy</a>
@@ -48,29 +58,66 @@
             </div>
         </div>
 
-        <!-- Board mit Spalten für Tasks -->
+        <!-- Board Sektion -->
         <section class="board_section">
-            <h1>Board</h1>
+            <!-- Oberer Bereich mit Titel, Suchfeld & Add-Button -->
+            <div class="board_header">
+                <h1 class="board-title">Board</h1>
+                <div class="board_header_actions">
+                    <!-- Suchfeld -->
+                    <div class="search_container">
+                        <img class="search_icon" src="/assets/icons/search.svg" alt="Search">
+                        <input type="text" id="searchInput" placeholder="Find Task"
+                            onkeyup="handleSearch(event)" />
+                    </div>
+                    <!-- Add Task Button -->
+                    <button class="btn_add_task" onclick="openAddTask()">
+                        Add Task +
+                    </button>
+                </div>
+            </div>
+
+            <!-- Board-Spalten -->
             <div class="board_container">
+                <!-- Spalte 1: To Do -->
                 <div class="board_column" id="todo">
-                    <h2>To Do</h2>
+                    <div class="column_header">
+                        <h2>To Do</h2>
+                        <button class="col_add_btn" onclick="addNewTask('todo')">+</button>
+                    </div>
                     <div class="task_list" ondrop="drop(event)" ondragover="allowDrop(event)"></div>
                 </div>
+
+                <!-- Spalte 2: In progress -->
                 <div class="board_column" id="doing">
-                    <h2>In progress</h2>
+                    <div class="column_header">
+                        <h2>In progress</h2>
+                        <button class="col_add_btn" onclick="addNewTask('doing')">+</button>
+                    </div>
                     <div class="task_list" ondrop="drop(event)" ondragover="allowDrop(event)"></div>
                 </div>
+
+                <!-- Spalte 3: Await feedback -->
                 <div class="board_column" id="feedback">
-                    <h2>Await feedback</h2>
+                    <div class="column_header">
+                        <h2>Await feedback</h2>
+                        <button class="col_add_btn" onclick="addNewTask('feedback')">+</button>
+                    </div>
                     <div class="task_list" ondrop="drop(event)" ondragover="allowDrop(event)"></div>
                 </div>
+
+                <!-- Spalte 4: Done -->
                 <div class="board_column" id="done">
-                    <h2>Done</h2>
+                    <div class="column_header">
+                        <h2>Done</h2>
+                        <button class="col_add_btn" onclick="addNewTask('done')">+</button>
+                    </div>
                     <div class="task_list" ondrop="drop(event)" ondragover="allowDrop(event)"></div>
                 </div>
             </div>
         </section>
 
+        <!-- Responsive Menu -->
         <div class="menu_header resp_menu_closed" id="resp_menu">
             <div class="menu_links">
                 <a href="/html/legalnotice.html">Legal Notice</a>
@@ -80,6 +127,7 @@
         </div>
     </main>
 
+    <!-- Deine JS-Dateien -->
     <script src="/js/template.js"></script>
     <script src="/js/board.js"></script>
 
