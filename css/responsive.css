@@ -295,14 +295,14 @@
     max-height: 1000px;
   }
   .contact_list {
-    height: 800px;
+    height: 805px;
   }
   #phonebook {
     height: 700px;
   }
   .contact_overlay {
     position: fixed;
-    top: 100%;              
+    top: 100%;
     background-color: rgba(0, 0, 0, 0.1);
     width: 100%;
     height: 100%;
@@ -314,18 +314,18 @@
     z-index: 9999;
     transition: top 0.5s ease-in-out, opacity 0.5s ease-in-out;
   }
-  
+
   .contact_overlay.active {
-    top: 0;                  
-    visibility: visible;     
+    top: 0;
+    visibility: visible;
     opacity: 1;
   }
-  
+
   .contact_overlay.closing {
-    top: 100%;         
+    top: 100%;
     opacity: 0;
     visibility: visible;
-  }  
+  }
 
   .overlay-content {
     background: rgb(0, 0, 0);
@@ -482,6 +482,7 @@
   .contact_list {
     width: 100%;
     display: block;
+    height: 868px;
   }
   .contacts_div {
     width: 100%;
@@ -533,10 +534,6 @@
 
   .letter {
     align-self: flex-start;
-  }
-
-  .contact_list {
-    height: 860px;
   }
 
   .contact_details_header {
@@ -1415,40 +1412,38 @@
   }
 }
 
-
 /* legal notice & privacy policy responsive */
 
 @media (max-width: 650px) {
-
   .privacypolicy_content {
     padding-left: 40px;
     padding-right: 40px;
-    padding-bottom: 20px;  
+    padding-bottom: 20px;
+  }
+
+  .privacypolicy_header {
+    height: 85vh;
+  }
+
+  .privacypolicy_section h1 {
+    font-size: 32px;
+  }
+
+  h2 {
+    font-size: 20px !important;
+  }
+  h3 {
+    font-size: 18px !important;
+  }
 }
 
-.privacypolicy_header{
-  height: 85vh;
-}
-
-.privacypolicy_section h1{
-  font-size: 32px;
-}
-
-h2 {
-  font-size: 20px !important;
-}
-h3{
-  font-size: 18px !important;
-}
-}
-
-@media (max-width: 450px){
+@media (max-width: 450px) {
   .privacypolicy_content {
     padding-left: 12px;
     padding-right: 12px;
-}
+  }
 
-p{
-  font-size: 16px;
-}
+  p {
+    font-size: 16px;
+  }
 }
