@@ -978,12 +978,7 @@
 
 @media (max-width: 950px) {
   .summary_details_header {
-    margin: 0;
     font-size: 40px;
-  }
-
-  .summary_details_header {
-    width: 402px;
   }
 
   .summary_card {
