@@ -4,14 +4,15 @@
   left: 0;
   width: 100%;
   height: 100%;
-  background-color: rgba(0, 0, 0, 0.6);
+  background-color: rgba(0, 0, 0, 0.3);
   display: flex;
   align-items: center;
   justify-content: center;
   z-index: 9999;
+  /* Schnellere, lineare Fade-Dauer */
+  transition: opacity 0.2s linear;
   opacity: 0;
   pointer-events: none;
-  transition: opacity 0.3s ease;
 }
 
 .board_overlay_show {
@@ -27,8 +28,10 @@
   border-radius: 20px;
   padding: 20px;
   box-shadow: 0 4px 10px rgba(0, 0, 0, 0.3);
-  animation-duration: 0.4s;
+  /* Kürzere, lineare Slide-Dauer */
+  animation-duration: 0.2s;
   animation-fill-mode: both;
+  animation-timing-function: linear;
   height: 760px;
   color: #2b3647;
   font-weight: normal;

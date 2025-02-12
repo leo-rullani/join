@@ -319,42 +319,48 @@
 
   .contact_overlay {
     position: fixed;
-    top: 100%;
-    background-color: rgba(0, 0, 0, 0.1);
+    top: 0;         
+    left: 0;        
     width: 100%;
     height: 100%;
+    background-color: rgba(0, 0, 0, 0.1);
     visibility: hidden;
     opacity: 0;
     display: flex;
     justify-content: center;
     align-items: center;
     z-index: 9999;
-    transition: top 0.5s ease-in-out, opacity 0.5s ease-in-out;
+    transition: opacity 0.5s ease-in-out, visibility 0.5s;
   }
 
   .contact_overlay.active {
-    top: 0;
     visibility: visible;
-    opacity: 1;
+    opacity: 1;   
   }
 
   .contact_overlay.closing {
-    top: 100%;
-    opacity: 0;
-    visibility: visible;
+    opacity: 0;   
+    visibility: hidden;
   }
 
   .overlay-content {
     background: rgb(0, 0, 0);
-    padding: 0px;
-    border-radius: 20px;
     width: 500px;
     height: 700px;
-    text-align: center;
-    position: relative;
+    border-radius: 20px;
     display: flex;
     flex-direction: column;
-    top: 0;
+    position: relative;
+    transition: transform 0.5s ease-in-out;
+    transform: translateY(100%);
+  }
+
+  .contact_overlay.active .overlay-content {
+    transform: translateY(0);
+  }
+
+  .contact_overlay.closing .overlay-content {
+    transform: translateY(100%);
   }
 
   .editContact_left,
