@@ -1,100 +1,138 @@
-/* 
-  Das übergeordnete Overlay: 
-  Deckt gesamten Bildschirm ab, ist halbtransparent,
-  standardmäßig unsichtbar (opacity: 0 und pointer-events: none)
-*/
 .board_overlay {
-    position: fixed;
-    top: 0;
-    left: 0;
-    width: 100%;
-    height: 100%;
-    background-color: rgba(0, 0, 0, 0.6); /* halbtransparenter, dunkler Hintergrund */
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    z-index: 9999;
-  
-    opacity: 0; /* unsichtbar */
-    pointer-events: none;
-    transition: opacity 0.3s ease; /* smoothes Ein-/Ausblenden */
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-color: rgba(0, 0, 0, 0.6);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 9999;
+  opacity: 0;
+  pointer-events: none;
+  transition: opacity 0.3s ease;
+}
+.board_overlay_show {
+  opacity: 1;
+  pointer-events: auto;
+}
+.board_overlay_content {
+  position: relative;
+  width: 420px;
+  max-width: 90%;
+  background: #fff;
+  border-radius: 20px;
+  padding: 20px;
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.3);
+  animation-duration: 0.4s;
+  animation-fill-mode: forwards;
+  height: 770px;
+}
+@keyframes slideInFromRight {
+  from {
+    transform: translateX(100%);
   }
-  
-  /* 
-    Wird per JS hinzugefügt (overlay.classList.add("board_overlay_show")), 
-    um das Overlay sichtbar und klickbar zu machen
-  */
-  .board_overlay_show {
-    opacity: 1;
-    pointer-events: auto;
+  to {
+    transform: translateX(0);
   }
-  
-  /*
-    Der weiße Inhalt innerhalb des Overlays:
-    Wir definieren Breite, Padding, etc.
-    Hier greifen wir später via JS "animationName" auf die Keyframes zu.
-  */
-  .board_overlay_content {
-    position: relative;
-    width: 420px;
-    max-width: 90%;
-    background: #fff;
-    border-radius: 8px;
-    padding: 20px;
-    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.3);
-  
-    /* Keyframe-Animationen sollen hier wirken */
-    animation-duration: 0.4s; 
-    animation-fill-mode: forwards; 
+}
+@keyframes slideOutToRight {
+  from {
+    transform: translateX(0);
   }
-  
-  /* 
-    Animation: von rechts --> in die Mitte.
-    initial: translateX(100%) (außerhalb des Bildschirms),
-    ende: translateX(0) (in der Mitte).
-  */
-  @keyframes slideInFromRight {
-    from {
-      transform: translateX(100%);
-    }
-    to {
-      transform: translateX(0);
-    }
+  to {
+    transform: translateX(120%);
   }
-  
-  /*
-    Animation: von Mitte --> nach rechts.
-  */
-  @keyframes slideOutToRight {
-    from {
-      transform: translateX(0);
-    }
-    to {
-      transform: translateX(100%);
-    }
-  }
-  
-  /* X-Button oben rechts */
-  .board_overlay_close {
-    position: absolute;
-    top: 16px;
-    right: 16px;
-    background-color: #333;
-    color: #fff;
-    border: none;
-    border-radius: 50%;
-    width: 36px;
-    height: 36px;
-    font-size: 18px;
-    cursor: pointer;
-    transition: background-color 0.2s ease;
-  }
-  
-  .board_overlay_close:hover {
-    background-color: #555;
-  }  
-
-  @keyframes slideOutToRight {
-    from { transform: translateX(0); }
-    to   { transform: translateX(120%); } /* oder 100vw */
-  }  
+}
+.board_overlay_close {
+  position: absolute;
+  top: 16px;
+  right: 16px;
+  background: none;
+  color: #333;
+  border: none;
+  font-size: 18px;
+  cursor: pointer;
+  transition: background-color 0.2s ease, border-radius 0.2s ease;
+}
+.board_overlay_close:hover {
+  background-color: #e0e0e0;
+  border-radius: 50%;
+}
+.task-label {
+  display: inline-block;
+  padding: 4px 8px;
+  border-radius: 4px;
+  color: #fff;
+  font-size: 0.85rem;
+  margin-bottom: 10px;
+}
+.label-technical {
+  background-color: #1ed7c1;
+}
+.label-userstory {
+  background-color: #0138ff;
+}
+.task-priority {
+  margin: 10px 0;
+  font-weight: bold;
+}
+.assigned-container {
+  margin: 10px 0;
+}
+.assignees {
+  display: flex;
+  gap: 10px;
+  margin-top: 5px;
+}
+.assignee {
+  display: flex;
+  align-items: center;
+  gap: 5px;
+}
+.assignee-circle {
+  width: 30px;
+  height: 30px;
+  border-radius: 50%;
+  color: #fff;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  font-weight: bold;
+}
+.circle-blue {
+  background-color: #2996cc;
+}
+.circle-purple {
+  background-color: #8c41f7;
+}
+.subtasks {
+  margin: 10px 0;
+}
+.subtask-item {
+  display: flex;
+  align-items: center;
+  margin-bottom: 5px;
+}
+.task-footer {
+  display: flex;
+  justify-content: flex-end;
+  gap: 10px;
+  margin-top: 15px;
+}
+.task-footer button {
+  display: flex;
+  align-items: center;
+  gap: 5px;
+  border: none;
+  background: none;
+  cursor: pointer;
+  padding: 5px 8px;
+  border-radius: 4px;
+  color: #333;
+}
+.task-footer button:hover {
+  background-color: #e0f0ff;
+  color: #007acc;
+}

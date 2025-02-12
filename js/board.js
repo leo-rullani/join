@@ -113,32 +113,23 @@ function saveNewTask() {
  */
 function openBoardOverlay() {
   const overlay = document.getElementById("boardOverlay");
-  const content = overlay.querySelector(".board_overlay_content");
-
-  // Zuweisung der Keyframe-Animation
-  content.style.animationName = "slideInFromRight";
-
-  // Overlay sichtbar machen (.board_overlay_show steuert z.B. opacity und pointer-events)
   overlay.classList.add("board_overlay_show");
+  overlay.querySelector(".board_overlay_content").style.animationName =
+    "slideInFromRight";
 }
 
-/**
- * Schließt das Board-Overlay (animiert von Mitte nach rechts)
- */
 function closeBoardOverlay() {
   const overlay = document.getElementById("boardOverlay");
   const content = overlay.querySelector(".board_overlay_content");
-
-  // Keyframe zuweisen (raus nach rechts)
   content.style.animationName = "slideOutToRight";
-
-  // Warten auf Ende der Animation, dann Overlay verbergen
-  content.addEventListener("animationend", function handler() {
-    if (content.style.animationName === "slideOutToRight") {
+  content.addEventListener(
+    "animationend",
+    function handler() {
       overlay.classList.remove("board_overlay_show");
       content.removeEventListener("animationend", handler);
-    }
-  });
+    },
+    { once: true }
+  );
 }
 
 /**
