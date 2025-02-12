@@ -657,8 +657,14 @@
   cursor: pointer;
   transition: background-color 0.3s;
 }
-.save_task_btn:hover {
-  background-color: #28abe2;
+.selection.active {
+  background-color: #091931;
+  display: flex;
+  align-items: center;
+}
+.selection.active a {
+  color: #ffffff;
+  text-decoration: none;
 }
 
 @media (max-width: 900px) {
