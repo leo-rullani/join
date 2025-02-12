@@ -21,7 +21,7 @@
 
 .board_overlay_content {
   position: relative;
-  width: 450px;
+  width: 430px;
   max-width: 90%;
   background: #fff;
   border-radius: 20px;
@@ -224,7 +224,7 @@
   display: flex;
   justify-content: flex-end;
   gap: 10px;
-  margin-top: 15px;
+  margin-right: 24px;
 }
 
 .task-footer button {
