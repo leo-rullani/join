@@ -37,8 +37,8 @@
   left: auto;
   right: 10px;
   transform: translateY(-50%);
-  width: 16px;
-  height: 16px;
+  width: 40px;
+  height: 40px;
   pointer-events: none;
 }
 .search_container input {
@@ -660,6 +660,7 @@
 .save_task_btn:hover {
   background-color: #28abe2;
 }
+
 @media (max-width: 900px) {
   .board_section {
     top: 76px;

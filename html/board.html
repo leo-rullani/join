@@ -64,7 +64,7 @@
                             <img class="search_icon" src="/assets/icons/search-icon-board.svg" alt="Search Icon">
                         </div>
                         <button class="btn_add_task" onclick="openAddTask()">
-                            Add Task
+                            Add Task +
                         </button>
                     </div>
                 </div>
@@ -287,22 +287,29 @@
             <!-- Schließen-Button -->
             <button class="board_overlay_close" onclick="closeBoardOverlay()">&times;</button>
 
-            <!-- Label (z. B. .label-technical oder .label-userstory) -->
+            <!-- Label (technical/user story) -->
             <div id="taskLabel" class="task-label label-technical">Technical Task</div>
 
             <!-- Titel & Untertitel -->
-            <h2 id="taskTitle">CSS Architecture Planning</h2>
+            <h2 id="taskTitle" class="h2_board-overlay">CSS Architecture Planning</h2>
             <p id="taskSubtitle">Define CSS naming conventions and structure.</p>
 
+            <!-- Due Date -->
+            <div class="overlay-section">
+                <span class="section-label">Due Date:</span>
+                <span id="dueDate">12/02/2025</span>
+            </div>
+
             <!-- Priority -->
-            <div class="task-priority">
-                Priority: <span id="priorityLabel">Urgent</span>
+            <div class="overlay-section">
+                <span class="section-label">Priority:</span>
+                <span id="priorityLabel">Urgent</span>
             </div>
 
             <!-- Assigned To -->
-            <div class="assigned-container">
-                <p>Assigned to:</p>
-                <div class="assignees">
+            <div class="overlay-section">
+                <span class="section-label">Assigned to:</span>
+                <div class="assignees-column">
                     <div class="assignee">
                         <div class="assignee-circle circle-blue">SM</div>
                         <span class="assignee-name">Sofia Müller</span>
@@ -316,6 +323,7 @@
 
             <!-- Subtasks -->
             <div class="subtasks">
+                <p class="section-label">Subtasks:</p>
                 <div class="subtask-item">
                     <input type="checkbox" id="subtask1">
                     <label for="subtask1">Establish CSS Methodology</label>
@@ -328,11 +336,11 @@
 
             <!-- Footer mit Icons -->
             <div class="task-footer">
-                <button class="btn-delete" onclick="deleteTask()">
-                    <img src="trash-icon.svg" alt="Delete"> Delete
+                <button class="board-btn-delete" onclick="deleteTask()">
+                    <img src="/assets/icons/board-btn-delete.svg" alt="Delete"> Delete
                 </button>
-                <button class="btn-edit" onclick="editTask()">
-                    <img src="edit-icon.svg" alt="Edit"> Edit
+                <button class="board-btn-edit" onclick="editTask()">
+                    <img src="/assets/icons/board-btn-edit.svg" alt="Edit"> Edit
                 </button>
             </div>
         </div>

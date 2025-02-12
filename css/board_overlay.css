@@ -28,6 +28,8 @@
   animation-duration: 0.4s;
   animation-fill-mode: forwards;
   height: 770px;
+  color: #2b3647;
+  font-weight: normal;
 }
 @keyframes slideInFromRight {
   from {
@@ -47,26 +49,27 @@
 }
 .board_overlay_close {
   position: absolute;
-  top: 16px;
-  right: 16px;
+  top: 32px;
+  right: 32px;
   background: none;
-  color: #333;
+  color: #3f3f3f;
   border: none;
-  font-size: 18px;
+  font-size: 32px;
   cursor: pointer;
   transition: background-color 0.2s ease, border-radius 0.2s ease;
 }
 .board_overlay_close:hover {
-  background-color: #e0e0e0;
-  border-radius: 50%;
+  background-color: #c6c7c8;
+  border-radius: 100%;
 }
 .task-label {
   display: inline-block;
-  padding: 4px 8px;
-  border-radius: 4px;
+  padding: 6px 32px;
+  border-radius: 12px;
   color: #fff;
-  font-size: 0.85rem;
-  margin-bottom: 10px;
+  font-size: 1.1rem;
+  margin-top: 16px;
+  margin-bottom: 24px;
 }
 .label-technical {
   background-color: #1ed7c1;
@@ -74,17 +77,17 @@
 .label-userstory {
   background-color: #0138ff;
 }
-.task-priority {
-  margin: 10px 0;
-  font-weight: bold;
+.overlay-section {
+  margin-bottom: 8px;
 }
-.assigned-container {
-  margin: 10px 0;
+.section-label {
+  color: #2b3647;
+  margin-right: 5px;
 }
-.assignees {
+.assignees-column {
   display: flex;
-  gap: 10px;
-  margin-top: 5px;
+  flex-direction: column;
+  gap: 8px;
 }
 .assignee {
   display: flex;
@@ -99,7 +102,7 @@
   display: flex;
   justify-content: center;
   align-items: center;
-  font-weight: bold;
+  font-weight: normal;
 }
 .circle-blue {
   background-color: #2996cc;
@@ -108,12 +111,20 @@
   background-color: #8c41f7;
 }
 .subtasks {
-  margin: 10px 0;
+  margin-bottom: 8px;
 }
 .subtask-item {
   display: flex;
   align-items: center;
   margin-bottom: 5px;
+  transition: background-color 0.2s ease;
+  border-radius: 4px;
+}
+.subtask-item:hover {
+  background-color: #c6c7c8;
+}
+.subtask-item input[type="checkbox"] {
+  accent-color: #2b3647;
 }
 .task-footer {
   display: flex;
@@ -129,10 +140,14 @@
   background: none;
   cursor: pointer;
   padding: 5px 8px;
-  border-radius: 4px;
-  color: #333;
+  color: #2b3647;
+  transition: color 0.2s ease;
 }
 .task-footer button:hover {
-  background-color: #e0f0ff;
-  color: #007acc;
+  color: #28abe2;
+}
+.h2_board-overlay {
+  font-size: 56px;
+  margin-block-start: 0;
+  margin-block-end: 0;
 }
