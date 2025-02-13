@@ -4,7 +4,9 @@
  * Wird beim Laden des Bodys (onload="initBoard()") aufgerufen.
  * Lädt initial Beispiel-Tasks und konfiguriert Drag & Drop.
  */
-function initBoard() {}
+function initBoard() {
+  displayTasks();
+}
 
 /**
  * Erstellt einige Beispiel-Tasks

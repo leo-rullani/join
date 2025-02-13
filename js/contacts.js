@@ -79,6 +79,7 @@ function processContactsData(contactsData) {
     ...data,
   }));
 
+  contactsArray = contactsArray.filter((contact) => contact.name);
   contactsArray.sort((a, b) => a.name.localeCompare(b.name));
 
   return contactsArray;

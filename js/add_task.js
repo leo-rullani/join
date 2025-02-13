@@ -12,11 +12,7 @@ let contactsToAssigned = [];
 let globalBoardCategory = "to-do";
 
 async function initAddTask() {
-  authGuard();
-  await init();
-  setNavActive("add-task");
-  allTasks = await getTasks();
-  contactsToAssigned = await getContacts();
+  await loadContacts();
   createAssignedTo();
   getCategoryFromUrl();
 }
@@ -142,13 +138,7 @@ function addTaskSubtasks(event) {
  * saves the updated tasks, resets the form, and displays a confirmation message.
  */
 async function addTaskCreateTask() {
-  const userId = getUserId(); // Hole die userId
-  if (!userId) {
-    console.error("No user ID found.");
-    return;
-  }
-
-  const taskId = "task_" + Date.now(); // Eine einzigartige Task-ID basierend auf der aktuellen Zeit
+  const taskId = "task_" + Date.now();
   const title = addTaskTitle();
   const description = addTaskDescription();
   const names = addTaskAssignedTo();
@@ -161,14 +151,13 @@ async function addTaskCreateTask() {
     date: date,
     priority: globalPrio,
     category: globalCategory,
-    subtasks: [], // Leere Liste für Subtasks, kann später erweitert werden
+    subtasks: [],
   };
 
-  // Speichern der Aufgabe unter dem Benutzer
-  const taskRef = `${databaseURL}/users/${userId}/tasks/${taskId}.json`;
+  const taskRef = `${databaseURL}/tasks/${taskId}.json`;
 
   const response = await fetch(taskRef, {
-    method: "POST",
+    method: "PUT",
     headers: {
       "Content-Type": "application/json",
     },
@@ -223,17 +212,17 @@ contactsToAssigned.sort(compareByName);
  * Iterates through the list of contacts to be assigned and generates HTML for each contact.
  */
 function createAssignedTo() {
-  for (let i = 0; i < contactsToAssigned.length; i++) {
-    const contact = contactsToAssigned[i].name;
-    const createContactsContainer = document.getElementById("add-task-contact");
-    const bgColor = assignColor(contact);
+  const createContactsContainer = document.getElementById("add-task-contact");
+  createContactsContainer.innerHTML = "";
 
+  contactsToAssigned.forEach((contact, i) => {
+    const bgColor = assignColor(contact.name);
     createContactsContainer.innerHTML += addTaskAssignedToHtml(
       i,
       bgColor,
-      contact
+      contact.name
     );
-  }
+  });
 }
 
 /**
@@ -260,46 +249,55 @@ function addTaskShowAvatars() {
  * and generates HTML elements for displaying filtered contacts.
  */
 function addTaskAssignedToSearch() {
-  let search = document.getElementById("find-person").value.toLowerCase();
-  const createContactsContainer = document.getElementById("add-task-contact");
-  createContactsContainer.innerHTML = "";
+  let search = document.getElementById("find-person").value.toLowerCase(); // Holen des Werts aus dem Suchfeld und Umwandeln in Kleinbuchstaben
+  const createContactsContainer = document.getElementById("add-task-contact"); // Container für die Kontaktliste
 
+  createContactsContainer.innerHTML = ""; // Leeren des Containers, bevor neue Ergebnisse angezeigt werden
+
+  // Durchlaufe die Liste der Kontakte und filtere sie basierend auf dem Suchbegriff
   for (let i = 0; i < contactsToAssigned.length; i++) {
-    const contact = contactsToAssigned[i].name;
-    const bgColor = assignColor(contact); // Assuming assignColor function is defined elsewhere
+    const contact = contactsToAssigned[i].name; // Der Name des Kontakts
+    const bgColor = assignColor(contact); // Färbung des Avatars (falls notwendig)
 
+    // Wenn der Kontaktname den Suchbegriff enthält, füge ihn zur Anzeige hinzu
     if (contact.toLowerCase().includes(search)) {
-      const assigned = assignedContacts.includes(contact); // Check if contact is already assigned
-      createContactsContainer.innerHTML += addTaskAssignedToSearchHTML(
+      const assigned = assignedContacts.includes(contact); // Überprüfe, ob der Kontakt bereits zugewiesen wurde
+
+      // Erstelle ein Listenelement (<li>) für den Kontakt
+      const listItem = document.createElement("li");
+      listItem.innerHTML = addTaskAssignedToSearchHTML(
         i,
         bgColor,
         contact,
         assigned
       );
+
+      // Füge das Listenelement zur <ul>-Liste hinzu
+      createContactsContainer.appendChild(listItem);
     }
   }
 }
 
-async function getTasks(userId) {
-  const taskRef = `${databaseURL}/users/${userId}/tasks.json`;
+async function getTasks() {
+  const taskRef = `${databaseURL}/tasks.json`;
   const response = await fetch(taskRef);
+  const tasks = await response.json();
 
-  if (response.ok) {
-    const tasks = await response.json();
-    console.log("Tasks fetched:", tasks);
-    return tasks;
+  if (response.ok && tasks) {
+    if (Object.keys(tasks).length === 0) {
+      console.log("No tasks found.");
+      return [];
+    }
+
+    return Object.values(tasks);
   } else {
-    console.error("Error fetching tasks");
+    console.error("Error fetching tasks or no tasks found", tasks);
     return [];
   }
 }
-async function updateTaskSubtasks(taskId, subtasks, userId) {
-  if (!userId) {
-    console.error("No userId provided for update.");
-    return;
-  }
 
-  const taskRef = `${databaseURL}/users/${userId}/tasks/${taskId}.json`;
+async function updateTaskSubtasks(taskId, subtasks) {
+  const taskRef = `${databaseURL}/tasks/${taskId}.json`;
 
   const response = await fetch(taskRef, {
     method: "PATCH",
@@ -316,8 +314,8 @@ async function updateTaskSubtasks(taskId, subtasks, userId) {
   }
 }
 
-async function deleteTask(taskId, userId) {
-  const taskRef = `${databaseURL}/users/${userId}/tasks/${taskId}.json`;
+async function deleteTask(taskId) {
+  const taskRef = `${databaseURL}/tasks/${taskId}.json`;
 
   const response = await fetch(taskRef, {
     method: "DELETE",
@@ -330,22 +328,53 @@ async function deleteTask(taskId, userId) {
   }
 }
 
-function getUserId() {
-  let userId = JSON.parse(sessionStorage.getItem("loggedInUser"))?.id;
-  if (!userId) {
-    console.error("User ID not found in sessionStorage.");
-  }
-  return userId;
-}
-
 async function displayTasks() {
-  const userId = getUserId(); // Hole die userId
-  if (!userId) return; // Falls keine userId vorhanden ist, breche ab
-
-  const tasks = await getTasks(userId); // Übergib die userId an getTasks
-  const tasksContainer = document.getElementById("task_first_place");
+  const tasks = await getTasks();
+  const tasksContainer = document.getElementById("tasks-container");
 
   tasks.forEach((task) => {
     tasksContainer.innerHTML += createTaskTemplate(task);
   });
+}
+
+async function loadContacts() {
+  const response = await fetch(`${databaseURL}/contacts.json`);
+  const data = await response.json();
+  contactsToAssigned = data;
+  contactsToAssigned = Object.values(contactsToAssigned);
+  createAssignedTo();
+}
+
+function assignColor(name) {
+  const colors = {
+    A: "#FF5733",
+    B: "#33FF57",
+    C: "#5733FF",
+    D: "#FF33A8",
+    E: "#33A8FF",
+    F: "#A8FF33",
+    G: "#FF8C33",
+    H: "#8C33FF",
+    I: "#33FFD7",
+    J: "#FFD733",
+    K: "#33FF8C",
+    L: "#D733FF",
+    M: "#FF336E",
+    N: "#338CFF",
+    O: "#33FFBD",
+    P: "#FFBD33",
+    Q: "#8CFF33",
+    R: "#FF338C",
+    S: "#336EFF",
+    T: "#33FF57",
+    U: "#FF5733",
+    V: "#5733FF",
+    W: "#FF33A8",
+    X: "#33A8FF",
+    Y: "#A8FF33",
+    Z: "#FF8C33",
+  };
+
+  let firstLetter = name.trim().charAt(0).toUpperCase();
+  return colors[firstLetter] || "#999999";
 }

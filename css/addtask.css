@@ -59,6 +59,7 @@
 }
 
 .add-task-textarea {
+  resize: none;
   border-radius: 10px;
   padding: 18px 16px 18px 16px;
   border: 1px solid #bbb9b9;
@@ -507,13 +508,13 @@ input:focus {
   border-radius: 10px;
   font-size: 20px;
   font-weight: 400;
-  border: 1px solid #2A3647;
+  border: 1px solid #2a3647;
   margin: 2px;
   cursor: pointer;
 }
 
 .add-task-bottom-clear-button {
-  border: 1px solid #2A3647;
+  border: 1px solid #2a3647;
   outline: 1px solid white;
   background-color: white;
   transition: all 200ms ease-in-out;
@@ -544,7 +545,7 @@ input:focus {
 }
 
 .add-task-bottom-create-button {
-  background-color: #2A3647;
+  background-color: #2a3647;
   color: rgb(255, 255, 255);
   transition: all 200ms ease-in-out;
 }
@@ -612,7 +613,7 @@ li:hover {
   width: 100%;
 }
 
-.checkbox-dropdown :has(input[type="text"]:focus)+ul {
+.checkbox-dropdown :has(input[type="text"]:focus) + ul {
   display: block;
 }
 
@@ -622,7 +623,7 @@ li:hover {
   gap: 8px;
 }
 
-.checkbox-dropdown .search>input {
+.checkbox-dropdown .search > input {
   border: 1px solid #d7d7d7;
   border-radius: 10px;
   padding: 12px 21px 12px 21px;
@@ -633,7 +634,7 @@ li:hover {
   transition: all 200ms;
 }
 
-.checkbox-dropdown .search>input:focus {
+.checkbox-dropdown .search > input:focus {
   background-image: url("/assets/icons/drop_down_arrow.svg");
 }
 
@@ -679,7 +680,7 @@ input[type="radio"] {
   background-color: #eeeeee;
 }
 
-.checkbox-dropdown ul li .avatar {
+.avatar {
   display: inline-flex;
   justify-content: center;
   align-items: center;
@@ -736,4 +737,56 @@ input[type="radio"] {
 .create-add-task-all-content {
   margin-inline: 50px;
   margin-block: 50px;
+}
+
+.add-task-main-content {
+  position: relative;
+  height: 100%;
+  width: 100%;
+}
+
+.add_task_container {
+  width: 850px;
+  border: none;
+  padding: 0;
+  margin: 0;
+}
+
+form {
+  all: unset;
+  height: 100%;
+}
+
+.checkbox-dropdown ul::-webkit-scrollbar-track {
+  -webkit-box-shadow: inset 0 0 6px rgba(0, 0, 0, 0.3);
+  border-radius: 10px;
+  background-color: #f5f5f5;
+}
+
+.checkbox-dropdown ul::-webkit-scrollbar {
+  width: 8px;
+  background-color: #f5f5f5;
+}
+
+.checkbox-dropdown ul::-webkit-scrollbar-thumb {
+  border-radius: 10px;
+  -webkit-box-shadow: inset 0 0 6px rgba(0, 0, 0, 0.3);
+  background-color: #a0a0a0;
+}
+
+.add-task-main-content::-webkit-scrollbar-track {
+  -webkit-box-shadow: inset 0 0 6px rgba(0, 0, 0, 0.3);
+  border-radius: 10px;
+  background-color: #f5f5f5;
+}
+
+.add-task-main-content::-webkit-scrollbar {
+  width: 8px;
+  background-color: #f5f5f5;
+}
+
+.add-task-main-content::-webkit-scrollbar-thumb {
+  border-radius: 10px;
+  -webkit-box-shadow: inset 0 0 6px rgba(0, 0, 0, 0.3);
+  background-color: #a0a0a0;
 }
