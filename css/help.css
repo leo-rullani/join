@@ -118,3 +118,7 @@ li::before {
   transform: scale(1.12);
   cursor: pointer;
 }
+
+.help_text_link {
+  display: none !important;
+}
