@@ -139,4 +139,3 @@ function addNewTask(col) {
   document.getElementById("addTaskOverlay").classList.add("active");
   document.getElementById("saveTaskBtnColumn").value = col;
 }
-

@@ -179,11 +179,13 @@
   transition: right 0.5s ease, opacity 0.5s ease;
   z-index: 9999;
 }
+
 .add_task_overlay.active {
   top: 0;
   visibility: visible;
   opacity: 1;
 }
+
 .overlay_content {
   background: #fff;
   border-radius: 10px;
@@ -692,3 +694,4 @@
     width: 100%;
   }
 }
+
