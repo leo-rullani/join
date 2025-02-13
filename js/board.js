@@ -4,9 +4,7 @@
  * Wird beim Laden des Bodys (onload="initBoard()") aufgerufen.
  * Lädt initial Beispiel-Tasks und konfiguriert Drag & Drop.
  */
-function initBoard() {
-  loadTasks();
-}
+function initBoard() {}
 
 /**
  * Erstellt einige Beispiel-Tasks
@@ -139,3 +137,5 @@ function addNewTask(col) {
   document.getElementById("addTaskOverlay").classList.add("active");
   document.getElementById("saveTaskBtnColumn").value = col;
 }
+
+/** */

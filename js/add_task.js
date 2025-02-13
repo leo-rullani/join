@@ -1,3 +1,6 @@
+let databaseURL =
+  "https://join-5d739-default-rtdb.europe-west1.firebasedatabase.app";
+
 let allTasks = [];
 
 let globalPrio = "medium";
@@ -45,7 +48,8 @@ function addTaskTitle() {
  * @returns {string} valueFromDescription - The value retrieved from the textarea.
  */
 function addTaskDescription() {
-  const valueFromDescription = document.getElementById("add-task-textarea").value;
+  const valueFromDescription =
+    document.getElementById("add-task-textarea").value;
   document.getElementById("add-task-textarea").value = "";
   return valueFromDescription;
 }
@@ -101,7 +105,8 @@ function addTaskPrio(prio, container, event) {
  * @param {string} category - The ID of the element containing the selected category text.
  */
 function addTaskChoseCategory(category) {
-  let selectElement = (document.getElementById("add-task-category").value = category);
+  let selectElement = (document.getElementById("add-task-category").value =
+    category);
   globalCategory = selectElement;
 }
 
@@ -122,8 +127,12 @@ function addTaskSubtasks(event) {
   globalSubtasks.unshift(subtaskValue);
   subtasksList.unshift(subtaskValue);
   addTaskSubtasksList(); //Create the element from Subtasks input
-  document.getElementById("add-task-subtasks-icon-plus").classList.remove("d-none");
-  document.getElementById("add-task-subtasks-icon-plus-check").classList.add("d-none");
+  document
+    .getElementById("add-task-subtasks-icon-plus")
+    .classList.remove("d-none");
+  document
+    .getElementById("add-task-subtasks-icon-plus-check")
+    .classList.add("d-none");
   subtasks.value = "";
 }
 
@@ -133,31 +142,46 @@ function addTaskSubtasks(event) {
  * saves the updated tasks, resets the form, and displays a confirmation message.
  */
 async function addTaskCreateTask() {
-  let tasks = await getTasks();
+  const userId = getUserId(); // Hole die userId
+  if (!userId) {
+    console.error("No user ID found.");
+    return;
+  }
 
+  const taskId = "task_" + Date.now(); // Eine einzigartige Task-ID basierend auf der aktuellen Zeit
   const title = addTaskTitle();
   const description = addTaskDescription();
   const names = addTaskAssignedTo();
   const date = addTaskDueDate();
 
   const newTask = {
-    boardCategory: globalBoardCategory,
     title: title,
     description: description,
     assignees: names,
     date: date,
     priority: globalPrio,
     category: globalCategory,
-    subtasks: [],
+    subtasks: [], // Leere Liste für Subtasks, kann später erweitert werden
   };
 
-  tasks.push(newTask);
+  // Speichern der Aufgabe unter dem Benutzer
+  const taskRef = `${databaseURL}/users/${userId}/tasks/${taskId}.json`;
 
-  addGlobalSubtasksToTask(tasks.length - 1, globalSubtasks, tasks);
+  const response = await fetch(taskRef, {
+    method: "POST",
+    headers: {
+      "Content-Type": "application/json",
+    },
+    body: JSON.stringify(newTask),
+  });
 
-  await saveTasks(tasks);
-  addTaskClearFormularReset();
-  addTaskCreateTaskConfirmation();
+  if (response.ok) {
+    addTaskClearFormularReset();
+    addTaskCreateTaskConfirmation();
+    console.log("Task successfully saved!");
+  } else {
+    console.error("Error saving task");
+  }
 }
 
 /**
@@ -204,7 +228,11 @@ function createAssignedTo() {
     const createContactsContainer = document.getElementById("add-task-contact");
     const bgColor = assignColor(contact);
 
-    createContactsContainer.innerHTML += addTaskAssignedToHtml(i, bgColor, contact);
+    createContactsContainer.innerHTML += addTaskAssignedToHtml(
+      i,
+      bgColor,
+      contact
+    );
   }
 }
 
@@ -250,4 +278,74 @@ function addTaskAssignedToSearch() {
       );
     }
   }
+}
+
+async function getTasks(userId) {
+  const taskRef = `${databaseURL}/users/${userId}/tasks.json`;
+  const response = await fetch(taskRef);
+
+  if (response.ok) {
+    const tasks = await response.json();
+    console.log("Tasks fetched:", tasks);
+    return tasks;
+  } else {
+    console.error("Error fetching tasks");
+    return [];
+  }
+}
+async function updateTaskSubtasks(taskId, subtasks, userId) {
+  if (!userId) {
+    console.error("No userId provided for update.");
+    return;
+  }
+
+  const taskRef = `${databaseURL}/users/${userId}/tasks/${taskId}.json`;
+
+  const response = await fetch(taskRef, {
+    method: "PATCH",
+    headers: {
+      "Content-Type": "application/json",
+    },
+    body: JSON.stringify({ subtasks: subtasks }),
+  });
+
+  if (response.ok) {
+    console.log("Task updated!");
+  } else {
+    console.error("Error updating task");
+  }
+}
+
+async function deleteTask(taskId, userId) {
+  const taskRef = `${databaseURL}/users/${userId}/tasks/${taskId}.json`;
+
+  const response = await fetch(taskRef, {
+    method: "DELETE",
+  });
+
+  if (response.ok) {
+    console.log("Task deleted!");
+  } else {
+    console.error("Error deleting task");
+  }
+}
+
+function getUserId() {
+  let userId = JSON.parse(sessionStorage.getItem("loggedInUser"))?.id;
+  if (!userId) {
+    console.error("User ID not found in sessionStorage.");
+  }
+  return userId;
+}
+
+async function displayTasks() {
+  const userId = getUserId(); // Hole die userId
+  if (!userId) return; // Falls keine userId vorhanden ist, breche ab
+
+  const tasks = await getTasks(userId); // Übergib die userId an getTasks
+  const tasksContainer = document.getElementById("task_first_place");
+
+  tasks.forEach((task) => {
+    tasksContainer.innerHTML += createTaskTemplate(task);
+  });
 }
