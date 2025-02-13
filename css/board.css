@@ -667,6 +667,7 @@
   text-decoration: none;
 }
 
+
 @media (max-width: 900px) {
   .board_section {
     top: 76px;
