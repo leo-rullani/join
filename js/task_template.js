@@ -1,8 +1,4 @@
-/***********************************************
- * Deine Farbzuweisungs-Funktion
- ***********************************************/
 function assignColor(name) {
-  // Holen wir uns den **ersten** Buchstaben in Großbuchstaben
   const firstLetter = name.trim()[0]?.toUpperCase() || "Z";
 
   // Deine Farbzuordnung:
@@ -35,105 +31,63 @@ function assignColor(name) {
     Z: "#FF8C33",
   };
 
-  // Fallback-Farbe, falls Buchstabe nicht im Objekt ist
   return colors[firstLetter] || "#999999";
 }
 
-/***********************************************
- * Task-Template mit Subtask-Logik, Avataren, usw.
- ***********************************************/
 function createTaskTemplate(task) {
-  // === 1) Kategorie-Label-Farbe (Technical vs. User Story) ===
   const labelColor = task.category === "Technical Task" ? "#20d7c1" : "#0038ff";
-
-  // === 2) Priority-Icon ===
   const priorityLower = String(task.priority || "").toLowerCase();
-  let priorityIcon = "/assets/icons/low.svg"; // Default Low
+  let priorityIcon = "/assets/icons/low.svg";
   if (priorityLower === "urgent") {
     priorityIcon = "/assets/icons/urgent.svg";
   } else if (priorityLower === "medium") {
     priorityIcon = "/assets/icons/medium.svg";
   }
-  // (Falls "low", bleibt es beim Default.)
 
-  // === 3) Subtasks-Logik ===
-  // Wir gehen davon aus, dass "task.subtasks" entweder:
-  //   - NICHT existiert oder
-  //   - ein Array von Strings ["Subtask 1", "Subtask 2"] oder
-  //   - ein Array von Objekten [{ title: "...", done: true }, ...]
   let totalSubtasks = 0;
   let completedSubtasks = 0;
-
   if (Array.isArray(task.subtasks) && task.subtasks.length > 0) {
     totalSubtasks = task.subtasks.length;
-
-    // Prüfen, ob es ein Array von Objekten mit "done" ist:
-    // (z.B. { title: "...", done: true })
     if (
       typeof task.subtasks[0] === "object" &&
       task.subtasks[0].hasOwnProperty("done")
     ) {
       completedSubtasks = task.subtasks.filter((s) => s.done).length;
     }
-    // Falls nur ein Array von Strings, "done" existiert nicht => completedSubtasks bleibt 0
   }
 
   let subtaskHTML = "";
   if (totalSubtasks > 0) {
-    // Nur wenn Subtasks vorliegen, Balken & Text einblenden
     const progressPercent = Math.round(
       (completedSubtasks / totalSubtasks) * 100
     );
     subtaskHTML = `
-      <div class="progress-container" style="margin-bottom: 8px;">
-        <div class="progress-bar-bg" style="
-          background-color: #e0e0e0; 
-          height: 6px; 
-          border-radius: 3px;
-          position: relative;
-        ">
-          <div class="progress-bar-fill" style="
-            background-color: #398df7; 
-            width: ${progressPercent}%;
-            height: 100%; 
-            border-radius: 3px;
-          "></div>
+      <div class="progress-container">
+        <div class="progress-bar-bg">
+          <div class="progress-bar-fill" style="width: ${progressPercent}%;"></div>
         </div>
-        <div class="subtask-info" style="text-align: right; font-size: 14px; color: #2b3647; margin-top: 4px;">
+        <div class="subtask-info">
           ${completedSubtasks}/${totalSubtasks} Subtasks
         </div>
       </div>
     `;
   }
 
-  // === 4) Assigned Avatare mit eigener Farbe je Name ===
   let assigneeHTML = "";
   if (Array.isArray(task.assignees)) {
     assigneeHTML = task.assignees
       .map((name) => {
-        // Initialen ermitteln
         const initials = getInitials(name);
-        // Farbe über die assignColor-Funktion (auf den Anfangsbuchstaben)
         const bgColor = assignColor(name);
         return `
-        <div 
-          class="avatar-circle" 
-          style="
-            width: 30px; height: 30px; border-radius: 50%; 
-            background-color: ${bgColor};
-            display: flex; align-items: center; justify-content: center;
-            color: #fff; font-size: 14px; font-weight: bold;
-            border: 2px solid #fff; margin-left: 0;
-          "
-        >
-          ${initials}
-        </div>
-      `;
+          <div class="avatar-circle" style="background-color: ${bgColor};">
+            ${initials}
+          </div>
+        `;
       })
       .join("");
   }
 
-  // Hilfsfunktion: "Sofia Müller" => "SM"
   function getInitials(fullName) {
     let parts = fullName.trim().split(" ");
     let first = parts[0]?.[0]?.toUpperCase() || "";
@@ -141,80 +95,24 @@ function createTaskTemplate(task) {
     return first + last;
   }
 
-  // === 5) Komplettes Template zusammenbauen ===
   return `
-    <div class="task" id="task_${task.id}" style="
-      background: #fff;
-      border-radius: 12px;
-      padding: 16px;
-      box-shadow: 0 1px 4px rgba(0, 0, 0, 0.2);
-      width: 240px;
-      margin-bottom: 20px;
-      cursor: pointer;
-      display: flex;
-      flex-direction: column;
-    ">
-
-      <!-- Label oben -->
-      <div 
-        class="task-label" 
-        style="
-          background-color: ${labelColor}; 
-          color: #fff;
-          padding: 6px 12px; 
-          border-radius: 8px; 
-          display: inline-block;
-          margin-bottom: 8px;
-          font-size: 14px;
-        "
-      >
+    <div class="task" id="task_${task.id}">
+      <div class="task-label" style="background-color: ${labelColor};">
         ${task.category || "Uncategorized"}
       </div>
-
-      <!-- Titel -->
-      <h3 style="
-        margin: 8px 0 4px; 
-        font-size: 18px; 
-        font-weight: 600;
-      ">
+      <h3 class="task-title">
         ${task.title || "No Title"}
       </h3>
-
-      <!-- Beschreibung in Grau -->
-      <p style="
-        color: #6b6b6b; 
-        margin-bottom: 12px; 
-        font-size: 14px;
-        line-height: 1.4;
-      ">
+      <p class="task-description">
         ${task.description || ""}
       </p>
-
-      <!-- Subtask-Balken -->
       ${subtaskHTML}
-
-      <!-- Footer: Avatare (links) + Priority (rechts) -->
-      <div class="task-footer" style="
-           display: flex; 
-           align-items: center; 
-           justify-content: space-between;
-           margin-top: 12px;
-      ">
-        <!-- Avatare links -->
-        <div class="task-assignees" style="
-             display: flex; 
-             gap: 4px;
-        ">
+      <div class="task-footer">
+        <div class="task-assignees">
           ${assigneeHTML}
         </div>
-
-        <!-- Priority-Icon rechts -->
         <div class="task-priority-icon">
-          <img 
-            src="${priorityIcon}" 
-            alt="${task.priority}" 
-            style="width: 24px; height: 24px;" 
-          />
+          <img src="${priorityIcon}" alt="${task.priority}" />
         </div>
       </div>
     </div>
