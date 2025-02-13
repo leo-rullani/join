@@ -69,3 +69,7 @@
 .legalnotice_content span {
   color: #29abe2ff;
 }
+
+.help_text_link {
+  display: none !important;
+}
