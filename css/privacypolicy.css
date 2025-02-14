@@ -83,3 +83,79 @@ ul {
 .help_text_link {
   display: none !important;
 }
+
+.privacypolicy_title {
+  font-size: 18px;
+  margin-right: 300px;
+}
+
+/* Ein einzelner Menüpunkt */
+.selection {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 3px;
+  color: #a8a8a8;
+  cursor: pointer;
+  transition: transform 0.3s ease;
+}
+
+.selection span {
+  min-width: 70px;
+  text-align: start;
+}
+
+.selection a {
+  color: #a8a8a8;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+/* Hover-Effekt auf einen Menüpunkt */
+.selection:hover {
+  width: 96%;
+  transform: scale(1.01);
+  background-color: #2c4972;
+}
+
+.isActive_privacy {
+  background-color: #091931;
+  width: 73%;
+}
+
+.policy_docs_privacy {
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-start;
+  text-align: start;
+  position: relative;
+  top: 300px;
+  left: 0px;
+}
+
+.policy_docs_privacy a {
+  display: flex;
+  align-items: start;
+  justify-content: flex-start;
+  padding: 5px;
+  padding-left: 60px;
+  cursor: pointer;
+  color: #a8a8a8;
+  margin: 0px;
+  padding-top: 10px;
+  padding-bottom: 10px;
+  margin-left: -12px;
+}
+
+.policy_docs_privacy a:hover {
+  width: 73%;
+  transform: scale(1.01);
+  background-color: #2c4972;
+}
+
+@media (max-width: 861px) {
+  .privacypolicy_title {
+    display: none;
+  }
+}
