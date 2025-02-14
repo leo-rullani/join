@@ -91,12 +91,11 @@ function openBoardOverlay(task) {
     return;
   }
 
-  selectedTask = task; // Speichern der ausgewählten Aufgabe
+  selectedTask = task;
   const overlay = document.getElementById("boardOverlay");
-  overlay.innerHTML = taskBoardTemplate(task); // Dein Template für das Overlay wird hier eingefügt
-  overlay.classList.add("board_overlay_show"); // Zeigt das Overlay an
+  overlay.innerHTML = taskBoardTemplate(task);
+  overlay.classList.add("board_overlay_show");
 
-  // Hier wird die Animation für das Overlay gesetzt
   overlay.querySelector(".board_overlay_content").style.animationName =
     "slideInFromRight";
 }

@@ -134,7 +134,7 @@ header {
 }
 
 /* Ein einzelner Menüpunkt */
-.selection_privacy {
+.selection {
   display: flex;
   align-items: center;
   justify-content: center;
@@ -144,12 +144,12 @@ header {
   transition: transform 0.3s ease;
 }
 
-.selection_privacy span {
+.selection span {
   min-width: 70px;
   text-align: start;
 }
 
-.selection_privacy a {
+.selection a {
   color: #a8a8a8;
   display: flex;
   align-items: center;
@@ -157,7 +157,7 @@ header {
 }
 
 /* Hover-Effekt auf einen Menüpunkt */
-.selection_privacy:hover {
+.selection:hover {
   width: 96%;
   transform: scale(1.01);
   background-color: #2c4972;
