@@ -378,3 +378,42 @@ function assignColor(name) {
   let firstLetter = name.trim().charAt(0).toUpperCase();
   return colors[firstLetter] || "#999999";
 }
+
+/**
+ * Zeigt einen Toast für die "Add Task"-Funktion an.
+ * @param {string} message - Die anzuzeigende Nachricht
+ */
+function showAddTaskToast(message) {
+  const n = document.getElementById("add_notification");
+  if (!n) return;
+  n.textContent = message;
+  n.classList.remove("hidden");
+
+  // Erst unterhalb starten
+  n.style.bottom = "-120px";
+
+  // Reflow (damit offsetHeight stimmen kann)
+  n.getBoundingClientRect();
+
+  // Höhe des Toasts (z.B. 60px)
+  const toastHeight = n.offsetHeight;
+  // Position in der Mitte: (Fensterhöhe / 2) - (halbe Toasthöhe)
+  const offsetFromBottom = window.innerHeight / 2 - toastHeight / 2;
+
+  // Neu setzen + "show"
+  n.style.bottom = `${offsetFromBottom}px`;
+  n.classList.add("show");
+
+  // Nach 3s ausblenden
+  setTimeout(() => {
+    n.classList.remove("show");
+    setTimeout(() => n.classList.add("hidden"), 500);
+  }, 3000);
+}
+
+function addTaskCreateTask() {
+  showAddTaskToast("Task added to board");
+  setTimeout(() => {
+    window.location.href = "board.html";
+  }, 2000);
+}
