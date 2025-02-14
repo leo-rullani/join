@@ -386,25 +386,19 @@ function assignColor(name) {
 function showAddTaskToast(message) {
   const n = document.getElementById("add_notification");
   if (!n) return;
-  n.textContent = message;
+  n.innerHTML = `
+    ${message}
+    <img src="/assets/icons/Icon-board.svg" style="width: 20px; margin-left: 8px; vertical-align: middle;" />
+  `;
+
   n.classList.remove("hidden");
-
-  // Erst unterhalb starten
   n.style.bottom = "-120px";
-
-  // Reflow (damit offsetHeight stimmen kann)
-  n.getBoundingClientRect();
-
-  // Höhe des Toasts (z.B. 60px)
+  n.getBoundingClientRect(); // Reflow
   const toastHeight = n.offsetHeight;
-  // Position in der Mitte: (Fensterhöhe / 2) - (halbe Toasthöhe)
-  const offsetFromBottom = window.innerHeight / 2 - toastHeight / 2;
-
-  // Neu setzen + "show"
+  const offsetFromBottom = (window.innerHeight / 2) - (toastHeight / 2);
   n.style.bottom = `${offsetFromBottom}px`;
   n.classList.add("show");
 
-  // Nach 3s ausblenden
   setTimeout(() => {
     n.classList.remove("show");
     setTimeout(() => n.classList.add("hidden"), 500);

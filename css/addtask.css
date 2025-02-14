@@ -796,7 +796,7 @@ form {
   position: fixed;
   left: 50%;
   transform: translateX(-50%);
-  min-width: 200px;
+  width: 300px;
   background-color: #2b3647; /* Dunkelblau */
   color: #fff;
   padding: 12px 16px;
