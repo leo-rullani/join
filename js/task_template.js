@@ -35,6 +35,11 @@ function assignColor(name) {
 }
 
 function createTaskTemplate(task) {
+  if (!task.id) {
+    console.error("Task ID is missing", task);
+    return "";
+  }
+
   const labelColor = task.category === "Technical Task" ? "#20d7c1" : "#0038ff";
   const priorityLower = String(task.priority || "").toLowerCase();
   let priorityIcon = "/assets/icons/low.svg";
@@ -87,14 +92,6 @@ function createTaskTemplate(task) {
       })
       .join("");
   }
-
-  function getInitials(fullName) {
-    let parts = fullName.trim().split(" ");
-    let first = parts[0]?.[0]?.toUpperCase() || "";
-    let last = parts[1]?.[0]?.toUpperCase() || "";
-    return first + last;
-  }
-
   return `
     <div class="task" id="task_${task.id}">
       <div class="task-label" style="background-color: ${labelColor};">
@@ -119,6 +116,12 @@ function createTaskTemplate(task) {
   `;
 }
 
+function getInitials(fullName) {
+  let parts = fullName.trim().split(" ");
+  let first = parts[0]?.[0]?.toUpperCase() || "";
+  let last = parts[1]?.[0]?.toUpperCase() || "";
+  return first + last;
+}
 /**
  * Clears the add task form and prevents default form submission behavior.
  * @param {*} event - The event object triggered by the user action.

@@ -122,7 +122,7 @@ function addTaskSubtasks(event) {
 
   globalSubtasks.unshift(subtaskValue);
   subtasksList.unshift(subtaskValue);
-  addTaskSubtasksList(); //Create the element from Subtasks input
+  addTaskSubtasksList();
   document
     .getElementById("add-task-subtasks-icon-plus")
     .classList.remove("d-none");
@@ -249,21 +249,17 @@ function addTaskShowAvatars() {
  * and generates HTML elements for displaying filtered contacts.
  */
 function addTaskAssignedToSearch() {
-  let search = document.getElementById("find-person").value.toLowerCase(); // Holen des Werts aus dem Suchfeld und Umwandeln in Kleinbuchstaben
-  const createContactsContainer = document.getElementById("add-task-contact"); // Container für die Kontaktliste
+  let search = document.getElementById("find-person").value.toLowerCase();
+  const createContactsContainer = document.getElementById("add-task-contact");
+  createContactsContainer.innerHTML = "";
 
-  createContactsContainer.innerHTML = ""; // Leeren des Containers, bevor neue Ergebnisse angezeigt werden
-
-  // Durchlaufe die Liste der Kontakte und filtere sie basierend auf dem Suchbegriff
   for (let i = 0; i < contactsToAssigned.length; i++) {
-    const contact = contactsToAssigned[i].name; // Der Name des Kontakts
-    const bgColor = assignColor(contact); // Färbung des Avatars (falls notwendig)
+    const contact = contactsToAssigned[i].name;
+    const bgColor = assignColor(contact);
 
-    // Wenn der Kontaktname den Suchbegriff enthält, füge ihn zur Anzeige hinzu
     if (contact.toLowerCase().includes(search)) {
-      const assigned = assignedContacts.includes(contact); // Überprüfe, ob der Kontakt bereits zugewiesen wurde
+      const assigned = assignedContacts.includes(contact);
 
-      // Erstelle ein Listenelement (<li>) für den Kontakt
       const listItem = document.createElement("li");
       listItem.innerHTML = addTaskAssignedToSearchHTML(
         i,
@@ -271,8 +267,6 @@ function addTaskAssignedToSearch() {
         contact,
         assigned
       );
-
-      // Füge das Listenelement zur <ul>-Liste hinzu
       createContactsContainer.appendChild(listItem);
     }
   }
@@ -289,7 +283,7 @@ async function getTasks() {
       return [];
     }
 
-    return Object.values(tasks);
+    return Object.keys(tasks).map((id) => ({ id, ...tasks[id] })); // IDs hinzufügen
   } else {
     console.error("Error fetching tasks or no tasks found", tasks);
     return [];
@@ -331,9 +325,15 @@ async function deleteTask(taskId) {
 async function displayTasks() {
   const tasks = await getTasks();
   const tasksContainer = document.getElementById("tasks-container");
+  tasksContainer.innerHTML = ""; // Alte Tasks entfernen
 
   tasks.forEach((task) => {
-    tasksContainer.innerHTML += createTaskTemplate(task);
+    const template = document.createElement("div");
+    template.innerHTML = createTaskTemplate(task);
+    const taskElement = template.firstElementChild;
+    if (taskElement) {
+      tasksContainer.appendChild(taskElement);
+    }
   });
 }
 
