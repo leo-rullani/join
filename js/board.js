@@ -86,11 +86,6 @@ function saveNewTask() {
  * Öffnet das Board-Overlay (animiert von rechts in die Mitte)
  */
 function openBoardOverlay(task) {
-  if (!task || !task.assignees) {
-    console.error("Task or assignees missing", task);
-    return;
-  }
-
   selectedTask = task;
   const overlay = document.getElementById("boardOverlay");
   overlay.innerHTML = taskBoardTemplate(task);
@@ -103,11 +98,16 @@ function openBoardOverlay(task) {
 function closeBoardOverlay() {
   const overlay = document.getElementById("boardOverlay");
   const content = overlay.querySelector(".board_overlay_content");
+
+  // Starte die Animation
   content.style.animationName = "slideOutToRight";
+
+  // Entferne die Klasse, die das Overlay sichtbar macht, nach der Animation
   content.addEventListener(
     "animationend",
     function handler() {
       overlay.classList.remove("board_overlay_show");
+      overlay.style.display = "none"; // Verstecke das Overlay
       content.removeEventListener("animationend", handler);
     },
     { once: true }

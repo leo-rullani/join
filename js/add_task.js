@@ -1,8 +1,6 @@
 let databaseURL =
   "https://join-5d739-default-rtdb.europe-west1.firebasedatabase.app";
 
-let allTasks = [];
-
 let globalPrio = "medium";
 let globalCategory = "";
 let globalSubtasks = [];
@@ -121,7 +119,7 @@ function addTaskSubtasks(event) {
 
   if (!subtaskValue) return;
 
-  globalSubtasks.unshift(subtaskValue);
+  globalSubtasks.unshift(subtaskValue); // Hier wird die Subtask hinzugefügt
   subtasksList.unshift(subtaskValue);
   addTaskSubtasksList();
   document
@@ -154,10 +152,12 @@ async function addTaskCreateTask() {
     date: date,
     priority: globalPrio,
     category: globalCategory,
-    subtasks: [], // Leeres Subtasks-Array für neuen Task
+    subtasks: globalSubtasks.map((subtasks) => ({
+      name: subtasks,
+      done: false,
+    })),
   };
-  allTasks.push(newTask);
-  addGlobalSubtasksToTask(allTasks.length - 1, subtasks, allTasks);
+
   const taskRef = `${databaseURL}/tasks/${taskId}.json`;
 
   const response = await fetch(taskRef, {
@@ -171,9 +171,9 @@ async function addTaskCreateTask() {
   if (response.ok) {
     addTaskClearFormularReset();
     addTaskCreateTaskConfirmation();
-    console.log("Task successfully saved!");
+    console.log("Task erfolgreich gespeichert!");
   } else {
-    console.error("Error saving task");
+    console.error("Fehler beim Speichern des Tasks");
   }
 }
 
@@ -187,7 +187,7 @@ function addGlobalSubtasksToTask(taskIndex, subtasks, tasks) {
   if (tasks[taskIndex]) {
     if (subtasks.length > 0) {
       subtasks.forEach((subtaskName) => {
-        tasks[taskIndex].subtasks.push({ name: subtaskName, completed: false });
+        tasks[taskIndex].subtasks.push({ name: subtaskName, done: false });
       });
     }
   } else {
@@ -286,46 +286,34 @@ async function getTasks() {
 
   if (response.ok && tasks) {
     if (Object.keys(tasks).length === 0) {
-      console.log("No tasks found.");
+      console.log("Keine Tasks gefunden.");
       return [];
     }
-
-    return Object.keys(tasks).map((id) => ({ id, ...tasks[id] })); // IDs hinzufügen
+    return Object.keys(tasks).map((id) => ({ id, ...tasks[id] }));
   } else {
-    console.error("Error fetching tasks or no tasks found", tasks);
+    console.error(
+      "Fehler beim Abrufen der Tasks oder keine Tasks gefunden",
+      tasks
+    );
     return [];
-  }
-}
-
-async function updateTaskSubtasks(taskId, subtasks) {
-  const taskRef = `${databaseURL}/tasks/${taskId}.json`;
-
-  const response = await fetch(taskRef, {
-    method: "PATCH",
-    headers: {
-      "Content-Type": "application/json",
-    },
-    body: JSON.stringify({ subtasks: subtasks }),
-  });
-
-  if (response.ok) {
-    console.log("Task updated!");
-  } else {
-    console.error("Error updating task");
   }
 }
 
 async function deleteTask(taskId) {
   const taskRef = `${databaseURL}/tasks/${taskId}.json`;
-
+  console.log("Deleting task at:", taskRef);
+  console.log("Deleting task with ID:", taskId);
   const response = await fetch(taskRef, {
     method: "DELETE",
   });
 
   if (response.ok) {
     console.log("Task deleted!");
+    await displayTasks();
+    closeBoardOverlay();
   } else {
-    console.error("Error deleting task");
+    const errorDetails = await response.text();
+    console.error("Error deleting task:", response.status, errorDetails);
   }
 }
 
@@ -335,25 +323,22 @@ async function displayTasks() {
   const boardOverlay = document.getElementById("boardOverlay");
 
   tasksContainer.innerHTML = "";
-  boardOverlay.innerHTML = ""; // Leert das Overlay, bevor neue Tasks geladen werden
+  boardOverlay.innerHTML = "";
 
   tasks.forEach((task) => {
-    console.log("Task Data (displayTasks):", task); // Überprüfe, ob die Subtasks korrekt da sind
+    console.log("Task Data (displayTasks):", task);
 
-    // Vergewissere dich, dass task die benötigten Felder enthält:
     if (task && task.id && Array.isArray(task.assignees)) {
       const template = document.createElement("div");
-      template.innerHTML = createTaskTemplate(task); // Dein Template für das Task-Element
+      template.innerHTML = createTaskTemplate(task);
 
-      // Wir fügen hier den onclick-Handler hinzu, um das Overlay zu öffnen
       const taskElement = template.firstElementChild;
       if (taskElement) {
-        // Hier wird der Task direkt über die ID geöffnet
         taskElement.onclick = () => openBoardOverlay(task);
         tasksContainer.appendChild(taskElement);
       }
     } else {
-      console.error("Invalid task data (missing required fields):", task);
+      console.error("Ungültige Task-Daten (fehlende Felder):", task);
     }
   });
 }
@@ -365,6 +350,15 @@ async function loadContacts() {
   contactsToAssigned = Object.values(contactsToAssigned);
   createAssignedTo();
 }
+
+function loadTasks() {
+  getTasks().then((loadedTasks) => {
+    window.tasks = loadedTasks; // 🔥 Globale Variable setzen
+    console.log("Tasks gespeichert in window.tasks:", window.tasks);
+  });
+}
+
+loadTasks(); // 🔥 Beim Laden der Seite direkt aufrufen
 
 function assignColor(name) {
   const colors = {

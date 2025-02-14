@@ -42,18 +42,20 @@ function createTaskTemplate(task) {
 
   const { totalSubtasks, completedSubtasks, subtaskHTML } = generateSubtaskHTML(
     task.subtasks,
-    true // Nur Progressbar anzeigen
+    true
   );
   const assigneeHTML = generateAssigneeHTML(task.assignees);
 
-  return generateTaskHTML(task, subtaskHTML, assigneeHTML);
+  const progress =
+    totalSubtasks > 0 ? (completedSubtasks / totalSubtasks) * 100 : 0;
+
+  return generateTaskHTML(task, subtaskHTML, assigneeHTML, progress);
 }
 
 function generateTaskHTML(task, subtaskHTML, assigneeHTML) {
   const labelColor = task.category === "Technical Task" ? "#20d7c1" : "#0038ff";
   const priorityIcon = getPriorityIcon(task.priority);
 
-  // Setze die Transition der Progressbar nach dem Laden der Seite
   setTimeout(() => {
     const progressBars = document.querySelectorAll(".progress-bar-fill");
     progressBars.forEach((bar) => {
@@ -100,7 +102,6 @@ function generateSubtaskHTML(subtasks, isCreateTaskTemplate = false) {
   const completedSubtasks = subtasks.filter((s) => s.done).length;
   const progressPercent = Math.round((completedSubtasks / totalSubtasks) * 100);
 
-  // Wenn es sich um das 'createTaskTemplate' handelt, dann füge nur die Progressbar hinzu
   if (isCreateTaskTemplate) {
     return {
       totalSubtasks,
@@ -131,52 +132,40 @@ function generateSubtaskHTML(subtasks, isCreateTaskTemplate = false) {
 }
 
 function generateBoardOverlaySubtaskHTML(task) {
-  console.log(task); // Hier wird überprüft, ob 'task' korrekt übergeben wird
   if (!task || !Array.isArray(task.subtasks)) {
     return "";
   }
 
   return task.subtasks
-    .map((subtask) => {
+    .map((subtask, index) => {
       return `
         <div class="subtask">
-<input type="checkbox" 
-       ${subtask.done ? "checked" : ""} 
-       onchange="updateSubtaskStatus('${task.id}', this.checked)">
+          <input type="checkbox" 
+                 ${subtask.done ? "checked" : ""} 
+                 onchange="updateSubtaskStatus(${index}, '${
+        task.id
+      }', this.checked)">
           <label>${subtask.name}</label>
         </div>
       `;
     })
     .join("");
 }
+
 function updateProgressBar(taskId) {
-  const task = allTasks.find((t) => t.id === taskId);
+  const task = tasks.find((t) => t.id === taskId);
+  if (!task) return;
+
   const totalSubtasks = task.subtasks.length;
-  const completedSubtasks = task.subtasks.filter((st) => st.done).length;
-
-  // Berechne den Fortschritt
-  const progress = (completedSubtasks / totalSubtasks) * 100;
-
-  // Aktualisiere die Progressbar im CreateTaskTemplate
+  const completedSubtasks = task.subtasks.filter((s) => s.done).length;
+  const progressPercent = (completedSubtasks / totalSubtasks) * 100;
   const progressBar = document.querySelector(
     `#task-${taskId} .progress-bar-fill`
   );
   if (progressBar) {
-    progressBar.style.width = `${progress}%`;
+    progressBar.style.width = `${progressPercent}%`;
   }
 }
-function updateSubtaskStatus(taskId, subtaskId, checked) {
-  const task = tasks.find((t) => t.id === taskId);
-  if (!task) {
-    console.error("Task with ID", taskId, "not found");
-    return;
-  }
-  const subtask = task.subtasks.find((s) => s.id === subtaskId);
-  if (subtask) {
-    subtask.completed = checked;
-  }
-}
-
 function renderTaskWithSubtasks(task) {
   const { subtaskHTML } = generateSubtaskHTML(task.subtasks);
   return `
@@ -199,34 +188,44 @@ function renderAnotherTemplateWithSubtasks(task) {
   `;
 }
 
-function updateSubtaskStatus(taskId, subtaskId, isChecked) {
-  // Sicherstellen, dass allTasks existiert
-  if (!Array.isArray(allTasks)) {
-    console.error("allTasks is not an array or is undefined");
-    return;
-  }
-
-  // Finde die Task mit der ID
-  const task = allTasks.find((t) => t.id === taskId);
-
+function updateSubtaskStatus(index, taskId, checked) {
+  const task = tasks.find((t) => t.id === taskId);
   if (!task) {
-    console.error(`Task with ID ${taskId} not found`);
+    console.error("Task nicht gefunden!");
     return;
   }
 
-  // Finde den Subtask basierend auf der Subtask-ID
-  const subtask = task.subtasks.find((st) => st.id === subtaskId);
-
+  const subtask = task.subtasks[index];
   if (!subtask) {
-    console.error(`Subtask with ID ${subtaskId} not found in task ${taskId}`);
+    console.error("Subtask nicht gefunden!");
     return;
   }
 
-  // Setze den Status des Subtasks
-  subtask.done = isChecked;
-
-  // Berechne den neuen Fortschritt und aktualisiere die Progressbar
+  subtask.done = checked;
   updateProgressBar(taskId);
+  updateSubtaskInFirebase(taskId, index, checked);
+}
+
+function updateSubtaskInFirebase(taskId, index, checked) {
+  const databaseURL =
+    "https://join-5d739-default-rtdb.europe-west1.firebasedatabase.app";
+
+  const updatedSubtaskData = { [`subtasks/${index}/done`]: checked };
+
+  return fetch(`${databaseURL}/tasks/${taskId}.json`, {
+    method: "PATCH",
+    headers: {
+      "Content-Type": "application/json",
+    },
+    body: JSON.stringify(updatedSubtaskData),
+  })
+    .then((response) => response.json())
+    .then((data) => {
+      console.log("Subtask-Status erfolgreich aktualisiert:", data);
+    })
+    .catch((error) => {
+      console.error("Fehler beim Speichern der Subtask-Status:", error);
+    });
 }
 
 function generateAssigneeHTML(assignees) {
@@ -318,7 +317,7 @@ function subTaskTemplate(element, i) {
                    `;
 }
 
-function taskBoardTemplate(task, taskId) {
+function taskBoardTemplate(task) {
   if (!task || !task.assignees) {
     console.error("Task or assignees are missing", task);
     return ""; // Falls Assignees fehlen, nichts zurückgeben
@@ -329,12 +328,6 @@ function taskBoardTemplate(task, taskId) {
 
   const labelColor = task.category === "Technical Task" ? "#20d7c1" : "#0038ff";
   const priorityIcon = getPriorityIcon(task.priority);
-
-  // Progressbar und Checkboxen hinzufügen
-  const { totalSubtasks, completedSubtasks } = generateSubtaskHTML(
-    task.subtasks
-  );
-  const progressPercent = Math.round((completedSubtasks / totalSubtasks) * 100);
 
   return `     
     <div class="board_overlay_content">
@@ -382,7 +375,7 @@ function taskBoardTemplate(task, taskId) {
 
       <!-- Footer mit Icons -->
       <div class="task-footer">
-        <button class="board-btn-delete">
+        <button class="board-btn-delete" onclick="deleteTask('${task.id}')">
           <img src="/assets/icons/board-btn-delete.svg" alt="Delete"> Delete
         </button>
         <button class="board-btn-edit" onclick="editTask()">
