@@ -365,7 +365,7 @@ input:focus {
 }
 
 .checkbox-dropdown .search > input:focus {
-  background-image: url("/assets/icons/drop_down_arrow_up.svg");
+  background-image: url("/assets/icons/drop_down_arrow_up.svg") !important;
 }
 
 .add-task-subtasks-icon-plus-check {
