@@ -36,12 +36,6 @@
   background-image: url("/assets/icons/drop_down_arrow_up.svg");
 }
 
-.add-task-overlay-urgent,
-.add-tasked-clicked {
-  background-color: #ff3d00;
-  color: #ffffff;
-}
-
 .search_container {
   position: relative;
 }
@@ -302,6 +296,7 @@
   font-size: 18px;
   width: 80%;
   height: 80px;
+  resize: none;
 }
 
 .add-task-overlay-assigned-to {
@@ -450,7 +445,7 @@
   height: 46px;
   border-radius: 10px;
   font-size: 16px;
-  border: none;
+  border: 1px solid #bbb9b9;
   background-color: #ffffff;
   cursor: pointer;
   width: 28%;
@@ -462,6 +457,21 @@
   box-shadow: rgba(0, 0, 0, 0.07) 0px 1px 2px, rgba(0, 0, 0, 0.07) 0px 2px 4px,
     rgba(0, 0, 0, 0.07) 0px 4px 8px, rgba(0, 0, 0, 0.07) 0px 8px 16px,
     rgba(0, 0, 0, 0.07) 0px 16px 32px, rgba(0, 0, 0, 0.07) 0px 32px 64px;
+}
+
+.add-task-overlay-urgent.add-task-clicked{
+  background-color: #ff3d00;
+  color: #ffffff;
+}
+
+.add-task-overlay-medium.add-task-clicked{
+  background-color: #ffbb2b;
+  color: #ffffff;
+}
+
+.add-task-overlay-low.add-task-clicked{
+  background-color: #7ae229;
+  color: #ffffff;
 }
 
 .add-task-overlay-important {
