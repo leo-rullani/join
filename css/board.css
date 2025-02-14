@@ -6,8 +6,8 @@
   right: 0;
   left: 0;
   bottom: 0;
-  height: calc(100vh - 130px); /* Höhe anpassen, damit Inhalt sichtbar bleibt */
-  overflow: hidden; /* Verhindert doppelte Scrollbars */
+  height: calc(100vh - 130px);
+  overflow: hidden;
 }
 .board_header {
   display: flex;
@@ -27,6 +27,21 @@
   align-items: center;
   gap: 20px;
 }
+
+.add-task-overlay-textarea:focus {
+  outline-color: #29abe2;
+}
+
+.checkbox-overlay-dropdown .search-overlay > input:focus {
+  background-image: url("/assets/icons/drop_down_arrow_up.svg");
+}
+
+.add-task-overlay-urgent,
+.add-tasked-clicked {
+  background-color: #ff3d00;
+  color: #ffffff;
+}
+
 .search_container {
   position: relative;
 }

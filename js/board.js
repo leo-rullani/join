@@ -9,32 +9,6 @@ function initBoard() {
 }
 
 /**
- * Erstellt einige Beispiel-Tasks
- */
-function loadTasks() {
-  let tasks = [
-    { id: "task1", text: "Task 1", column: "todo" },
-    { id: "task2", text: "Task 2", column: "doing" },
-  ];
-  tasks.forEach((t) => {
-    let el = document.createElement("div");
-    el.id = t.id;
-    el.className = "task";
-    el.draggable = true;
-    el.ondragstart = drag;
-    el.innerText = t.text;
-    // Klick-Event → Board-Overlay öffnen
-    el.onclick = openBoardOverlay;
-
-    // In die jeweilige Spalte einfügen
-    document
-      .getElementById(t.column)
-      .querySelector(".task_list")
-      .appendChild(el);
-  });
-}
-
-/**
  * Erlaubt Drag & Drop (hier: das Ablegen)
  */
 function allowDrop(e) {
@@ -111,9 +85,18 @@ function saveNewTask() {
 /**
  * Öffnet das Board-Overlay (animiert von rechts in die Mitte)
  */
-function openBoardOverlay() {
+function openBoardOverlay(task) {
+  if (!task || !task.assignees) {
+    console.error("Task or assignees missing", task);
+    return;
+  }
+
+  selectedTask = task; // Speichern der ausgewählten Aufgabe
   const overlay = document.getElementById("boardOverlay");
-  overlay.classList.add("board_overlay_show");
+  overlay.innerHTML = taskBoardTemplate(task); // Dein Template für das Overlay wird hier eingefügt
+  overlay.classList.add("board_overlay_show"); // Zeigt das Overlay an
+
+  // Hier wird die Animation für das Overlay gesetzt
   overlay.querySelector(".board_overlay_content").style.animationName =
     "slideInFromRight";
 }

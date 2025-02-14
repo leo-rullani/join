@@ -177,7 +177,8 @@
                                 <div>Prio</div>
                                 <div id="add-task-urgent-medium-low-buttons"
                                     class="add-task-overlay-urgent-medium-low-buttons">
-                                    <button id="add-task-urgent" class="add-task-overlay-urgent" name="prio"
+                                    <button id="add-task-urgent" class="add-task-overlay-urgent add-task-clicked"
+                                        name="prio"
                                         onclick="addTaskPrio('urgent', 'add-task-urgent-medium-low-buttons', event)"
                                         data-priority="urgent">
                                         <div class="add-task-overlay-important">
@@ -193,7 +194,7 @@
                                             <img id="prio-medium" src="/assets/icons/medium.svg" />
                                         </div>
                                     </button>
-                                    <button id="add-task-low" class="add-task-overlay-low"
+                                    <button id="add-task-low" class="add-task-overlay-low add-task-clicked"
                                         onclick="addTaskPrio('low', 'add-task-urgent-medium-low-buttons', event)"
                                         data-priority="low">
                                         <div class="add-task-overlay-important">
@@ -293,67 +294,7 @@
 
         <!-- Board-Overlay (Task-Details) -->
         <div class="board_overlay" id="boardOverlay">
-            <div class="board_overlay_content">
-                <!-- Schließen-Button -->
-                <button class="board_overlay_close" onclick="closeBoardOverlay()">&times;</button>
 
-                <!-- Label (technical/user story) -->
-                <div id="taskLabel" class="task-label label-technical">Technical Task</div>
-
-                <!-- Titel & Untertitel -->
-                <h2 id="taskTitle" class="h2_board-overlay">CSS Architecture Planning</h2>
-                <p id="taskSubtitle" class="text-regular">Define CSS naming conventions and structure.</p>
-
-                <!-- Due Date -->
-                <div class="overlay-section">
-                    <span class="section-label text-label">Due Date:</span>
-                    <span id="dueDate" class="board_duedate text-regular">12/02/2025</span>
-                </div>
-
-                <!-- Priority -->
-                <div class="overlay-section">
-                    <span class="section-label text-label">Priority:</span>
-                    <span id="priorityLabel" class="board_priority text-regular">Urgent</span>
-                </div>
-
-                <!-- Assigned To -->
-                <div class="overlay-section">
-                    <span class="section-label text-label">Assigned to:</span>
-                    <div class="assignees-column">
-                        <div class="assignee">
-                            <div class="assignee-circle circle-blue">SM</div>
-                            <span class="assignee-name text-regular">Sofia Müller</span>
-                        </div>
-                        <div class="assignee">
-                            <div class="assignee-circle circle-purple">BZ</div>
-                            <span class="assignee-name text-regular">Benedikt Ziegler</span>
-                        </div>
-                    </div>
-                </div>
-
-                <!-- Subtasks -->
-                <div class="subtasks">
-                    <p class="section-label text-label">Subtasks:</p>
-                    <div class="subtask-item">
-                        <input type="checkbox" id="subtask1">
-                        <label for="subtask1" class="text-subtask">Establish CSS Methodology</label>
-                    </div>
-                    <div class="subtask-item">
-                        <input type="checkbox" id="subtask2">
-                        <label for="subtask2" class="text-subtask">Setup Base Styles</label>
-                    </div>
-                </div>
-
-                <!-- Footer mit Icons -->
-                <div class="task-footer">
-                    <button class="board-btn-delete" onclick="deleteTask()">
-                        <img src="/assets/icons/board-btn-delete.svg" alt="Delete"> Delete
-                    </button>
-                    <button class="board-btn-edit" onclick="editTask()">
-                        <img src="/assets/icons/board-btn-edit.svg" alt="Edit"> Edit
-                    </button>
-                </div>
-            </div>
         </div>
 
         <!-- SCRIPTS -->

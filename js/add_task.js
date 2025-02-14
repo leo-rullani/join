@@ -10,6 +10,7 @@ let subtasksList = [];
 let assignedContacts = [];
 let contactsToAssigned = [];
 let globalBoardCategory = "to-do";
+let selectedTask = null;
 
 async function initAddTask() {
   await loadContacts();
@@ -143,17 +144,20 @@ async function addTaskCreateTask() {
   const description = addTaskDescription();
   const names = addTaskAssignedTo();
   const date = addTaskDueDate();
+  const subtasks = globalSubtasks || [];
 
   const newTask = {
+    id: taskId,
     title: title,
     description: description,
     assignees: names,
     date: date,
     priority: globalPrio,
     category: globalCategory,
-    subtasks: [],
+    subtasks: [], // Leeres Subtasks-Array für neuen Task
   };
-
+  allTasks.push(newTask);
+  addGlobalSubtasksToTask(allTasks.length - 1, subtasks, allTasks);
   const taskRef = `${databaseURL}/tasks/${taskId}.json`;
 
   const response = await fetch(taskRef, {
@@ -179,14 +183,17 @@ async function addTaskCreateTask() {
  * @param {string[]} subtasks An array containing the names of the subtasks to be added.
  */
 function addGlobalSubtasksToTask(taskIndex, subtasks, tasks) {
-  if (subtasks.length > 0) {
-    for (let i = 0; i < subtasks.length; i++) {
-      const subtaskName = subtasks[i];
-      tasks[taskIndex].subtasks.push({ name: subtaskName, completed: false });
+  // Überprüfen, ob der Task existiert
+  if (tasks[taskIndex]) {
+    if (subtasks.length > 0) {
+      subtasks.forEach((subtaskName) => {
+        tasks[taskIndex].subtasks.push({ name: subtaskName, completed: false });
+      });
     }
+  } else {
+    console.error("Task at index", taskIndex, "is undefined");
   }
 }
-
 /**
  * Compares two objects by their 'name' property in a case-insensitive manner.
  * @param {*} a - The first object to compare.
@@ -325,14 +332,28 @@ async function deleteTask(taskId) {
 async function displayTasks() {
   const tasks = await getTasks();
   const tasksContainer = document.getElementById("tasks-container");
-  tasksContainer.innerHTML = ""; // Alte Tasks entfernen
+  const boardOverlay = document.getElementById("boardOverlay");
+
+  tasksContainer.innerHTML = "";
+  boardOverlay.innerHTML = ""; // Leert das Overlay, bevor neue Tasks geladen werden
 
   tasks.forEach((task) => {
-    const template = document.createElement("div");
-    template.innerHTML = createTaskTemplate(task);
-    const taskElement = template.firstElementChild;
-    if (taskElement) {
-      tasksContainer.appendChild(taskElement);
+    console.log("Task Data (displayTasks):", task); // Überprüfe, ob die Subtasks korrekt da sind
+
+    // Vergewissere dich, dass task die benötigten Felder enthält:
+    if (task && task.id && Array.isArray(task.assignees)) {
+      const template = document.createElement("div");
+      template.innerHTML = createTaskTemplate(task); // Dein Template für das Task-Element
+
+      // Wir fügen hier den onclick-Handler hinzu, um das Overlay zu öffnen
+      const taskElement = template.firstElementChild;
+      if (taskElement) {
+        // Hier wird der Task direkt über die ID geöffnet
+        taskElement.onclick = () => openBoardOverlay(task);
+        tasksContainer.appendChild(taskElement);
+      }
+    } else {
+      console.error("Invalid task data (missing required fields):", task);
     }
   });
 }
@@ -377,37 +398,4 @@ function assignColor(name) {
 
   let firstLetter = name.trim().charAt(0).toUpperCase();
   return colors[firstLetter] || "#999999";
-}
-
-/**
- * Zeigt einen Toast für die "Add Task"-Funktion an.
- * @param {string} message - Die anzuzeigende Nachricht
- */
-function showAddTaskToast(message) {
-  const n = document.getElementById("add_notification");
-  if (!n) return;
-  n.innerHTML = `
-    ${message}
-    <img src="/assets/icons/Icon-board.svg" style="width: 20px; margin-left: 8px; vertical-align: middle;" />
-  `;
-
-  n.classList.remove("hidden");
-  n.style.bottom = "-120px";
-  n.getBoundingClientRect(); // Reflow
-  const toastHeight = n.offsetHeight;
-  const offsetFromBottom = (window.innerHeight / 2) - (toastHeight / 2);
-  n.style.bottom = `${offsetFromBottom}px`;
-  n.classList.add("show");
-
-  setTimeout(() => {
-    n.classList.remove("show");
-    setTimeout(() => n.classList.add("hidden"), 500);
-  }, 3000);
-}
-
-function addTaskCreateTask() {
-  showAddTaskToast("Task added to board");
-  setTimeout(() => {
-    window.location.href = "board.html";
-  }, 2000);
 }

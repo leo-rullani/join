@@ -1505,33 +1505,96 @@
     flex-direction: column;
     gap: 8px;
   }
+}
 
-  
 @media (max-width: 530px) {
-
   input {
     width: 100% !important;
   }
 
   textarea {
-    width: 100% !important; 
+    width: 100% !important;
   }
 
   .add-task-urgent-medium-low-buttons {
     flex-direction: column;
-    height: 80px;
   }
 
   .add-task-urgent,
   .add-task-medium,
-  .add-task-low{
-    width: 80%;
+  .add-task-low {
+    width: 100%;
   }
 
-  .checkbox-dropdown ul li input{
+  .checkbox-dropdown ul li input {
     width: auto !important;
   }
 }
+
+@media (max-width: 480px) {
+  input {
+    width: 80% !important;
+  }
+
+  textarea {
+    width: 80% !important;
+  }
+
+  .checkbox-dropdown ul {
+    width: 80%;
+  }
+
+  .add-task-urgent,
+  .add-task-medium,
+  .add-task-low {
+    width: 80%;
+  }
+
+  .add-task-bottom {
+    align-items: flex-start;
+    padding: 0;
+  }
+
+  .add-task-subtasks-icon-plus {
+    left: 87px;
+  }
+
+  .add-task-subtasks-icon-plus-check {
+    left: 75px;
+  }
+}
+
+@media (max-width: 380px) {
+  input {
+    width: 65% !important;
+  }
+
+  textarea {
+    width: 65% !important;
+  }
+
+  .checkbox-dropdown ul {
+    width: 65%;
+  }
+
+  .add-task-urgent,
+  .add-task-medium,
+  .add-task-low {
+    width: 65%;
+  }
+
+  .add-task-subtasks-icon-plus {
+    left: 30px;
+  }
+
+  .add-task-subtasks-icon-plus-check {
+    left: 15px;
+  }
+
+  .add-task-bottom-clear,
+  .add-task-bottom-create-task {
+    padding: 12px 12px 12px 12px;
+  }
 }
 
 /* legal notice, privacy policy & help responsive */

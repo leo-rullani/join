@@ -306,9 +306,9 @@ input:focus {
   display: flex;
   justify-content: center;
   align-items: center;
-  position: absolute;
-  right: 10px;
-  bottom: 8px;
+  position: relative;
+  left: 140px;
+  bottom: 57px;
   cursor: pointer;
   gap: 5px;
 }
@@ -364,13 +364,17 @@ input:focus {
   background-color: #ededef;
 }
 
+.checkbox-dropdown .search > input:focus {
+  background-image: url("/assets/icons/drop_down_arrow_up.svg");
+}
+
 .add-task-subtasks-icon-plus-check {
   display: flex;
   justify-content: center;
   align-items: center;
-  position: absolute;
-  right: 10px;
-  bottom: 8px;
+  position: relative;
+  left: 140px;
+  bottom: 54px;
   cursor: pointer;
   gap: 5px;
 }
