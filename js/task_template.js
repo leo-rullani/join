@@ -64,7 +64,9 @@ function generateTaskHTML(task, subtaskHTML, assigneeHTML) {
   }, 10);
 
   return `
-    <div class="task" onclick="openBoardOverlay(${task.id})" id="${task.id}">
+    <div class="task" onclick="console.log('${task.id}'); openBoardOverlay('${
+    task.id
+  }')"  id="${task.id}">
       <div class="task-label" style="background-color: ${labelColor};">
         ${task.category || "Uncategorized"}
       </div>
@@ -152,6 +154,10 @@ function generateBoardOverlaySubtaskHTML(task) {
     .join("");
 }
 
+function reload() {
+  location.reload();
+}
+
 function updateProgressBar(taskId) {
   const task = tasks.find((t) => t.id === taskId);
   if (!task) return;
@@ -159,17 +165,23 @@ function updateProgressBar(taskId) {
   const totalSubtasks = task.subtasks.length;
   const completedSubtasks = task.subtasks.filter((s) => s.done).length;
   const progressPercent = (completedSubtasks / totalSubtasks) * 100;
-  const progressBar = document.querySelector(
-    `#task-${taskId} .progress-bar-fill`
-  );
+
+  // Aktualisiere den Fortschrittsbalken
+  const progressBar = document.querySelector(`#${taskId} .progress-bar-fill`);
   if (progressBar) {
     progressBar.style.width = `${progressPercent}%`;
+  }
+
+  // Aktualisiere die Subtask-Anzeige
+  const subtaskInfo = document.querySelector(`#${taskId} .subtask-info`);
+  if (subtaskInfo) {
+    subtaskInfo.textContent = `${completedSubtasks}/${totalSubtasks} Subtasks`;
   }
 }
 function renderTaskWithSubtasks(task) {
   const { subtaskHTML } = generateSubtaskHTML(task.subtasks);
   return `
-    <div class="task" onclick="openBoardOverlay()" id="${task.id}">
+    <div class="task" onclick="console.log('${task.id}'); openBoardOverlay('${task.id}')"  id="${task.id}">
       <h3 class="task-title">${task.title}</h3>
       <div class="task-description">${task.description}</div>
       ${subtaskHTML}
@@ -190,22 +202,11 @@ function renderAnotherTemplateWithSubtasks(task) {
 
 function updateSubtaskStatus(index, taskId, checked) {
   const task = tasks.find((t) => t.id === taskId);
-  if (!task) {
-    console.error("Task nicht gefunden!");
-    return;
+  if (task && task.subtasks[index]) {
+    task.subtasks[index].done = checked; // Aktualisiere den Subtask-Status
+    updateProgressBar(taskId); // Aktualisiere die Fortschrittsanzeige
   }
-
-  const subtask = task.subtasks[index];
-  if (!subtask) {
-    console.error("Subtask nicht gefunden!");
-    return;
-  }
-
-  subtask.done = checked;
-  updateProgressBar(taskId);
-  updateSubtaskInFirebase(taskId, index, checked);
 }
-
 function updateSubtaskInFirebase(taskId, index, checked) {
   const databaseURL =
     "https://join-5d739-default-rtdb.europe-west1.firebasedatabase.app";

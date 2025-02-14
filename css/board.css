@@ -199,10 +199,18 @@
   border-radius: 20px;
   cursor: grab;
   box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+  transition: transform 0.2s ease; /* Sanfte Übergänge */
+  position: relative;
 }
 
 .task:active {
   cursor: grabbing;
+}
+
+.task.dragging {
+  cursor: grabbing;
+  transform: scale(0.95);
+  z-index: 1000; /* Damit das gezogene Element über anderen Elementen ist */
 }
 
 /*OVERLAY*/
@@ -459,17 +467,17 @@
     rgba(0, 0, 0, 0.07) 0px 16px 32px, rgba(0, 0, 0, 0.07) 0px 32px 64px;
 }
 
-.add-task-overlay-urgent.add-task-clicked{
+.add-task-overlay-urgent.add-task-clicked {
   background-color: #ff3d00;
   color: #ffffff;
 }
 
-.add-task-overlay-medium.add-task-clicked{
+.add-task-overlay-medium.add-task-clicked {
   background-color: #ffbb2b;
   color: #ffffff;
 }
 
-.add-task-overlay-low.add-task-clicked{
+.add-task-overlay-low.add-task-clicked {
   background-color: #7ae229;
   color: #ffffff;
 }

@@ -334,7 +334,11 @@ async function displayTasks() {
 
       const taskElement = template.firstElementChild;
       if (taskElement) {
-        taskElement.onclick = () => openBoardOverlay(task);
+        taskElement.draggable = true; // Mach das Element draggable
+        taskElement.ondragstart = drag; // Drag-Event zuweisen
+        taskElement.ondragend = dragEnd; // Drag-End-Event
+
+        taskElement.onclick = () => openBoardOverlay(task.id); // Klick-Event
         tasksContainer.appendChild(taskElement);
       }
     } else {
