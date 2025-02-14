@@ -3,13 +3,15 @@ body {
   margin: 0;
   padding: 0;
   font-family: "Inter", serif;
-  background-color: #f6f7f8; /* Grau wie gewünscht */
+  background-color: #f6f7f8;
+  /* Grau wie gewünscht */
   overflow: hidden;
 }
 
 /* === Header === */
 header {
-  background-color: #ffffff; /* Header jetzt weiß */
+  background-color: #ffffff;
+  /* Header jetzt weiß */
   height: 75px;
   position: absolute;
   width: 100%;
@@ -50,7 +52,8 @@ header {
   border-radius: 20px 0 20px 20px;
   box-shadow: rgba(0, 0, 0, 0.05) 0px 6px 10px 0px;
   background: #2a3647;
-  display: flex; /* Standard, im Wechsel mit .resp_menu_closed */
+  display: flex;
+  /* Standard, im Wechsel mit .resp_menu_closed */
   flex-direction: column;
   width: 130px;
   height: 130px;
@@ -94,6 +97,7 @@ header {
 .resp_menu_closed {
   display: none;
 }
+
 .resp_menu_open {
   display: flex;
 }
@@ -158,6 +162,34 @@ header {
 
 /* Hover-Effekt auf einen Menüpunkt */
 .selection:hover {
+  width: 96%;
+  transform: scale(1.01);
+  background-color: #2c4972;
+}
+
+.selection_privacy {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 3px;
+  color: #a8a8a8;
+  cursor: pointer;
+  transition: transform 0.3s ease;
+}
+
+.selection_privacy span {
+  min-width: 70px;
+  text-align: start;
+}
+
+.selection_privacy a {
+  color: #a8a8a8;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.selection_privacy:hover {
   width: 96%;
   transform: scale(1.01);
   background-color: #2c4972;
