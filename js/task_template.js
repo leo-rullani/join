@@ -33,6 +33,9 @@ function assignColor(name) {
   return colors[firstLetter] || "#999999";
 }
 
+/*******************************************
+ * Erzeugt das Task-Board-Kärtchen
+ *******************************************/
 function createTaskTemplate(task) {
   if (!task.id) {
     console.error("Task ID is missing", task);
@@ -51,10 +54,11 @@ function createTaskTemplate(task) {
   return generateTaskHTML(task, subtaskHTML, assigneeHTML, progress);
 }
 
-function generateTaskHTML(task, subtaskHTML, assigneeHTML) {
+function generateTaskHTML(task, subtaskHTML, assigneeHTML, progress) {
   const labelColor = task.category === "Technical Task" ? "#20d7c1" : "#0038ff";
   const priorityIcon = getPriorityIcon(task.priority);
 
+  // Smoother Progress-Bar
   setTimeout(() => {
     const progressBars = document.querySelectorAll(".progress-bar-fill");
     progressBars.forEach((bar) => {
@@ -65,7 +69,7 @@ function generateTaskHTML(task, subtaskHTML, assigneeHTML) {
   return `
     <div class="task" onclick="console.log('${task.id}'); openBoardOverlay('${
     task.id
-  }')"  id="${task.id}">
+  }')" id="${task.id}">
       <div class="task-label" style="background-color: ${labelColor};">
         ${task.category || "Uncategorized"}
       </div>
@@ -140,13 +144,16 @@ function generateBoardOverlaySubtaskHTML(task) {
   return task.subtasks
     .map((subtask, index) => {
       return `
-        <div class="subtask">
+        <div class="subtask-item-overlay">
           <input type="checkbox" 
-                 ${subtask.done ? "checked" : ""} 
+                 id="subtask-${task.id}-${index}"
+                 ${subtask.done ? "checked" : ""}
                  onchange="updateSubtaskStatus(${index}, '${
         task.id
       }', this.checked)">
-          <label>${subtask.name}</label>
+          <label for="subtask-${task.id}-${index}" class="text-subtask">
+            ${subtask.name}
+          </label>
         </div>
       `;
     })
@@ -174,10 +181,11 @@ function updateProgressBar(taskId) {
     subtaskInfo.textContent = `${completedSubtasks}/${totalSubtasks} Subtasks`;
   }
 }
+
 function renderTaskWithSubtasks(task) {
   const { subtaskHTML } = generateSubtaskHTML(task.subtasks);
   return `
-    <div class="task" onclick="console.log('${task.id}'); openBoardOverlay('${task.id}')"  id="${task.id}">
+    <div class="task" onclick="console.log('${task.id}'); openBoardOverlay('${task.id}')" id="${task.id}">
       <h3 class="task-title">${task.title}</h3>
       <div class="task-description">${task.description}</div>
       ${subtaskHTML}
@@ -203,6 +211,7 @@ function updateSubtaskStatus(index, taskId, checked) {
     updateProgressBar(taskId);
   }
 }
+
 function updateSubtaskInFirebase(taskId, index, checked) {
   const databaseURL =
     "https://join-5d739-default-rtdb.europe-west1.firebasedatabase.app";
@@ -246,16 +255,14 @@ function generateAssigneeHTML(assignees) {
     })
     .join("");
 }
+
 function getInitials(fullName) {
   let parts = fullName.trim().split(" ");
   let first = parts[0]?.[0]?.toUpperCase() || "";
   let last = parts[1]?.[0]?.toUpperCase() || "";
   return first + last;
 }
-/**
- * Clears the add task form and prevents default form submission behavior.
- * @param {*} event - The event object triggered by the user action.
- */
+
 function addTaskCreateTaskConfirmation() {
   showToast(`<img src="./assets/icons/board.svg"/> Task added to board`);
   setTimeout(() => {
@@ -265,33 +272,33 @@ function addTaskCreateTaskConfirmation() {
 
 function addTaskShowAvatarsHTML(bgColor, contact) {
   return `
-    <div class="avatar" style="background-color: ${bgColor};">${getUserInitials(
-    contact
-  )}</div>
-    `;
+    <div class="avatar" style="background-color: ${bgColor};">
+      ${getUserInitials(contact)}
+    </div>
+  `;
 }
 
 function addTaskAssignedToHtml(i, bgColor, contact) {
   return `
-      <li>
-        <label for="person${i}">
-          <span class="avatar" style="background-color: ${bgColor};">${getUserInitials(
-    contact
-  )}</span>
-          <span>${contact}</span>
-        </label>
-        <input class="add-task-checkbox" type="checkbox" name="person[${i}]" id="person${i}" value="${contact}" onclick="addTaskAssignedTo()">
-      </li>
-    `;
+    <li>
+      <label for="person${i}">
+        <span class="avatar" style="background-color: ${bgColor};">
+          ${getUserInitials(contact)}
+        </span>
+        <span>${contact}</span>
+      </label>
+      <input class="add-task-checkbox" type="checkbox" name="person[${i}]" id="person${i}" value="${contact}" onclick="addTaskAssignedTo()">
+    </li>
+  `;
 }
 
 function addTaskAssignedToSearchHTML(i, bgColor, contact, assigned) {
   return `
     <li>
       <label for="person${i}">
-        <span class="avatar" style="background-color: ${bgColor};">${getUserInitials(
-    contact
-  )}</span>
+        <span class="avatar" style="background-color: ${bgColor};">
+          ${getUserInitials(contact)}
+        </span>
         <span>${contact}</span>
       </label>
       <input class="add-task-checkbox" type="checkbox" name="person[${i}]" id="person${i}" value="${contact}" ${
@@ -303,24 +310,27 @@ function addTaskAssignedToSearchHTML(i, bgColor, contact, assigned) {
 
 function subTaskTemplate(element, i) {
   return `   
-                     <li>
-                   <span class="add-task-subtasks-extra-task" id="add-task-subtasks-extra-task">${element}</span> 
-                   <div class="add-task-subtasks-icons">
-                      <img class="add-task-edit" src="/assets/icons/add-subtask-edit.svg"  onclick="editTaskSubtasksList(${i}, event)" >
-                       <div class="add-tasks-border"></div>
-                      <img  class="add-task-trash" src="/assets/icons/add-subtask-delete.svg" onclick="removeFromAddTaskSubtasksList(${i}, event)">
-                   </div>
-                 </li>
-                   `;
+    <li>
+      <span class="add-task-subtasks-extra-task" id="add-task-subtasks-extra-task">${element}</span>
+      <div class="add-task-subtasks-icons">
+        <img class="add-task-edit" src="/assets/icons/add-subtask-edit.svg" onclick="editTaskSubtasksList(${i}, event)" >
+        <div class="add-tasks-border"></div>
+        <img class="add-task-trash" src="/assets/icons/add-subtask-delete.svg" onclick="removeFromAddTaskSubtasksList(${i}, event)">
+      </div>
+    </li>
+  `;
 }
 
+/*******************************************
+ * Overlay-Template-Funktion
+ *******************************************/
 function taskBoardTemplate(task) {
   if (!task || !task.assignees) {
     console.error("Task or assignees are missing", task);
     return "";
   }
 
-  const assigneeHTML = generateAssigneeHTML(task.assignees);
+  const assigneeHTML = generateOverlayAssigneeHTML(task.assignees);
   const subtaskHTML = generateBoardOverlaySubtaskHTML(task);
 
   const labelColor = task.category === "Technical Task" ? "#20d7c1" : "#0038ff";
@@ -332,7 +342,9 @@ function taskBoardTemplate(task) {
       <button class="board_overlay_close" onclick="closeBoardOverlay()">&times;</button>
 
       <!-- Label (technical/user story) -->
-      <div id="taskLabel" class="task-label" style="background-color: ${labelColor};">${task.category}</div>
+      <div id="taskLabel" class="task-label" style="background-color: ${labelColor};">
+        ${task.category}
+      </div>
 
       <!-- Titel & Untertitel -->
       <h2 id="taskTitle" class="h2_board-overlay">${task.title}</h2>
@@ -347,17 +359,17 @@ function taskBoardTemplate(task) {
       <!-- Priority -->
       <div class="overlay-section">
         <span class="section-label text-label">Priority:</span>
-        <span id="priorityLabel" class="board_priority text-regular">${task.priority}<img src="${priorityIcon}" alt="${task.priority}" /></span>
+        <span id="priorityLabel" class="board_priority text-regular">
+          ${task.priority}
+          <img class="prio-icon-boardoverlay" src="${priorityIcon}" alt="${task.priority}" />
+        </span>
       </div>
 
       <!-- Assigned To -->
       <div class="overlay-section">
         <span class="section-label text-label">Assigned to:</span>
-        <div class="assignees-column">
-          <div class="assignee">
-            <div class="assignee-circle circle-blue">${assigneeHTML}</div>
-            <span class="assignee-name text-regular">${task.assignees}</span>
-          </div>
+        <div class="assignees-column-overlay">
+          ${assigneeHTML}
         </div>
       </div>
 
@@ -365,20 +377,78 @@ function taskBoardTemplate(task) {
       <div class="subtasks">
         <p class="section-label text-label">Subtasks:</p>
         <!-- Subtask List with Checkboxes -->
-        <div class="subtask-item">
-          ${subtaskHTML}
-        </div>
+        <!-- Jetzt direkt subtaskHTML, KEIN einzelnes <div> mehr -->
+        ${subtaskHTML}
       </div>
 
       <!-- Footer mit Icons -->
       <div class="task-footer">
-        <button class="board-btn-delete" onclick="deleteTask('${task.id}')">
+        <!-- Buttons mit Task-ID -->
+        <button class="board-btn-delete" onclick="deleteTask('${task.id}');">
           <img src="/assets/icons/board-btn-delete.svg" alt="Delete"> Delete
         </button>
-        <button class="board-btn-edit" onclick="editTask()">
+        <button class="board-btn-edit" onclick="editTask('${task.id}');">
           <img src="/assets/icons/board-btn-edit.svg" alt="Edit"> Edit
         </button>
       </div>
     </div>
   `;
+}
+
+function generateOverlayAssigneeHTML(assignees) {
+  if (typeof assignees === "object" && !Array.isArray(assignees)) {
+    assignees = Object.values(assignees);
+  }
+
+  if (!Array.isArray(assignees) || assignees.length === 0) {
+    return "<div>No assignees</div>";
+  }
+
+  return assignees
+    .map((name) => {
+      const initials = getInitials(name);
+      // nutze dictionary-Farben
+      const bgColor = assignColor(name);
+      return `
+        <div class="assignee-overlay">
+          <div class="assignee-circle-overlay" style="background-color:${bgColor};">
+            ${initials}
+          </div>
+          <span class="assignee-name-overlay">${name}</span>
+        </div>
+      `;
+    })
+    .join("");
+}
+
+function closeBoardOverlay() {
+  document
+    .querySelector(".board_overlay")
+    .classList.remove("board_overlay_show");
+}
+
+function deleteTaskInFirebase(taskId) {
+  const databaseURL = "https://join-5d739-default-rtdb.europe-west1.firebasedatabase.app";
+  return fetch(`${databaseURL}/tasks/${taskId}.json`, {
+    method: "DELETE",
+  })
+    .then(() => console.log("Task in Firebase gelöscht"))
+    .catch((error) => console.error("Fehler beim Löschen in Firebase", error));
+}
+
+function deleteTask(taskId) {
+  // 1) Löschen in local tasks
+  tasks = tasks.filter((task) => task.id !== taskId);
+  // 2) Delete-Request an Firebase
+  deleteTaskInFirebase(taskId);
+  // 3) DOM entfernen, Overlay schließen, Board neu rendern
+  const taskEl = document.getElementById(taskId);
+  if (taskEl) taskEl.remove();
+  closeBoardOverlay();
+  renderBoard();
+}
+
+function editTask(taskId) {
+  console.log("Edit Task:", taskId);
+  closeBoardOverlay();
 }

@@ -9,7 +9,6 @@
   align-items: center;
   justify-content: center;
   z-index: 9999;
-  /* Schnellere, lineare Fade-Dauer */
   transition: opacity 0.2s linear;
   opacity: 0;
   pointer-events: none;
@@ -108,6 +107,7 @@
   font-size: 56px;
   margin-block-start: 0;
   margin-block-end: 0;
+  color: black;
 }
 
 /* =====================
@@ -130,23 +130,28 @@
   color: #000;
   font-weight: normal;
 }
-/* ===================== */
 
-.assignees-column {
+.assignees-column-overlay {
   display: flex;
-  flex-direction: column;
-  gap: 8px;
+  flex-direction: column; 
+  gap: 12px;
 }
 
-.assignee {
+.assignee-overlay {
   display: flex;
   align-items: center;
-  gap: 5px;
-  margin-top: 12px;
-  margin-left: 12px;
+  gap: 8px;
+  padding: 5px 8px; 
+  border-radius: 6px; 
+  transition: background-color 0.2s;
 }
 
-.assignee-circle {
+.assignee-overlay:hover {
+  background-color: #e2e3e4;
+  border: 1px solid #ccc;
+}
+
+.assignee-circle-overlay {
   width: 30px;
   height: 30px;
   border-radius: 50%;
@@ -157,39 +162,34 @@
   font-weight: normal;
 }
 
-.circle-blue {
-  background-color: #2996cc;
-}
-
-.circle-purple {
-  background-color: #8c41f7;
+.assignee-name-overlay {
+  font-size: 16px;
+  color: #000;
 }
 
 .subtasks {
   display: flex;
   flex-direction: column;
-  display: inline-flex;
-  flex-direction: column;
   margin-bottom: 8px;
 }
 
-.subtask-item {
+.subtask-item-overlay {
   display: flex;
-  display: inline-flex;
   align-items: center;
   margin-bottom: 5px;
   transition: background-color 0.2s ease;
-  border-radius: 12px;
+  border-radius: 6px;
   padding: 5px 10px;
   width: auto;
   max-width: 100%;
 }
 
-.subtask-item:hover {
-  background-color: #e2e3e4;
+.subtask-item-overlay:hover {
+  background-color: #f1f1f1;
+  border: 1px solid #ccc;
 }
 
-.subtask-item input[type="checkbox"] {
+.subtask-item-overlay input[type="checkbox"] {
   -webkit-appearance: none;
   appearance: none;
   width: 24px;
@@ -198,13 +198,10 @@
   border: 2px solid #2a3647;
   position: relative;
   cursor: pointer;
-  flex: none;
-  order: 0;
-  flex-grow: 0;
   margin-right: 8px;
 }
 
-.subtask-item input[type="checkbox"]::after {
+.subtask-item-overlay input[type="checkbox"]::after {
   content: "";
   position: absolute;
   width: 5px;
@@ -219,7 +216,7 @@
   transition: opacity 0.2s ease;
 }
 
-.subtask-item input[type="checkbox"]:checked::after {
+.subtask-item-overlay input[type="checkbox"]:checked::after {
   opacity: 1;
 }
 
@@ -251,5 +248,9 @@
 }
 
 .board_priority {
-  margin-left: 25px;
+  margin-left: 27px;
+}
+
+.prio-icon-boardoverlay {
+  margin-left: 10px;
 }
