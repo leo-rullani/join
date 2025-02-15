@@ -13,17 +13,15 @@ function initBoard() {
  * Erlaubt Drag & Drop (hier: das Ablegen)
  */
 function allowDrop(e) {
-  e.preventDefault(); // Erlaubt das Ablegen
+  e.preventDefault();
 
-  // Automatisches Scrollen
   const container = document.getElementById("tasks-container");
   const containerRect = container.getBoundingClientRect();
 
-  // Überprüfen, ob der Mauszeiger nahe dem oberen oder unteren Rand des Containers ist
   if (e.clientY < containerRect.top + 50) {
-    container.scrollTop -= 10; // Nach oben scrollen
+    container.scrollTop -= 10;
   } else if (e.clientY > containerRect.bottom - 50) {
-    container.scrollTop += 10; // Nach unten scrollen
+    container.scrollTop += 10;
   }
 }
 /**
@@ -118,12 +116,11 @@ function saveNewTask() {
   let el = document.createElement("div");
   el.id = "task_" + Date.now();
   el.className = "task";
-  el.draggable = true; // Muss draggable sein
-  el.ondragstart = drag; // Drag-Event zuweisen
+  el.draggable = true;
+  el.ondragstart = drag;
   el.innerText = val;
   el.onclick = () => openBoardOverlay(el.id);
 
-  // Hier das Element zur Liste hinzufügen
   document.getElementById("todo").querySelector(".task_list").appendChild(el);
 
   document.getElementById("newTaskInput").value = "";
@@ -166,6 +163,14 @@ function closeBoardOverlay() {
     },
     { once: true }
   );
+}
+
+function resetOverlay() {
+  const overlay = document.getElementById("boardOverlay");
+
+  overlay.classList.remove("board_overlay_show");
+  overlay.style.display = "none";
+  overlay.style.pointerEvents = "none";
 }
 
 /**

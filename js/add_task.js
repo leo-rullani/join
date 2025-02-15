@@ -286,15 +286,11 @@ async function getTasks() {
 
   if (response.ok && tasks) {
     if (Object.keys(tasks).length === 0) {
-      console.log("Keine Tasks gefunden.");
       return [];
     }
     return Object.keys(tasks).map((id) => ({ id, ...tasks[id] }));
   } else {
-    console.error(
-      "Fehler beim Abrufen der Tasks oder keine Tasks gefunden",
-      tasks
-    );
+    console.error("No Tasks Found", tasks);
     return [];
   }
 }
@@ -310,7 +306,7 @@ async function deleteTask(taskId) {
   if (response.ok) {
     console.log("Task deleted!");
     await displayTasks();
-    closeBoardOverlay();
+    resetOverlay();
   } else {
     const errorDetails = await response.text();
     console.error("Error deleting task:", response.status, errorDetails);
@@ -334,11 +330,11 @@ async function displayTasks() {
 
       const taskElement = template.firstElementChild;
       if (taskElement) {
-        taskElement.draggable = true; // Mach das Element draggable
-        taskElement.ondragstart = drag; // Drag-Event zuweisen
-        taskElement.ondragend = dragEnd; // Drag-End-Event
+        taskElement.draggable = true;
+        taskElement.ondragstart = drag;
+        taskElement.ondragend = dragEnd;
 
-        taskElement.onclick = () => openBoardOverlay(task.id); // Klick-Event
+        taskElement.onclick = () => openBoardOverlay(task.id);
         tasksContainer.appendChild(taskElement);
       }
     } else {
@@ -357,13 +353,12 @@ async function loadContacts() {
 
 function loadTasks() {
   getTasks().then((loadedTasks) => {
-    window.tasks = loadedTasks; // 🔥 Globale Variable setzen
+    window.tasks = loadedTasks;
     console.log("Tasks gespeichert in window.tasks:", window.tasks);
   });
 }
 
-loadTasks(); // 🔥 Beim Laden der Seite direkt aufrufen
-
+loadTasks();
 function assignColor(name) {
   const colors = {
     A: "#FF5733",

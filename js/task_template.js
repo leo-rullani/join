@@ -1,7 +1,6 @@
 function assignColor(name) {
   const firstLetter = name.trim()[0]?.toUpperCase() || "Z";
 
-  // Deine Farbzuordnung:
   const colors = {
     A: "#FF5733",
     B: "#33FF57",
@@ -166,13 +165,10 @@ function updateProgressBar(taskId) {
   const completedSubtasks = task.subtasks.filter((s) => s.done).length;
   const progressPercent = (completedSubtasks / totalSubtasks) * 100;
 
-  // Aktualisiere den Fortschrittsbalken
   const progressBar = document.querySelector(`#${taskId} .progress-bar-fill`);
   if (progressBar) {
     progressBar.style.width = `${progressPercent}%`;
   }
-
-  // Aktualisiere die Subtask-Anzeige
   const subtaskInfo = document.querySelector(`#${taskId} .subtask-info`);
   if (subtaskInfo) {
     subtaskInfo.textContent = `${completedSubtasks}/${totalSubtasks} Subtasks`;
@@ -203,8 +199,8 @@ function renderAnotherTemplateWithSubtasks(task) {
 function updateSubtaskStatus(index, taskId, checked) {
   const task = tasks.find((t) => t.id === taskId);
   if (task && task.subtasks[index]) {
-    task.subtasks[index].done = checked; // Aktualisiere den Subtask-Status
-    updateProgressBar(taskId); // Aktualisiere die Fortschrittsanzeige
+    task.subtasks[index].done = checked;
+    updateProgressBar(taskId);
   }
 }
 function updateSubtaskInFirebase(taskId, index, checked) {
@@ -321,7 +317,7 @@ function subTaskTemplate(element, i) {
 function taskBoardTemplate(task) {
   if (!task || !task.assignees) {
     console.error("Task or assignees are missing", task);
-    return ""; // Falls Assignees fehlen, nichts zurückgeben
+    return "";
   }
 
   const assigneeHTML = generateAssigneeHTML(task.assignees);
