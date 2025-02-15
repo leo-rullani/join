@@ -337,6 +337,8 @@
   .policy_docs_privacy a{
     align-items: center;
     margin-left: 0px;
+    padding: 8px;
+    font-size: 16px;
   }
 
   .policy_docs_privacy:hover{
@@ -782,6 +784,15 @@
   .selection img {
     width: 16px;
     margin: 0;
+  }
+
+  .menu_bar_login img{
+    width: 20px;
+    margin: 0;
+  }
+
+  .policy_docs_privacy a {
+    font-size: 16px;
   }
 
   .selection a {
@@ -1638,7 +1649,7 @@
 
   .add-task-bottom-clear,
   .add-task-bottom-create-task {
-    padding: 12px 12px 12px 12px;
+    padding: 8px 8px 8px 8px;
   }
 }
 

@@ -517,6 +517,10 @@ input:focus {
   cursor: pointer;
 }
 
+.add-task-bottom-clear{
+  font-size: 20px;
+}
+
 .add-task-bottom-clear-button {
   border: 1px solid #2a3647;
   outline: 1px solid white;
