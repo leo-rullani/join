@@ -112,14 +112,23 @@ function generateSubtaskHTML(subtasks, isCreateTaskTemplate = false) {
       totalSubtasks,
       completedSubtasks,
       subtaskHTML: `
-        <div class="progress-container">
-          <div class="progress-bar-bg" style="background-color: #ddd; width: 100%; border-radius: 10px; height: 10px;">
-            <div class="progress-bar-fill" style="width: ${progressPercent}%; background-color: #4caf50; border-radius: 10px; height: 100%;"></div>
-          </div>
-          <div class="subtask-info" style="text-align: center; margin-top: 5px;">
-            ${completedSubtasks}/${totalSubtasks} Subtasks
-          </div>
-        </div>
+        <div class="progress-container" 
+     style="display: flex; align-items: center; justify-content: space-between; margin-bottom: 8px;">
+  <!-- Progress-Bar-Hintergrund, begrenzt auf 60% Breite -->
+  <div class="progress-bar-bg" 
+       style="background-color: #ddd; width: 60%; border-radius: 10px; height: 10px;">
+    <div class="progress-bar-fill"
+         style="width: ${progressPercent}%; background-color: #4689ff; border-radius: 10px; height: 100%;">
+    </div>
+  </div>
+
+  <!-- Subtask-Info rechts daneben -->
+  <div class="subtask-info" 
+       style="font-size: 12px; margin-left: 10px;">
+    ${completedSubtasks}/${totalSubtasks} Subtasks
+  </div>
+</div>
+
       `,
     };
   }
@@ -428,7 +437,8 @@ function closeBoardOverlay() {
 }
 
 function deleteTaskInFirebase(taskId) {
-  const databaseURL = "https://join-5d739-default-rtdb.europe-west1.firebasedatabase.app";
+  const databaseURL =
+    "https://join-5d739-default-rtdb.europe-west1.firebasedatabase.app";
   return fetch(`${databaseURL}/tasks/${taskId}.json`, {
     method: "DELETE",
   })
