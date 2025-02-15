@@ -104,15 +104,19 @@
 
 .board_container {
   display: flex;
-  justify-content: flex-start;
   flex-wrap: wrap;
   margin-left: 35px;
-  overflow: hidden auto;
+  /* Eindeutigere Schreibweise für nur vertikales Scrollen */
+  overflow-x: hidden;
+  overflow-y: auto;
   height: calc(100vh - 290px);
   width: 100%;
   max-width: 1920px;
   padding-bottom: 20px;
+  align-items: flex-start; /* Spalten beginnen oben */
+  gap: 20px;              /* Abstand zwischen Spalten + Zeilen */
 }
+
 .column_header {
   display: flex;
   align-items: center;
@@ -135,7 +139,8 @@
   align-items: flex-start;
   width: 250px;
   padding-right: 100px;
-  height: 100%;
+  height: auto;
+  margin-bottom: 20px;
 }
 
 .col_add_btn {
