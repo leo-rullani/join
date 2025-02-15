@@ -139,8 +139,7 @@
   align-items: flex-start;
   width: 250px;
   padding-right: 100px;
-  height: auto;
-  margin-bottom: 20px;
+  height: 1000px;
 }
 
 .col_add_btn {
@@ -742,27 +741,8 @@
   text-decoration: none;
 }
 
-@media (max-width: 900px) {
-  .board_section {
-    top: 76px;
-    height: 830px;
-  }
-  .board_header {
-    margin-left: 20px;
-    margin-right: 20px;
-    flex-direction: column;
-    align-items: flex-start;
-    gap: 10px;
-  }
-  .board_header_actions {
-    align-self: flex-end;
-  }
-  .board_container {
-    flex-direction: column;
-    margin: 20px;
-  }
-  .column_header,
-  .board_column {
-    width: 100%;
+@media (max-width: 1020px) {
+  .column_wrapper {
+    padding-right: 40px;
   }
 }
