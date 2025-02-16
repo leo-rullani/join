@@ -139,7 +139,7 @@
   align-items: flex-start;
   width: 250px;
   padding-right: 100px;
-  height: 1000px;
+  min-height: 350px;
 }
 
 .col_add_btn {
@@ -743,12 +743,6 @@
   text-decoration: none;
 }
 
-@media (max-width: 1020px) {
-  .column_wrapper {
-    padding-right: 40px;
-  }
-}
-
 @media (max-width: 650px) {
   .task {
     display: flex;
@@ -759,7 +753,8 @@
 
 @media (max-width: 650px) {
   .board_container {
-    flex-wrap:wrap;
+      flex-wrap: wrap !important;
+      justify-content: center;
   }
   .board_overlay_content {
     width: 260px; 
@@ -770,5 +765,12 @@
 @media (max-width: 650px) {
   .help_text_link {
     display: flex;
+  }
+}
+
+@media (max-width: 780px) {
+  .board_container {
+      flex-wrap: wrap !important;
+      justify-content: center;
   }
 }
