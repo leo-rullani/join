@@ -114,7 +114,7 @@
   max-width: 1920px;
   padding-bottom: 20px;
   align-items: flex-start; /* Spalten beginnen oben */
-  gap: 20px;              /* Abstand zwischen Spalten + Zeilen */
+  gap: 20px; /* Abstand zwischen Spalten + Zeilen */
 }
 
 .column_header {
@@ -192,6 +192,8 @@
 .task_list:has(.task) {
   background-color: transparent;
   border: none;
+  padding-bottom: 30px;
+  padding-top: 30px;
 }
 
 .task {
@@ -213,7 +215,7 @@
 
 .task.dragging {
   cursor: grabbing;
-  transform: scale(0.95);
+  transform: rotate(5deg);
   z-index: 1000; /* Damit das gezogene Element über anderen Elementen ist */
 }
 

@@ -43,11 +43,52 @@ function drop(e) {
   e.preventDefault();
   let data = e.dataTransfer.getData("text");
   let dragged = document.getElementById(data);
+  const target = e.target;
 
-  if (e.target.classList.contains("task_list")) {
-    e.target.appendChild(dragged);
+  if (target.classList.contains("task_list")) {
+    const rect = target.getBoundingClientRect();
+    const offsetY = e.clientY - rect.top;
+    const children = target.children;
+
+    let position = 0;
+    for (let i = 0; i < children.length; i++) {
+      const childRect = children[i].getBoundingClientRect();
+      if (offsetY < childRect.top - rect.top) {
+        break;
+      }
+      position++;
+    }
+    insertAt(target, dragged, position);
+    const newBoardCategory = target.parentElement.id;
+    updateTaskBoardCategory(dragged.id, newBoardCategory);
+  }
+}
+
+// Funktion zum Aktualisieren der boardCategory in der Firebase-Datenbank
+async function updateTaskBoardCategory(taskId, newBoardCategory) {
+  const taskRef = `${databaseURL}/tasks/${taskId}.json`;
+
+  const response = await fetch(taskRef, {
+    method: "PATCH",
+    headers: {
+      "Content-Type": "application/json",
+    },
+    body: JSON.stringify({ boardCategory: newBoardCategory }),
+  });
+
+  if (response.ok) {
+    console.log("Board category erfolgreich aktualisiert:", newBoardCategory);
   } else {
-    console.log("Invalid drop target:", e.target);
+    console.error("Fehler beim Aktualisieren der boardCategory");
+  }
+}
+
+function insertAt(target, dragged, position) {
+  const children = target.children;
+  if (position >= children.length) {
+    target.appendChild(dragged); // Füge am Ende hinzu
+  } else {
+    target.insertBefore(dragged, children[position]); // Füge an der angegebenen Position hinzu
   }
 }
 
@@ -176,9 +217,8 @@ function resetOverlay() {
 /**
  * Add New Task: Öffnet das AddTask-Overlay und merkt sich die gewählte Spalte
  */
-function addNewTask(col) {
+function addNewTask() {
   document.getElementById("addTaskOverlay").classList.add("active");
-  document.getElementById("saveTaskBtnColumn").value = col;
 }
 
 /** */

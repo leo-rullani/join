@@ -7,7 +7,6 @@ let globalSubtasks = [];
 let subtasksList = [];
 let assignedContacts = [];
 let contactsToAssigned = [];
-let globalBoardCategory = "to-do";
 let selectedTask = null;
 
 async function initAddTask() {
@@ -152,6 +151,7 @@ async function addTaskCreateTask() {
     date: date,
     priority: globalPrio,
     category: globalCategory,
+    boardCategory: "todo", // Standardwert setzen, falls nicht definiert
     subtasks: globalSubtasks.map((subtasks) => ({
       name: subtasks,
       done: false,
@@ -315,30 +315,50 @@ async function deleteTask(taskId) {
 
 async function displayTasks() {
   const tasks = await getTasks();
-  const tasksContainer = document.getElementById("tasks-container");
-  const boardOverlay = document.getElementById("boardOverlay");
+  const todoContainer = document
+    .getElementById("todo")
+    .querySelector(".task_list");
+  const doingContainer = document
+    .getElementById("doing")
+    .querySelector(".task_list");
+  const feedbackContainer = document
+    .getElementById("feedback")
+    .querySelector(".task_list");
+  const doneContainer = document
+    .getElementById("done")
+    .querySelector(".task_list");
 
-  tasksContainer.innerHTML = "";
-  boardOverlay.innerHTML = "";
+  todoContainer.innerHTML = "";
+  doingContainer.innerHTML = "";
+  feedbackContainer.innerHTML = "";
+  doneContainer.innerHTML = "";
 
   tasks.forEach((task) => {
-    console.log("Task Data (displayTasks):", task);
+    const template = document.createElement("div");
+    template.innerHTML = createTaskTemplate(task);
 
-    if (task && task.id && Array.isArray(task.assignees)) {
-      const template = document.createElement("div");
-      template.innerHTML = createTaskTemplate(task);
+    const taskElement = template.firstElementChild;
+    if (taskElement) {
+      taskElement.draggable = true;
+      taskElement.ondragstart = drag;
+      taskElement.ondragend = dragEnd;
 
-      const taskElement = template.firstElementChild;
-      if (taskElement) {
-        taskElement.draggable = true;
-        taskElement.ondragstart = drag;
-        taskElement.ondragend = dragEnd;
-
-        taskElement.onclick = () => openBoardOverlay(task.id);
-        tasksContainer.appendChild(taskElement);
+      switch (task.boardCategory) {
+        case "todo":
+          todoContainer.appendChild(taskElement);
+          break;
+        case "doing":
+          doingContainer.appendChild(taskElement);
+          break;
+        case "feedback":
+          feedbackContainer.appendChild(taskElement);
+          break;
+        case "done":
+          doneContainer.appendChild(taskElement);
+          break;
+        default:
+          console.error("Unbekannte Kategorie:", task.boardCategory);
       }
-    } else {
-      console.error("Ungültige Task-Daten (fehlende Felder):", task);
     }
   });
 }
