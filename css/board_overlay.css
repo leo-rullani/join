@@ -9,7 +9,6 @@
   align-items: center;
   justify-content: center;
   z-index: 9999;
-  transition: opacity 0.2s linear;
   opacity: 0;
   pointer-events: none;
 }
@@ -27,7 +26,6 @@
   border-radius: 20px;
   padding: 20px;
   box-shadow: 0 4px 10px rgba(0, 0, 0, 0.3);
-  /* Kürzere, lineare Slide-Dauer */
   animation-duration: 0.2s;
   animation-fill-mode: both;
   animation-timing-function: linear;
@@ -37,22 +35,22 @@
   margin-top: -16px;
 }
 
+/* Beispiel: Slide In */
 @keyframes slideInFromRight {
-  from {
-    transform: translateX(300%);
-  }
-  to {
-    transform: translateX(0);
-  }
+  from { transform: translateX(300%); }
+  to   { transform: translateX(0); }
+}
+.board_overlay_content.slide-in {
+  animation: slideInFromRight 3s ease-in forwards;
 }
 
+/* Beispiel: Slide Out */
 @keyframes slideOutToRight {
-  from {
-    transform: translateX(0);
-  }
-  to {
-    transform: translateX(300%);
-  }
+  from { transform: translateX(0); }
+  to   { transform: translateX(100%); }
+}
+.board_overlay_content.slide-out {
+  animation: slideOutToRight 3s ease-out forwards;
 }
 
 .board_overlay_close {
@@ -60,11 +58,12 @@
   top: 32px;
   right: 32px;
   background: none;
+  animation-duration: 1s;
   color: #3f3f3f;
   border: none;
   font-size: 32px;
   cursor: pointer;
-  transition: background-color 0.2s ease, border-radius 0.2s ease;
+  transition: background-color 1s ease, border-radius 1s ease;
   width: 40px;
   height: 40px;
   display: flex;

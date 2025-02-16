@@ -430,11 +430,6 @@ function generateOverlayAssigneeHTML(assignees) {
     .join("");
 }
 
-function closeBoardOverlay() {
-  document
-    .querySelector(".board_overlay")
-    .classList.remove("board_overlay_show");
-}
 
 function deleteTaskInFirebase(taskId) {
   const databaseURL =

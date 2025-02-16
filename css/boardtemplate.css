@@ -101,3 +101,22 @@
     height: 24px;
     margin-right: -23px;
   }  
+
+  /* Gleiche Keyframes */
+@keyframes slideInFromRight {
+  from { transform: translateX(300%); }
+  to   { transform: translateX(0); }
+}
+@keyframes slideOutToRight {
+  from { transform: translateX(0); }
+  to   { transform: translateX(300%); }
+}
+
+/* .slide-in => 3s */
+.board_overlay_content.slide-in {
+  animation: slideInFromRight 3s ease-in forwards;
+}
+/* .slide-out => 3s */
+.board_overlay_content.slide-out {
+  animation: slideOutToRight 3s ease-out forwards;
+}
