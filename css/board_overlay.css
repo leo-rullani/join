@@ -260,3 +260,16 @@
   z-index: 1; 
   background-color: #F6F7F8;
 }
+
+@media (max-width: 650px) {
+  .board_overlay_content {
+    width: 260px; 
+    height: 670px;
+  }
+}
+
+@media (max-width: 650px) {
+  .help-link {
+    display: flex !important;
+  }
+}

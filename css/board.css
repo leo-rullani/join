@@ -748,3 +748,27 @@
     padding-right: 40px;
   }
 }
+
+@media (max-width: 650px) {
+  .task {
+    display: flex;
+    justify-content: center;
+    flex-direction: column;
+  }
+}
+
+@media (max-width: 650px) {
+  .board_container {
+    flex-wrap:wrap;
+  }
+  .board_overlay_content {
+    width: 260px; 
+    height: 670px;
+  }
+}
+
+@media (max-width: 650px) {
+  .help_text_link {
+    display: flex;
+  }
+}
