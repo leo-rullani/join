@@ -116,7 +116,7 @@ function generateSubtaskHTML(subtasks, isCreateTaskTemplate = false) {
      style="display: flex; align-items: center; justify-content: space-between; margin-bottom: 8px;">
   <!-- Progress-Bar-Hintergrund, begrenzt auf 60% Breite -->
   <div class="progress-bar-bg" 
-       style="background-color: #ddd; width: 60%; border-radius: 10px; height: 10px;">
+       style="background-color: #ddd; width: 58%; border-radius: 10px; height: 10px;">
     <div class="progress-bar-fill"
          style="width: ${progressPercent}%; background-color: #4689ff; border-radius: 10px; height: 100%;">
     </div>
