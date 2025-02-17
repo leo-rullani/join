@@ -743,7 +743,7 @@
   text-decoration: none;
 }
 
-@media (max-width: 650px) {
+@media (max-width: 860px) {
   .task {
     display: flex;
     justify-content: center;
@@ -751,7 +751,7 @@
   }
 }
 
-@media (max-width: 650px) {
+@media (max-width: 860px) {
   .board_container {
       flex-wrap: wrap !important;
       justify-content: center;
@@ -762,7 +762,7 @@
   }
 }
 
-@media (max-width: 650px) {
+@media (max-width: 860px) {
   .help_text_link {
     display: flex;
   }

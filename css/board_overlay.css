@@ -273,3 +273,15 @@
     display: flex !important;
   }
 }
+
+@media (max-width: 1020px) {
+  .column_wrapper {
+    padding-right: 50px;
+  }
+}
+
+@media (max-width: 900px) {
+  .column_wrapper {
+    padding-right: 25px;
+  }
+}
