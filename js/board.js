@@ -137,7 +137,14 @@ function handleSearch(e) {
  * Öffnet das "Add Task"-Overlay (alte Logik mit .active-Klasse)
  */
 function openAddTask() {
-  document.getElementById("addTaskOverlay").classList.add("active");
+  // Prüfe aktuelle Fensterbreite
+  if (window.innerWidth <= 650) {
+    // Bei kleinen Bildschirmen direkt zur AddTask-Seite
+    window.location.href = "/html/addtask.html";
+  } else {
+    // Bei größeren Bildschirmen -> Overlay öffnen
+    document.getElementById("addTaskOverlay").classList.add("active");
+  }
 }
 
 /**
@@ -220,5 +227,3 @@ function resetOverlay() {
 function addNewTask() {
   document.getElementById("addTaskOverlay").classList.add("active");
 }
-
-/** */

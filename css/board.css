@@ -140,6 +140,7 @@
   width: 250px;
   padding-right: 100px;
   min-height: 200px;
+  max-height: fit-content;
 }
 
 .col_add_btn {
@@ -779,6 +780,7 @@
   .board_container {
       flex-wrap: wrap !important;
       justify-content: center;
+      margin-top: -40px;
   }
   .board_overlay_content {
     width: 260px; 
@@ -828,7 +830,7 @@
   .btn_add_task::before {
     content: "+";       
     color: #ffffff;      
-    font-size: 50px; 
+    font-size: 40px; 
     font-weight: 300px;    
     position: absolute;
     top: 50%;
@@ -856,6 +858,7 @@
   }
   .task_list:has(.task) {
     padding-top: 0px;
+    padding-bottom: 0px;
   }
 }
 
