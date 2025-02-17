@@ -193,8 +193,7 @@
 .task_list:has(.task) {
   background-color: transparent;
   border: none;
-  padding-bottom: 30px;
-  padding-top: 30px;
+  min-height: 250px;
 }
 
 .task {
@@ -754,11 +753,11 @@
 
 @media (max-width: 860px) {
   .board_container {
-      flex-wrap: wrap !important;
-      justify-content: center;
+    flex-wrap: wrap !important;
+    justify-content: center;
   }
   .board_overlay_content {
-    width: 260px; 
+    width: 260px;
     height: 670px;
   }
 }
@@ -771,19 +770,19 @@
 
 @media (max-width: 780px) {
   .board_container {
-      flex-wrap: wrap !important;
-      justify-content: center;
+    flex-wrap: wrap !important;
+    justify-content: center;
   }
 }
 
 @media (max-width: 650px) {
   .board_container {
-      flex-wrap: wrap !important;
-      justify-content: center;
-      margin-top: -40px;
+    flex-wrap: wrap !important;
+    justify-content: center;
+    margin-top: -40px;
   }
   .board_overlay_content {
-    width: 260px; 
+    width: 260px;
     height: 670px;
   }
 }
@@ -796,42 +795,42 @@
 
 @media (max-width: 780px) {
   .board_container {
-      flex-wrap: wrap !important;
-      justify-content: center;
+    flex-wrap: wrap !important;
+    justify-content: center;
   }
 }
 
 @media (max-width: 650px) {
   .board_header {
-    flex-direction: column; 
-    align-items: flex-start; 
+    flex-direction: column;
+    align-items: flex-start;
   }
 
   .board_header_actions {
     display: flex;
-    flex-direction: column; 
+    flex-direction: column;
     width: 100%;
   }
-  
+
   .btn_add_task {
-    order: 2; 
-    align-self: flex-end; 
+    order: 2;
+    align-self: flex-end;
     margin-top: -37px;
     width: 44px;
     height: 44px;
     padding: 0;
-    border-radius: 12px; 
+    border-radius: 12px;
     display: flex;
     align-items: center;
     justify-content: center;
-    color: transparent; 
-    position: relative; 
+    color: transparent;
+    position: relative;
   }
   .btn_add_task::before {
-    content: "+";       
-    color: #ffffff;      
-    font-size: 40px; 
-    font-weight: 300px;    
+    content: "+";
+    color: #ffffff;
+    font-size: 40px;
+    font-weight: 300px;
     position: absolute;
     top: 50%;
     left: 50%;
@@ -839,9 +838,9 @@
   }
 
   .search_container {
-    order: 3;            
-    flex-basis: 100%;     
-    margin-top: 10px;    
+    order: 3;
+    flex-basis: 100%;
+    margin-top: 10px;
     display: flex;
     align-items: center;
     position: relative;
@@ -850,7 +849,7 @@
 
   .search_container input {
     width: 100%;
-    padding-right: 40px; 
+    padding-right: 40px;
   }
 
   .column_header {
@@ -864,7 +863,7 @@
 
 @media (max-width: 650px) {
   .board_overlay_content {
-    width: 260px; 
+    width: 260px;
     height: 670px;
   }
 }
@@ -892,10 +891,11 @@
 
 @media (max-width: 500px) {
   .board_container {
-      flex-wrap: wrap !important;
-      justify-content: flex-start;
-      margin-left: 0px;
-      scrollbar-width: none;
+    flex-wrap: wrap !important;
+    justify-content: flex-start;
+    margin-left: 0px;
+    scrollbar-width: none;
+    width: 200px;
   }
 
   .board-title {
@@ -906,32 +906,28 @@
   }
 }
 
-@media (min-width: 500px) {
-  .task_list {
-    display: flex;
-    flex-direction: row;
-    flex-wrap: nowrap;    /* Kein Zeilenumbruch => horizontales Scrolling */
-    overflow-x: auto;     /* Ermöglicht Scrollen nach links/rechts */
-    gap: 16px;            /* Abstand zwischen den Tasks */
-    padding: 10px;        
-  }
+@media (max-width: 500px) {
+  @media (min-width: 100px) {
+    .task_list {
+      display: flex;
+      flex-direction: row;
+      flex-wrap: nowrap;
+      overflow-x: auto;
+      gap: 16px;
+      padding: 10px;
+    }
 
-  /* 2) Die einzelnen Task-Karten: feste (oder min-)Breite, 
-     damit sie zuverlässig nebeneinander liegen */
-  .task {
-    flex: 0 0 220px;      /* 220px feste Breite, passe nach Geschmack an */
-    margin-bottom: 0;     /* Untereinander-Margin ggf. entfernen, 
-                             da wir jetzt seitlich anordnen */
-    border-radius: 12px;  /* Beispiel */
+    .task_card {
+      flex: 1 1 auto;
+      min-width: 200px;
+      box-sizing: border-box;
+    }
   }
-
-  /* 3) Optional: Scrollbar-Styling und Co. 
-     Falls du die native Scrollbar anpassen willst: */
   .task_list::-webkit-scrollbar {
-    height: 8px;          /* horizontale scrollbar-Höhe */
+    display: none;
   }
   .task_list::-webkit-scrollbar-thumb {
-    background: #aaa;      /* Farbe des Scrollbalkens */
+    background: #aaa;
     border-radius: 4px;
   }
 }

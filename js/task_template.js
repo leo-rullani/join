@@ -218,6 +218,7 @@ function updateSubtaskStatus(index, taskId, checked) {
   if (task && task.subtasks[index]) {
     task.subtasks[index].done = checked;
     updateProgressBar(taskId);
+    updateSubtaskInFirebase(taskId, index, checked);
   }
 }
 
@@ -429,7 +430,6 @@ function generateOverlayAssigneeHTML(assignees) {
     })
     .join("");
 }
-
 
 function deleteTaskInFirebase(taskId) {
   const databaseURL =

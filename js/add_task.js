@@ -412,3 +412,58 @@ function assignColor(name) {
   let firstLetter = name.trim().charAt(0).toUpperCase();
   return colors[firstLetter] || "#999999";
 }
+
+async function getTaskSummary() {
+  try {
+    const tasks = await getTasks();
+    const summary = {
+      todo: 0,
+      doing: 0,
+      feedback: 0,
+      done: 0,
+      urgent: 0,
+      urgentDueDates: [],
+    };
+
+    tasks.forEach((task) => {
+      if (summary[task.boardCategory] !== undefined) {
+        summary[task.boardCategory]++;
+      }
+      if (task.priority === "urgent") {
+        summary.urgent++;
+        if (task.date) {
+          summary.urgentDueDates.push(
+            new Date(task.date).toLocaleDateString("de-DE", {
+              day: "2-digit",
+              month: "long",
+              year: "numeric",
+            })
+          );
+        }
+      }
+    });
+
+    displayTaskSummary(summary);
+  } catch (error) {
+    console.error("Fehler beim Abrufen der Task-Übersicht:", error);
+  }
+}
+
+function displayTaskSummary(summary) {
+  document.getElementById("summary-todo").textContent = `${summary.todo} `;
+  document.getElementById("summary-doing").textContent = `${summary.doing} `;
+  document.getElementById(
+    "summary-feedback"
+  ).textContent = `${summary.feedback} `;
+  document.getElementById("summary-done").textContent = `${summary.done}`;
+  document.getElementById("summary-urgent").textContent = `${summary.urgent} `;
+  document.getElementById("summary-complete").textContent = tasks.length;
+
+  if (summary.urgentDueDates.length > 0) {
+    document.getElementById("summary-urgent-dates").innerHTML =
+      summary.urgentDueDates.join("<br>");
+  } else {
+    document.getElementById("summary-urgent-dates").textContent =
+      "No urgent tasks";
+  }
+}
