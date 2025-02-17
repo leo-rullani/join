@@ -73,3 +73,50 @@
 .help_text_link {
   display: none !important;
 }
+
+.selection:hover {
+  width: 96%;
+  transform: scale(1.01);
+  background-color: #2c4972;
+}
+
+.policy_docs_privacy a:hover{
+  width: 73%;
+  transform: scale(1.1);
+  background-color: #2c4972;
+}
+
+.policy_docs_privacy {
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-start;
+  text-align: start;
+  position: relative;
+  top: 300px;
+  left: 0px;
+}
+
+.policy_docs_privacy a {
+  display: flex;
+  align-items: start;
+  justify-content: flex-start;
+  padding: 5px;
+  padding-left: 60px;
+  cursor: pointer;
+  color: #a8a8a8;
+  margin: 0px;
+  padding-top: 10px;
+  padding-bottom: 10px;
+  margin-left: -12px;
+}
+
+.privacypolicy_title {
+  font-size: 18px;
+  margin-right: 300px;
+}
+
+@media (max-width: 861px) {
+  .privacypolicy_title {
+      display: none;
+  }
+}
