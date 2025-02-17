@@ -5,8 +5,8 @@ let draggedTaskId = null;
  * Wird beim Laden des Bodys (onload="initBoard()") aufgerufen.
  * Lädt initial Beispiel-Tasks und konfiguriert Drag & Drop.
  */
-function initBoard() {
-  displayTasks();
+async function initBoard() {
+  await displayTasks();
 }
 
 /**

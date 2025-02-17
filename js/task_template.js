@@ -426,16 +426,6 @@ function generateOverlayAssigneeHTML(assignees) {
     .join("");
 }
 
-function deleteTaskInFirebase(taskId) {
-  const databaseURL =
-    "https://join-5d739-default-rtdb.europe-west1.firebasedatabase.app";
-  return fetch(`${databaseURL}/tasks/${taskId}.json`, {
-    method: "DELETE",
-  })
-    .then(() => console.log("Task in Firebase gelöscht"))
-    .catch((error) => console.error("Fehler beim Löschen in Firebase", error));
-}
-
 function editTask(taskId) {
   console.log("Edit Task:", taskId);
   closeBoardOverlay();
