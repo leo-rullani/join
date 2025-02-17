@@ -139,7 +139,7 @@
   align-items: flex-start;
   width: 250px;
   padding-right: 100px;
-  min-height: 350px;
+  min-height: 200px;
 }
 
 .col_add_btn {
@@ -775,49 +775,114 @@
   }
 }
 
-@media (max-width: 600px) {
-  /* Das gesamte .board_header wird zur Flexbox */
+@media (max-width: 650px) {
+  .board_container {
+      flex-wrap: wrap !important;
+      justify-content: center;
+  }
+  .board_overlay_content {
+    width: 260px; 
+    height: 670px;
+  }
+}
+
+@media (max-width: 650px) {
+  .help_text_link {
+    display: flex;
+  }
+}
+
+@media (max-width: 780px) {
+  .board_container {
+      flex-wrap: wrap !important;
+      justify-content: center;
+  }
+}
+
+@media (max-width: 650px) {
   .board_header {
-    display: flex;       /* Erlaubt Umbruch in die nächste Zeile */
-    align-items: center;
-    justify-content: space-between; /* Titel links, Button rechts */
+    flex-direction: column; 
+    align-items: flex-start; 
   }
 
-  /* Titel soll als erstes Element kommen */
-  .board_header h1.board-title {
-    order: 1;
-    margin: 0;               /* Evtl. Rand entfernen/reduzieren */
-    font-size: 28px;         /* Beispiel: etwas kleiner machen */
+  .board_header_actions {
+    display: flex;
+    flex-direction: column; 
+    width: 100%;
   }
-
-  /* Add-Task-Button soll rechts neben den Titel,
-     solange noch Platz in derselben Zeile ist */
+  
   .btn_add_task {
-    order: 2;
-    margin-left: auto; /* Schiebt den Button an den rechten Rand */
+    order: 2; 
+    align-self: flex-end; 
+    margin-top: -37px;
+    width: 44px;
+    height: 44px;
+    padding: 0;
+    border-radius: 12px; 
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: transparent; 
+    position: relative; 
+  }
+  .btn_add_task::before {
+    content: "+";       
+    color: #ffffff;      
+    font-size: 50px; 
+    font-weight: 300px;    
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
   }
 
-  /* Die Suchleiste soll *immer* in die nächste Zeile rutschen */
   .search_container {
-    order: 3;
-    flex-basis: 100%; /* Nimmt die ganze Breite -> erzwungener Zeilenumbruch */
-    margin-top: 10px; /* Kleiner Abstand nach oben */
-    display: flex; 
-    flex-wrap: wrap;  
-    align-items: center; 
-    position: relative; /* damit das Icon 'search_icon' absolut positioniert werden kann */
+    order: 3;            
+    flex-basis: 100%;     
+    margin-top: 10px;    
+    display: flex;
+    align-items: center;
+    position: relative;
+    width: 100%;
   }
 
-  /* Damit das Input-Feld samt Icon sauber bleibt */
   .search_container input {
     width: 100%;
-    padding-right: 40px; /* Platz für das Such-Icon */
+    padding-right: 40px; 
   }
 
-  .search_icon {
-    position: absolute;
-    right: 10px;
-    top: 50%;
-    transform: translateY(-50%);
+  .column_header {
+    margin-bottom: 0px;
+  }
+  .task_list:has(.task) {
+    padding-top: 0px;
+  }
+}
+
+@media (max-width: 650px) {
+  .board_overlay_content {
+    width: 260px; 
+    height: 670px;
+  }
+}
+
+@media (max-width: 650px) {
+  .help-link {
+    display: flex !important;
+  }
+}
+
+/* 1) Bis 1020px -> 50px padding */
+/* 1) Bis 1020px -> 50px padding */
+@media (max-width: 1020px) {
+  .column_wrapper {
+    padding-right: 50px;
+  }
+}
+
+/* 2) Ab 900px -> wieder 0px padding (oder was du willst) */
+@media (max-width: 900px) {
+  .column_wrapper {
+    padding-right: 100px;
   }
 }

@@ -260,28 +260,3 @@
   z-index: 1; 
   background-color: #F6F7F8;
 }
-
-@media (max-width: 650px) {
-  .board_overlay_content {
-    width: 260px; 
-    height: 670px;
-  }
-}
-
-@media (max-width: 650px) {
-  .help-link {
-    display: flex !important;
-  }
-}
-
-@media (max-width: 1020px) {
-  .column_wrapper {
-    padding-right: 50px;
-  }
-}
-
-@media (max-width: 900px) {
-  .column_wrapper {
-    padding-right: 25px;
-  }
-}
