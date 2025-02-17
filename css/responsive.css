@@ -1538,6 +1538,7 @@
   .add-task-main-content {
     overflow: hidden auto;
     top: 75px;
+    scrollbar-width: none;
   }
 
   .add_task_container {
