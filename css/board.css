@@ -905,3 +905,33 @@
     margin-left: -65px;
   }
 }
+
+@media (min-width: 500px) {
+  .task_list {
+    display: flex;
+    flex-direction: row;
+    flex-wrap: nowrap;    /* Kein Zeilenumbruch => horizontales Scrolling */
+    overflow-x: auto;     /* Ermöglicht Scrollen nach links/rechts */
+    gap: 16px;            /* Abstand zwischen den Tasks */
+    padding: 10px;        
+  }
+
+  /* 2) Die einzelnen Task-Karten: feste (oder min-)Breite, 
+     damit sie zuverlässig nebeneinander liegen */
+  .task {
+    flex: 0 0 220px;      /* 220px feste Breite, passe nach Geschmack an */
+    margin-bottom: 0;     /* Untereinander-Margin ggf. entfernen, 
+                             da wir jetzt seitlich anordnen */
+    border-radius: 12px;  /* Beispiel */
+  }
+
+  /* 3) Optional: Scrollbar-Styling und Co. 
+     Falls du die native Scrollbar anpassen willst: */
+  .task_list::-webkit-scrollbar {
+    height: 8px;          /* horizontale scrollbar-Höhe */
+  }
+  .task_list::-webkit-scrollbar-thumb {
+    background: #aaa;      /* Farbe des Scrollbalkens */
+    border-radius: 4px;
+  }
+}
