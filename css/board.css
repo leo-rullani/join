@@ -897,4 +897,11 @@
       margin-left: 0px;
       scrollbar-width: none;
   }
+
+  .board-title {
+    margin-left: -30px;
+  }
+  .search_container {
+    margin-left: -65px;
+  }
 }
