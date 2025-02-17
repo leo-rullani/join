@@ -23,7 +23,6 @@ document.addEventListener("DOMContentLoaded", initSummary);
  * Initializes summary view: checks user data, sets greeting, reveals page.
  */
 function initSummary() {
-  getTaskSummary();
   const headerName = document.getElementById("userName"),
     greetingDiv = document.getElementById("userName"),
     userData = sessionStorage.getItem("loggedInUser");

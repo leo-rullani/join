@@ -145,6 +145,7 @@ function openAddTask() {
     // Bei größeren Bildschirmen -> Overlay öffnen
     document.getElementById("addTaskOverlay").classList.add("active");
   }
+  createAssignedTo(true);
 }
 
 /**
@@ -226,4 +227,5 @@ function resetOverlay() {
  */
 function addNewTask() {
   document.getElementById("addTaskOverlay").classList.add("active");
+  createAssignedTo(true);
 }

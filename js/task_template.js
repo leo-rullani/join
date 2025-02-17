@@ -335,11 +335,6 @@ function subTaskTemplate(element, i) {
  * Overlay-Template-Funktion
  *******************************************/
 function taskBoardTemplate(task) {
-  if (!task || !task.assignees) {
-    console.error("Task or assignees are missing", task);
-    return "";
-  }
-
   const assigneeHTML = generateOverlayAssigneeHTML(task.assignees);
   const subtaskHTML = generateBoardOverlaySubtaskHTML(task);
 
@@ -439,18 +434,6 @@ function deleteTaskInFirebase(taskId) {
   })
     .then(() => console.log("Task in Firebase gelöscht"))
     .catch((error) => console.error("Fehler beim Löschen in Firebase", error));
-}
-
-function deleteTask(taskId) {
-  // 1) Löschen in local tasks
-  tasks = tasks.filter((task) => task.id !== taskId);
-  // 2) Delete-Request an Firebase
-  deleteTaskInFirebase(taskId);
-  // 3) DOM entfernen, Overlay schließen, Board neu rendern
-  const taskEl = document.getElementById(taskId);
-  if (taskEl) taskEl.remove();
-  closeBoardOverlay();
-  renderBoard();
 }
 
 function editTask(taskId) {
