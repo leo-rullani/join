@@ -762,7 +762,11 @@
   }
 }
 
-@media (max-width: 860px) {
+.help_text_link {
+  display: none !important;
+}
+
+@media (max-width: 600px) {
   .help_text_link {
     display: flex !important;
   }
