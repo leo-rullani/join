@@ -899,14 +899,21 @@
       justify-content: flex-start;
       margin-left: 0px;
       scrollbar-width: none;
-      width: 200px;
   }
-
+  .board_column {
+    min-height: 0px;
+  }
+  .task {
+    margin-left: 0px !important;
+  }
   .board-title {
     margin-left: -30px;
   }
   .search_container {
     margin-left: -65px;
+  }
+  .column_header {
+    width: inherit;
   }
 }
 
@@ -917,8 +924,7 @@
       flex-direction: row;
       flex-wrap: nowrap;   
       overflow-x: auto;    
-      gap: 16px;           
-      padding: 10px;
+      gap: 8px;           
     }
 
     .task_card {
@@ -934,4 +940,8 @@
     background: #aaa;     
     border-radius: 4px;
   }
-}
+    .column_wrapper {
+      padding-right: 100px;
+      width: 300px;
+    }
+  }
