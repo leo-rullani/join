@@ -365,7 +365,7 @@ async function overlayAddTaskCreateTask() {
     });
     if (response.ok) {
       console.log("Overlay-Task erfolgreich gespeichert:", newTask);
-      showToast("Task created from overlay!");
+      addTaskCreateTaskConfirmation();
 
       // Formular + Overlay reset
       overlayClearForm();
