@@ -828,7 +828,8 @@
     align-items: center;
     justify-content: center;
     color: transparent; 
-    position: relative; 
+    position: absolute;
+    margin-right: -40px;
   }
   .btn_add_task::before {
     content: "+";       
