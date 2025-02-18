@@ -424,3 +424,43 @@ function generateOverlayAssigneeHTML(assignees) {
     })
     .join("");
 }
+
+/*****************************************************
+ * addtaskoverlay.js
+ *****************************************************/
+function openAddTaskOverlay() {
+  const overlay = document.getElementById("addTaskOverlay");
+  if (!overlay) {
+    console.error("Add Task Overlay-Element nicht gefunden!");
+    return;
+  }
+  // Overlay sichtbar machen
+  overlay.classList.add("add_task_overlay_show");
+
+  // Optionale Slide-In-Animation:
+  const content = overlay.querySelector(".overlay_content");
+  if (content) {
+    content.classList.remove("slide-out");
+    content.classList.add("slide-in");
+  }
+}
+
+function closeAddTaskOverlay() {
+  const overlay = document.getElementById("addTaskOverlay");
+  if (!overlay) return;
+
+  const content = overlay.querySelector(".overlay_content");
+  if (content) {
+    // Slide-Out
+    content.classList.remove("slide-in");
+    content.classList.add("slide-out");
+
+    // Warte bis Animation vorbei ist (3s in diesem Beispiel)
+    setTimeout(() => {
+      overlay.classList.remove("add_task_overlay_show");
+    }, 3000);
+  } else {
+    // Fallback ohne Animation
+    overlay.classList.remove("add_task_overlay_show");
+  }
+}

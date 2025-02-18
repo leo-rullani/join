@@ -1,291 +1,487 @@
-/* ==========================================
-   Dateiname: addtaskoverlay.css
-   ========================================== */
+/* ========================================
+   addtaskoverlay.css
+   ======================================== */
 
-/* Alles nur unterhalb von 1201px aktiv */
-@media (max-width: 1201px) {
-
-    /* Overlay-Hintergrund */
-    .add_task_overlay {
-      position: fixed;
-      top: 0;
-      left: 0;
-      width: 100%;
-      height: 100%;
-      background-color: rgba(0, 0, 0, 0.3);
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      z-index: 9999;
-      opacity: 0;
-      pointer-events: none;
-    }
+/* 
+   Grundlegendes Overlay für alle Bildschirme 
+   (Falls du willst, dass das Overlay auch über 1200px existiert)
+*/
+.add_task_overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0, 0, 0, 0.3);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    z-index: 9999;
+    opacity: 0;
+    pointer-events: none;
+  }
   
-    /* Overlay sichtbar machen */
-    .add_task_overlay_show {
-      opacity: 1;
-      pointer-events: auto;
-    }
+  .add_task_overlay_show {
+    opacity: 1;
+    pointer-events: auto;
+  }
   
-    /* Der weiße Dialog-Inhalt */
-    .add_task_overlay_content {
-      position: relative;
-      width: 430px;
-      max-width: 90%;
-      background: #fff;
-      border-radius: 20px;
-      padding: 20px;
-      box-shadow: 0 4px 10px rgba(0, 0, 0, 0.3);
-      animation-duration: 0.2s;
-      animation-fill-mode: both;
-      animation-timing-function: linear;
-      height: 760px;
-      color: #2b3647;
-      font-weight: normal;
-      margin-top: -16px;
-    }
+  .overlay_content {
+    position: relative;
+    width: 430px;
+    max-width: 90%;
+    background: #fff;
+    border-radius: 20px;
+    padding: 20px;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.3);
+    animation-duration: 0.2s;
+    animation-fill-mode: both;
+    animation-timing-function: linear;
+    height: 760px;
+    color: #2b3647;
+    font-weight: normal;
+    margin-top: -16px;
+  }
   
-    /* Beispiel-Animation: Slide In (kannst du beibehalten oder anpassen) */
-    @keyframes slideInFromRight {
-      from { transform: translateX(300%); }
-      to   { transform: translateX(0); }
-    }
-    .add_task_overlay_content.slide-in {
-      animation: slideInFromRight 3s ease-in forwards;
-    }
+  /* Slide-In-/Slide-Out-Animationen (optional) */
+  @keyframes slideInFromRight {
+    from { transform: translateX(300%); }
+    to   { transform: translateX(0); }
+  }
+  .overlay_content.slide-in {
+    animation: slideInFromRight 3s ease-in forwards;
+  }
   
-    /* Beispiel-Animation: Slide Out (kannst du beibehalten oder anpassen) */
-    @keyframes slideOutToRight {
-      from { transform: translateX(0); }
-      to   { transform: translateX(100%); }
-    }
-    .add_task_overlay_content.slide-out {
-      animation: slideOutToRight 3s ease-out forwards;
-    }
+  @keyframes slideOutToRight {
+    from { transform: translateX(0); }
+    to   { transform: translateX(100%); }
+  }
+  .overlay_content.slide-out {
+    animation: slideOutToRight 3s ease-out forwards;
+  }
   
-    /* Overlay-Schließen-Button */
-    .add_task_overlay_close {
-      position: absolute;
-      top: 32px;
-      right: 32px;
-      background: none;
-      animation-duration: 1s;
-      color: #3f3f3f;
-      border: none;
-      font-size: 32px;
-      cursor: pointer;
-      transition: background-color 1s ease, border-radius 1s ease;
-      width: 40px;
-      height: 40px;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-    }
-    .add_task_overlay_close:hover {
-      background-color: #e2e3e4;
-      border-radius: 100%;
-    }
+  /* Close-Button oben rechts */
+  .close_overlay_btn {
+    border: none;
+    height: 30px;
+    width: 30px;
+    border-radius: 50%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding: 0;
+    margin: 0;
+  }
+  .close_overlay_btn button {
+    background-color: transparent;
+    border: none;
+    font-size: 35px;
+    height: 30px;
+    width: 30px;
+    border-radius: 50%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding: 0;
+    margin: 0;
+  }
+  .close_overlay_btn button:hover {
+    background-color: #aaa;
+    cursor: pointer;
+  }
   
-    /* Label / Kategorie (Beispiel: "User Story", "Technical Task") */
-    .task-label {
-      display: inline-block;
-      padding: 6px 32px;
-      border-radius: 12px;
-      color: #fff;
-      font-size: 1.1rem;
-      margin-top: 16px;
-      margin-bottom: 24px;
-    }
+  /* Das innere Formular + Container */
+  .add-task-overlay-content {
+    display: flex;
+    flex-direction: column;
+    padding: 20px;
+  }
+  .add-task-overlay-h1-container {
+    display: flex;
+    justify-content: space-between;
+  }
+  .add-task-overlay-h1-container h1 {
+    font-size: 32px;
+    margin: 20px 0 0 10px;
+    padding: 0;
+  }
+  .add-task-overlay-container {
+    display: flex; /* Standard: left + right nebeneinander (für >1200px) */
+  }
   
-    .label-technical {
-      background-color: #1ed7c1;
-    }
-    .label-userstory {
-      background-color: #0138ff;
-    }
+  /* Linke Seite (Title, Description, Assigned) */
+  .add-task-overlay-left-side {
+    display: flex;
+    flex-direction: column;
+    margin: 30px 0 0 0;
+    flex: 1;
+    font-size: 20px;
+  }
+  /* Rechte Seite (Due Date, Priority, Category, Subtasks) */
+  .add-task-overlay-right-side {
+    display: flex;
+    flex-direction: column;
+    flex: 1;
+    margin: 30px 0 0 0;
+    font-size: 20px;
+  }
   
-    .overlay-section {
-      margin-bottom: 24px;
-    }
-    .section-label {
-      margin-right: 5px;
-    }
-    .h2_board-overlay {
-      font-size: 56px;
-      margin-block-start: 0;
-      margin-block-end: 0;
-      color: black;
-    }
+  /* Titel */
+  .add-task-overlay-title {
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+    margin: 10px;
+  }
+  .add-task-overlay-title-input {
+    padding: 10px 15px;
+    border-radius: 10px;
+    border: 1px solid #bbb9b9;
+    font-size: 18px;
+    width: 80%;
+  }
   
-    /* NEUE TEXT-KLASSEN (Beispiele) */
-    .text-regular {
-      font-size: 18px;
-      color: #000;
-      font-weight: normal;
-    }
-    .text-label {
-      font-size: 18px;
-      color: #2b3647;
-      font-weight: normal;
-    }
-    .text-subtask {
-      font-size: 12px;
-      color: #000;
-      font-weight: normal;
-      max-width: 80%
-    }
+  /* Description */
+  .add-task-overlay-description {
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+    margin: 10px;
+  }
+  .add-task-overlay-textarea {
+    border-radius: 10px;
+    padding: 10px 15px;
+    border: 1px solid #bbb9b9;
+    font-size: 18px;
+    width: 80%;
+    height: 80px;
+    resize: none;
+  }
   
-    /* Assignee-Liste */
-    .assignees-column-overlay {
-      display: flex;
-      flex-direction: column; 
-      gap: 12px;
-    }
-    .assignee-overlay {
-      display: flex;
-      align-items: center;
-      gap: 8px;
-      padding: 5px 8px; 
-      border-radius: 6px; 
-      transition: background-color 0.2s;
-      margin-bottom: -10px;
-    }
-    .assignee-overlay:hover {
-      background-color: #F6F7F8;
-    }
-    .assignee-circle-overlay {
-      width: 30px;
-      height: 30px;
-      border-radius: 50%;
-      color: #fff;
-      display: flex;
-      justify-content: center;
-      align-items: center;
-      font-weight: normal;
-      margin-left: 10px;
-    }
-    .assignee-name-overlay {
-      font-size: 16px;
-      color: #000;
-    }
+  /* Assigned to */
+  .add-task-overlay-assigned-to {
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+    margin: 10px;
+  }
   
-    /* Subtasks + Checkboxes */
-    .subtasks {
-      display: flex;
+  /* Checkbox-Dropdown */
+  .checkbox-overlay-dropdown {
+    position: relative;
+    display: flex;
+    flex-direction: column;
+    width: 100%;
+  }
+  .checkbox-overlay-dropdown .search-overlay {
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+  }
+  .checkbox-overlay-dropdown .search-overlay > input {
+    border: 1px solid #d7d7d7;
+    border-radius: 10px;
+    padding: 12px 21px;
+    background-image: url(/assets/icons/drop_down_arrow.svg);
+    background-position: calc(100% - 10px) center;
+    background-size: 30px;
+    background-repeat: no-repeat;
+    transition: all 200ms;
+    width: 78%;
+    font-size: 18px;
+  }
+  .checkbox-overlay-dropdown ul {
+    background: #fff;
+    padding: 0;
+    list-style: none;
+    max-height: 250px;
+    overflow-y: auto;
+    position: absolute;
+    top: 100%;
+    width: 89%;
+    display: none;
+    z-index: 1;
+    border-radius: 0 0 10px 10px;
+    box-shadow: 0 4px 4px 0 rgba(0, 0, 0, 0.1);
+  }
+  .checkbox-overlay-dropdown ul li {
+    padding: 8px;
+    border-radius: 8px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+  }
+  .checkbox-overlay-dropdown ul li label {
+    cursor: pointer;
+    width: 100%;
+    display: flex;
+    align-items: center;
+  }
+  .checkbox-overlay-dropdown ul li:hover {
+    background-color: #eeeeee;
+  }
+  .d-none {
+    display: none !important;
+  }
+  
+  /* Avatare (zugewiesene Personen) */
+  .add-task-assigned-avatar {
+    display: flex;
+    gap: 8px;
+    margin-left: 10px;
+    margin-top: 8px;
+  }
+  
+  /* Due Date */
+  .add-task-overlay-due-date {
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+    margin: 10px;
+  }
+  .add-task-overlay-due-date-input {
+    padding: 10px 15px;
+    width: 80%;
+    border-radius: 10px;
+    border: 1px solid #bbb9b9;
+    cursor: pointer;
+    font-size: 18px;
+  }
+  
+  /* Priority */
+  .add-task-overlay-urgent-medium-low-container {
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+    margin: 10px;
+  }
+  .add-task-overlay-urgent-medium-low-buttons {
+    display: flex;
+    gap: 8px;
+  }
+  .add-task-overlay-urgent,
+  .add-task-overlay-medium,
+  .add-task-overlay-low {
+    display: flex;
+    align-items: center;
+    height: 46px;
+    border-radius: 10px;
+    font-size: 16px;
+    border: 1px solid #bbb9b9;
+    background-color: #ffffff;
+    cursor: pointer;
+    width: 28%;
+  }
+  .add-task-overlay-urgent:hover,
+  .add-task-overlay-medium:hover,
+  .add-task-overlay-low:hover {
+    box-shadow: 
+      rgba(0, 0, 0, 0.07) 0px 1px 2px,
+      rgba(0, 0, 0, 0.07) 0px 2px 4px,
+      rgba(0, 0, 0, 0.07) 0px 4px 8px,
+      rgba(0, 0, 0, 0.07) 0px 8px 16px,
+      rgba(0, 0, 0, 0.07) 0px 16px 32px,
+      rgba(0, 0, 0, 0.07) 0px 32px 64px;
+  }
+  .add-task-overlay-urgent.add-task-clicked {
+    background-color: #ff3d00;
+    color: #ffffff;
+  }
+  .add-task-overlay-medium.add-task-clicked {
+    background-color: #ffbb2b;
+    color: #ffffff;
+  }
+  .add-task-overlay-low.add-task-clicked {
+    background-color: #7ae229;
+    color: #ffffff;
+  }
+  .add-task-overlay-important {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 8px;
+    flex: 1;
+  }
+  .add-task-overlay-important-name {
+    text-size-adjust: auto;
+  }
+  
+  /* Kategorie-Auswahl */
+  .add-task-overlay-category {
+    position: relative;
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+    margin: 10px;
+  }
+  .add-task-radio {
+    margin-left: 8px;
+  }
+  
+  /* Subtasks */
+  .add-task-overlay-subtasks {
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+    margin: 10px;
+  }
+  .add-task-overlay-subtasks-input-container {
+    display: flex;
+    flex-direction: column;
+    position: relative;
+    gap: 8px;
+  }
+  .add-task-overlay-subtasks-input {
+    padding: 10px 15px;
+    border-radius: 10px;
+    border: 1px solid #bbb9b9;
+    width: 81%;
+    font-size: 18px;
+  }
+  .add-task-overlay-subtasks-icon-plus {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    position: absolute;
+    right: 15%;
+    bottom: 5px;
+    cursor: pointer;
+    gap: 5px;
+  }
+  .add-task-overlay-subtasks-icon-plus button {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    border-radius: 50%;
+    background-color: #ffffff;
+    border: none;
+    padding: 10px;
+    cursor: pointer;
+  }
+  .add-task-overlay-subtasks-icon-plus-check {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    position: absolute;
+    left: 66%;
+    bottom: 5px;
+    cursor: pointer;
+    gap: 5px;
+  }
+  .add-task-overlay-subtasks-icon-plus-check button {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    border-radius: 50%;
+    background-color: #ffffff;
+    border: none;
+    padding: 10px;
+    cursor: pointer;
+  }
+  .add-tasks-border {
+    width: 1px;
+    height: 26px;
+    border: 1px solid #bbb9b9;
+  }
+  .add-task-overlay-subtasks-choosen {
+    max-height: 200px;
+    overflow-y: auto;
+  }
+  .add-task-overlay-subtasks-list li {
+    position: relative;
+    margin-block: 8px;
+  }
+  .add-task-overlay-subtasks-extra-task {
+    position: relative;
+    word-break: break-all;
+    padding-left: 10px;
+    padding-right: 70px;
+  }
+  .add-task-overlay-subtasks-extra-task::before {
+    content: "";
+    background-color: black;
+    position: absolute;
+    left: -8px;
+    top: 12px;
+    border-radius: 50%;
+    display: block;
+    width: 5px;
+    height: 5px;
+  }
+  .add-task-overlay-subtasks-icons {
+    position: absolute;
+    right: 10px;
+    display: none;
+    align-items: center;
+    gap: 8px;
+    padding-right: 16px;
+  }
+  .add-task-overlay-subtasks-list li:hover .add-task-overlay-subtasks-icons {
+    display: flex;
+  }
+  
+  /* Footer (Cancel / Create) */
+  .add-task-bottom {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    margin-top: 20px;
+  }
+  .add-task-bottom-clear-button,
+  .add-task-bottom-create-button {
+    border: none;
+    background: none;
+    cursor: pointer;
+  }
+  .add-task-bottom-clear {
+    display: flex;
+    gap: 5px;
+    align-items: center;
+    color: #2b3647;
+    padding: 8px 12px;
+    border-radius: 8px;
+    transition: background-color 0.3s;
+  }
+  .add-task-bottom-clear:hover {
+    background-color: #ededef;
+  }
+  .add-task-bottom-create-task {
+    display: flex;
+    gap: 5px;
+    align-items: center;
+    background-color: #2b3647;
+    color: #fff;
+    padding: 8px 12px;
+    border-radius: 8px;
+    transition: background-color 0.3s;
+  }
+  .add-task-bottom-create-task:hover {
+    background-color: #28abe2;
+  }
+  .add-task-create-task {
+    width: 14px;
+    height: 14px;
+  }
+  .add-task-required {
+    color: red;
+  }
+  
+  /* ========================================
+     Ab 1200px und kleiner => alles untereinander
+     ======================================== */
+  @media (max-width: 1200px) {
+    /* Container in eine Spalte */
+    .add-task-overlay-container {
       flex-direction: column;
-      margin-bottom: 8px;
     }
-    .subtask-item-overlay {
-      display: flex;
-      align-items: center;
-      margin-bottom: 5px;
-      transition: background-color 0.2s ease;
-      border-radius: 6px;
-      padding: 5px 10px;
-      max-width: 100%;
+    /* Linke + rechte Seite je 100% Breite, 
+       damit Title, Description, Assigned, Due Date, etc. 
+       alle untereinander erscheinen */
+    .add-task-overlay-left-side,
+    .add-task-overlay-right-side {
+      width: 100%;
+      margin: 0;
     }
-    .subtask-item-overlay:hover {
-      background-color: #F6F7F8;
-    }
-    .subtask-item-overlay input[type="checkbox"] {
-      -webkit-appearance: none;
-      appearance: none;
-      width: 24px;
-      height: 24px;
-      border-radius: 3px;
-      border: 2px solid #2a3647;
-      position: relative;
-      cursor: pointer;
-      margin-right: 8px;
-    }
-    .subtask-item-overlay input[type="checkbox"]::after {
-      content: "";
-      position: absolute;
-      width: 5px;
-      height: 11.5px;
-      left: 8px;
-      top: 2.5px;
-      border: 2px solid #2a3647;
-      border-top: none;
-      border-left: none;
-      transform: rotate(45deg);
-      opacity: 0;
-      transition: opacity 0.2s ease;
-    }
-    .subtask-item-overlay input[type="checkbox"]:checked::after {
-      opacity: 1;
-    }
-  
-    /* Footer-Buttons */
-    .task-footer {
-      display: flex;
-      justify-content: flex-end;
-      gap: 10px;
-      margin-right: 24px;
-    }
-    .task-footer button {
-      display: flex;
-      align-items: center;
-      gap: 5px;
-      border: none;
-      background: none;
-      cursor: pointer;
-      padding: 5px 8px;
-      color: #2b3647;
-      transition: color 0.2s ease;
-    }
-    .task-footer button:hover {
-      color: #28abe2;
-    }
-  
-    .board_duedate {
-      margin-left: 10px;
-    }
-    .board_priority {
-      margin-left: 27px;
-    }
-    .prio-icon-boardoverlay {
-      margin-left: 10px;
-    }
-  
-    /* Sticky-Spalte (falls du sie auch hier brauchst) */
-    .column_header {
-      position: sticky;
-      top: 0; 
-      z-index: 1; 
-      background-color: #F6F7F8;
-    }
-  
-    /* Beispiel-Anpassung für sehr kleine Screens */
-    @media (max-width: 860px) {
-      .add_task_overlay_content {
-        width: 350px; 
-        height: 670px;
-        top: 10px;
-      }
-    }
-  
-    @media (max-width: 427px) {
-      .add_task_overlay_content {
-        width: 320px; 
-        height: 670px;
-        top: 10px;
-      }
-    }
-  
-    @media (max-width: 360px) {
-      .add_task_overlay_content {
-        width: 290px; 
-        height: 670px;
-        top: 10px;
-      }
-    }
-  
-    @media (max-width: 340px) {
-      .add_task_overlay_content {
-        width: 250px !important; 
-        height: 670px;
-        top: 10px;
-      }
-    }
+    /* Titel, Beschreibung, usw. sind sowieso schon column,
+       also kein extra Code nötig */
   }  
