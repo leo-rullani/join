@@ -1,28 +1,11 @@
 "use strict";
-
 /**
  * @file summary.js
  * Handles UI updates for the summary page, including greeting overlays.
  */
+document.addEventListener("DOMContentLoaded", initSummaryPage);
 
-/**
- * Toggles the small menu at the profile icon.
- */
-function toggleRespMenu() {
-  let menu = document.getElementById("resp_menu");
-  menu.classList.toggle("resp_menu_closed");
-  menu.classList.toggle("resp_menu_open");
-}
-
-/**
- * Initializes the summary page after the DOM content is loaded.
- */
-document.addEventListener("DOMContentLoaded", initSummary);
-
-/**
- * Initializes summary view: checks user data, sets greeting, reveals page.
- */
-function initSummary() {
+function initSummaryPage() {
   const headerName = document.getElementById("userName"),
     greetingDiv = document.getElementById("userName"),
     userData = sessionStorage.getItem("loggedInUser");
@@ -40,6 +23,78 @@ function initSummary() {
   setGreeting();
   initOverlayCheck();
   document.body.style.visibility = "visible";
+  // 2) Tritt nur auf summary.html auf
+  getTaskSummary();
+}
+
+async function getTaskSummary() {
+  try {
+    const loadedTasks = await getTasks();
+    // Global setzen:
+    window.tasks = loadedTasks;
+
+    const summary = {
+      todo: 0,
+      doing: 0,
+      feedback: 0,
+      done: 0,
+      urgent: 0,
+      urgentDueDates: [],
+    };
+    loadedTasks.forEach((task) => {
+      if (summary[task.boardCategory] !== undefined) {
+        summary[task.boardCategory]++;
+      }
+      if (task.priority === "urgent") {
+        summary.urgent++;
+        if (task.date) {
+          summary.urgentDueDates.push(
+            new Date(task.date).toLocaleDateString("de-DE", {
+              day: "2-digit",
+              month: "long",
+              year: "numeric",
+            })
+          );
+        }
+      }
+    });
+    displayTaskSummary(summary, tasks);
+  } catch (error) {
+    console.error("Fehler beim Abrufen der Task-Übersicht:", error);
+  }
+}
+
+function displayTaskSummary(summary) {
+  const elTodo = document.getElementById("summary-todo");
+  if (!elTodo) return; // nicht auf summary-Seite
+
+  elTodo.textContent = `${summary.todo}`;
+  document.getElementById("summary-doing").textContent = `${summary.doing}`;
+  document.getElementById(
+    "summary-feedback"
+  ).textContent = `${summary.feedback}`;
+  document.getElementById("summary-done").textContent = `${summary.done}`;
+  document.getElementById("summary-urgent").textContent = `${summary.urgent} `;
+
+  // <- Hier statt "tasks" => "window.tasks"
+  document.getElementById("summary-complete").textContent = tasks.length;
+
+  if (summary.urgentDueDates.length > 0) {
+    document.getElementById("summary-urgent-dates").innerHTML =
+      summary.urgentDueDates.join("<br>");
+  } else {
+    document.getElementById("summary-urgent-dates").textContent =
+      "No urgent tasks";
+  }
+}
+
+/**
+ * Toggles the small menu at the profile icon.
+ */
+function toggleRespMenu() {
+  let menu = document.getElementById("resp_menu");
+  menu.classList.toggle("resp_menu_closed");
+  menu.classList.toggle("resp_menu_open");
 }
 
 /**

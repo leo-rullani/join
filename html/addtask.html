@@ -67,26 +67,33 @@
 
             <section class="add-task-main-content">
                 <div class="add_task_container">
+                    <!-- Dein ursprüngliches Formular mit IDs -->
                     <form onsubmit="addTaskCreateTask(); return false;" class="add-task-all-content" id="add-task-form">
                         <div class="add-task-h1-container">
                             <h1 class="add-task-h1">Add Task</h1>
                         </div>
+
                         <div class="add-task-container">
                             <div class="add-task-left-side">
+                                <!-- Title -->
                                 <div class="add-task-title">
-                                    <label for="add-task-title-input">Title<span
-                                            class="add-task-required">*</span></label>
+                                    <label for="add-task-title-input">
+                                        Title <span class="add-task-required">*</span>
+                                    </label>
                                     <input required id="add-task-title-input" class="add-task-title-input" type="text"
                                         autocomplete="off" placeholder="Enter a title" value="" />
                                 </div>
 
+                                <!-- Description -->
                                 <div class="add-task-description">
-                                    <label for="add-task-textarea">Description<span
-                                            class="add-task-required">*</span></label>
+                                    <label for="add-task-textarea">
+                                        Description <span class="add-task-required">*</span>
+                                    </label>
                                     <textarea required id="add-task-textarea" class="add-task-textarea"
                                         placeholder="Enter a description"></textarea>
                                 </div>
 
+                                <!-- Assigned to -->
                                 <div class="add-task-assigned-to">
                                     <div class="checkbox-dropdown">
                                         <div class="search">
@@ -104,35 +111,37 @@
                             <div class="add-task-right-left-between"></div>
 
                             <div class="add-task-right-side">
+                                <!-- Due Date -->
                                 <div class="add-task-due-date">
-                                    <label for="date">Due date<span class="add-task-required">*</span></label>
+                                    <label for="date">Due date <span class="add-task-required">*</span></label>
                                     <input required type="date" class="add-task-due-date-input" id="date" name="date"
                                         onclick="addTaskMinimumDate()" />
                                 </div>
 
+                                <!-- Priority -->
                                 <div class="add-task-urgent-medium-low-container">
                                     <div>Prio</div>
-
                                     <div id="add-task-urgent-medium-low-buttons"
                                         class="add-task-urgent-medium-low-buttons">
-                                        <button id="add-task-urgent" class="add-task-urgent" name="prio"
-                                            onclick="addTaskPrio('urgent', 'add-task-urgent-medium-low-buttons', event)"
+                                        <button type="button" id="add-task-urgent" class="add-task-urgent" name="prio"
+                                            onclick="addTaskPrioToggleButton('urgent', 'add-task-urgent-medium-low-buttons', event)"
                                             data-priority="urgent">
                                             <div class="add-task-important">
                                                 <div class="add-task-important-name">Urgent</div>
                                                 <img id="prio-urgent" src="/assets/icons/urgent.svg" />
                                             </div>
                                         </button>
-                                        <button id="add-task-medium" class="add-task-medium add-task-clicked"
-                                            onclick="addTaskPrio('medium', 'add-task-urgent-medium-low-buttons', event)"
+                                        <button type="button" id="add-task-medium"
+                                            class="add-task-medium add-task-clicked"
+                                            onclick="addTaskPrioToggleButton('medium', 'add-task-urgent-medium-low-buttons', event)"
                                             data-priority="medium">
                                             <div class="add-task-important">
                                                 <div class="add-task-important-name">Medium</div>
                                                 <img id="prio-medium" src="/assets/icons/medium_white.svg" />
                                             </div>
                                         </button>
-                                        <button id="add-task-low" class="add-task-low"
-                                            onclick="addTaskPrio('low', 'add-task-urgent-medium-low-buttons', event)"
+                                        <button type="button" id="add-task-low" class="add-task-low"
+                                            onclick="addTaskPrioToggleButton('low', 'add-task-urgent-medium-low-buttons', event)"
                                             data-priority="low">
                                             <div class="add-task-important">
                                                 <div class="add-task-important-name">Low</div>
@@ -142,30 +151,38 @@
                                     </div>
                                 </div>
 
+                                <!-- Category -->
                                 <div class="add-task-category">
                                     <div class="checkbox-dropdown">
                                         <div class="search">
-                                            <label for="add-task-category">Category<span
-                                                    class="add-task-required">*</span></label>
+                                            <label for="add-task-category">
+                                                Category <span class="add-task-required">*</span>
+                                            </label>
                                             <input required type="text" id="add-task-category" autocomplete="off"
                                                 placeholder="Select task category" />
                                         </div>
                                         <ul>
                                             <li>
-                                                <label for="technical-task">Technical Task<input class="add-task-radio"
-                                                        type="radio" name="category" id="technical-task"
-                                                        value="Technical Task"
-                                                        onclick="addTaskChoseCategory(this.value)" /></label>
+                                                <label for="technical-task">
+                                                    Technical Task
+                                                    <input class="add-task-radio" type="radio" name="category"
+                                                        id="technical-task" value="Technical Task"
+                                                        onclick="addTaskChoseCategory(this.value)" />
+                                                </label>
                                             </li>
                                             <li>
-                                                <label for="user-story">User Story<input class="add-task-radio"
-                                                        type="radio" name="category" id="user-story" value="User Story"
-                                                        onclick="addTaskChoseCategory(this.value)" /></label>
+                                                <label for="user-story">
+                                                    User Story
+                                                    <input class="add-task-radio" type="radio" name="category"
+                                                        id="user-story" value="User Story"
+                                                        onclick="addTaskChoseCategory(this.value)" />
+                                                </label>
                                             </li>
                                         </ul>
                                     </div>
                                 </div>
 
+                                <!-- Subtasks -->
                                 <div class="add-task-subtasks">
                                     <div class="add-task-subtasks-input-container">
                                         <label for="add-task-subtasks-input">Subtasks</label>
@@ -173,14 +190,12 @@
                                             class="add-task-subtasks-input" type="text" placeholder="Add new subtask"
                                             autocomplete="off" onclick="addTaskSubtasksClicked()"
                                             onkeypress="addTaskSubtasks(event)" />
-
                                         <div id="add-task-subtasks-icon-plus" class="add-task-subtasks-icon-plus">
                                             <button onclick="addSubtasksPlus(event)" id="add-task-subtasks-input-plus">
                                                 <img class="add-task-subtasks-input-plus"
                                                     src="/assets/icons/add_task_subtasks_icon_plus.svg" alt="" />
                                             </button>
                                         </div>
-
                                         <div id="add-task-subtasks-icon-plus-check"
                                             class="add-task-subtasks-icon-plus-check d-none">
                                             <button id="add-task-subtasks-input-clear" onclick="clearSubtasks(event)">
@@ -203,6 +218,7 @@
                                 </div>
                             </div>
                         </div>
+
                         <div class="add-task-bottom">
                             <div><span class="add-task-required">*</span> This field is required</div>
                             <div>
@@ -212,7 +228,6 @@
                                         <span>&times;</span>
                                     </div>
                                 </button>
-
                                 <button type="submit" class="add-task-bottom-create-button">
                                     <div class="add-task-bottom-create-task">
                                         Create Task
@@ -228,6 +243,7 @@
                 </div>
             </section>
 
+
             <!-- KLEINES PROFILMENÜ (zuständig für Mobil/Responsive) -->
             <div class="menu_header resp_menu_closed" id="resp_menu">
                 <div class="menu_links">
@@ -242,13 +258,12 @@
 
         </main>
 
-        <script src="/js/template.js"></script>
-        <script src="/js/add_task.js"></script>
-        <script src="/js/add_task_support.js"></script>
-        <script src="/js/task_template.js"></script>
-
 
 
     </body>
+    <script src="/js/add_task_support.js"></script>
+    <script src="/js/task_template.js"></script>
+    <script src="/js/add_task.js"></script>
+    <script src="/js/template.js"></script>
 
 </html>

@@ -6,7 +6,8 @@ let draggedTaskId = null;
  * Lädt initial Beispiel-Tasks und konfiguriert Drag & Drop.
  */
 async function initBoard() {
-  await displayTasks();
+  await loadContacts(); // Kontakte holen
+  displayTasks(); // Board rendern
 }
 
 /**
@@ -136,7 +137,7 @@ function handleSearch(e) {
 /**
  * Öffnet das "Add Task"-Overlay (alte Logik mit .active-Klasse)
  */
-function openAddTask() {
+function openAddTaskOverlay() {
   // Prüfe aktuelle Fensterbreite
   if (window.innerWidth <= 650) {
     // Bei kleinen Bildschirmen direkt zur AddTask-Seite
@@ -220,12 +221,4 @@ function resetOverlay() {
   overlay.classList.remove("board_overlay_show");
   overlay.style.display = "none";
   overlay.style.pointerEvents = "none";
-}
-
-/**
- * Add New Task: Öffnet das AddTask-Overlay und merkt sich die gewählte Spalte
- */
-function addNewTask() {
-  document.getElementById("addTaskOverlay").classList.add("active");
-  createAssignedTo(true);
 }

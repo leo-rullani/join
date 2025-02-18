@@ -1,11 +1,12 @@
-/**
- * Adds minimum date attribute to an input field with id "date",
- * setting it to today's date.
- */
+/********************************
+ * Datei: add_task_support.js
+ * Enthält deine Hilfsfunktionen (Subtasks etc.)
+ ********************************/
+
+// Beispielsweise:
 function addTaskMinimumDate() {
   // Get today's date in ISO format (YYYY-MM-DD)
   let today = new Date().toISOString().split("T")[0];
-
   // Set the minimum date attribute of the input field with id "date"
   document.getElementById("date").setAttribute("min", today);
 }
@@ -33,12 +34,8 @@ function addTaskPrioToggleButton(prio, container) {
  * Unchecks all checkboxes with the class "add-task-checkbox".
  */
 function addTaskAssignedToUnCheck() {
-  // Select all checkboxes with the class "add-task-checkbox"
   const checkBoxes = document.querySelectorAll(".add-task-checkbox");
-
-  // Loop through each checkbox
   for (let i = 0; i < checkBoxes.length; i++) {
-    // If the checkbox is checked, uncheck it
     if (checkBoxes[i].checked) {
       checkBoxes[i].checked = false;
     }
@@ -47,7 +44,6 @@ function addTaskAssignedToUnCheck() {
 
 /**
  * Updates the subtasks list in the UI based on the provided index.
- * @param {number} i - Index indicating the position of the subtask in the list.
  */
 function addTaskSubtasksList() {
   const lists = document.getElementById("add-task-subtasks-list");
@@ -60,7 +56,6 @@ function addTaskSubtasksList() {
 
 /**
  * Removes a subtask from the subtasks list based on the provided index.
- * @param {number} i - Index indicating the position of the subtask to be removed.
  */
 function removeFromAddTaskSubtasksList(i, event) {
   event.stopPropagation();
@@ -76,7 +71,6 @@ function editTaskSubtasksList(param, event) {
 
   for (let i = 0; i < subtasksList.length; i++) {
     const lists = subtasksList[i];
-
     if (i === param) {
       let liElement = document.createElement("li");
       liElement.setAttribute("class", "add-task-subtask-li-edit");
@@ -161,37 +155,21 @@ function editTaskSubtasksList(param, event) {
       listItem.appendChild(spanElement);
       listItem.appendChild(iconsDiv);
 
-      let ulElement = document.getElementById("add-task-subtasks-list"); // Replace 'your-ul-element-id' with the actual ID of your UL element
-
       ulElement.appendChild(listItem);
     }
   }
 }
 
-/**
- * Updates the subtasks list when a subtask is confirmed or edited.
- * @param {*} i - Index of the subtask to be updated in the list.
- * @param {*} event - Event triggered by the user action (keypress or other).
- * @returns void
- */
 function confirmTaskSubtasksList(i, event) {
   if (event.type === "keypress" && event.key !== "Enter") return;
-
   event.preventDefault();
   const subtasks = document.getElementById("add-task-subtasks-input-edit");
   const subtaskValue = subtasks.value.trim();
-
   if (!subtaskValue) return;
-
   subtasksList.splice(i, 1, subtaskValue);
   addTaskSubtasksList();
 }
 
-/**
- * Function to handle adding subtasks to a task plus functionality.
- *
- * @param {*} event - prevent default
- */
 function addSubtasksPlus(event) {
   event.preventDefault();
   addTaskSubtasksClicked();
@@ -199,10 +177,6 @@ function addSubtasksPlus(event) {
   document.getElementById("add-task-subtasks-input").select();
 }
 
-/**
- * Handles the click event when adding subtasks to a task.
- * Hides the "plus" icon and displays the "check" icon to indicate confirmation.
- */
 function addTaskSubtasksClicked() {
   document
     .getElementById("add-task-subtasks-icon-plus")
@@ -212,10 +186,6 @@ function addTaskSubtasksClicked() {
     .classList.remove("d-none");
 }
 
-/**
- * Clears subtasks input field and resets icons to initial state.
- * @param {*} event - The event object triggered by the user action.
- */
 function clearSubtasks(event) {
   event.preventDefault();
   document
@@ -227,9 +197,6 @@ function clearSubtasks(event) {
   document.getElementById("add-task-subtasks-input").value = "";
 }
 
-/**
- * Resets the form used for adding a task to its initial state.
- */
 function addTaskClearFormularReset() {
   globalSubtasks = [];
   subtasksList = [];
@@ -247,16 +214,9 @@ function addTaskClearFormularReset() {
   document
     .getElementById("add-task-subtasks-icon-plus-check")
     .classList.add("d-none");
-  addTaskPrioToggleButton(
-    (prio = "medium"),
-    "add-task-urgent-medium-low-buttons"
-  );
+  addTaskPrioToggleButton("medium", "add-task-urgent-medium-low-buttons");
 }
 
-/**
- * Clears the add task form and prevents default form submission behavior.
- * @param {*} event - The event object triggered by the user action.
- */
 function addTaskClearFormular(event) {
   event.preventDefault();
   addTaskClearFormularReset();
@@ -264,6 +224,7 @@ function addTaskClearFormular(event) {
 
 function showToast(message) {
   const notification = document.getElementById("add_notification");
+  if (!notification) return;
   notification.textContent = message;
   notification.classList.add("show");
   notification.style.right = "-50px";

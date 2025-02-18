@@ -297,7 +297,7 @@ function addTaskAssignedToHtml(i, bgColor, contact) {
         </span>
         <span>${contact}</span>
       </label>
-      <input class="add-task-checkbox" type="checkbox" name="person[${i}]" id="person${i}" value="${contact}" onclick="addTaskAssignedTo()">
+      <input class="add-task-checkbox" type="checkbox" name="person[${i}]" id="person${i}" value="${contact}" onclick="toggleContactSelection('${contactName}')">
     </li>
   `;
 }
@@ -313,7 +313,7 @@ function addTaskAssignedToSearchHTML(i, bgColor, contact, assigned) {
       </label>
       <input class="add-task-checkbox" type="checkbox" name="person[${i}]" id="person${i}" value="${contact}" ${
     assigned ? "checked" : ""
-  } onclick="addTaskAssignedTo()">
+  } onclick="toggleContactSelection('${contactName}')">
     </li>
   `;
 }
@@ -424,9 +424,4 @@ function generateOverlayAssigneeHTML(assignees) {
       `;
     })
     .join("");
-}
-
-function editTask(taskId) {
-  console.log("Edit Task:", taskId);
-  closeBoardOverlay();
 }
