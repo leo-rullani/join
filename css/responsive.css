@@ -1594,11 +1594,15 @@
 
 @media (max-width: 530px) {
   input {
-    width: 100% !important;
+    width: 90% !important;
   }
 
-  textarea {
-    width: 100% !important;
+  .add-task-subtasks-input{
+    width: 71% !important;
+  }
+
+  .add-task-textarea {
+    width: 93% !important;
   }
 
   .add-task-urgent-medium-low-buttons {
@@ -1618,11 +1622,16 @@
 
 @media (max-width: 480px) {
   input {
-    width: 80% !important;
+    width: 70% !important;
+    font-size: 14px;
   }
 
-  textarea {
-    width: 80% !important;
+  .add-task-subtasks-input{
+    width: 48% !important;
+  }
+
+  .add-task-textarea {
+    width: 73% !important;
   }
 
   .checkbox-dropdown ul {
@@ -1632,7 +1641,7 @@
   .add-task-urgent,
   .add-task-medium,
   .add-task-low {
-    width: 80%;
+    width: 84%;
   }
 
   .add-task-bottom {
@@ -1642,6 +1651,7 @@
 
   .add-task-subtasks-icon-plus {
     left: 87px;
+    top: -54px;
   }
 
   .add-task-subtasks-icon-plus-check {
@@ -1651,11 +1661,15 @@
 
 @media (max-width: 380px) {
   input {
-    width: 65% !important;
+    width: 63% !important;
   }
 
-  textarea {
-    width: 65% !important;
+  .add-task-subtasks-input{
+    width: 40% !important;
+  }
+
+  .add-task-textarea {
+    width: 66% !important;
   }
 
   .checkbox-dropdown ul {
@@ -1665,15 +1679,33 @@
   .add-task-urgent,
   .add-task-medium,
   .add-task-low {
-    width: 65%;
+    width: 77%;
   }
 
   .add-task-subtasks-icon-plus {
-    left: 30px;
+    left: 56px;
+    top: -54px;
+  }
+
+  .add-task-subtasks-icon-plus-check img{
+    height: 23px;
+  }
+
+  .add-task-subtasks-icons{
+    padding-right: 79px;
+  }
+
+  .add-task-subtasks-input-edit-div{
+    width: 84%;
+  }
+
+  .add-task-subtasks-icons-edit{
+    right: 40px;
   }
 
   .add-task-subtasks-icon-plus-check {
-    left: 15px;
+    left: 24px;
+    top: -53px;
   }
 
   .add-task-bottom-clear,

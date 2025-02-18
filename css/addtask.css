@@ -142,7 +142,7 @@ input:focus {
 
 .add-task-due-date-input {
   padding: 12px 21px 12px 21px;
-  width: 100%;
+  width: 88%;
   border-radius: 10px;
   border: 1px solid #bbb9b9;
   cursor: pointer;
@@ -288,7 +288,7 @@ input:focus {
   padding: 12px 95px 12px 21px;
   border-radius: 10px;
   border: 1px solid #bbb9b9;
-  width: 100%;
+  width: 69%;
 }
 
 .add-task-subtasks-input-container {
@@ -303,7 +303,7 @@ input:focus {
   justify-content: center;
   align-items: center;
   position: relative;
-  left: 140px;
+  left: 155px;
   bottom: 57px;
   cursor: pointer;
   gap: 5px;
@@ -478,7 +478,7 @@ input:focus {
 
 .add-task-confirm {
   width: 15px;
-  height: 15px;
+  height: 25px;
 }
 
 .add-task-confirm:hover {
@@ -494,7 +494,7 @@ input:focus {
   display: flex;
   justify-content: space-between;
   align-items: center;
-  margin: 50px 10px 10px 10px;
+  margin: 10px 10px 10px 10px;
   padding: 16px;
 }
 

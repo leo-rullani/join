@@ -103,7 +103,7 @@ function editTaskSubtasksList(param, event) {
 
       let confirmIcon = document.createElement("img");
       confirmIcon.className = "add-task-confirm";
-      confirmIcon.src = "/assets/icons/add_task_check.svg";
+      confirmIcon.src = "/assets/icons/done_inverted.svg";
       confirmIcon.setAttribute(
         "onclick",
         `confirmTaskSubtasksList(${i}, event)`
