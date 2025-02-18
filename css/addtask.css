@@ -492,10 +492,10 @@ input:focus {
 
 .add-task-bottom {
   display: flex;
-  justify-content: space-between;
-  align-items: center;
-  margin: 10px 10px 10px 10px;
-  padding: 16px;
+  justify-content: flex-end;
+  align-items: flex-end;
+  margin-top: -10px;
+  margin-right: 8px;
 }
 
 .dialog .add-task-bottom {
@@ -563,11 +563,7 @@ input:focus {
 
 .add-task-bottom-clear,
 .add-task-bottom-create-task {
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  gap: 8px;
-  padding: 12px 21px 12px 21px;
+  
 }
 
 .add-task-create-task {

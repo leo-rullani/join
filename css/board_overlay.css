@@ -30,6 +30,7 @@
   animation-fill-mode: both;
   animation-timing-function: linear;
   height: 760px;
+  overflow-y: auto;
   color: #2b3647;
   font-weight: normal;
   margin-top: -16px;
@@ -55,8 +56,8 @@
 
 .board_overlay_close {
   position: absolute;
-  top: 32px;
-  right: 32px;
+  top: 16px;
+  right: 16px;
   background: none;
   animation-duration: 1s;
   color: #3f3f3f;
@@ -274,6 +275,7 @@
     width: 350px; 
     height: 670px;
     top: 10px;
+    overflow-y: auto;
   }
 }
 
@@ -282,6 +284,7 @@
     width: 320px; 
     height: 670px;
     top: 10px;
+    overflow-y: auto;
   }
 }
 
@@ -290,6 +293,7 @@
     width: 290px; 
     height: 670px;
     top: 10px;
+    overflow-y: auto;
   }
 }
 
@@ -298,5 +302,6 @@
     width: 250px !important; 
     height: 670px;
     top: 10px;
+    overflow-y: auto;
   }
 }

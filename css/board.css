@@ -294,7 +294,6 @@
   border-radius: 10px;
   border: 1px solid #bbb9b9;
   font-size: 18px;
-  width: 80%;
 }
 
 .add-task-overlay-description {
@@ -309,7 +308,6 @@
   padding: 10px 15px 10px 15px;
   border: 1px solid #bbb9b9;
   font-size: 18px;
-  width: 80%;
   height: 80px;
   resize: none;
 }
@@ -337,7 +335,6 @@
   background-size: 30px;
   background-repeat: no-repeat;
   transition: all 200ms;
-  width: 78%;
   font-size: 18px;
 }
 
@@ -363,7 +360,7 @@
   overflow-y: auto;
   position: absolute;
   top: 100%;
-  width: 89%;
+  width: 100%;
   display: none;
   z-index: 1;
   border-radius: 0 0 10px 10px;
@@ -433,7 +430,6 @@
 
 .add-task-overlay-due-date-input {
   padding: 10px 15px 10px 15px;
-  width: 80%;
   border-radius: 10px;
   border: 1px solid #bbb9b9;
   cursor: pointer;
@@ -449,7 +445,7 @@
 
 .add-task-overlay-urgent-medium-low-buttons {
   display: flex;
-  gap: 8px;
+  gap: 32px;
 }
 
 .add-task-overlay-urgent,
@@ -531,7 +527,6 @@
   padding: 10px 15px 10px 15px;
   border-radius: 10px;
   border: 1px solid #bbb9b9;
-  width: 81%;
   font-size: 18px;
 }
 
@@ -547,7 +542,8 @@
   justify-content: center;
   align-items: center;
   position: absolute;
-  right: 15%;
+  right: 1%;
+  top: 48%;
   bottom: 5px;
   cursor: pointer;
   gap: 5px;
@@ -596,7 +592,7 @@
   border-radius: 50%;
   background-color: #ffffff;
   border: none;
-  padding: 10px;
+  padding: 5px;
   cursor: pointer;
 }
 
@@ -609,7 +605,7 @@
   justify-content: center;
   align-items: center;
   position: absolute;
-  left: 66%;
+  left: 79%;
   bottom: 5px;
   cursor: pointer;
   gap: 5px;
@@ -682,6 +678,7 @@
   align-items: center;
   gap: 8px;
 }
+
 
 .add-task-overlay-subtasks-icons {
   display: none;
