@@ -274,7 +274,7 @@ function getInitials(fullName) {
 }
 
 function addTaskCreateTaskConfirmation() {
-  showToast(`<img src="./assets/icons/board.svg"/> Task added to board`);
+  showToast(`<img src="./assets/icons/Icon-board.svg"/> Task added to board`);
   setTimeout(() => {
     window.location.href = "board.html";
   }, 2000);

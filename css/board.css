@@ -828,8 +828,7 @@
     align-items: center;
     justify-content: center;
     color: transparent; 
-    position: absolute;
-    margin-right: -40px;
+    position: relative;
   }
   .btn_add_task::before {
     content: "+";       
@@ -878,16 +877,11 @@
     display: flex !important;
   }
 }
-
-/* 1) Bis 1020px -> 50px padding */
-/* 1) Bis 1020px -> 50px padding */
 @media (max-width: 1020px) {
   .column_wrapper {
     padding-right: 50px;
   }
 }
-
-/* 2) Ab 900px -> wieder 0px padding (oder was du willst) */
 @media (max-width: 900px) {
   .column_wrapper {
     padding-right: 100px;
@@ -911,7 +905,17 @@
     margin-left: -30px;
   }
   .search_container {
-    margin-left: -65px;
+    /* Statt negative margin einfach 0 oder auto: */
+    margin-left: 0;
+    margin-right: 0;
+    width: 100%;
+    box-sizing: border-box; /* Damit Padding und Border eingerechnet werden */
+  }
+  
+  /* Falls das Inputfeld nicht 100% bekommt, kannst du es so anpassen: */
+  .search_container input {
+    width: 100%;
+    padding-right: 40px; /* Platz für Icon */
   }
   .column_header {
     width: inherit;
@@ -920,6 +924,21 @@
 
 @media (max-width: 500px) {
   @media (min-width: 100px) {
+    .btn_add_task {
+      order: 2; 
+      align-self: flex-end; 
+      margin-top: -37px;
+      width: 44px;
+      height: 44px;
+      padding: 0;
+      border-radius: 12px; 
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      color: transparent; 
+      position: absolute;
+      margin-right: -40px;
+    }
     .task_list {
       display: flex;
       flex-direction: row;
@@ -949,7 +968,8 @@
       width: 368px;
   }
   .board_section {
-    overflow-y: auto;    /* Oder overflow: auto; */
+    height: auto;       /* Dynamische Höhe */
+    overflow-y: auto;   /* Scroll wenn nötig */
   }
   .board_content {
     min-width: auto; /* oder einfach entfernen */
@@ -1021,5 +1041,12 @@
 @media (max-width: 324px) {
   .column_wrapper {
     width: 275px;
+  }
+}
+
+@media (max-width: 500px) {
+  .board_container {
+    /* Falls Du unten eine 60px hohe Sticky-Footer hast */
+    margin-bottom: 60px; 
   }
 }
