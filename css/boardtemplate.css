@@ -70,8 +70,8 @@
   .task-footer {
     display: flex;
     align-items: center;
-    justify-content: space-between;
-    margin-top: 12px;
+    justify-content: flex-end;
+    margin-right: auto;
   }
   
   .task-assignees {
@@ -99,7 +99,10 @@
   .task-priority-icon img {
     width: 24px;
     height: 24px;
-    margin-right: -23px;
+  }  
+
+  .task-priority-icon {
+    margin-left: 120px;
   }  
 
   /* Gleiche Keyframes */
