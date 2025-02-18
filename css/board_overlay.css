@@ -305,3 +305,41 @@
     overflow-y: auto;
   }
 }
+
+@media (max-width: 430px) {
+  .add-task-overlay-urgent-medium-low-buttons {
+    display: flex;
+    gap: 24px;
+  }
+  .add-task-overlay-important {
+    gap: 8px;
+  }
+  .add-task-overlay-medium {
+    font-size: 12px;
+  }
+  .add-task-overlay-low {
+    font-size: 12px;
+  }
+  .add-task-overlay-urgent {
+    font-size: 12px;
+  }
+}
+
+@media (max-width: 360px) {
+  .add-task-overlay-urgent-medium-low-buttons {
+    display: flex;
+    gap: 24px;
+  }
+  .add-task-overlay-important {
+    gap: 4px;
+  }
+  .add-task-overlay-medium {
+    font-size: 8px;
+  }
+  .add-task-overlay-low {
+    font-size: 8px;
+  }
+  .add-task-overlay-urgent {
+    font-size: 8px;
+  }
+}

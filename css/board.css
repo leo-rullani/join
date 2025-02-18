@@ -765,9 +765,6 @@
   .subtask-item-overlay input[type="checkbox"] {
     margin-right: 16px;
   }
-  input {
-    width: 20% !important;
-  }
 }
 
 .help_text_link {
