@@ -225,7 +225,7 @@ function addTaskClearFormular(event) {
 function showToast(message) {
   const notification = document.getElementById("add_notification");
   if (!notification) return;
-  notification.textContent = message;
+  notification.innerHTML = message;
   notification.classList.add("show");
   notification.style.right = "-50px";
   notification.style.bottom = "150px";

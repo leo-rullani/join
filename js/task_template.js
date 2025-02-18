@@ -274,7 +274,7 @@ function getInitials(fullName) {
 }
 
 function addTaskCreateTaskConfirmation() {
-  showToast(`<img src="./assets/icons/Icon-board.svg"/> Task added to board`);
+  showToast(`Task added to board <img src="/assets/icons/Icon-board.svg">`);
   setTimeout(() => {
     window.location.href = "board.html";
   }, 2000);
@@ -412,7 +412,6 @@ function generateOverlayAssigneeHTML(assignees) {
   return assignees
     .map((name) => {
       const initials = getInitials(name);
-      // nutze dictionary-Farben
       const bgColor = assignColor(name);
       return `
         <div class="assignee-overlay">
