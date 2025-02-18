@@ -181,35 +181,74 @@ function saveNewTask() {
  */
 function openBoardOverlay(taskId) {
   console.log("Opening overlay for Task ID:", taskId);
-  console.log("Available tasks:", tasks);
 
   const task = tasks.find((t) => t.id === taskId);
   if (!task) {
     console.error("Task not found!");
     return;
   }
-
   selectedTask = task;
+
+  // The main overlay div
   const overlay = document.getElementById("boardOverlay");
-  overlay.innerHTML = taskBoardTemplate(task);
+
+  // Detect if overlay is hidden => then we do "slideInFromRight"
+  const wasHidden =
+    overlay.style.display === "" || overlay.style.display === "none";
+
   overlay.classList.add("board_overlay_show");
   overlay.style.display = "flex";
 
-  overlay.querySelector(".board_overlay_content").style.animationName =
-    "slideInFromRight";
+  // Clear any old content
+  overlay.innerHTML = "";
+
+  // Create a new content .board_overlay_content
+  const contentDiv = document.createElement("div");
+  contentDiv.className = "board_overlay_content";
+
+  if (wasHidden) {
+    // Only animate if we are actually opening from hidden
+    contentDiv.style.animationName = "slideInFromRight";
+  } else {
+    // No animation if we are just switching detail <-> edit
+    contentDiv.style.animationName = "";
+  }
+
+  // If in edit mode (and for the same task), show edit form
+  if (editingMode && editingTaskId === taskId) {
+    contentDiv.innerHTML = taskEditTemplate(task);
+    overlay.appendChild(contentDiv);
+    fillEditFormData(task);
+  } else {
+    // Otherwise, show detail
+    contentDiv.innerHTML = taskBoardTemplate(task);
+    overlay.appendChild(contentDiv);
+  }
 }
+/****************************************
+ * closeBoardOverlay()
+ * - Closes with animation
+ * - DOES NOT reset editingMode so that
+ *   next time we open the same task,
+ *   it remains in edit mode if we left it so.
+ ****************************************/
 function closeBoardOverlay() {
   const overlay = document.getElementById("boardOverlay");
   const content = overlay.querySelector(".board_overlay_content");
+  if (!content) {
+    overlay.style.display = "none";
+    return;
+  }
 
+  // Animate closing
   content.style.animationName = "slideOutToRight";
-
   content.addEventListener(
     "animationend",
     function handler() {
       overlay.classList.remove("board_overlay_show");
       overlay.style.display = "none";
       content.removeEventListener("animationend", handler);
+      overlay.innerHTML = "";
     },
     { once: true }
   );

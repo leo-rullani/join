@@ -331,71 +331,242 @@ function subTaskTemplate(element, i) {
   `;
 }
 
-/*******************************************
- * Overlay-Template-Funktion
- *******************************************/
+/****************************************
+ * The DETAIL template (unchanged from your code)
+ ****************************************/
 function taskBoardTemplate(task) {
   const assigneeHTML = generateOverlayAssigneeHTML(task.assignees);
   const subtaskHTML = generateBoardOverlaySubtaskHTML(task);
-
   const labelColor = task.category === "Technical Task" ? "#20d7c1" : "#0038ff";
   const priorityIcon = getPriorityIcon(task.priority);
 
-  return `     
-    <div class="board_overlay_content">
-      <!-- Schließen-Button -->
-      <button class="board_overlay_close" onclick="closeBoardOverlay()">&times;</button>
+  return `
+    <button class="board_overlay_close" onclick="closeBoardOverlay()">&times;</button>
 
-      <!-- Label (technical/user story) -->
-      <div id="taskLabel" class="task-label" style="background-color: ${labelColor};">
-        ${task.category}
+    <div id="taskLabel" class="task-label" style="background-color: ${labelColor};">
+      ${task.category}
+    </div>
+
+    <h2 id="taskTitle" class="h2_board-overlay">${task.title}</h2>
+    <p id="taskSubtitle" class="text-regular">${task.description}</p>
+
+    <div class="overlay-section">
+      <span class="section-label text-label">Due Date:</span>
+      <span id="dueDate" class="board_duedate text-regular">${task.date}</span>
+    </div>
+
+    <div class="overlay-section">
+      <span class="section-label text-label">Priority:</span>
+      <span id="priorityLabel" class="board_priority text-regular">
+        ${task.priority}
+        <img class="prio-icon-boardoverlay" src="${priorityIcon}" alt="${task.priority}" />
+      </span>
+    </div>
+
+    <div class="overlay-section">
+      <span class="section-label text-label">Assigned to:</span>
+      <div class="assignees-column-overlay">
+        ${assigneeHTML}
+      </div>
+    </div>
+
+    <div class="subtasks">
+      <p class="section-label text-label">Subtasks:</p>
+      ${subtaskHTML}
+    </div>
+
+    <div class="task-footer">
+      <button class="board-btn-delete" onclick="deleteTask('${task.id}')">
+        <img src="/assets/icons/board-btn-delete.svg" alt="Delete"> Delete
+      </button>
+      <button class="board-btn-edit" onclick="editTask('${task.id}')">
+        <img src="/assets/icons/board-btn-edit.svg" alt="Edit"> Edit
+      </button>
+    </div>
+  `;
+}
+
+/****************************************
+ * The EDIT template
+ * - No "Cancel" button. Only "Ok"
+ * - "X" in top right closes but keeps edit mode
+ ****************************************/
+function taskEditTemplate(task) {
+  return `
+    <button class="board_overlay_close" onclick="closeBoardOverlay()">&times;</button>
+
+    <div class="edit-task-overlay-container">
+
+      <!-- Title -->
+      <div class="add-task-overlay-title">
+        <label for="overlay-edit-task-title-input">
+          Title <span class="add-task-required">*</span>
+        </label>
+        <input required id="overlay-edit-task-title-input"
+               class="add-task-overlay-title-input"
+               type="text" autocomplete="off" placeholder="Enter a title" />
       </div>
 
-      <!-- Titel & Untertitel -->
-      <h2 id="taskTitle" class="h2_board-overlay">${task.title}</h2>
-      <p id="taskSubtitle" class="text-regular">${task.description}</p>
+      <!-- Description -->
+      <div class="add-task-overlay-description">
+        <label for="overlay-edit-task-textarea">
+          Description <span class="add-task-required">*</span>
+        </label>
+        <textarea required id="overlay-edit-task-textarea" 
+                  class="add-task-overlay-textarea"
+                  placeholder="Enter a description"></textarea>
+      </div>
+
+      <!-- Assigned to -->
+      <div class="add-task-overlay-assigned-to">
+        <div class="checkbox-overlay-dropdown">
+          <div class="search-overlay">
+            <label for="overlay-find-person">Assigned to</label>
+            <input type="text" name="overlay-find-person"
+                   id="overlay-find-person"
+                   autocomplete="off" placeholder="Select contacts to assign"
+                   onclick="editShowContactList()"
+                   onkeyup="editAssignedToSearch()" />
+          </div>
+          <ul id="overlay-edit-task-contact"></ul>
+        </div>
+      </div>
+      <div id="overlay-edit-task-assigned-avatar" class="add-task-assigned-avatar"></div>
 
       <!-- Due Date -->
-      <div class="overlay-section">
-        <span class="section-label text-label">Due Date:</span>
-        <span id="dueDate" class="board_duedate text-regular">${task.date}</span>
+      <div class="add-task-overlay-due-date">
+        <label for="overlay-edit-date">
+          Due date <span class="add-task-required">*</span>
+        </label>
+        <input required type="date"
+               class="add-task-overlay-due-date-input"
+               id="overlay-edit-date"
+               name="overlay-edit-date" />
       </div>
 
       <!-- Priority -->
-      <div class="overlay-section">
-        <span class="section-label text-label">Priority:</span>
-        <span id="priorityLabel" class="board_priority text-regular">
-          ${task.priority}
-          <img class="prio-icon-boardoverlay" src="${priorityIcon}" alt="${task.priority}" />
-        </span>
+      <div class="add-task-overlay-urgent-medium-low-container">
+        <div>Prio</div>
+        <div id="overlay-edit-task-urgent-medium-low-buttons"
+             class="add-task-overlay-urgent-medium-low-buttons">
+          <button id="overlay-edit-task-urgent" 
+                  class="add-task-overlay-urgent"
+                  data-priority="urgent"
+                  onclick="editSetTaskPrio('urgent','overlay-edit-task-urgent-medium-low-buttons',event)">
+            <div class="add-task-overlay-important">
+              <div class="add-task-overlay-important-name">Urgent</div>
+              <img id="overlay-prio-urgent" src="/assets/icons/urgent.svg" />
+            </div>
+          </button>
+          <button id="overlay-edit-task-medium"
+                  class="add-task-overlay-medium add-task-clicked"
+                  data-priority="medium"
+                  onclick="editSetTaskPrio('medium','overlay-edit-task-urgent-medium-low-buttons',event)">
+            <div class="add-task-overlay-important">
+              <div class="add-task-overlay-important-name">Medium</div>
+              <img id="overlay-prio-medium" src="/assets/icons/medium.svg" />
+            </div>
+          </button>
+          <button id="overlay-edit-task-low"
+                  class="add-task-overlay-low"
+                  data-priority="low"
+                  onclick="editSetTaskPrio('low','overlay-edit-task-urgent-medium-low-buttons',event)">
+            <div class="add-task-overlay-important">
+              <div class="add-task-overlay-important-name">Low</div>
+              <img id="overlay-prio-low" src="/assets/icons/low.svg" />
+            </div>
+          </button>
+        </div>
       </div>
 
-      <!-- Assigned To -->
-      <div class="overlay-section">
-        <span class="section-label text-label">Assigned to:</span>
-        <div class="assignees-column-overlay">
-          ${assigneeHTML}
+      <!-- Category -->
+      <div class="add-task-overlay-category">
+        <div class="checkbox-overlay-dropdown">
+          <div class="search-overlay">
+            <label for="overlay-edit-task-category">
+              Category <span class="add-task-required">*</span>
+            </label>
+            <input required type="text"
+                   id="overlay-edit-task-category"
+                   autocomplete="off"
+                   placeholder="Select task category" />
+          </div>
+          <ul>
+            <li>
+              <label for="overlay-technical-task">
+                Technical Task
+                <input class="add-task-radio" 
+                       type="radio" 
+                       name="overlay-category"
+                       id="overlay-technical-task"
+                       value="Technical Task"
+                       onclick="editSetCategory(this.value)" />
+              </label>
+            </li>
+            <li>
+              <label for="overlay-user-story">
+                User Story
+                <input class="add-task-radio"
+                       type="radio"
+                       name="overlay-category"
+                       id="overlay-user-story"
+                       value="User Story"
+                       onclick="editSetCategory(this.value)" />
+              </label>
+            </li>
+          </ul>
         </div>
       </div>
 
       <!-- Subtasks -->
-      <div class="subtasks">
-        <p class="section-label text-label">Subtasks:</p>
-        <!-- Subtask List with Checkboxes -->
-        <!-- Jetzt direkt subtaskHTML, KEIN einzelnes <div> mehr -->
-        ${subtaskHTML}
+      <div class="add-task-overlay-subtasks">
+        <div class="add-task-overlay-subtasks-input-container">
+          <label for="overlay-edit-task-subtasks-input">Subtasks</label>
+          <input id="overlay-edit-task-subtasks-input"
+                 name="overlay-edit-task-subtasks-input"
+                 class="add-task-overlay-subtasks-input"
+                 type="text"
+                 placeholder="Add new subtask"
+                 autocomplete="off"
+                 onclick="editSubtasksClicked()"
+                 onkeypress="editAddSubtask(event)" />
+          <div id="overlay-edit-task-subtasks-icon-plus"
+               class="add-task-overlay-subtasks-icon-plus">
+            <button id="overlay-edit-task-subtasks-input-plus"
+                    onclick="editSubtasksPlus(event)">
+              <img src="/assets/icons/add_task_subtasks_icon_plus.svg" alt="" />
+            </button>
+          </div>
+          <div id="overlay-edit-task-subtasks-icon-plus-check"
+               class="add-task-overlay-subtasks-icon-plus-check d-none">
+            <button id="overlay-edit-task-subtasks-input-clear"
+                    onclick="editClearSubtasksInput(event)">
+              <img src="/assets/icons/add_task_clear.svg" />
+            </button>
+            <div class="add-tasks-border"></div>
+            <button onclick="editAddSubtask(event)">
+              <svg width="14" height="14" viewBox="0 0 38 30" fill="none" xmlns="http://www.w3.org/2000/svg">
+                <path d="M4.02832 15.0001L15.2571 26.0662L33.9717 3.93408"
+                      stroke="black" stroke-width="7" stroke-linecap="round" stroke-linejoin="round" />
+              </svg>
+            </button>
+          </div>
+        </div>
       </div>
+      <div id="overlay-edit-task-subtasks-choosen" class="add-task-overlay-subtasks-choosen">
+        <ul id="overlay-edit-task-subtasks-list" class="overlay-edit-task-subtasks-list"></ul>
+      </div>
+    </div>
 
-      <!-- Footer mit Icons -->
-      <div class="task-footer">
-        <!-- Buttons mit Task-ID -->
-        <button class="board-btn-delete" onclick="deleteTask('${task.id}');">
-          <img src="/assets/icons/board-btn-delete.svg" alt="Delete"> Delete
-        </button>
-        <button class="board-btn-edit" onclick="editTask('${task.id}');">
-          <img src="/assets/icons/board-btn-edit.svg" alt="Edit"> Edit
-        </button>
-      </div>
+    <!-- Footer: single "Ok" button => updateTask() -->
+    <div class="add-task-bottom">
+      <button class="add-task-bottom-create-button" type="button"
+              onclick="updateTask('${task.id}')">
+        <div class="add-task-bottom-create-task">
+          Ok
+          <img class="add-task-create-task" src="/assets/icons/add_task_check.svg" alt="check" />
+        </div>
+      </button>
     </div>
   `;
 }

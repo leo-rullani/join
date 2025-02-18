@@ -1,10 +1,3 @@
-/********************************
- * Datei: add_task.js
- * Enthält:
- * 1) Deine alten Funktionen für add_task.html (Hauptformular)
- * 2) Neue, separate Overlay-Funktionen (prefix "overlay...")
- ********************************/
-
 // ===== Globale Variablen =====
 let databaseURL =
   "https://join-5d739-default-rtdb.europe-west1.firebasedatabase.app";
@@ -12,9 +5,8 @@ let globalPrio = "medium";
 let globalCategory = "";
 let globalSubtasks = [];
 let subtasksList = [];
-// ### Haupt-Formular: Array mit gewählten Personen
 let assignedContacts = [];
-// ### "globale" Kontaktliste
+let editAssignedContacts = [];
 let contactsToAssigned = [];
 let selectedTask = null;
 let editingTaskId = null;
@@ -22,8 +14,8 @@ let editingMode = false;
 
 // ===== 1) Init-Funktion fürs Hauptformular =====
 async function initAddTask() {
-  await loadContacts(); // Holt alle Kontakte (contactsToAssigned)
-  createAssignedTo(); // Erzeugt direkt die Kontakt-Liste ohne Filter
+  await loadContacts();
+  createAssignedTo();
   getCategoryFromUrl();
 }
 
@@ -58,7 +50,7 @@ function addTaskCreateTask() {
   const taskId = "task_" + Date.now();
   const title = addTaskTitle();
   const description = addTaskDescription();
-  const names = assignedContacts.slice(); // Kopie aller aktuell gewählten
+  const names = assignedContacts.slice();
   const date = addTaskDueDate();
   const subtasks = globalSubtasks || [];
 
@@ -66,11 +58,11 @@ function addTaskCreateTask() {
     id: taskId,
     title: title,
     description: description,
-    assignees: names, // WICHTIG: unsere assignedContacts
+    assignees: names,
     date: date,
     priority: globalPrio,
     category: globalCategory,
-    boardCategory: "todo", // Standard
+    boardCategory: "todo",
     subtasks: subtasks.map((sb) => ({ name: sb, done: false })),
   };
 
@@ -142,7 +134,6 @@ function createAssignedTo() {
   createContactsContainer.innerHTML = "";
   contactsToAssigned.forEach((contact, i) => {
     const bgColor = assignColor(contact.name);
-    // Checken, ob dieser Kontakt schon gewählt ist
     const checked = assignedContacts.includes(contact.name);
 
     createContactsContainer.innerHTML += `
@@ -178,11 +169,9 @@ function addTaskAssignedToSearch() {
   contactsToAssigned.forEach((c, i) => {
     let contactName = c.name;
     if (!contactName.toLowerCase().includes(search)) {
-      // passt nicht => überspringen
       return;
     }
     const bgColor = assignColor(contactName);
-    // Schon ausgewählt?
     const checked = assignedContacts.includes(contactName);
 
     container.innerHTML += `
@@ -213,13 +202,10 @@ function addTaskAssignedToSearch() {
 function toggleContactSelection(contactName) {
   const index = assignedContacts.indexOf(contactName);
   if (index >= 0) {
-    // already selected => entfernen
     assignedContacts.splice(index, 1);
   } else {
-    // noch nicht drin => hinzufügen
     assignedContacts.push(contactName);
   }
-  // Avatare aktualisieren
   addTaskShowAvatars();
 }
 
@@ -233,7 +219,6 @@ function addTaskShowAvatars() {
   avatarContainer.innerHTML = "";
   assignedContacts.forEach((contact) => {
     const color = assignColor(contact);
-    // Nur Initialen, kein "x"
     avatarContainer.innerHTML += `
       <div class="avatar" style="background:${color}">
         ${getUserInitials(contact)}
@@ -260,7 +245,7 @@ function loadTasks() {
     console.log("Tasks gespeichert in window.tasks:", window.tasks);
   });
 }
-loadTasks(); // Lädt direkt beim Skriptstart
+loadTasks();
 
 function assignColor(name) {
   const colors = {
@@ -316,7 +301,6 @@ let overlayAssignedContacts = [];
 async function overlayAddTaskCreateTask() {
   const taskId = "task_" + Date.now();
 
-  // Titel + Beschreibung
   const title = document
     .getElementById("overlay-add-task-title-input")
     .value.trim();
@@ -324,26 +308,20 @@ async function overlayAddTaskCreateTask() {
     .getElementById("overlay-add-task-textarea")
     .value.trim();
 
-  // Kontakte
-  const names = overlayAssignedContacts.slice(); // Kopie der aktuellen Auswahl
+  const names = overlayAssignedContacts.slice();
 
-  // Datum
   const date = document.getElementById("overlay-date").value;
-  // Priority
   const priority = overlayGetPriority();
-  // Kategorie
   const category = document
     .getElementById("overlay-add-task-category")
     .value.trim();
 
-  // Subtasks
   const spans = document.querySelectorAll(
     "#overlay-add-task-subtasks-list li span"
   );
   let overlaySubtasks = [];
   spans.forEach((s) => overlaySubtasks.push(s.textContent.trim()));
 
-  // Neues Task-Objekt
   const newTask = {
     id: taskId,
     title,
@@ -367,11 +345,9 @@ async function overlayAddTaskCreateTask() {
       console.log("Overlay-Task erfolgreich gespeichert:", newTask);
       addTaskCreateTaskConfirmation();
 
-      // Formular + Overlay reset
       overlayClearForm();
       document.getElementById("addTaskOverlay").style.display = "none";
 
-      // Board neu laden
       await displayTasks();
     } else {
       console.error("Fehler beim Speichern (Overlay)", response.status);
@@ -403,7 +379,6 @@ function overlayClearForm() {
   if (container) container.innerHTML = "";
 }
 
-/** Overlay-Priority **/
 function overlayAddTaskPrio(prio, containerId, event) {
   event.preventDefault();
   overlayAddTaskPrioToggleButton(prio, containerId);
@@ -419,7 +394,6 @@ function overlayAddTaskPrioToggleButton(prio, containerId) {
       icon.src = `/assets/icons/${p}.svg`;
     }
   });
-  // aktivieren
   const activeBtn = container.querySelector(`button[data-priority="${prio}"]`);
   if (activeBtn) {
     activeBtn.classList.add("add-task-clicked");
@@ -438,12 +412,10 @@ function overlayGetPriority() {
   return "medium";
 }
 
-/** Overlay-Category **/
 function overlayAddTaskChoseCategory(value) {
   document.getElementById("overlay-add-task-category").value = value;
 }
 
-/** Overlay-Subtasks (unverändert) **/
 function overlayAddTaskSubtasksClicked() {
   document
     .getElementById("overlay-add-task-subtasks-icon-plus")
@@ -516,7 +488,6 @@ function overlayShowContactList() {
   if (!container) return;
   container.innerHTML = "";
 
-  // Zeige ALLE Kontakte
   contactsToAssigned.forEach((contact, i) => {
     const bgColor = assignColor(contact.name);
     const checked = overlayAssignedContacts.includes(contact.name);
@@ -577,20 +548,16 @@ function overlayAddTaskAssignedToSearch() {
   });
 }
 
-/** Toggle-Funktion fürs Overlay */
 function overlayToggleContactSelection(contactName) {
   const idx = overlayAssignedContacts.indexOf(contactName);
   if (idx >= 0) {
-    // schon drin => entfernen
     overlayAssignedContacts.splice(idx, 1);
   } else {
-    // hinzufügen
     overlayAssignedContacts.push(contactName);
   }
   overlayShowAvatars();
 }
 
-/** Avatare im Overlay */
 function overlayShowAvatars() {
   const avatarDiv = document.getElementById("overlay-add-task-assigned-avatar");
   if (!avatarDiv) return;
@@ -606,113 +573,51 @@ function overlayShowAvatars() {
   });
 }
 
-/*edit*/
+/****************************************
+ * editTask(taskId)
+ * - Called from detail mode's "Edit" button
+ * - Sets editingMode = true, re-opens overlay
+ ****************************************/
 function editTask(taskId) {
-  console.log("Edit Task:", taskId);
-
-  // 1) Finde Task in globalen tasks
-  const task = tasks.find((t) => t.id === taskId);
-  if (!task) {
-    console.error("Task not found to edit:", taskId);
-    return;
-  }
-  window.oldBoardCategory = task.boardCategory;
-  // 2) Speichere die ID in editingTaskId
-  editingTaskId = taskId;
   editingMode = true;
-
-  // 3) Blende das Board-Overlay aus
-  closeBoardOverlay();
-
-  // 4) Öffne das "Add Task Overlay" (oder ein spezielles Edit-Overlay),
-  //    Fülle es mit den Task-Daten:
-  openAddTaskOverlayForEdit(task);
+  editingTaskId = taskId;
+  openBoardOverlay(taskId);
 }
 
-function openAddTaskOverlayForEdit(task) {
-  // 1) Wechsle das Overlay auf "block" o. Ä.
-  const overlay = document.getElementById("addTaskOverlay");
-  overlay.classList.add("active");
+/****************************************
+ * updateTask(taskId)
+ * - Called by the "Ok" button in edit mode
+ * - Actually saves to Firebase
+ ****************************************/
+async function updateTask(taskId) {
+  const taskRef = `${databaseURL}/tasks/${taskId}.json`;
 
-  // 2) Titel & Beschreibung
-  document.getElementById("overlay-add-task-title-input").value = task.title;
-  document.getElementById("overlay-add-task-textarea").value = task.description;
+  const titleEl = document.getElementById("overlay-edit-task-title-input");
+  const descEl = document.getElementById("overlay-edit-task-textarea");
+  const dateEl = document.getElementById("overlay-edit-date");
+  const catEl = document.getElementById("overlay-edit-task-category");
 
-  // 3) Datum
-  document.getElementById("overlay-date").value = task.date || "";
-
-  // 4) Kategorie
-  document.getElementById("overlay-add-task-category").value =
-    task.category || "";
-
-  // 5) Priority (Prio-Buttons)
-  overlayAddTaskPrioToggleButton(
-    task.priority || "medium",
-    "overlay-add-task-urgent-medium-low-buttons"
-  );
-
-  // 6) Assignees (overlayAssignedContacts füllen)
-  overlayAssignedContacts = [...(task.assignees || [])];
-  overlayShowAvatars();
-
-  // 7) Subtasks
-  //    Leere erst die Liste und fülle neu
-  document.getElementById("overlay-add-task-subtasks-list").innerHTML = "";
-  (task.subtasks || []).forEach((sub) => {
-    createOverlaySubtaskLi(sub.name, sub.done);
-  });
-
-  // 8) Button / Form-Submit auf "overlayUpdateTask()" statt "overlayAddTaskCreateTask()"
-  const form = document.getElementById("overlay-add-task-form");
-  form.onsubmit = (event) => {
-    event.preventDefault();
-    overlayUpdateTask(); // Siehe nächste Funktion
-  };
-
-  // Optional: Ändere den Button-Text „Create Task“ → „Save Task“
-  const createBtn = document.querySelector(".add-task-bottom-create-button");
-  if (createBtn) {
-    createBtn.innerHTML = `
-      <div class="add-task-bottom-create-task">
-        Save Changes
-        <img class="add-task-create-task" src="/assets/icons/add_task_check.svg" alt="check" />
-      </div>
-    `;
-  }
-}
-
-async function overlayUpdateTask() {
-  if (!editingTaskId) {
-    console.error("No editingTaskId set. Cannot update task!");
+  if (!titleEl || !descEl || !dateEl || !catEl) {
+    console.error("One or more edit form elements not found!");
     return;
   }
 
-  // 1) Gleiche Logik wie beim Erstellen, aber wir überschreiben das Objekt in Firebase
-  const title = document
-    .getElementById("overlay-add-task-title-input")
-    .value.trim();
-  const description = document
-    .getElementById("overlay-add-task-textarea")
-    .value.trim();
-  const date = document.getElementById("overlay-date").value;
-  const priority = overlayGetPriority();
-  const category = document
-    .getElementById("overlay-add-task-category")
-    .value.trim();
+  const title = titleEl.value.trim();
+  const description = descEl.value.trim();
+  const date = dateEl.value;
+  const category = catEl.value.trim();
+  const priority = getEditTaskPriority();
 
-  // Subtasks einsammeln
   const spans = document.querySelectorAll(
-    "#overlay-add-task-subtasks-list li span"
+    "#overlay-edit-task-subtasks-list li span"
   );
   let overlaySubtasks = [];
   spans.forEach((s) => overlaySubtasks.push(s.textContent.trim()));
 
-  // Assigned Contacts
-  const assignees = overlayAssignedContacts.slice();
+  const assignees = editAssignedContacts.slice();
 
-  // 2) Erstelle das aktualisierte Task-Objekt
   const updatedTask = {
-    id: editingTaskId,
+    id: taskId,
     title,
     description,
     assignees,
@@ -723,49 +628,307 @@ async function overlayUpdateTask() {
     subtasks: overlaySubtasks.map((st) => ({ name: st, done: false })),
   };
 
-  // 3) PUT/PATCH in Firebase
-  const taskRef = `${databaseURL}/tasks/${editingTaskId}.json`;
   try {
     const response = await fetch(taskRef, {
-      method: "PUT", // oder PATCH
+      method: "PUT",
       headers: { "Content-Type": "application/json" },
       body: JSON.stringify(updatedTask),
     });
-    if (response.ok) {
-      console.log("Overlay-Task erfolgreich aktualisiert:", updatedTask);
-      showToast("Task updated!");
 
-      // 4) Reset + Overlay schließen
-      overlayClearForm(); // setzt overlayAssignedContacts = [];
-      document.getElementById("addTaskOverlay").style.display = "none";
+    if (response.ok) {
+      console.log("Task updated:", updatedTask);
+      showToast("Task updated!");
+      await displayTasks();
+
       editingMode = false;
       editingTaskId = null;
 
-      // 5) Board neu laden
-      await displayTasks();
+      openBoardOverlay(taskId);
     } else {
-      console.error("Fehler beim Updaten (Overlay)", response.status);
+      console.error("Update failed with status:", response.status);
     }
   } catch (err) {
-    console.error("Fehler (Overlay):", err);
+    console.error("Error updating task:", err);
   }
 }
 
-function createOverlaySubtaskLi(name, done) {
-  const ul = document.getElementById("overlay-add-task-subtasks-list");
-  // done ignorieren wir hier, weil wir in deinem Code
-  // noch kein "Haken" für Subtasks hast. Falls du den Status
-  // in der Edit-Ansicht willst, kannst du einen <input type="checkbox"> hinzufügen.
+/****************************************
+ * fillEditFormData(task)
+ * - Called right after injecting the edit template
+ ****************************************/
+function fillEditFormData(task) {
+  document.getElementById("overlay-edit-task-title-input").value = task.title;
+  document.getElementById("overlay-edit-task-textarea").value =
+    task.description;
+  document.getElementById("overlay-edit-date").value = task.date || "";
+  document.getElementById("overlay-edit-task-category").value =
+    task.category || "";
+
+  editTogglePrioButton(
+    task.priority || "medium",
+    "overlay-edit-task-urgent-medium-low-buttons"
+  );
+
+  editAssignedContacts = [...(task.assignees || [])];
+  editShowAvatars();
+
+  const ul = document.getElementById("overlay-edit-task-subtasks-list");
+  ul.innerHTML = "";
+  (task.subtasks || []).forEach((sub) => {
+    const li = document.createElement("li");
+    li.innerHTML = `
+      <span class="add-task-subtasks-extra-task">${sub.name}</span>
+      <div class="add-task-subtasks-icons">
+        <img class="add-task-edit" src="/assets/icons/add-subtask-edit.svg" onclick="editSubtaskName(this)">
+        <div class="add-tasks-border"></div>
+        <img class="add-task-trash" src="/assets/icons/add-subtask-delete.svg" onclick="editRemoveSubtask(this)">
+      </div>
+    `;
+    ul.appendChild(li);
+  });
+
+  window.oldBoardCategory = task.boardCategory;
+}
+
+/****************************************
+ * Priority handling for Edit
+ ****************************************/
+function editSetTaskPrio(prio, containerId, event) {
+  event.preventDefault();
+  editTogglePrioButton(prio, containerId);
+}
+
+function editTogglePrioButton(prio, containerId) {
+  const container = document.getElementById(containerId);
+  if (!container) return;
+  const buttons = container.querySelectorAll("button");
+
+  buttons.forEach((btn) => {
+    btn.classList.remove("add-task-clicked");
+    const icon = btn.querySelector("img");
+    const p = btn.dataset.priority;
+
+    if (icon) icon.src = `/assets/icons/${p}.svg`;
+  });
+
+  const activeBtn = container.querySelector(`button[data-priority="${prio}"]`);
+  if (activeBtn) {
+    activeBtn.classList.add("add-task-clicked");
+    const icon = activeBtn.querySelector("img");
+
+    if (icon) icon.src = `/assets/icons/${prio}_white.svg`;
+  }
+}
+
+function getEditTaskPriority() {
+  const container = document.getElementById(
+    "overlay-edit-task-urgent-medium-low-buttons"
+  );
+  if (!container) return "medium";
+  const activeBtn = container.querySelector(".add-task-clicked");
+  if (activeBtn) {
+    return activeBtn.dataset.priority;
+  }
+  return "medium";
+}
+
+/****************************************
+ * Category in Edit
+ ****************************************/
+function editSetCategory(value) {
+  document.getElementById("overlay-edit-task-category").value = value;
+}
+
+/****************************************
+ * Subtasks in Edit: Add, Remove, Edit
+ ****************************************/
+function editSubtasksClicked() {
+  document
+    .getElementById("overlay-edit-task-subtasks-icon-plus")
+    .classList.add("d-none");
+  document
+    .getElementById("overlay-edit-task-subtasks-icon-plus-check")
+    .classList.remove("d-none");
+}
+
+function editAddSubtask(event) {
+  if (event.type === "keypress" && event.key !== "Enter") return;
+  event.preventDefault();
+  const input = document.getElementById("overlay-edit-task-subtasks-input");
+  if (!input) return;
+  const val = input.value.trim();
+  if (!val) return;
+
+  const ul = document.getElementById("overlay-edit-task-subtasks-list");
   const li = document.createElement("li");
   li.innerHTML = `
-    <span class="add-task-subtasks-extra-task">${name}</span>
+    <span class="add-task-subtasks-extra-task">${val}</span>
     <div class="add-task-subtasks-icons">
-      <img class="add-task-edit" src="/assets/icons/add-subtask-edit.svg" onclick="/* optional */">
+      <img class="add-task-edit" src="/assets/icons/add-subtask-edit.svg" onclick="editSubtaskName(this)">
       <div class="add-tasks-border"></div>
-      <img class="add-task-trash" src="/assets/icons/add-subtask-delete.svg" onclick="overlayRemoveSubtask(this)">
+      <img class="add-task-trash" src="/assets/icons/add-subtask-delete.svg" onclick="editRemoveSubtask(this)">
     </div>
   `;
-  ul.appendChild(li);
+  ul.prepend(li);
+
+  input.value = "";
+  document
+    .getElementById("overlay-edit-task-subtasks-icon-plus")
+    .classList.remove("d-none");
+  document
+    .getElementById("overlay-edit-task-subtasks-icon-plus-check")
+    .classList.add("d-none");
+}
+
+function editSubtaskName(el) {
+  const li = el.closest("li");
+  if (!li) return;
+  const span = li.querySelector("span");
+  if (!span) return;
+
+  const oldName = span.textContent.trim();
+  const input = document.createElement("input");
+  input.type = "text";
+  input.value = oldName;
+  input.addEventListener("keypress", (ev) => {
+    if (ev.key === "Enter") {
+      const newName = input.value.trim();
+      span.textContent = newName;
+      li.replaceChild(span, input);
+    }
+  });
+  input.addEventListener("blur", () => {
+    const newName = input.value.trim();
+    span.textContent = newName;
+    li.replaceChild(span, input);
+  });
+
+  li.replaceChild(input, span);
+  input.focus();
+}
+
+function editRemoveSubtask(el) {
+  const li = el.closest("li");
+  if (li) li.remove();
+}
+
+function editSubtasksPlus(event) {
+  event.preventDefault();
+  editSubtasksClicked();
+  const input = document.getElementById("overlay-edit-task-subtasks-input");
+  if (input) {
+    input.focus();
+    input.select();
+  }
+}
+
+function editClearSubtasksInput(event) {
+  event.preventDefault();
+  document
+    .getElementById("overlay-edit-task-subtasks-icon-plus")
+    .classList.remove("d-none");
+  document
+    .getElementById("overlay-edit-task-subtasks-icon-plus-check")
+    .classList.add("d-none");
+  const input = document.getElementById("overlay-edit-task-subtasks-input");
+  if (input) input.value = "";
+}
+
+/****************************************
+ * Assigned Contacts in Edit
+ * (Similar to your "Add" overlay,
+ * but using editAssignedContacts)
+ ****************************************/
+function editShowContactList() {
+  const container = document.getElementById("overlay-edit-task-contact");
+  if (!container) return;
+  container.innerHTML = "";
+
+  (contactsToAssigned || []).forEach((contact, i) => {
+    const bgColor = assignColor(contact.name);
+    const checked = editAssignedContacts.includes(contact.name);
+
+    container.innerHTML += `
+      <li>
+        <label for="edit-person${i}">
+          <span class="avatar" style="background-color:${bgColor};">
+            ${getUserInitials(contact.name)}
+          </span>
+          <span>${contact.name}</span>
+        </label>
+        <input
+          class="overlay-add-task-checkbox"
+          type="checkbox"
+          id="edit-person${i}"
+          value="${contact.name}"
+          ${checked ? "checked" : ""}
+          onclick="editToggleContactSelection('${contact.name}')"
+        >
+      </li>
+    `;
+  });
+}
+
+function editAssignedToSearch() {
+  const search = document
+    .getElementById("overlay-find-person")
+    .value.toLowerCase();
+  const container = document.getElementById("overlay-edit-task-contact");
+  container.innerHTML = "";
+
+  (contactsToAssigned || []).forEach((c, i) => {
+    const contactName = c.name;
+    if (!contactName.toLowerCase().includes(search)) return;
+
+    const bgColor = assignColor(contactName);
+    const checked = editAssignedContacts.includes(contactName);
+
+    container.innerHTML += `
+      <li>
+        <label for="edit-person${i}">
+          <span class="avatar" style="background-color:${bgColor};">
+            ${getUserInitials(contactName)}
+          </span>
+          <span>${contactName}</span>
+        </label>
+        <input
+          class="overlay-add-task-checkbox"
+          type="checkbox"
+          id="edit-person${i}"
+          value="${contactName}"
+          ${checked ? "checked" : ""}
+          onclick="editToggleContactSelection('${contactName}')"
+        >
+      </li>
+    `;
+  });
+}
+
+function editToggleContactSelection(contactName) {
+  const idx = editAssignedContacts.indexOf(contactName);
+  if (idx >= 0) {
+    editAssignedContacts.splice(idx, 1);
+  } else {
+    editAssignedContacts.push(contactName);
+  }
+  editShowAvatars();
+}
+
+function editShowAvatars() {
+  const avatarDiv = document.getElementById(
+    "overlay-edit-task-assigned-avatar"
+  );
+  if (!avatarDiv) return;
+  avatarDiv.innerHTML = "";
+
+  editAssignedContacts.forEach((contactName) => {
+    const bgColor = assignColor(contactName);
+    avatarDiv.innerHTML += `
+      <div class="avatar" style="background:${bgColor}">
+        ${getUserInitials(contactName)}
+      </div>
+    `;
+  });
 }
 
 /* =====================================
@@ -855,53 +1018,4 @@ async function displayTasks() {
       }
     }
   });
-}
-
-async function loadContacts() {
-  const response = await fetch(`${databaseURL}/contacts.json`);
-  const data = await response.json();
-  contactsToAssigned = data;
-  contactsToAssigned = Object.values(contactsToAssigned);
-  createAssignedTo();
-}
-
-function loadTasks() {
-  getTasks().then((loadedTasks) => {
-    window.tasks = loadedTasks;
-    console.log("Tasks gespeichert in window.tasks:", window.tasks);
-  });
-}
-loadTasks();
-
-function assignColor(name) {
-  const colors = {
-    A: "#FF5733",
-    B: "#33FF57",
-    C: "#5733FF",
-    D: "#FF33A8",
-    E: "#33A8FF",
-    F: "#A8FF33",
-    G: "#FF8C33",
-    H: "#8C33FF",
-    I: "#33FFD7",
-    J: "#FFD733",
-    K: "#33FF8C",
-    L: "#D733FF",
-    M: "#FF336E",
-    N: "#338CFF",
-    O: "#33FFBD",
-    P: "#FFBD33",
-    Q: "#8CFF33",
-    R: "#FF338C",
-    S: "#336EFF",
-    T: "#33FF57",
-    U: "#FF5733",
-    V: "#5733FF",
-    W: "#FF33A8",
-    X: "#33A8FF",
-    Y: "#A8FF33",
-    Z: "#FF8C33",
-  };
-  let firstLetter = name.trim().charAt(0).toUpperCase();
-  return colors[firstLetter] || "#999999";
 }
