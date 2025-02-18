@@ -12,7 +12,6 @@
 .board_header {
   display: flex;
   align-items: center;
-  margin-left: 35px;
   margin-right: 60px;
   justify-content: space-between;
   margin-bottom: 60px;
@@ -38,6 +37,7 @@
 
 .search_container {
   position: relative;
+  margin-right: 10px;
 }
 .search_icon {
   position: absolute;
@@ -54,8 +54,9 @@
   border: 2px solid #ccc;
   border-radius: 8px;
   font-size: 16px;
-  width: 200px;
+  width: 220px;
   text-align: left;
+  min-width: 100%;
 }
 .btn_add_task {
   background-color: #2b3647;
@@ -746,7 +747,7 @@
 @media (max-width: 860px) {
   .task {
     display: flex;
-    justify-content: center;
+    justify-content: flex-start; /* statt center */
     flex-direction: column;
   }
 }
@@ -755,6 +756,9 @@
   .board_container {
       flex-wrap: wrap !important;
       justify-content: center;
+      overflow-y: auto;
+      width: 100%;
+      padding-bottom: 60px;
   }
   .board_overlay_content {
     width: 300px; 
@@ -814,6 +818,7 @@
   .board_header {
     flex-direction: column; 
     align-items: flex-start; 
+    width: 94%;
   }
 
   .board_header_actions {
@@ -855,11 +860,13 @@
     align-items: center;
     position: relative;
     width: 100%;
+    top: 10px;
+    margin-bottom: 10px;
   }
 
   .search_container input {
     width: 100%;
-    padding-right: 40px; 
+    padding-right: 0px; 
   }
 
   .column_header {
@@ -907,9 +914,7 @@
   .task {
     margin-left: 0px !important;
   }
-  .board-title {
-    margin-left: -30px;
-  }
+
   .search_container {
     /* Statt negative margin einfach 0 oder auto: */
     margin-left: 0;
@@ -921,10 +926,17 @@
   /* Falls das Inputfeld nicht 100% bekommt, kannst du es so anpassen: */
   .search_container input {
     width: 100%;
-    padding-right: 40px; /* Platz für Icon */
   }
   .column_header {
     width: inherit;
+  }
+}
+
+@media (max-width: 650px) {
+  .btn_add_task {
+    position: absolute; 
+    margin-right: -5px;
+
   }
 }
 
@@ -943,7 +955,7 @@
       justify-content: center;
       color: transparent; 
       position: absolute;
-      margin-right: -40px;
+      margin-right: -10px;
     }
     .task_list {
       display: flex;
