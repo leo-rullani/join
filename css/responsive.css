@@ -1593,8 +1593,8 @@
 }
 
 @media (max-width: 530px) {
-  input {
-    width: 90% !important;
+  .add-task-main-content input {
+    width: 90%;
   }
 
   .add-task-subtasks-input{
@@ -1621,8 +1621,8 @@
 }
 
 @media (max-width: 480px) {
-  input {
-    width: 70% !important;
+  .add-task-main-content input {
+    width: 70% ;
     font-size: 14px;
   }
 
@@ -1660,8 +1660,8 @@
 }
 
 @media (max-width: 380px) {
-  input {
-    width: 63% !important;
+  .add-task-main-content input {
+    width: 63%;
   }
 
   .add-task-subtasks-input{
