@@ -261,6 +261,14 @@
   background-color: #F6F7F8;
 }
 
+@media (max-width: 500px) {
+  .subtask-item-overlay input[type="checkbox"] {
+    margin-right: 16px;
+    width: 10% !important;
+  }
+}
+
+
 @media (max-width: 860px) {
   .board_overlay_content {
     width: 350px; 
