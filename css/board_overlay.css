@@ -74,7 +74,7 @@
   }
 }
 .overlay_content.slide-in {
-  animation: slideInFromRight 3s ease-in forwards;
+  animation: slideInFromRight 0.3s ease-in forwards;
 }
 
 .board_overlay_content.slide-in {
@@ -95,7 +95,7 @@
 }
 
 .overlay_content.slide-out {
-  animation: slideOutToRight 3s ease-out forwards;
+  animation: slideOutToRight 0.3s ease-out forwards;
 }
 
 .board_overlay_close {
