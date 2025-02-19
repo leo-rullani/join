@@ -184,3 +184,102 @@ function closeBoardOverlay() {
     { once: true }
   );
 }
+
+/**
+ * Öffnet das Add-Task-Overlay mit einer Slide-In-Animation.
+ * Achtet auf mobile Breakpoint: Wenn <= 650, geht es direkt auf addtask.html
+ */
+function openAddTaskOverlay() {
+  const overlay = document.getElementById("addTaskOverlay");
+  if (!overlay) return;
+
+  // Mobile -> direkt addtask.html
+  if (window.innerWidth <= 650) {
+    window.location.href = "/html/addtask.html";
+    return;
+  }
+
+  // Anzeige aktivieren
+  overlay.style.display = "flex"; // jetzt sichtbar
+  overlay.classList.add("active");
+
+  // Animationslogik
+  const content = overlay.querySelector(".overlay_content");
+  if (content) {
+    // Prüfen, ob Overlay gerade "unsichtbar" war
+    const wasHidden =
+      overlay.style.display === "" || overlay.style.display === "none";
+    if (wasHidden) {
+      content.style.animationName = "slideInFromRight";
+    } else {
+      content.style.animationName = "";
+    }
+  }
+}
+
+/**
+ * Schließt das Add-Task-Overlay mit Slide-Out-Animation.
+ */
+function closeAddTaskOverlay() {
+  const overlay = document.getElementById("addTaskOverlay");
+  if (!overlay) return;
+
+  const content = overlay.querySelector(".overlay_content");
+  if (!content) {
+    // Falls kein Inhalt da, einfach hart ausblenden
+    overlay.style.display = "none";
+    overlay.classList.remove("active");
+    return;
+  }
+
+  // Slide-Out
+  content.style.animationName = "slideOutToRight";
+  content.addEventListener(
+    "animationend",
+    function handler() {
+      // Nach Ende der Animation Overlay ausblenden
+      overlay.style.display = "none";
+      overlay.classList.remove("active");
+      content.style.animationName = "";
+      content.removeEventListener("animationend", handler);
+      // Wichtig: NICHT mehr overlay.innerHTML = "" -> sonst ist alles weg!
+    },
+    { once: true }
+  );
+}
+
+const addTaskOverlay = document.getElementById("addTaskOverlay");
+if (addTaskOverlay) {
+  addTaskOverlay.addEventListener("click", function (e) {
+    if (e.target === addTaskOverlay) {
+      closeAddTaskOverlay();
+    }
+  });
+}
+
+const boardOverlay = document.getElementById("boardOverlay");
+if (boardOverlay) {
+  boardOverlay.addEventListener("click", (e) => {
+    if (e.target === boardOverlay) {
+      closeBoardOverlay();
+    }
+  });
+}
+
+const contactOverlay = document.getElementById("overlay");
+if (contactOverlay) {
+  contactOverlay.addEventListener("click", (e) => {
+    if (e.target === contactOverlay) {
+      closeOverlay();
+    }
+  });
+}
+
+const contactEditOverlay = document.getElementById("editOverlay");
+if (contactEditOverlay) {
+  contactEditOverlay.addEventListener("click", (e) => {
+    if (e.target === contactEditOverlay) {
+      closeEditOverlay();
+    }
+  });
+}
