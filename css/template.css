@@ -2,7 +2,7 @@
 body {
   margin: 0;
   padding: 0;
-  font-family: "Inter", serif;
+  font-family: "Inter";
   background-color: #f6f7f8;
   /* Grau wie gewünscht */
   overflow: hidden;
@@ -27,6 +27,7 @@ header {
   justify-content: space-between;
   align-items: center;
   font-size: 18px;
+  z-index: 100;
 }
 
 .header_img {

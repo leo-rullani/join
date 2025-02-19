@@ -341,12 +341,12 @@ function taskBoardTemplate(task) {
   const priorityIcon = getPriorityIcon(task.priority);
 
   return `
-    <button class="board_overlay_close" onclick="closeBoardOverlay()">&times;</button>
+    
 
-    <div id="taskLabel" class="task-label" style="background-color: ${labelColor};">
-      ${task.category}
-    </div>
-
+  <div id="taskLabel" class="task-label board_label" style="background-color: ${labelColor};">
+      ${task.category}<button class="board_overlay_close" onclick="closeBoardOverlay()">&times;</button>
+    </div> 
+<div class="board_overlay_details_content"> 
     <h2 id="taskTitle" class="h2_board-overlay">${task.title}</h2>
     <p id="taskSubtitle" class="text-regular">${task.description}</p>
 
@@ -375,14 +375,14 @@ function taskBoardTemplate(task) {
       ${subtaskHTML}
     </div>
 
-    <div class="task-footer">
+    <div class="task-detail-footer">
       <button class="board-btn-delete" onclick="deleteTask('${task.id}')">
         <img src="/assets/icons/board-btn-delete.svg" alt="Delete"> Delete
       </button>
       <button class="board-btn-edit" onclick="editTask('${task.id}')">
         <img src="/assets/icons/board-btn-edit.svg" alt="Edit"> Edit
       </button>
-    </div>
+    </div></div>
   `;
 }
 
@@ -559,7 +559,7 @@ function taskEditTemplate(task) {
     </div>
 
     <!-- Footer: single "Ok" button => updateTask() -->
-    <div class="add-task-bottom">
+    <div class="edit-task-bottom">
       <button class="add-task-bottom-create-button" type="button"
               onclick="updateTask('${task.id}')">
         <div class="add-task-bottom-create-task">

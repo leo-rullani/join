@@ -23,45 +23,35 @@
 
         <!-- header -->
         <header>
-            <div class="header_content">
-                <span class="kanban-project">Kanban Project Management Tool</span>
-                <div class="header_img">
-                    <!-- help icon visible > 605px per CSS -->
-                    <a href="/html/help.html">
-                        <img class="help_icon" src="/assets/icons/help.svg" alt="Help Icon">
-                    </a>
+            <div class="header_content"><span>Kanban Project Management Tool </span>
+                <div class="header_img"><a href="/html/help.html"><img class="help_icon" src="/assets/icons/help.svg"
+                            alt=""></a>
                     <div onclick="toggleRespMenu()">
                         <div class="profile_initials" id="userInitials"></div>
                     </div>
                 </div>
-            </div>
         </header>
 
         <!-- main: side-bar left and content right -->
         <main class="content">
             <div class="side_menu">
-                <img class="logo" src="/assets/img/join-logo-white.svg" alt="Join Logo">
+                <img class="logo" src="/assets/img/join-logo-white.svg" alt="">
                 <div class="menu_bar">
-                    <div class="selection">
-                        <img src="/assets/icons/Icon-summary.svg" alt="">
-                        <a href="/html/summary.html"><span>Summary</span></a>
-                    </div>
-                    <div class="selection active">
-                        <img src="/assets/icons/Icon-addtask.svg" alt="">
-                        <a href="/html/addtask.html"><span>Add Task</span></a>
-                    </div>
-                    <div class="selection ">
-                        <img src="/assets/icons/Icon-board.svg" alt="">
-                        <a href="/html/board.html"><span>Board</span></a>
-                    </div>
-                    <div class="selection">
-                        <img src="/assets/icons/Icon-contacts.svg" alt="">
-                        <a href="/html/contacts.html"><span>Contacts</span></a>
-                    </div>
+                    <div class="selection"><img src="/assets/icons/Icon-summary.svg" alt=""><a
+                            href="/html/summary.html"><span>Summary</span></a></div>
+                    <div class="selection isActive"><img src="/assets/icons/Icon-addtask.svg" alt=""><a
+                            href="/html/addtask.html"><span>Add
+                                Task</span></a></div>
+                    <div class="selection"><img src="/assets/icons/Icon-board.svg" alt=""><a
+                            href="/html/board.html"><span>Board</span></a></div>
+                    <div class="selection"><img src="/assets/icons/Icon-contacts.svg" alt=""><a
+                            href="/html/contacts.html"><span>Contacts</span></a></div>
+
                     <div class="policy_docs">
                         <a href="/html/privacypolicy.html">Privacy Policy</a>
-                        <a href="/html/legalnotice.html">Legal Notice</a>
+                        <a href="/html/legalnotice.html">Legal notice</a>
                     </div>
+
                 </div>
             </div>
 
@@ -247,12 +237,10 @@
             <!-- KLEINES PROFILMENÜ (zuständig für Mobil/Responsive) -->
             <div class="menu_header resp_menu_closed" id="resp_menu">
                 <div class="menu_links">
-                    <!-- help < 605px -->
-                    <a href="/html/help.html" class="help_text_link">Help</a>
-
+                    <a class="help-link" href="/html/help.html">Help</a>
                     <a href="/html/legalnotice.html">Legal Notice</a>
                     <a href="/html/privacypolicy.html">Privacy Policy</a>
-                    <a onclick="logout()" href="#">Logout</a>
+                    <a onclick="logout()" href="#">Log out</a>
                 </div>
             </div>
 

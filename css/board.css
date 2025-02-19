@@ -252,6 +252,9 @@
   position: relative;
   display: flex;
   flex-direction: column;
+  animation-duration: 0.2s;
+  animation-fill-mode: both;
+  animation-timing-function: linear;
 }
 
 .add-task-overlay-content {
@@ -310,6 +313,7 @@
   font-size: 14px;
   height: 80px;
   resize: none;
+  font-family: "Inter";
 }
 
 .add-task-overlay-assigned-to {
@@ -366,6 +370,23 @@
   z-index: 1;
   border-radius: 0 0 10px 10px;
   box-shadow: 0 4px 4px 0 rgba(0, 0, 0, 0.1);
+}
+
+.checkbox-overlay-dropdown ul::-webkit-scrollbar-track {
+  -webkit-box-shadow: inset 0 0 6px rgba(0, 0, 0, 0.3);
+  border-radius: 10px;
+  background-color: #f5f5f5;
+}
+
+.checkbox-overlay-dropdown ul::-webkit-scrollbar {
+  width: 8px;
+  background-color: #f5f5f5;
+}
+
+.checkbox-overlay-dropdown ul::-webkit-scrollbar-thumb {
+  border-radius: 10px;
+  -webkit-box-shadow: inset 0 0 6px rgba(0, 0, 0, 0.3);
+  background-color: #a0a0a0;
 }
 
 .checkbox-overlay-dropdown ul:hover {
@@ -680,7 +701,6 @@
   gap: 8px;
 }
 
-
 .add-task-overlay-subtasks-icons {
   display: none;
   padding-right: 16px;
@@ -752,14 +772,14 @@
 
 @media (max-width: 860px) {
   .board_container {
-      flex-wrap: wrap !important;
-      justify-content: center;
-      overflow-y: auto;
-      width: 100%;
-      padding-bottom: 60px;
+    flex-wrap: wrap !important;
+    justify-content: center;
+    overflow-y: auto;
+    width: 100%;
+    padding-bottom: 60px;
   }
   .board_overlay_content {
-    width: 300px; 
+    width: 300px;
     height: 750px;
   }
   .subtask-item-overlay input[type="checkbox"] {
@@ -779,19 +799,19 @@
 
 @media (max-width: 780px) {
   .board_container {
-      flex-wrap: wrap !important;
-      justify-content: center;
+    flex-wrap: wrap !important;
+    justify-content: center;
   }
 }
 
 @media (max-width: 650px) {
   .board_container {
-      flex-wrap: wrap !important;
-      justify-content: center;
-      margin-top: -40px;
+    flex-wrap: wrap !important;
+    justify-content: center;
+    margin-top: -40px;
   }
   .board_overlay_content {
-    width: 260px; 
+    width: 260px;
     height: 670px;
   }
 }
@@ -804,43 +824,43 @@
 
 @media (max-width: 780px) {
   .board_container {
-      flex-wrap: wrap !important;
-      justify-content: center;
+    flex-wrap: wrap !important;
+    justify-content: center;
   }
 }
 
 @media (max-width: 650px) {
   .board_header {
-    flex-direction: column; 
-    align-items: flex-start; 
+    flex-direction: column;
+    align-items: flex-start;
     width: 94%;
   }
 
   .board_header_actions {
     display: flex;
-    flex-direction: column; 
+    flex-direction: column;
     width: 100%;
   }
-  
+
   .btn_add_task {
-    order: 2; 
-    align-self: flex-end; 
+    order: 2;
+    align-self: flex-end;
     margin-top: -37px;
     width: 44px;
     height: 44px;
     padding: 0;
-    border-radius: 12px; 
+    border-radius: 12px;
     display: flex;
     align-items: center;
     justify-content: center;
-    color: transparent; 
+    color: transparent;
     position: relative;
   }
   .btn_add_task::before {
-    content: "+";       
-    color: #ffffff;      
-    font-size: 40px; 
-    font-weight: 300px;    
+    content: "+";
+    color: #ffffff;
+    font-size: 40px;
+    font-weight: 300px;
     position: absolute;
     top: 50%;
     left: 50%;
@@ -848,9 +868,9 @@
   }
 
   .search_container {
-    order: 3;            
-    flex-basis: 100%;     
-    margin-top: 10px;    
+    order: 3;
+    flex-basis: 100%;
+    margin-top: 10px;
     display: flex;
     align-items: center;
     position: relative;
@@ -861,21 +881,20 @@
 
   .search_container input {
     width: 100%;
-    padding-right: 0px; 
+    padding-right: 0px;
   }
 
   .column_header {
     margin-bottom: 0px;
   }
   .task_list:has(.task) {
-    padding-top: 0px;
-    padding-bottom: 0px;
+    margin-bottom: 30px;
   }
 }
 
 @media (max-width: 860px) {
   .board_overlay_content {
-    width: 260px; 
+    width: 260px;
     height: 670px;
   }
 }
@@ -898,10 +917,10 @@
 
 @media (max-width: 500px) {
   .board_container {
-      flex-wrap: wrap !important;
-      justify-content: flex-start;
-      margin-left: 0px;
-      scrollbar-width: none;
+    flex-wrap: wrap !important;
+    justify-content: flex-start;
+    margin-left: 0px;
+    scrollbar-width: none;
   }
   .board_column {
     min-height: 0px;
@@ -917,7 +936,7 @@
     width: 100%;
     box-sizing: border-box; /* Damit Padding und Border eingerechnet werden */
   }
-  
+
   /* Falls das Inputfeld nicht 100% bekommt, kannst du es so anpassen: */
   .search_container input {
     width: 100%;
@@ -929,26 +948,25 @@
 
 @media (max-width: 650px) {
   .btn_add_task {
-    position: absolute; 
+    position: absolute;
     margin-right: -5px;
-
   }
 }
 
 @media (max-width: 500px) {
   @media (min-width: 100px) {
     .btn_add_task {
-      order: 2; 
-      align-self: flex-end; 
+      order: 2;
+      align-self: flex-end;
       margin-top: -37px;
       width: 44px;
       height: 44px;
       padding: 0;
-      border-radius: 12px; 
+      border-radius: 12px;
       display: flex;
       align-items: center;
       justify-content: center;
-      color: transparent; 
+      color: transparent;
       position: absolute;
       margin-right: -10px;
     }
@@ -958,36 +976,36 @@
       flex-wrap: nowrap;
       overflow-x: auto;
       gap: 8px;
-      width: 100%;         
+      width: 100%;
     }
     .task {
-      flex: 0 0 auto; 
-      width: 280px; 
+      flex: 0 0 auto;
+      width: 280px;
     }
 
     .task_card {
-      flex: 1 1 auto; 
+      flex: 1 1 auto;
       min-width: 200px;
       box-sizing: border-box;
     }
-  .task_list::-webkit-scrollbar {
-    display: none;     
-  }
-  .task_list::-webkit-scrollbar-thumb {
-    background: #aaa;     
-    border-radius: 4px;
-  }
+    .task_list::-webkit-scrollbar {
+      display: none;
+    }
+    .task_list::-webkit-scrollbar-thumb {
+      background: #aaa;
+      border-radius: 4px;
+    }
     .column_wrapper {
       width: 368px;
-  }
-  .board_section {
-    height: auto;       /* Dynamische Höhe */
-    overflow-y: auto;   /* Scroll wenn nötig */
-  }
-  .board_content {
-    min-width: auto; /* oder einfach entfernen */
-    width: 100%;
-  }
+    }
+    .board_section {
+      height: auto; /* Dynamische Höhe */
+      overflow-y: auto; /* Scroll wenn nötig */
+    }
+    .board_content {
+      min-width: auto; /* oder einfach entfernen */
+      width: 100%;
+    }
   }
 }
 
@@ -1060,6 +1078,6 @@
 @media (max-width: 500px) {
   .board_container {
     /* Falls Du unten eine 60px hohe Sticky-Footer hast */
-    margin-bottom: 60px; 
+    margin-bottom: 60px;
   }
 }

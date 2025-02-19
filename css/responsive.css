@@ -261,7 +261,7 @@
     margin-bottom: 3px;
   }
 
-  .menu_bar_login{
+  .menu_bar_login {
     width: 100%;
     top: 0px;
     display: flex;
@@ -309,7 +309,7 @@
     justify-content: center;
   }
 
-  .selection_privacy{
+  .selection_privacy {
     width: auto;
     text-align: center;
     margin: 0 12px;
@@ -318,7 +318,7 @@
     font-size: 14px;
   }
 
-  .selection_privacy:hover{
+  .selection_privacy:hover {
     transition: background-color 0.3s ease-in-out;
     width: fit-content;
   }
@@ -336,13 +336,13 @@
     gap: 16px;
   }
 
-  .policy_docs_privacy a{
+  .policy_docs_privacy a {
     align-items: center;
     margin-left: 0px;
     padding: 20px;
   }
 
-  .policy_docs_privacy:hover{
+  .policy_docs_privacy:hover {
     transition: background-color 0.3s ease-in-out;
     width: fit-content;
   }
@@ -353,7 +353,7 @@
     background-color: #2c4972;
   }
 
-  .isActive_privacy{
+  .isActive_privacy {
     width: auto;
     border-radius: 12px;
   }
@@ -798,12 +798,12 @@
     margin: 0;
   }
 
-  .menu_bar_login img{
+  .menu_bar_login img {
     width: 20px;
     margin-right: 10px;
   }
 
-  .policy_docs_privacy{
+  .policy_docs_privacy {
     font-size: 14px;
   }
 
@@ -848,18 +848,18 @@
   }
 }
 
-@media(max-width:430px){
-  .policy_docs_privacy{
+@media (max-width: 430px) {
+  .policy_docs_privacy {
     gap: 8px;
     margin: 0;
     font-size: 11px;
   }
 
-  .policy_docs_privacy a{
+  .policy_docs_privacy a {
     padding: 10px;
   }
 
-  .selection_privacy{
+  .selection_privacy {
     font-size: 11px;
   }
 }
@@ -1596,7 +1596,7 @@
     width: 90%;
   }
 
-  .add-task-subtasks-input{
+  .add-task-subtasks-input {
     width: 71% !important;
   }
 
@@ -1621,11 +1621,11 @@
 
 @media (max-width: 480px) {
   .add-task-main-content input {
-    width: 70% ;
+    width: 70%;
     font-size: 14px;
   }
 
-  .add-task-subtasks-input{
+  .add-task-subtasks-input {
     width: 48% !important;
   }
 
@@ -1663,7 +1663,7 @@
     width: 63%;
   }
 
-  .add-task-subtasks-input{
+  .add-task-subtasks-input {
     width: 40% !important;
   }
 
@@ -1686,19 +1686,19 @@
     top: -54px;
   }
 
-  .add-task-subtasks-icon-plus-check img{
+  .add-task-subtasks-icon-plus-check img {
     height: 23px;
   }
 
-  .add-task-subtasks-icons{
+  .add-task-subtasks-icons {
     padding-right: 79px;
   }
 
-  .add-task-subtasks-input-edit-div{
+  .add-task-subtasks-input-edit-div {
     width: 84%;
   }
 
-  .add-task-subtasks-icons-edit{
+  .add-task-subtasks-icons-edit {
     right: 40px;
   }
 
