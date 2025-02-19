@@ -1149,19 +1149,19 @@
   }
 
   .summary_details_header {
-    margin-left: 0px;
+    margin-left: 2.5px;
   }
 
   .summary_cards {
-    margin-left: 0px;
+    margin-left: 2.5px;
   }
 
   .summary_longbox {
-    margin-left: 0px;
+    margin-left: 2.5px;
   }
 
   .summary_smallboxes {
-    margin-left: 0px;
+    margin-left: 2.5px;
   }
 }
 
@@ -1575,6 +1575,7 @@
 
   .add_task_container {
     display: flex;
+    height: 90vh;
   }
 
   .add-task-left-side,
@@ -1592,7 +1593,20 @@
 
   .add-task-bottom {
     flex-direction: column;
+    align-items: flex-start;
+    background-color: #f6f7f8;
     gap: 8px;
+    position: sticky;
+    bottom: -2px;
+  }
+
+}
+
+@media(max-width:860px) {
+  .add-task-bottom {
+    align-items: flex-start;
+    padding: 0;
+    bottom: 50px;
   }
 }
 
@@ -1646,11 +1660,6 @@
   .add-task-medium,
   .add-task-low {
     width: 84%;
-  }
-
-  .add-task-bottom {
-    align-items: flex-start;
-    padding: 0;
   }
 
   .add-task-subtasks-icon-plus {
@@ -1711,6 +1720,21 @@
     left: 24px;
     top: -53px;
   }
+
+  .add-task-bottom-create-button {
+    padding: 0;
+  }
+
+  .add-task-bottom-clear-button,
+  .add-task-bottom-create-button {
+    font-size: 16px;
+  }
+
+  .add-task-bottom-clear-button{
+    width: 112px;
+  }
+
+
 
   .add-task-bottom-clear,
   .add-task-bottom-create-task {
