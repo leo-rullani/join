@@ -26,7 +26,7 @@ body {
 }
 
 .logo {
-  width: 180px; 
+  width: 180px;
   height: auto;
 }
 
@@ -65,8 +65,7 @@ body {
   align-items: center;
   justify-content: flex-start;
 }
-.dummy {
-}
+
 .signup-box h2 {
   font-size: 50px;
   font-weight: bolder;
@@ -181,7 +180,7 @@ body {
 .notification {
   position: fixed;
   left: 50%;
-  bottom: -120px; 
+  bottom: -120px;
   transform: translateX(-50%);
   background-color: #2b3647;
   color: #fff;

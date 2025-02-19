@@ -8,6 +8,8 @@ let subtasksList = [];
 let assignedContacts = [];
 let editAssignedContacts = [];
 let contactsToAssigned = [];
+let overlaySubtasksList = [];
+let editOverlaySubtasksList = [];
 let selectedTask = null;
 let editingTaskId = null;
 let editingMode = false;
@@ -287,8 +289,6 @@ function getUserInitials(contact) {
   return first + last;
 }
 
-/** usw... (Subtasks, createTaskTemplate, displayTasks, etc.) **/
-
 // =============== OVERLAY-FUNKTIONEN ===============
 /**
  * Seperates Array fürs Overlay:
@@ -316,12 +316,6 @@ async function overlayAddTaskCreateTask() {
     .getElementById("overlay-add-task-category")
     .value.trim();
 
-  const spans = document.querySelectorAll(
-    "#overlay-add-task-subtasks-list li span"
-  );
-  let overlaySubtasks = [];
-  spans.forEach((s) => overlaySubtasks.push(s.textContent.trim()));
-
   const newTask = {
     id: taskId,
     title,
@@ -331,7 +325,7 @@ async function overlayAddTaskCreateTask() {
     priority,
     category,
     boardCategory: "todo",
-    subtasks: overlaySubtasks.map((st) => ({ name: st, done: false })),
+    subtasks: overlaySubtasksList.map((st) => ({ name: st, done: false })),
   };
 
   const taskRef = `${databaseURL}/tasks/${taskId}.json`;
@@ -424,6 +418,11 @@ function overlayAddTaskSubtasksClicked() {
     .getElementById("overlay-add-task-subtasks-icon-plus-check")
     .classList.remove("d-none");
 }
+
+/**
+ * Subtask hinzufügen (Overlay).
+ * Hier fügen wir auch direkt den Edit-/Löschen-Button ein
+ */
 function overlayAddTaskSubtasks(event) {
   if (event.type === "keypress" && event.key !== "Enter") return;
   event.preventDefault();
@@ -437,7 +436,7 @@ function overlayAddTaskSubtasks(event) {
   li.innerHTML = `
     <span class="add-task-subtasks-extra-task">${val}</span>
     <div class="add-task-subtasks-icons">
-      <img class="add-task-edit" src="/assets/icons/add-subtask-edit.svg" onclick="/* optional edit function */">
+      <img class="add-task-edit" src="/assets/icons/add-subtask-edit.svg" onclick="overlayEditSubtaskName(this)">
       <div class="add-tasks-border"></div>
       <img class="add-task-trash" src="/assets/icons/add-subtask-delete.svg" onclick="overlayRemoveSubtask(this)">
     </div>
@@ -452,10 +451,140 @@ function overlayAddTaskSubtasks(event) {
     .getElementById("overlay-add-task-subtasks-icon-plus-check")
     .classList.add("d-none");
 }
+
+/**
+ * Statt direkt ins DOM zu schreiben, tragen wir
+ * jedes neue Subtask erst ins Array ein und rendern dann neu.
+ */
+function overlayAddTaskSubtasks(event) {
+  if (event.type === "keypress" && event.key !== "Enter") return;
+  event.preventDefault();
+  const input = document.getElementById("overlay-add-task-subtasks-input");
+  const val = input.value.trim();
+  if (!val) return;
+
+  // Neueste Subtask vorne einfügen (so wie addtask.html)
+  overlaySubtasksList.unshift(val);
+  input.value = "";
+
+  // Icons umschalten
+  document
+    .getElementById("overlay-add-task-subtasks-icon-plus")
+    .classList.remove("d-none");
+  document
+    .getElementById("overlay-add-task-subtasks-icon-plus-check")
+    .classList.add("d-none");
+
+  overlayAddTaskSubtasksList(); // Neu rendern
+}
+
+/**
+ * Rendert die gesamte <ul> "#overlay-add-task-subtasks-list"
+ * analog zu addTaskSubtasksList() in addtask.html
+ */
+function overlayAddTaskSubtasksList() {
+  const ul = document.getElementById("overlay-add-task-subtasks-list");
+  ul.innerHTML = "";
+
+  for (let i = 0; i < overlaySubtasksList.length; i++) {
+    const subtask = overlaySubtasksList[i];
+    ul.innerHTML += overlaySubTaskTemplate(subtask, i);
+  }
+}
+
+/**
+ * Returns the normal <li> with the subtask text + edit + trash icons
+ */
+function overlaySubTaskTemplate(subtaskName, index) {
+  return `
+    <li>
+      <span class="add-task-subtasks-extra-task">${subtaskName}</span>
+      <div class="overlay-add-task-subtasks-icons">
+        <img class="add-task-edit"
+             src="/assets/icons/add-subtask-edit.svg"
+             onclick="overlayEditTaskSubtasksList(${index}, event)">
+        <div class="add-tasks-border"></div>
+        <img class="add-task-trash"
+             src="/assets/icons/add-subtask-delete.svg"
+             onclick="overlayRemoveOverlaySubtask(${index}, event)">
+      </div>
+    </li>
+  `;
+}
+
+/**
+ * Wenn der User auf "Edit"-Icon klickt, zeigen wir das Input-Feld + 2 Icons (Trash & Confirm),
+ * so wie in "editTaskSubtasksList(...)" von addtask.html
+ */
+function overlayEditTaskSubtasksList(index, event) {
+  event.stopPropagation();
+  const ul = document.getElementById("overlay-add-task-subtasks-list");
+  ul.innerHTML = "";
+
+  for (let i = 0; i < overlaySubtasksList.length; i++) {
+    const subtask = overlaySubtasksList[i];
+    if (i === index) {
+      // Edit-Modus: Zeige Input, Trash, Confirm
+      ul.innerHTML += `
+        <li class="add-task-subtask-li-edit">
+          <div class="add-task-subtasks-input-edit-div">
+            <input class="add-task-subtasks-input-edit"
+                   id="overlay-add-task-subtasks-input-edit"
+                   type="text"
+                   value="${subtask}"
+                   onkeypress="overlayConfirmEditSubtask(${i}, event)">
+
+            <div class="add-task-subtasks-icons-edit">
+              <img class="add-task-trash"
+                   src="/assets/icons/add-subtask-delete.svg"
+                   onclick="overlayRemoveOverlaySubtask(${i}, event)">
+              <div class="add-tasks-border"></div>
+              <img class="add-task-confirm"
+                   src="/assets/icons/done_inverted.svg"
+                   onclick="overlayConfirmEditSubtask(${i}, event)">
+            </div>
+          </div>
+        </li>
+      `;
+    } else {
+      // Normaler Modus
+      ul.innerHTML += overlaySubTaskTemplate(subtask, i);
+    }
+  }
+}
+
+/**
+ * Bestätigt das neue Subtask (Enter oder Klick auf Checkmark)
+ */
+function overlayConfirmEditSubtask(index, event) {
+  if (event.type === "keypress" && event.key !== "Enter") return;
+  event.preventDefault();
+
+  const input = document.getElementById("overlay-add-task-subtasks-input-edit");
+  const newVal = input.value.trim();
+  if (!newVal) return;
+
+  overlaySubtasksList[index] = newVal; // aktualisieren
+  overlayAddTaskSubtasksList(); // neu rendern
+}
+
+/**
+ * Subtask löschen
+ */
+function overlayRemoveOverlaySubtask(index, event) {
+  event.stopPropagation();
+  overlaySubtasksList.splice(index, 1);
+  overlayAddTaskSubtasksList();
+}
+
+/**
+ * Subtask löschen (Overlay) - entfernt das entsprechende <li>
+ */
 function overlayRemoveSubtask(el) {
   const li = el.closest("li");
   if (li) li.remove();
 }
+
 function overlayAddSubtasksPlus(event) {
   event.preventDefault();
   overlayAddTaskSubtasksClicked();
@@ -479,10 +608,6 @@ function overlayClearSubtasks(event) {
 
 /** =============== Overlay-Kontakt-Liste & Suche =============== */
 
-/**
- * Statt "overlayAddTaskAssignedTo()" (das alles neu setzte)
- * nutzen wir Toggling per "overlayToggleContactSelection(...)"
- */
 function overlayShowContactList() {
   const container = document.getElementById("overlay-add-task-contact");
   if (!container) return;
@@ -608,6 +733,7 @@ async function updateTask(taskId) {
   const category = catEl.value.trim();
   const priority = getEditTaskPriority();
 
+  // Subtasks aus dem DOM:
   const spans = document.querySelectorAll(
     "#overlay-edit-task-subtasks-list li span"
   );
@@ -668,6 +794,8 @@ function fillEditFormData(task) {
     task.priority || "medium",
     "overlay-edit-task-urgent-medium-low-buttons"
   );
+  editOverlaySubtasksList = (task.subtasks || []).map((sub) => sub.name);
+  renderEditOverlaySubtasksList();
 
   editAssignedContacts = [...(task.assignees || [])];
   editShowAvatars();
@@ -678,7 +806,7 @@ function fillEditFormData(task) {
     const li = document.createElement("li");
     li.innerHTML = `
       <span class="add-task-subtasks-extra-task">${sub.name}</span>
-      <div class="add-task-subtasks-icons">
+      <div class="edit-task-subtasks-icons">
         <img class="add-task-edit" src="/assets/icons/add-subtask-edit.svg" onclick="editSubtaskName(this)">
         <div class="add-tasks-border"></div>
         <img class="add-task-trash" src="/assets/icons/add-subtask-delete.svg" onclick="editRemoveSubtask(this)">
@@ -734,8 +862,12 @@ function getEditTaskPriority() {
 
 /****************************************
  * Category in Edit
+ * -> Mit event.preventDefault(), damit Button-Klick
+ *    nicht sofort das Formular abschickt, falls
+ *    es als <button> realisiert ist.
  ****************************************/
-function editSetCategory(value) {
+function editSetCategory(value, event) {
+  if (event) event.preventDefault();
   document.getElementById("overlay-edit-task-category").value = value;
 }
 
@@ -763,7 +895,7 @@ function editAddSubtask(event) {
   const li = document.createElement("li");
   li.innerHTML = `
     <span class="add-task-subtasks-extra-task">${val}</span>
-    <div class="add-task-subtasks-icons">
+    <div class="edit-task-subtasks-icons">
       <img class="add-task-edit" src="/assets/icons/add-subtask-edit.svg" onclick="editSubtaskName(this)">
       <div class="add-tasks-border"></div>
       <img class="add-task-trash" src="/assets/icons/add-subtask-delete.svg" onclick="editRemoveSubtask(this)">
@@ -780,33 +912,112 @@ function editAddSubtask(event) {
     .classList.add("d-none");
 }
 
-function editSubtaskName(el) {
-  const li = el.closest("li");
-  if (!li) return;
-  const span = li.querySelector("span");
-  if (!span) return;
-
-  const oldName = span.textContent.trim();
-  const input = document.createElement("input");
-  input.type = "text";
-  input.value = oldName;
-  input.addEventListener("keypress", (ev) => {
-    if (ev.key === "Enter") {
-      const newName = input.value.trim();
-      span.textContent = newName;
-      li.replaceChild(span, input);
-    }
-  });
-  input.addEventListener("blur", () => {
-    const newName = input.value.trim();
-    span.textContent = newName;
-    li.replaceChild(span, input);
-  });
-
-  li.replaceChild(input, span);
-  input.focus();
+// Haupt-Render-Funktion:
+function renderEditOverlaySubtasksList() {
+  const ul = document.getElementById("overlay-edit-task-subtasks-list");
+  ul.innerHTML = "";
+  for (let i = 0; i < editOverlaySubtasksList.length; i++) {
+    const subtaskName = editOverlaySubtasksList[i];
+    ul.innerHTML += createEditOverlaySubtaskTemplate(subtaskName, i);
+  }
 }
 
+function createEditOverlaySubtaskTemplate(name, i) {
+  return `
+    <li>
+      <span class="add-task-subtasks-extra-task">${name}</span>
+      <div class="edit-task-subtasks-icons">
+        <img class="add-task-edit" src="/assets/icons/add-subtask-edit.svg"
+             onclick="editOverlaySubtask(${i}, event)">
+        <div class="add-tasks-border"></div>
+        <img class="add-task-trash" src="/assets/icons/add-subtask-delete.svg"
+             onclick="removeEditOverlaySubtask(${i}, event)">
+      </div>
+    </li>
+  `;
+}
+
+function editOverlaySubtask(index, event) {
+  event.stopPropagation();
+  const ul = document.getElementById("overlay-edit-task-subtasks-list");
+  ul.innerHTML = "";
+
+  for (let i = 0; i < editOverlaySubtasksList.length; i++) {
+    const subtaskName = editOverlaySubtasksList[i];
+    if (i === index) {
+      // Edit-Zustand (Input + Trash + Confirm)
+      ul.innerHTML += `
+        <li class="add-task-subtask-li-edit">
+          <div class="add-task-subtasks-input-edit-div">
+            <input class="add-task-subtasks-input-edit"
+                   id="overlay-edit-task-subtasks-input-edit"
+                   type="text"
+                   value="${subtaskName}"
+                   onkeypress="confirmEditOverlaySubtask(${i}, event)">
+            <div class="add-task-subtasks-icons-edit">
+              <img class="add-task-trash" src="/assets/icons/add-subtask-delete.svg"
+                   onclick="removeEditOverlaySubtask(${i}, event)">
+              <div class="add-tasks-border"></div>
+              <img class="add-task-confirm" src="/assets/icons/done_inverted.svg"
+                   onclick="confirmEditOverlaySubtask(${i}, event)">
+            </div>
+          </div>
+        </li>
+      `;
+    } else {
+      // Normaler Zustand
+      ul.innerHTML += createEditOverlaySubtaskTemplate(subtaskName, i);
+    }
+  }
+}
+
+function confirmEditOverlaySubtask(index, event) {
+  if (event.type === "keypress" && event.key !== "Enter") return;
+  event.preventDefault();
+  const input = document.getElementById(
+    "overlay-edit-task-subtasks-input-edit"
+  );
+  const val = input.value.trim();
+  if (!val) return;
+  editOverlaySubtasksList[index] = val;
+  renderEditOverlaySubtasksList();
+}
+
+function removeEditOverlaySubtask(index, event) {
+  event.stopPropagation();
+  editOverlaySubtasksList.splice(index, 1);
+  renderEditOverlaySubtasksList();
+}
+
+/**
+ * Subtask hinzufügen (über Plus-Icon oder Enter):
+ */
+function editAddSubtask(event) {
+  if (event.type === "keypress" && event.key !== "Enter") return;
+  event.preventDefault();
+  const input = document.getElementById("overlay-edit-task-subtasks-input");
+  if (!input) return;
+  const val = input.value.trim();
+  if (!val) return;
+
+  // Wie in addtask: neues Subtask vorne rein
+  editOverlaySubtasksList.unshift(val);
+  input.value = "";
+
+  // Icons wieder zurückschalten
+  document
+    .getElementById("overlay-edit-task-subtasks-icon-plus")
+    .classList.remove("d-none");
+  document
+    .getElementById("overlay-edit-task-subtasks-icon-plus-check")
+    .classList.add("d-none");
+
+  renderEditOverlaySubtasksList();
+}
+
+/**
+ * Subtask löschen (Edit-Overlay)
+ */
 function editRemoveSubtask(el) {
   const li = el.closest("li");
   if (li) li.remove();
@@ -836,8 +1047,6 @@ function editClearSubtasksInput(event) {
 
 /****************************************
  * Assigned Contacts in Edit
- * (Similar to your "Add" overlay,
- * but using editAssignedContacts)
  ****************************************/
 function editShowContactList() {
   const container = document.getElementById("overlay-edit-task-contact");
@@ -933,7 +1142,7 @@ function editShowAvatars() {
 
 /* =====================================
    Restlicher Code: getTasks(), deleteTask, 
-   displayTasks(), etc. kannst du unverändert lassen.
+   displayTasks(), etc. bleibt unverändert.
 ===================================== */
 
 async function getTasks() {

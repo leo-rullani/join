@@ -234,8 +234,10 @@
   display: flex;
   justify-content: center;
   align-items: center;
-  transition: right 1s ease, opacity 1s ease;
   z-index: 9999;
+  animation-duration: 0.2s;
+  animation-fill-mode: both;
+  animation-timing-function: linear;
 }
 
 .add_task_overlay.active {

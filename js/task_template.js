@@ -339,6 +339,12 @@ function taskBoardTemplate(task) {
   const subtaskHTML = generateBoardOverlaySubtaskHTML(task);
   const labelColor = task.category === "Technical Task" ? "#20d7c1" : "#0038ff";
   const priorityIcon = getPriorityIcon(task.priority);
+  const formattedDate = new Date(task.date)
+    .toISOString()
+    .split("T")[0]
+    .split("-")
+    .reverse()
+    .join("/");
 
   return `
     
@@ -352,7 +358,7 @@ function taskBoardTemplate(task) {
 
     <div class="overlay-section">
       <span class="section-label text-label">Due Date:</span>
-      <span id="dueDate" class="board_duedate text-regular">${task.date}</span>
+      <span id="dueDate" class="board_duedate text-regular">${formattedDate}</span>
     </div>
 
     <div class="overlay-section">
@@ -493,25 +499,25 @@ function taskEditTemplate(task) {
           </div>
           <ul>
             <li>
-              <label for="overlay-technical-task">
+              <label for="edit-technical-task">
                 Technical Task
                 <input class="add-task-radio" 
                        type="radio" 
                        name="overlay-category"
-                       id="overlay-technical-task"
+                       id="edit-technical-task"
                        value="Technical Task"
-                       onclick="editSetCategory(this.value)" />
+                       onclick="editSetCategory('technical', event)" />
               </label>
             </li>
             <li>
-              <label for="overlay-user-story">
+              <label for="edit-user-story">
                 User Story
                 <input class="add-task-radio"
                        type="radio"
                        name="overlay-category"
-                       id="overlay-user-story"
+                       id="edit-user-story"
                        value="User Story"
-                       onclick="editSetCategory(this.value)" />
+                       onclick="editSetCategory('user story', event)" />
               </label>
             </li>
           </ul>

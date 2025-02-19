@@ -153,16 +153,13 @@ function openAddTaskOverlay() {
   // Hier eine “slideInFromRight” (oder wie auch immer sie heißt) setzen:
   if (content) {
     // Beispielhaft: vorher resetten, Reflow -> dann Animationsname setzen
-    content.style.animationName = "none";
-    content.offsetHeight;
+
     content.style.animationName = "slideInFromRight";
 
     // Falls du nach dem “reinsliden” noch irgendetwas machen willst,
     // könntest du hier animationend abfangen.
     // ABER: Nicht Overlay entfernen oder inhalt löschen, denn wir wollen es ja geöffnet haben!
   }
-
-  createAssignedTo(true); // Deine Funktion
 }
 
 function closeAddTaskOverlay() {
@@ -191,28 +188,6 @@ function closeAddTaskOverlay() {
 /**
  * Schließt das "Add Task"-Overlay
  */
-function closeAddTaskOverlay() {
-  const overlay = document.getElementById("addTaskOverlay");
-  const content = document.getElementById("overlay_content");
-
-  if (!content) {
-    overlay.classList.remove("active");
-    return;
-  }
-
-  // Animate closing
-  content.style.animationName = "slideOutToRight";
-  content.addEventListener(
-    "animationend",
-    function handler() {
-      overlay.classList.remove("active");
-      overlay.style.display = "none";
-      content.removeEventListener("animationend", handler);
-      overlay.innerHTML = "";
-    },
-    { once: true }
-  );
-}
 
 /**
  * Speichert neuen Task und legt ihn in "To Do" an
