@@ -368,60 +368,6 @@ async function deleteContactFromServer(userId, contactId) {
   }
 }
 
-function openEditOverlay(contactId, name, email, phone) {
-  document.getElementById("editOverlay").style.display = "flex";
-
-  document.getElementById("editName").value = name;
-  document.getElementById("editEmail").value = email;
-  document.getElementById("editPhone").value = phone;
-
-  document
-    .getElementById("editContactForm")
-    .setAttribute("data-contact-id", contactId);
-}
-
-function closeEditOverlay() {
-  document.getElementById("editOverlay").style.display = "none";
-}
-
-function openOverlay() {
-  let overlay = document.getElementById("overlay");
-  overlay.classList.add("active");
-  overlay.classList.remove("closing");
-}
-
-function closeOverlay() {
-  let overlay = document.getElementById("overlay");
-  overlay.classList.add("closing");
-
-  setTimeout(() => {
-    overlay.classList.remove("active");
-    overlay.classList.remove("closing");
-  }, 500);
-}
-
-function openEditOverlay(contactId, name, email, phone) {
-  let overlay = document.getElementById("editOverlay");
-  overlay.classList.add("active");
-  overlay.classList.remove("closing");
-
-  document.getElementById("editName").value = name;
-  document.getElementById("editEmail").value = email;
-  document.getElementById("editPhone").value = phone;
-
-  document.getElementById("editContactForm").dataset.contactId = contactId;
-}
-
-function closeEditOverlay() {
-  let overlay = document.getElementById("editOverlay");
-  overlay.classList.add("closing");
-
-  setTimeout(() => {
-    overlay.classList.remove("active");
-    overlay.classList.remove("closing");
-  }, 500);
-}
-
 function toggleRespMenu() {
   let menu = document.getElementById("resp_menu");
   menu.classList.toggle("resp_menu_closed");
@@ -445,36 +391,3 @@ function showToast(message) {
     notification.classList.remove("show");
   }, 3300);
 }
-
-function openContactDetails() {
-  let contactDetails = document.getElementById("contact-details");
-  contactDetails.style.display = "block";
-}
-
-function closeContactDetails() {
-  let contactDetails = document.getElementById("contact-details");
-  contactDetails.style.display = "none";
-}
-
-function openSeeMore() {
-  let contactLinks = document.getElementById("seeMoreLinks");
-
-  if (contactLinks.style.display === "flex") {
-    contactLinks.style.display = "none";
-  } else {
-    contactLinks.style.display = "flex";
-  }
-}
-
-document.addEventListener("click", function (event) {
-  let contactLinks = document.getElementById("seeMoreLinks");
-  let button = document.getElementById("seeMoreButton");
-
-  if (
-    contactLinks.style.display === "flex" &&
-    !contactLinks.contains(event.target) &&
-    !button.contains(event.target)
-  ) {
-    contactLinks.style.display = "none";
-  }
-});

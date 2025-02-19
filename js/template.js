@@ -83,6 +83,6 @@ document.addEventListener("DOMContentLoaded", function () {
   if (!summaryLink) return;
 
   if (isGuest()) {
-    summaryLink.href = "summaryguest.html";
+    summaryLink.href = "summary.html";
   }
 });

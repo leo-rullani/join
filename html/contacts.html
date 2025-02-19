@@ -13,9 +13,6 @@
         <link rel="stylesheet" href="/css/contacts.css">
         <link rel="stylesheet" href="/css/fonts.css">
         <link rel="stylesheet" href="/css/responsive.css">
-        <script src="/js/contactsTemplate.js"></script>
-        <script src="/js/contacts.js"></script>
-        <script src="/js/template.js"></script>
 
 
     </head>
@@ -244,7 +241,7 @@
 
                     <div id="add_notification" class="notification"></div>
 
-                    <div class="contact_overlay" id="editOverlay">
+                    <div class="contact_overlay closeTheOverlay" id="editOverlay">
                         <div class="overlay-content" id="overlayContent">
                             <div class="close-btn" onclick="closeEditOverlay()"><span>✖</span></div>
                             <div class="editContact_left">
@@ -276,7 +273,7 @@
                         </div>
                     </div>
             </section>
-            <div class="contact_overlay" id="overlay">
+            <div class="contact_overlay closeTheOverlay" id="overlay">
                 <div class="overlay-content" id="overlayContent">
                     <div class="close-btn" onclick="closeOverlay()"><span>✖</span></div>
                     <div class="addContact_left">
@@ -316,4 +313,9 @@
             </div>
         </main>
     </body>
+
+    <script src="/js/open_close_overlays.js"></script>
+    <script src="/js/contactsTemplate.js"></script>
+    <script src="/js/contacts.js"></script>
+    <script src="/js/template.js"></script>
 </html>

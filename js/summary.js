@@ -5,7 +5,8 @@
  */
 document.addEventListener("DOMContentLoaded", initSummaryPage);
 
-function initSummaryPage() {
+async function initSummaryPage() {
+  await getTaskSummary();
   const headerName = document.getElementById("userName"),
     greetingDiv = document.getElementById("userName"),
     userData = sessionStorage.getItem("loggedInUser");
@@ -23,15 +24,12 @@ function initSummaryPage() {
   setGreeting();
   initOverlayCheck();
   document.body.style.visibility = "visible";
-  // 2) Tritt nur auf summary.html auf
-  getTaskSummary();
 }
 
 async function getTaskSummary() {
   try {
-    const loadedTasks = await getTasks();
-    // Global setzen:
-    window.tasks = loadedTasks;
+    // Rufe getTasks() auf, beachte die runden Klammern und das await:
+    const loadedTasks = await window.getTasks();
 
     const summary = {
       todo: 0,
@@ -41,10 +39,13 @@ async function getTaskSummary() {
       urgent: 0,
       urgentDueDates: [],
     };
+
+    // Jetzt durch alle Tasks gehen:
     loadedTasks.forEach((task) => {
       if (summary[task.boardCategory] !== undefined) {
         summary[task.boardCategory]++;
       }
+
       if (task.priority === "urgent") {
         summary.urgent++;
         if (task.date) {
@@ -58,25 +59,25 @@ async function getTaskSummary() {
         }
       }
     });
-    displayTaskSummary(summary, tasks);
+
+    // Rufe die Anzeige-Funktion auf und übergib das Task-Array:
+    displayTaskSummary(summary, loadedTasks);
   } catch (error) {
     console.error("Fehler beim Abrufen der Task-Übersicht:", error);
   }
 }
 
-function displayTaskSummary(summary) {
+function displayTaskSummary(summary, tasks) {
   const elTodo = document.getElementById("summary-todo");
-  if (!elTodo) return; // nicht auf summary-Seite
+  if (!elTodo) return; // Falls wir nicht auf der Summary-Seite sind
 
-  elTodo.textContent = `${summary.todo}`;
-  document.getElementById("summary-doing").textContent = `${summary.doing}`;
-  document.getElementById(
-    "summary-feedback"
-  ).textContent = `${summary.feedback}`;
-  document.getElementById("summary-done").textContent = `${summary.done}`;
-  document.getElementById("summary-urgent").textContent = `${summary.urgent} `;
+  elTodo.textContent = summary.todo;
+  document.getElementById("summary-doing").textContent = summary.doing;
+  document.getElementById("summary-feedback").textContent = summary.feedback;
+  document.getElementById("summary-done").textContent = summary.done;
+  document.getElementById("summary-urgent").textContent = summary.urgent;
 
-  // <- Hier statt "tasks" => "window.tasks"
+  // Hier kannst du jetzt tasks.length nehmen
   document.getElementById("summary-complete").textContent = tasks.length;
 
   if (summary.urgentDueDates.length > 0) {
@@ -86,15 +87,6 @@ function displayTaskSummary(summary) {
     document.getElementById("summary-urgent-dates").textContent =
       "No urgent tasks";
   }
-}
-
-/**
- * Toggles the small menu at the profile icon.
- */
-function toggleRespMenu() {
-  let menu = document.getElementById("resp_menu");
-  menu.classList.toggle("resp_menu_closed");
-  menu.classList.toggle("resp_menu_open");
 }
 
 /**
