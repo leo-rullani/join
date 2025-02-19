@@ -4,12 +4,11 @@
   border-radius: 12px;
   padding: 16px;
   box-shadow: 0 1px 4px rgba(0, 0, 0, 0.2);
-  width: 200px;
+  width: 250px;
   margin-bottom: 20px;
   cursor: pointer;
   display: flex;
   flex-direction: column;
-  margin-left: 10px;
 }
 
 /* Kategorielabel oben (Farbe dynamisch inline) */
@@ -130,4 +129,10 @@
 /* .slide-out => 3s */
 .board_overlay_content.slide-out {
   animation: slideOutToRight 3s ease-out forwards;
+}
+
+@media (max-width: 500px) {
+  .task {
+    width: 220px;
+  }
 }

@@ -139,7 +139,7 @@
   flex-direction: column;
   justify-content: flex-start;
   align-items: flex-start;
-  width: 250px;
+  width: 280px;
   padding-right: 100px;
   min-height: 200px;
   max-height: fit-content;
@@ -169,6 +169,7 @@
   border-radius: 20px;
   min-height: 250px;
   width: 100%;
+  margin-left: 4px;
 }
 .task_list {
   background-color: #e7e7e7;
@@ -833,6 +834,10 @@
     margin-left: 0px;
   }
 
+  .task {
+    width: 200px;
+  }
+
   .board_header_actions {
     display: flex;
     flex-direction: column;
@@ -886,6 +891,7 @@
   }
   .task_list:has(.task) {
     margin-bottom: 30px;
+    min-height: 0px;
   }
 }
 
