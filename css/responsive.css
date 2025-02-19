@@ -303,10 +303,12 @@
   }
 
   .selection a {
-    display: block;
+    display: flex;
     align-items: center;
     text-align: center;
     justify-content: center;
+    flex-direction: column;
+    padding: 10px;
   }
 
   .selection_privacy {
@@ -808,10 +810,12 @@
   }
 
   .selection a {
-    display: block;
+    display: flex;
     align-items: center;
     text-align: center;
     justify-content: center;
+    flex-direction: column;
+    padding: 8px;
   }
 
   .header_content span {

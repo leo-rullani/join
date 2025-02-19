@@ -1,321 +1,323 @@
 <!DOCTYPE html>
 <html lang="en">
-    <head>
-        <meta charset="UTF-8">
-        <meta name="viewport" content="width=device-width, initial-scale=1.0">
-        <title>Contacts</title>
 
-        <link rel="icon" type="image/png" href="/assets/img/join-logo-blue.svg">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Contacts</title>
 
-        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css">
+    <link rel="icon" type="image/png" href="/assets/img/join-logo-blue.svg">
 
-        <link rel="stylesheet" href="/css/template.css">
-        <link rel="stylesheet" href="/css/contacts.css">
-        <link rel="stylesheet" href="/css/fonts.css">
-        <link rel="stylesheet" href="/css/responsive.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css">
+
+    <link rel="stylesheet" href="/css/template.css">
+    <link rel="stylesheet" href="/css/contacts.css">
+    <link rel="stylesheet" href="/css/fonts.css">
+    <link rel="stylesheet" href="/css/responsive.css">
 
 
-    </head>
-    <body onload="init()">
-        <header>
-            <div class="header_content"><span>Kanban Project Management Tool </span>
-                <div class="header_img"><a href="/html/help.html"><img class="help_icon" src="/assets/icons/help.svg"
-                            alt=""></a>
-                    <div onclick="toggleRespMenu()">
-                        <div class="profile_initials" id="userInitials"></div>
-                    </div>
-                </div>
-        </header>
-        <main class="content">
-            <div class="side_menu">
-                <img class="logo" src="/assets/img/join-logo-white.svg" alt="">
-                <div class="menu_bar">
-                    <div class="selection width"><img src="/assets/icons/Icon-summary.svg" alt=""><a id="summaryLink"
-                            href="/html/summary.html"><span>Summary</span></a></div>
-                    <div class="selection width"><img src="/assets/icons/Icon-addtask.svg" alt=""><a
-                            href="/html/addtask.html"><span>Add
-                                Task</span></a></div>
-                    <div class="selection width"><img src="/assets/icons/Icon-board.svg" alt=""><a
-                            href="/html/board.html"><span>Board</span></a></div>
-                    <div class="selection width isActive"><img src="/assets/icons/Icon-contacts.svg" alt=""><a
-                            href="/html/contacts.html"><span>Contacts</span></a></div>
+</head>
 
-                    <div class="policy_docs">
-                        <a href="/html/privacypolicy.html">Privacy Policy</a>
-                        <a href="/html/legalnotice.html">Legal notice</a>
-                    </div>
-                </div>
-
-            </div>
-            <section class="contact_content">
-                <div class="contacts_container">
-                    <div class="addContact_button_container"> <button class="addContact_button"
-                            onclick="openOverlay()"><span>Add
-                                new contact</span>
-                            <img src="/assets/icons/person_add.svg" alt=""></button></div>
-                    <div class="contacts_div">
-
-                        <div class="contact_list" id="contacts">
-                            <div id="phonebook">
-                                <div class="letter-section" id="A">
-                                    <div class="letter">
-                                        <h2>A</h2>
-                                    </div>
-                                    <div class="contacts"></div>
-                                </div>
-                                <div class="letter-section" id="B">
-                                    <div class="letter">
-                                        <h2>B</h2>
-                                    </div>
-                                    <div class="contacts"></div>
-                                </div>
-                                <div class="letter-section" id="C">
-                                    <div class="letter">
-                                        <h2>C</h2>
-                                    </div>
-                                    <div class="contacts"></div>
-                                </div>
-                                <div class="letter-section" id="D">
-                                    <div class="letter">
-                                        <h2>D</h2>
-                                    </div>
-                                    <div class="contacts"></div>
-                                </div>
-                                <div class="letter-section" id="E">
-                                    <div class="letter">
-                                        <h2>E</h2>
-                                    </div>
-                                    <div class="contacts"></div>
-                                </div>
-                                <div class="letter-section" id="F">
-                                    <div class="letter">
-                                        <h2>F</h2>
-                                    </div>
-                                    <div class="contacts"></div>
-                                </div>
-                                <div class="letter-section" id="G">
-                                    <div class="letter">
-                                        <h2>G</h2>
-                                    </div>
-                                    <div class="contacts"></div>
-                                </div>
-                                <div class="letter-section" id="H">
-                                    <div class="letter">
-                                        <h2>H</h2>
-                                    </div>
-                                    <div class="contacts"></div>
-                                </div>
-                                <div class="letter-section" id="I">
-                                    <div class="letter">
-                                        <h2>I</h2>
-                                    </div>
-                                    <div class="contacts"></div>
-                                </div>
-                                <div class="letter-section" id="J">
-                                    <div class="letter">
-                                        <h2>J</h2>
-                                    </div>
-                                    <div class="contacts"></div>
-                                </div>
-                                <div class="letter-section" id="K">
-                                    <div class="letter">
-                                        <h2>K</h2>
-                                    </div>
-                                    <div class="contacts"></div>
-                                </div>
-                                <div class="letter-section" id="L">
-                                    <div class="letter">
-                                        <h2>L</h2>
-                                    </div>
-                                    <div class="contacts"></div>
-                                </div>
-                                <div class="letter-section" id="M">
-                                    <div class="letter">
-                                        <h2>M</h2>
-                                    </div>
-                                    <div class="contacts"></div>
-                                </div>
-                                <div class="letter-section" id="N">
-                                    <div class="letter">
-                                        <h2>N</h2>
-                                    </div>
-                                    <div class="contacts"></div>
-                                </div>
-                                <div class="letter-section" id="O">
-                                    <div class="letter">
-                                        <h2>O</h2>
-                                    </div>
-                                    <div class="contacts"></div>
-                                </div>
-                                <div class="letter-section" id="P">
-                                    <div class="letter">
-                                        <h2>P</h2>
-                                    </div>
-                                    <div class="contacts"></div>
-                                </div>
-                                <div class="letter-section" id="Q">
-                                    <div class="letter">
-                                        <h2>Q</h2>
-                                    </div>
-                                    <div class="contacts"></div>
-                                </div>
-                                <div class="letter-section" id="R">
-                                    <div class="letter">
-                                        <h2>R</h2>
-                                    </div>
-                                    <div class="contacts"></div>
-                                </div>
-                                <div class="letter-section" id="S">
-                                    <div class="letter">
-                                        <h2>S</h2>
-                                    </div>
-                                    <div class="contacts"></div>
-                                </div>
-                                <div class="letter-section" id="T">
-                                    <div class="letter">
-                                        <h2>T</h2>
-                                    </div>
-                                    <div class="contacts"></div>
-                                </div>
-                                <div class="letter-section" id="U">
-                                    <div class="letter">
-                                        <h2>U</h2>
-                                    </div>
-                                    <div class="contacts"></div>
-                                </div>
-                                <div class="letter-section" id="V">
-                                    <div class="letter">
-                                        <h2>V</h2>
-                                    </div>
-                                    <div class="contacts"></div>
-                                </div>
-                                <div class="letter-section" id="W">
-                                    <div class="letter">
-                                        <h2>W</h2>
-                                    </div>
-                                    <div class="contacts"></div>
-                                </div>
-                                <div class="letter-section" id="X">
-                                    <div class="letter">
-                                        <h2>X</h2>
-                                    </div>
-                                    <div class="contacts"></div>
-                                </div>
-                                <div class="letter-section" id="Y">
-                                    <div class="letter">
-                                        <h2>Y</h2>
-                                    </div>
-                                    <div class="contacts"></div>
-                                </div>
-                                <div class="letter-section" id="Z">
-                                    <div class="letter">
-                                        <h2>Z</h2>
-                                    </div>
-                                    <div class="contacts"></div>
-                                </div>
-                            </div>
-                        </div>
-
-                    </div>
-                </div>
-                <div id="contact-details" class="contact-details-container">
-                    <button onclick="closeContactDetails()" class="return_button_contacts"><i
-                            class="fa-solid fa-arrow-left"></i></button>
-                    <div class="contact_details_header">
-                        <div class="details_header">
-                            <h1><b>Contacts</b></h1>
-                        </div>
-                        <div class="team_header">
-                            <div class="blue_line"></div>
-                            <div class="details_motivation">
-                                Better with a team
-                            </div>
-                        </div>
-                        <div class="resp_edit_delete_menu">
-                            <button class="seeMore_button" id="seeMoreButton" onclick="openSeeMore()"><img
-                                    src="/assets/icons/more_vert.svg" alt=""></button>
-                        </div>
-                    </div>
-                    <div id="contact-info">
-                    </div>
-
-                    <div id="add_notification" class="notification"></div>
-
-                    <div class="contact_overlay closeTheOverlay" id="editOverlay">
-                        <div class="overlay-content" id="overlayContent">
-                            <div class="close-btn" onclick="closeEditOverlay()"><span>✖</span></div>
-                            <div class="editContact_left">
-                                <img src="/assets/img/join-logo-white.svg" alt="">
-                                <h1>Edit contact</h1>
-                                <div class="editunderline"></div>
-                            </div>
-                            <div class="editContact_right">
-                                <div id="initials-edit"></div>
-                                <div class="form_add">
-                                    <form id="editContactForm" onsubmit="submitEditForm(event)">
-                                        <input required class="icon_name" type="name" name="name" id="editName"
-                                            placeholder="Name"><br>
-                                        <input required class="icon_email" type="email" name="email" id="editEmail"
-                                            placeholder="Email"><br>
-                                        <input required class="icon_phone" type="phone" name="phone" id="editPhone"
-                                            placeholder="Phone"><br>
-
-                                        <div class="button_div">
-                                            <button type="button" class="btn-cancel" id="contactDeleteButton">Delete
-                                                ✖</button>
-                                            <button class="btn-create" type="submit">Save Changes<img
-                                                    src="/assets/icons/check.svg" alt=""></button>
-                                        </div>
-                                    </form>
-                                </div>
-
-                            </div>
-                        </div>
-                    </div>
-            </section>
-            <div class="contact_overlay closeTheOverlay" id="overlay">
-                <div class="overlay-content" id="overlayContent">
-                    <div class="close-btn" onclick="closeOverlay()"><span>✖</span></div>
-                    <div class="addContact_left">
-                        <img src="/assets/img/join-logo-white.svg" alt="">
-                        <h1>Add contact</h1>
-                        <span>Tasks are better with a team!</span>
-                        <div class="underline"></div>
-                    </div>
-                    <div class="addContact_right">
-                        <div><img class="addContact_right_img" src="/assets/icons/contact_pic.svg" alt=""></div>
-                        <div class="form_add">
-                            <form onsubmit="return saveContactToDatabase(event)">
-                                <input required class="icon_name" type="name" name="name" id="name"
-                                    placeholder="Name"><br>
-                                <input required class="icon_email" type="email" name="email" id="email"
-                                    placeholder="Email"><br>
-                                <input required class="icon_phone" type="phone" name="phone" id="phone"
-                                    placeholder="Phone"><br>
-
-                                <div class="button_div"> <button type="button" class="btn-cancel"
-                                        onclick="closeOverlay()">Cancel
-                                        ✖</button> <button class="btn-create" type="submit">Create
-                                        contact <img src="/assets/icons/check.svg" alt=""></button></div>
-                            </form>
-                        </div>
-
-                    </div>
+<body onload="init()">
+    <header>
+        <div class="header_content"><span>Kanban Project Management Tool </span>
+            <div class="header_img"><a href="/html/help.html"><img class="help_icon" src="/assets/icons/help.svg"
+                        alt=""></a>
+                <div onclick="toggleRespMenu()">
+                    <div class="profile_initials" id="userInitials"></div>
                 </div>
             </div>
-            <div class="menu_header resp_menu_closed" id="resp_menu">
-                <div class="menu_links">
-                    <a class="help-link" href="/html/help.html">Help</a>
-                    <a href="/html/legalnotice.html">Legal Notice</a>
+    </header>
+    <main class="content">
+        <div class="side_menu">
+            <img class="logo" src="/assets/img/join-logo-white.svg" alt="">
+            <div class="menu_bar">
+                <div class="selection width"><a id="summaryLink" href="/html/summary.html"><img
+                            src="/assets/icons/Icon-summary.svg" alt=""><span>Summary</span></a></div>
+                <div class="selection width"><a href="/html/addtask.html"><img src="/assets/icons/Icon-addtask.svg"
+                            alt=""><span>Add
+                            Task</span></a></div>
+                <div class="selection width"><a href="/html/board.html"><img src="/assets/icons/Icon-board.svg"
+                            alt=""><span>Board</span></a></div>
+                <div class="selection width isActive"><a href="/html/contacts.html"><img
+                            src="/assets/icons/Icon-contacts.svg" alt=""><span>Contacts</span></a></div>
+
+                <div class="policy_docs">
                     <a href="/html/privacypolicy.html">Privacy Policy</a>
-                    <a onclick="logout()" href="#">Log out</a>
+                    <a href="/html/legalnotice.html">Legal notice</a>
                 </div>
             </div>
-        </main>
-    </body>
 
-    <script src="/js/open_close_overlays.js"></script>
-    <script src="/js/contactsTemplate.js"></script>
-    <script src="/js/contacts.js"></script>
-    <script src="/js/template.js"></script>
+        </div>
+        <section class="contact_content">
+            <div class="contacts_container">
+                <div class="addContact_button_container"> <button class="addContact_button"
+                        onclick="openOverlay()"><span>Add
+                            new contact</span>
+                        <img src="/assets/icons/person_add.svg" alt=""></button></div>
+                <div class="contacts_div">
+
+                    <div class="contact_list" id="contacts">
+                        <div id="phonebook">
+                            <div class="letter-section" id="A">
+                                <div class="letter">
+                                    <h2>A</h2>
+                                </div>
+                                <div class="contacts"></div>
+                            </div>
+                            <div class="letter-section" id="B">
+                                <div class="letter">
+                                    <h2>B</h2>
+                                </div>
+                                <div class="contacts"></div>
+                            </div>
+                            <div class="letter-section" id="C">
+                                <div class="letter">
+                                    <h2>C</h2>
+                                </div>
+                                <div class="contacts"></div>
+                            </div>
+                            <div class="letter-section" id="D">
+                                <div class="letter">
+                                    <h2>D</h2>
+                                </div>
+                                <div class="contacts"></div>
+                            </div>
+                            <div class="letter-section" id="E">
+                                <div class="letter">
+                                    <h2>E</h2>
+                                </div>
+                                <div class="contacts"></div>
+                            </div>
+                            <div class="letter-section" id="F">
+                                <div class="letter">
+                                    <h2>F</h2>
+                                </div>
+                                <div class="contacts"></div>
+                            </div>
+                            <div class="letter-section" id="G">
+                                <div class="letter">
+                                    <h2>G</h2>
+                                </div>
+                                <div class="contacts"></div>
+                            </div>
+                            <div class="letter-section" id="H">
+                                <div class="letter">
+                                    <h2>H</h2>
+                                </div>
+                                <div class="contacts"></div>
+                            </div>
+                            <div class="letter-section" id="I">
+                                <div class="letter">
+                                    <h2>I</h2>
+                                </div>
+                                <div class="contacts"></div>
+                            </div>
+                            <div class="letter-section" id="J">
+                                <div class="letter">
+                                    <h2>J</h2>
+                                </div>
+                                <div class="contacts"></div>
+                            </div>
+                            <div class="letter-section" id="K">
+                                <div class="letter">
+                                    <h2>K</h2>
+                                </div>
+                                <div class="contacts"></div>
+                            </div>
+                            <div class="letter-section" id="L">
+                                <div class="letter">
+                                    <h2>L</h2>
+                                </div>
+                                <div class="contacts"></div>
+                            </div>
+                            <div class="letter-section" id="M">
+                                <div class="letter">
+                                    <h2>M</h2>
+                                </div>
+                                <div class="contacts"></div>
+                            </div>
+                            <div class="letter-section" id="N">
+                                <div class="letter">
+                                    <h2>N</h2>
+                                </div>
+                                <div class="contacts"></div>
+                            </div>
+                            <div class="letter-section" id="O">
+                                <div class="letter">
+                                    <h2>O</h2>
+                                </div>
+                                <div class="contacts"></div>
+                            </div>
+                            <div class="letter-section" id="P">
+                                <div class="letter">
+                                    <h2>P</h2>
+                                </div>
+                                <div class="contacts"></div>
+                            </div>
+                            <div class="letter-section" id="Q">
+                                <div class="letter">
+                                    <h2>Q</h2>
+                                </div>
+                                <div class="contacts"></div>
+                            </div>
+                            <div class="letter-section" id="R">
+                                <div class="letter">
+                                    <h2>R</h2>
+                                </div>
+                                <div class="contacts"></div>
+                            </div>
+                            <div class="letter-section" id="S">
+                                <div class="letter">
+                                    <h2>S</h2>
+                                </div>
+                                <div class="contacts"></div>
+                            </div>
+                            <div class="letter-section" id="T">
+                                <div class="letter">
+                                    <h2>T</h2>
+                                </div>
+                                <div class="contacts"></div>
+                            </div>
+                            <div class="letter-section" id="U">
+                                <div class="letter">
+                                    <h2>U</h2>
+                                </div>
+                                <div class="contacts"></div>
+                            </div>
+                            <div class="letter-section" id="V">
+                                <div class="letter">
+                                    <h2>V</h2>
+                                </div>
+                                <div class="contacts"></div>
+                            </div>
+                            <div class="letter-section" id="W">
+                                <div class="letter">
+                                    <h2>W</h2>
+                                </div>
+                                <div class="contacts"></div>
+                            </div>
+                            <div class="letter-section" id="X">
+                                <div class="letter">
+                                    <h2>X</h2>
+                                </div>
+                                <div class="contacts"></div>
+                            </div>
+                            <div class="letter-section" id="Y">
+                                <div class="letter">
+                                    <h2>Y</h2>
+                                </div>
+                                <div class="contacts"></div>
+                            </div>
+                            <div class="letter-section" id="Z">
+                                <div class="letter">
+                                    <h2>Z</h2>
+                                </div>
+                                <div class="contacts"></div>
+                            </div>
+                        </div>
+                    </div>
+
+                </div>
+            </div>
+            <div id="contact-details" class="contact-details-container">
+                <button onclick="closeContactDetails()" class="return_button_contacts"><i
+                        class="fa-solid fa-arrow-left"></i></button>
+                <div class="contact_details_header">
+                    <div class="details_header">
+                        <h1><b>Contacts</b></h1>
+                    </div>
+                    <div class="team_header">
+                        <div class="blue_line"></div>
+                        <div class="details_motivation">
+                            Better with a team
+                        </div>
+                    </div>
+                    <div class="resp_edit_delete_menu">
+                        <button class="seeMore_button" id="seeMoreButton" onclick="openSeeMore()"><img
+                                src="/assets/icons/more_vert.svg" alt=""></button>
+                    </div>
+                </div>
+                <div id="contact-info">
+                </div>
+
+                <div id="add_notification" class="notification"></div>
+
+                <div class="contact_overlay closeTheOverlay" id="editOverlay">
+                    <div class="overlay-content" id="overlayContent">
+                        <div class="close-btn" onclick="closeEditOverlay()"><span>✖</span></div>
+                        <div class="editContact_left">
+                            <img src="/assets/img/join-logo-white.svg" alt="">
+                            <h1>Edit contact</h1>
+                            <div class="editunderline"></div>
+                        </div>
+                        <div class="editContact_right">
+                            <div id="initials-edit"></div>
+                            <div class="form_add">
+                                <form id="editContactForm" onsubmit="submitEditForm(event)">
+                                    <input required class="icon_name" type="name" name="name" id="editName"
+                                        placeholder="Name"><br>
+                                    <input required class="icon_email" type="email" name="email" id="editEmail"
+                                        placeholder="Email"><br>
+                                    <input required class="icon_phone" type="phone" name="phone" id="editPhone"
+                                        placeholder="Phone"><br>
+
+                                    <div class="button_div">
+                                        <button type="button" class="btn-cancel" id="contactDeleteButton">Delete
+                                            ✖</button>
+                                        <button class="btn-create" type="submit">Save Changes<img
+                                                src="/assets/icons/check.svg" alt=""></button>
+                                    </div>
+                                </form>
+                            </div>
+
+                        </div>
+                    </div>
+                </div>
+        </section>
+        <div class="contact_overlay closeTheOverlay" id="overlay">
+            <div class="overlay-content" id="overlayContent">
+                <div class="close-btn" onclick="closeOverlay()"><span>✖</span></div>
+                <div class="addContact_left">
+                    <img src="/assets/img/join-logo-white.svg" alt="">
+                    <h1>Add contact</h1>
+                    <span>Tasks are better with a team!</span>
+                    <div class="underline"></div>
+                </div>
+                <div class="addContact_right">
+                    <div><img class="addContact_right_img" src="/assets/icons/contact_pic.svg" alt=""></div>
+                    <div class="form_add">
+                        <form onsubmit="return saveContactToDatabase(event)">
+                            <input required class="icon_name" type="name" name="name" id="name" placeholder="Name"><br>
+                            <input required class="icon_email" type="email" name="email" id="email"
+                                placeholder="Email"><br>
+                            <input required class="icon_phone" type="phone" name="phone" id="phone"
+                                placeholder="Phone"><br>
+
+                            <div class="button_div"> <button type="button" class="btn-cancel"
+                                    onclick="closeOverlay()">Cancel
+                                    ✖</button> <button class="btn-create" type="submit">Create
+                                    contact <img src="/assets/icons/check.svg" alt=""></button></div>
+                        </form>
+                    </div>
+
+                </div>
+            </div>
+        </div>
+        <div class="menu_header resp_menu_closed" id="resp_menu">
+            <div class="menu_links">
+                <a class="help-link" href="/html/help.html">Help</a>
+                <a href="/html/legalnotice.html">Legal Notice</a>
+                <a href="/html/privacypolicy.html">Privacy Policy</a>
+                <a onclick="logout()" href="#">Log out</a>
+            </div>
+        </div>
+    </main>
+</body>
+
+<script src="/js/open_close_overlays.js"></script>
+<script src="/js/contactsTemplate.js"></script>
+<script src="/js/contacts.js"></script>
+<script src="/js/template.js"></script>
+
 </html>

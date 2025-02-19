@@ -1,324 +1,131 @@
 <!DOCTYPE html>
 <html lang="en">
 
-    <head>
-        <meta charset="UTF-8">
-        <meta name="viewport" content="width=device-width, initial-scale=1.0">
-        <title>Board</title>
-        <link rel="icon" type="image/png" href="/assets/img/join-logo-blue.svg">
-        <link rel="stylesheet" href="/css/board.css">
-        <link rel="stylesheet" href="/css/template.css">
-        <link rel="stylesheet" href="/css/fonts.css">
-        <link rel="stylesheet" href="/css/responsive.css">
-        <link rel="stylesheet" href="/css/addtask.css">
-        <link rel="stylesheet" href="/css/board_overlay.css">
-        <link rel="stylesheet" href="/css/boardtemplate.css">
-        <!-- <link rel="stylesheet" href="/css/addtask_overlay.css" -->
-    </head>
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Board</title>
+    <link rel="icon" type="image/png" href="/assets/img/join-logo-blue.svg">
+    <link rel="stylesheet" href="/css/board.css">
+    <link rel="stylesheet" href="/css/template.css">
+    <link rel="stylesheet" href="/css/fonts.css">
+    <link rel="stylesheet" href="/css/responsive.css">
+    <link rel="stylesheet" href="/css/addtask.css">
+    <link rel="stylesheet" href="/css/board_overlay.css">
+    <link rel="stylesheet" href="/css/boardtemplate.css">
+    <!-- <link rel="stylesheet" href="/css/addtask_overlay.css" -->
+</head>
 
-    <body onload="initBoard()">
-        <header>
-            <div class="header_content">
-                <span class="kanban-project">Kanban Project Management Tool</span>
-                <div class="header_img">
-                    <!-- help icon visible > 605px per CSS -->
-                    <a href="/html/help.html">
-                        <img class="help_icon" src="/assets/icons/help.svg" alt="Help Icon">
-                    </a>
-                    <div onclick="toggleRespMenu()">
-                        <div class="profile_initials" id="userInitials"></div>
-                    </div>
+<body onload="initBoard()">
+    <header>
+        <div class="header_content">
+            <span class="kanban-project">Kanban Project Management Tool</span>
+            <div class="header_img">
+                <!-- help icon visible > 605px per CSS -->
+                <a href="/html/help.html">
+                    <img class="help_icon" src="/assets/icons/help.svg" alt="Help Icon">
+                </a>
+                <div onclick="toggleRespMenu()">
+                    <div class="profile_initials" id="userInitials"></div>
                 </div>
-            </div>
-        </header>
-        <main class="content">
-            <div class="side_menu">
-                <img class="logo" src="/assets/img/join-logo-white.svg" alt="Join Logo">
-                <div class="menu_bar">
-                    <div class="selection">
-                        <img src="/assets/icons/Icon-summary.svg" alt="">
-                        <a href="/html/summary.html"><span>Summary</span></a>
-                    </div>
-                    <div class="selection">
-                        <img src="/assets/icons/Icon-addtask.svg" alt="">
-                        <a href="/html/addtask.html"><span>Add Task</span></a>
-                    </div>
-                    <div class="selection active">
-                        <img src="/assets/icons/Icon-board.svg" alt="">
-                        <a href="/html/board.html"><span>Board</span></a>
-                    </div>
-                    <div class="selection">
-                        <img src="/assets/icons/Icon-contacts.svg" alt="">
-                        <a href="/html/contacts.html"><span>Contacts</span></a>
-                    </div>
-                    <div class="policy_docs">
-                        <a href="/html/privacypolicy.html">Privacy Policy</a>
-                        <a href="/html/legalnotice.html">Legal Notice</a>
-                    </div>
-                </div>
-            </div>
-            <section class="board_section">
-                <div class="board-content">
-                    <div class="board_header">
-                        <h1 class="board-title">Board</h1>
-                        <div class="board_header_actions">
-                            <div class="search_container">
-                                <input type="text" id="searchInput" placeholder="Find Task"
-                                    onkeyup="handleSearch(event)">
-                                <img class="search_icon" src="/assets/icons/search-icon-board.svg" alt="Search Icon">
-                            </div>
-                            <button class="btn_add_task" onclick="openAddTaskOverlay()">
-                                Add Task +
-                            </button>
-                        </div>
-                    </div>
-
-                    <div class="board_container">
-
-                        <!-- Spalte: TO DO -->
-                        <div class="column_wrapper">
-                            <div class="column_header">
-                                <h2>To Do</h2>
-                                <button class="col_add_btn" onclick="openAddTaskOverlay('todo')">+</button>
-                            </div>
-                            <div class="board_column" id="todo">
-                                <div id="tasks-container" class="task_list" ondrop="drop(event)"
-                                    ondragover="allowDrop(event)">
-                                    <!-- Tasks werden per JS erzeugt hier -->
-                                </div>
-                            </div>
-                        </div>
-
-                        <!-- Spalte: IN PROGRESS -->
-                        <div class="column_wrapper">
-                            <div class="column_header">
-                                <h2>In progress</h2>
-                                <button class="col_add_btn" onclick="openAddTaskOverlay('doing')">+</button>
-                            </div>
-                            <div class="board_column" id="doing">
-                                <div class="task_list" ondrop="drop(event)" ondragover="allowDrop(event)"></div>
-                            </div>
-                        </div>
-
-                        <!-- Spalte: AWAIT FEEDBACK -->
-                        <div class="column_wrapper">
-                            <div class="column_header">
-                                <h2>Await feedback</h2>
-                                <button class="col_add_btn" onclick="openAddTaskOverlay('feedback')">+</button>
-                            </div>
-                            <div class="board_column" id="feedback">
-                                <div class="task_list" ondrop="drop(event)" ondragover="allowDrop(event)"></div>
-                            </div>
-                        </div>
-
-                        <!-- Spalte: DONE -->
-                        <div class="column_wrapper">
-                            <div class="column_header">
-                                <h2>Done</h2>
-                            </div>
-                            <div class="board_column" id="done">
-                                <div class="task_list" ondrop="drop(event)" ondragover="allowDrop(event)"></div>
-                            </div>
-                        </div>
-
-                    </div>
-                </div>
-            </section>
-            <div class="menu_header resp_menu_closed" id="resp_menu">
-                <div class="menu_links">
-                    <!-- help < 605px -->
-                    <a href="/html/help.html" class="help_text_link">Help</a>
-
-                    <a href="/html/legalnotice.html">Legal Notice</a>
-                    <a href="/html/privacypolicy.html">Privacy Policy</a>
-                    <a onclick="logout()" href="#">Logout</a>
-                </div>
-            </div>
-        </main>
-
-        <!-- Overlay für neues Task (Add Task) -->
-        <div class="add_task_overlay" id="addTaskOverlay">
-            <div class="overlay_content">
-                <form id="overlay-add-task-form" onsubmit="overlayAddTaskCreateTask(); return false;"
-                    class="add-task-overlay-content">
-                    <div class="add-task-overlay-h1-container">
-                        <h1>Add Task (Overlay)</h1>
-                        <div class="close_overlay_btn">
-                            <button type="button" onclick="closeAddTaskOverlay()">&times;</button>
-                        </div>
-                    </div>
-
-                    <div class="add-task-overlay-container">
-                        <div class="add-task-overlay-left-side">
-                            <!-- Title -->
-                            <div class="add-task-overlay-title">
-                                <label for="overlay-add-task-title-input">
-                                    Title <span class="add-task-required">*</span>
-                                </label>
-                                <input required id="overlay-add-task-title-input" class="add-task-overlay-title-input"
-                                    type="text" autocomplete="off" placeholder="Enter a title" value="" />
-                            </div>
-
-                            <!-- Description -->
-                            <div class="add-task-overlay-description">
-                                <label for="overlay-add-task-textarea">
-                                    Description <span class="add-task-required">*</span>
-                                </label>
-                                <textarea required id="overlay-add-task-textarea" class="add-task-overlay-textarea"
-                                    placeholder="Enter a description"></textarea>
-                            </div>
-
-                            <!-- Assigned to -->
-                            <div class="add-task-overlay-assigned-to">
-                                <div class="checkbox-overlay-dropdown">
-                                    <div class="search-overlay">
-                                        <label for="overlay-find-person">Assigned to</label>
-                                        <input type="text" name="overlay-find-person" id="overlay-find-person"
-                                            autocomplete="off" placeholder="Select contacts to assign"
-                                            onclick="overlayShowContactList()"
-                                            onkeyup="overlayAddTaskAssignedToSearch()" />
-                                    </div>
-                                    <ul id="overlay-add-task-contact"></ul>
-                                </div>
-                            </div>
-                            <div id="overlay-add-task-assigned-avatar" class="add-task-assigned-avatar"></div>
-                        </div>
-
-                        <div class="add-task-overlay-right-side">
-                            <!-- Due Date -->
-                            <div class="add-task-overlay-due-date">
-                                <label for="overlay-date">Due date
-                                    <span class="add-task-required">*</span>
-                                </label>
-                                <input required type="date" class="add-task-overlay-due-date-input" id="overlay-date"
-                                    name="overlay-date" />
-                            </div>
-
-                            <!-- Priority -->
-                            <div class="add-task-overlay-urgent-medium-low-container">
-                                <div>Prio</div>
-                                <div id="overlay-add-task-urgent-medium-low-buttons"
-                                    class="add-task-overlay-urgent-medium-low-buttons">
-                                    <button id="overlay-add-task-urgent" class="add-task-overlay-urgent"
-                                        data-priority="urgent"
-                                        onclick="overlayAddTaskPrio('urgent','overlay-add-task-urgent-medium-low-buttons',event)">
-                                        <div class="add-task-overlay-important">
-                                            <div class="add-task-overlay-important-name">Urgent</div>
-                                            <img id="overlay-prio-urgent" src="/assets/icons/urgent.svg" />
-                                        </div>
-                                    </button>
-                                    <button id="overlay-add-task-medium"
-                                        class="add-task-overlay-medium add-task-clicked" data-priority="medium"
-                                        onclick="overlayAddTaskPrio('medium','overlay-add-task-urgent-medium-low-buttons',event)">
-                                        <div class="add-task-overlay-important">
-                                            <div class="add-task-overlay-important-name">Medium</div>
-                                            <img id="overlay-prio-medium" src="/assets/icons/medium.svg" />
-                                        </div>
-                                    </button>
-                                    <button id="overlay-add-task-low" class="add-task-overlay-low" data-priority="low"
-                                        onclick="overlayAddTaskPrio('low','overlay-add-task-urgent-medium-low-buttons',event)">
-                                        <div class="add-task-overlay-important">
-                                            <div class="add-task-overlay-important-name">Low</div>
-                                            <img id="overlay-prio-low" src="/assets/icons/low.svg" />
-                                        </div>
-                                    </button>
-                                </div>
-                            </div>
-
-                            <!-- Category -->
-                            <div class="add-task-overlay-category">
-                                <div class="checkbox-overlay-dropdown">
-                                    <div class="search-overlay">
-                                        <label for="overlay-add-task-category">
-                                            Category <span class="add-task-required">*</span>
-                                        </label>
-                                        <input required type="text" id="overlay-add-task-category" autocomplete="off"
-                                            placeholder="Select task category" />
-                                    </div>
-                                    <ul>
-                                        <li>
-                                            <label for="overlay-technical-task">
-                                                Technical Task
-                                                <input class="add-task-radio" type="radio" name="overlay-category"
-                                                    id="overlay-technical-task" value="Technical Task"
-                                                    onclick="overlayAddTaskChoseCategory(this.value)" />
-                                            </label>
-                                        </li>
-                                        <li>
-                                            <label for="overlay-user-story">
-                                                User Story
-                                                <input class="add-task-radio" type="radio" name="overlay-category"
-                                                    id="overlay-user-story" value="User Story"
-                                                    onclick="overlayAddTaskChoseCategory(this.value)" />
-                                            </label>
-                                        </li>
-                                    </ul>
-                                </div>
-                            </div>
-
-                            <!-- Subtasks -->
-                            <div class="add-task-overlay-subtasks">
-                                <div class="add-task-overlay-subtasks-input-container">
-                                    <label for="overlay-add-task-subtasks-input">Subtasks</label>
-                                    <input id="overlay-add-task-subtasks-input" name="overlay-add-task-subtasks-input"
-                                        class="add-task-overlay-subtasks-input" type="text"
-                                        placeholder="Add new subtask" autocomplete="off"
-                                        onclick="overlayAddTaskSubtasksClicked()"
-                                        onkeypress="overlayAddTaskSubtasks(event)" />
-                                    <div id="overlay-add-task-subtasks-icon-plus"
-                                        class="add-task-overlay-subtasks-icon-plus">
-                                        <button id="overlay-add-task-subtasks-input-plus"
-                                            onclick="overlayAddSubtasksPlus(event)">
-                                            <img src="/assets/icons/add_task_subtasks_icon_plus.svg" alt="" />
-                                        </button>
-                                    </div>
-                                    <div id="overlay-add-task-subtasks-icon-plus-check"
-                                        class="add-task-overlay-subtasks-icon-plus-check d-none">
-                                        <button id="overlay-add-task-subtasks-input-clear"
-                                            onclick="overlayClearSubtasks(event)">
-                                            <img src="/assets/icons/add_task_clear.svg" />
-                                        </button>
-                                        <div class="add-tasks-border"></div>
-                                        <button onclick="overlayAddTaskSubtasks(event)">
-                                            <svg width="14" height="14" viewBox="0 0 38 30" fill="none"
-                                                xmlns="http://www.w3.org/2000/svg">
-                                                <path d="M4.02832 15.0001L15.2571 26.0662L33.9717 3.93408"
-                                                    stroke="black" stroke-width="7" stroke-linecap="round"
-                                                    stroke-linejoin="round" />
-                                            </svg>
-                                        </button>
-                                    </div>
-                                </div>
-                            </div>
-                            <div id="overlay-add-task-subtasks-choosen" class="add-task-overlay-subtasks-choosen">
-                                <ul id="overlay-add-task-subtasks-list" class="add-task-overlay-subtasks-list"></ul>
-                            </div>
-                        </div>
-                    </div>
-
-                    <div class="add-task-bottom">
-                        <div><span class="add-task-required">*</span> This field is required</div>
-                        <div>
-                            <button type="button" class="add-task-bottom-clear-button" onclick="closeAddTaskOverlay()">
-                                <div class="add-task-bottom-clear">
-                                    Cancel &times;
-                                </div>
-                            </button>
-                            <button class="add-task-bottom-create-button" type="submit">
-                                <div class="add-task-bottom-create-task">
-                                    Create Task
-                                    <img class="add-task-create-task" src="/assets/icons/add_task_check.svg"
-                                        alt="check" />
-                                </div>
-                            </button>
-                        </div>
-                    </div>
-                </form>
             </div>
         </div>
-        <div id="add_notification" class="notification"></div>
+    </header>
+    <main class="content">
+        <div class="side_menu">
+            <img class="logo" src="/assets/img/join-logo-white.svg" alt="Join Logo">
+            <div class="menu_bar">
+                <div class="selection">
 
-        <!-- toggle-menu -->
+                    <a href="/html/summary.html"><img src="/assets/icons/Icon-summary.svg"
+                            alt=""><span>Summary</span></a>
+                </div>
+                <div class="selection">
+
+                    <a href="/html/addtask.html"><img src="/assets/icons/Icon-addtask.svg" alt=""><span>Add
+                            Task</span></a>
+                </div>
+                <div class="selection active">
+
+                    <a href="/html/board.html"><img src="/assets/icons/Icon-board.svg" alt=""><span>Board</span></a>
+                </div>
+                <div class="selection">
+
+                    <a href="/html/contacts.html"><img src="/assets/icons/Icon-contacts.svg"
+                            alt=""><span>Contacts</span></a>
+                </div>
+                <div class="policy_docs">
+                    <a href="/html/privacypolicy.html">Privacy Policy</a>
+                    <a href="/html/legalnotice.html">Legal Notice</a>
+                </div>
+            </div>
+        </div>
+        <section class="board_section">
+            <div class="board-content">
+                <div class="board_header">
+                    <h1 class="board-title">Board</h1>
+                    <div class="board_header_actions">
+                        <div class="search_container">
+                            <input type="text" id="searchInput" placeholder="Find Task" onkeyup="handleSearch(event)">
+                            <img class="search_icon" src="/assets/icons/search-icon-board.svg" alt="Search Icon">
+                        </div>
+                        <button class="btn_add_task" onclick="openAddTaskOverlay()">
+                            Add Task +
+                        </button>
+                    </div>
+                </div>
+
+                <div class="board_container">
+
+                    <!-- Spalte: TO DO -->
+                    <div class="column_wrapper">
+                        <div class="column_header">
+                            <h2>To Do</h2>
+                            <button class="col_add_btn" onclick="openAddTaskOverlay('todo')">+</button>
+                        </div>
+                        <div class="board_column" id="todo">
+                            <div id="tasks-container" class="task_list" ondrop="drop(event)"
+                                ondragover="allowDrop(event)">
+                                <!-- Tasks werden per JS erzeugt hier -->
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Spalte: IN PROGRESS -->
+                    <div class="column_wrapper">
+                        <div class="column_header">
+                            <h2>In progress</h2>
+                            <button class="col_add_btn" onclick="openAddTaskOverlay('doing')">+</button>
+                        </div>
+                        <div class="board_column" id="doing">
+                            <div class="task_list" ondrop="drop(event)" ondragover="allowDrop(event)"></div>
+                        </div>
+                    </div>
+
+                    <!-- Spalte: AWAIT FEEDBACK -->
+                    <div class="column_wrapper">
+                        <div class="column_header">
+                            <h2>Await feedback</h2>
+                            <button class="col_add_btn" onclick="openAddTaskOverlay('feedback')">+</button>
+                        </div>
+                        <div class="board_column" id="feedback">
+                            <div class="task_list" ondrop="drop(event)" ondragover="allowDrop(event)"></div>
+                        </div>
+                    </div>
+
+                    <!-- Spalte: DONE -->
+                    <div class="column_wrapper">
+                        <div class="column_header">
+                            <h2>Done</h2>
+                        </div>
+                        <div class="board_column" id="done">
+                            <div class="task_list" ondrop="drop(event)" ondragover="allowDrop(event)"></div>
+                        </div>
+                    </div>
+
+                </div>
+            </div>
+        </section>
         <div class="menu_header resp_menu_closed" id="resp_menu">
             <div class="menu_links">
                 <!-- help < 605px -->
@@ -329,22 +136,213 @@
                 <a onclick="logout()" href="#">Logout</a>
             </div>
         </div>
-        </main>
+    </main>
 
-        <!-- Board-Overlay (Task-Details) -->
-        <div class="board_overlay" id="boardOverlay">
+    <!-- Overlay für neues Task (Add Task) -->
+    <div class="add_task_overlay" id="addTaskOverlay">
+        <div class="overlay_content">
+            <form id="overlay-add-task-form" onsubmit="overlayAddTaskCreateTask(); return false;"
+                class="add-task-overlay-content">
+                <div class="add-task-overlay-h1-container">
+                    <h1>Add Task (Overlay)</h1>
+                    <div class="close_overlay_btn">
+                        <button type="button" onclick="closeAddTaskOverlay()">&times;</button>
+                    </div>
+                </div>
 
+                <div class="add-task-overlay-container">
+                    <div class="add-task-overlay-left-side">
+                        <!-- Title -->
+                        <div class="add-task-overlay-title">
+                            <label for="overlay-add-task-title-input">
+                                Title <span class="add-task-required">*</span>
+                            </label>
+                            <input required id="overlay-add-task-title-input" class="add-task-overlay-title-input"
+                                type="text" autocomplete="off" placeholder="Enter a title" value="" />
+                        </div>
+
+                        <!-- Description -->
+                        <div class="add-task-overlay-description">
+                            <label for="overlay-add-task-textarea">
+                                Description <span class="add-task-required">*</span>
+                            </label>
+                            <textarea required id="overlay-add-task-textarea" class="add-task-overlay-textarea"
+                                placeholder="Enter a description"></textarea>
+                        </div>
+
+                        <!-- Assigned to -->
+                        <div class="add-task-overlay-assigned-to">
+                            <div class="checkbox-overlay-dropdown">
+                                <div class="search-overlay">
+                                    <label for="overlay-find-person">Assigned to</label>
+                                    <input type="text" name="overlay-find-person" id="overlay-find-person"
+                                        autocomplete="off" placeholder="Select contacts to assign"
+                                        onclick="overlayShowContactList()" onkeyup="overlayAddTaskAssignedToSearch()" />
+                                </div>
+                                <ul id="overlay-add-task-contact"></ul>
+                            </div>
+                        </div>
+                        <div id="overlay-add-task-assigned-avatar" class="add-task-assigned-avatar"></div>
+                    </div>
+
+                    <div class="add-task-overlay-right-side">
+                        <!-- Due Date -->
+                        <div class="add-task-overlay-due-date">
+                            <label for="overlay-date">Due date
+                                <span class="add-task-required">*</span>
+                            </label>
+                            <input required type="date" class="add-task-overlay-due-date-input" id="overlay-date"
+                                name="overlay-date" />
+                        </div>
+
+                        <!-- Priority -->
+                        <div class="add-task-overlay-urgent-medium-low-container">
+                            <div>Prio</div>
+                            <div id="overlay-add-task-urgent-medium-low-buttons"
+                                class="add-task-overlay-urgent-medium-low-buttons">
+                                <button id="overlay-add-task-urgent" class="add-task-overlay-urgent"
+                                    data-priority="urgent"
+                                    onclick="overlayAddTaskPrio('urgent','overlay-add-task-urgent-medium-low-buttons',event)">
+                                    <div class="add-task-overlay-important">
+                                        <div class="add-task-overlay-important-name">Urgent</div>
+                                        <img id="overlay-prio-urgent" src="/assets/icons/urgent.svg" />
+                                    </div>
+                                </button>
+                                <button id="overlay-add-task-medium" class="add-task-overlay-medium add-task-clicked"
+                                    data-priority="medium"
+                                    onclick="overlayAddTaskPrio('medium','overlay-add-task-urgent-medium-low-buttons',event)">
+                                    <div class="add-task-overlay-important">
+                                        <div class="add-task-overlay-important-name">Medium</div>
+                                        <img id="overlay-prio-medium" src="/assets/icons/medium.svg" />
+                                    </div>
+                                </button>
+                                <button id="overlay-add-task-low" class="add-task-overlay-low" data-priority="low"
+                                    onclick="overlayAddTaskPrio('low','overlay-add-task-urgent-medium-low-buttons',event)">
+                                    <div class="add-task-overlay-important">
+                                        <div class="add-task-overlay-important-name">Low</div>
+                                        <img id="overlay-prio-low" src="/assets/icons/low.svg" />
+                                    </div>
+                                </button>
+                            </div>
+                        </div>
+
+                        <!-- Category -->
+                        <div class="add-task-overlay-category">
+                            <div class="checkbox-overlay-dropdown">
+                                <div class="search-overlay">
+                                    <label for="overlay-add-task-category">
+                                        Category <span class="add-task-required">*</span>
+                                    </label>
+                                    <input required type="text" id="overlay-add-task-category" autocomplete="off"
+                                        placeholder="Select task category" />
+                                </div>
+                                <ul>
+                                    <li>
+                                        <label for="overlay-technical-task">
+                                            Technical Task
+                                            <input class="add-task-radio" type="radio" name="overlay-category"
+                                                id="overlay-technical-task" value="Technical Task"
+                                                onclick="overlayAddTaskChoseCategory(this.value)" />
+                                        </label>
+                                    </li>
+                                    <li>
+                                        <label for="overlay-user-story">
+                                            User Story
+                                            <input class="add-task-radio" type="radio" name="overlay-category"
+                                                id="overlay-user-story" value="User Story"
+                                                onclick="overlayAddTaskChoseCategory(this.value)" />
+                                        </label>
+                                    </li>
+                                </ul>
+                            </div>
+                        </div>
+
+                        <!-- Subtasks -->
+                        <div class="add-task-overlay-subtasks">
+                            <div class="add-task-overlay-subtasks-input-container">
+                                <label for="overlay-add-task-subtasks-input">Subtasks</label>
+                                <input id="overlay-add-task-subtasks-input" name="overlay-add-task-subtasks-input"
+                                    class="add-task-overlay-subtasks-input" type="text" placeholder="Add new subtask"
+                                    autocomplete="off" onclick="overlayAddTaskSubtasksClicked()"
+                                    onkeypress="overlayAddTaskSubtasks(event)" />
+                                <div id="overlay-add-task-subtasks-icon-plus"
+                                    class="add-task-overlay-subtasks-icon-plus">
+                                    <button id="overlay-add-task-subtasks-input-plus"
+                                        onclick="overlayAddSubtasksPlus(event)">
+                                        <img src="/assets/icons/add_task_subtasks_icon_plus.svg" alt="" />
+                                    </button>
+                                </div>
+                                <div id="overlay-add-task-subtasks-icon-plus-check"
+                                    class="add-task-overlay-subtasks-icon-plus-check d-none">
+                                    <button id="overlay-add-task-subtasks-input-clear"
+                                        onclick="overlayClearSubtasks(event)">
+                                        <img src="/assets/icons/add_task_clear.svg" />
+                                    </button>
+                                    <div class="add-tasks-border"></div>
+                                    <button onclick="overlayAddTaskSubtasks(event)">
+                                        <svg width="14" height="14" viewBox="0 0 38 30" fill="none"
+                                            xmlns="http://www.w3.org/2000/svg">
+                                            <path d="M4.02832 15.0001L15.2571 26.0662L33.9717 3.93408" stroke="black"
+                                                stroke-width="7" stroke-linecap="round" stroke-linejoin="round" />
+                                        </svg>
+                                    </button>
+                                </div>
+                            </div>
+                        </div>
+                        <div id="overlay-add-task-subtasks-choosen" class="add-task-overlay-subtasks-choosen">
+                            <ul id="overlay-add-task-subtasks-list" class="add-task-overlay-subtasks-list"></ul>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="add-task-bottom">
+                    <div><span class="add-task-required">*</span> This field is required</div>
+                    <div>
+                        <button type="button" class="add-task-bottom-clear-button" onclick="closeAddTaskOverlay()">
+                            <div class="add-task-bottom-clear">
+                                Cancel &times;
+                            </div>
+                        </button>
+                        <button class="add-task-bottom-create-button" type="submit">
+                            <div class="add-task-bottom-create-task">
+                                Create Task
+                                <img class="add-task-create-task" src="/assets/icons/add_task_check.svg" alt="check" />
+                            </div>
+                        </button>
+                    </div>
+                </div>
+            </form>
         </div>
+    </div>
+    <div id="add_notification" class="notification"></div>
 
-        <!-- SCRIPTS -->
-        <script src="/js/data_task.js"></script>
-        <script src="/js/task_template.js"></script>
-        <script src="/js/add_task.js"></script>
-        <script src="/js/add_task_overlay.js"></script>
-        <script src="/js/edit_task.js"></script>
-        <script src="/js/template.js"></script>
-        <script src="/js/board.js"></script>
-        <script src="/js/open_close_overlays.js"></script>
-    </body>
+    <!-- toggle-menu -->
+    <div class="menu_header resp_menu_closed" id="resp_menu">
+        <div class="menu_links">
+            <!-- help < 605px -->
+            <a href="/html/help.html" class="help_text_link">Help</a>
+
+            <a href="/html/legalnotice.html">Legal Notice</a>
+            <a href="/html/privacypolicy.html">Privacy Policy</a>
+            <a onclick="logout()" href="#">Logout</a>
+        </div>
+    </div>
+    </main>
+
+    <!-- Board-Overlay (Task-Details) -->
+    <div class="board_overlay" id="boardOverlay">
+
+    </div>
+
+    <!-- SCRIPTS -->
+    <script src="/js/data_task.js"></script>
+    <script src="/js/task_template.js"></script>
+    <script src="/js/add_task.js"></script>
+    <script src="/js/add_task_overlay.js"></script>
+    <script src="/js/edit_task.js"></script>
+    <script src="/js/template.js"></script>
+    <script src="/js/board.js"></script>
+    <script src="/js/open_close_overlays.js"></script>
+</body>
 
 </html>
