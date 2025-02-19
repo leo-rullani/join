@@ -121,8 +121,9 @@ input:focus {
 
 .add-task-right-left-between {
   width: 1px;
-  height: 500px;
+  height: 445px;
   background-color: #dadbdb;
+  margin-top: 43px;
 }
 
 .add-task-right-side {

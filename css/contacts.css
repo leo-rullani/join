@@ -489,7 +489,7 @@
   padding-top: 8px;
   padding-bottom: 8px;
   font-size: 16px;
-  border: 1px solid;
+  border: 1px solid #a8a8a8;
 }
 
 .form_add input:focus {

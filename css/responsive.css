@@ -339,7 +339,8 @@
   .policy_docs_privacy a {
     align-items: center;
     margin-left: 0px;
-    padding: 20px;
+    padding: 26px;
+    font-size: 12px;
   }
 
   .policy_docs_privacy:hover {
@@ -800,7 +801,6 @@
 
   .menu_bar_login img {
     width: 20px;
-    margin-right: 10px;
   }
 
   .policy_docs_privacy {
@@ -855,12 +855,13 @@
     font-size: 11px;
   }
 
-  .policy_docs_privacy a {
-    padding: 10px;
-  }
-
   .selection_privacy {
     font-size: 11px;
+    display: flex;
+    flex-direction: column;
+    text-align: center;
+    align-items: center;
+    justify-content: center;
   }
 }
 
@@ -899,6 +900,10 @@
   .overlay-content {
     width: 300px;
     height: 700px;
+  }
+
+  .policy_docs_privacy a {
+    padding: 17px;
   }
 
   .editContact_left,

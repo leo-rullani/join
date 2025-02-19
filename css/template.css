@@ -186,7 +186,6 @@ header {
 
 .selection_privacy span {
   min-width: 70px;
-  text-align: start;
 }
 
 .selection_privacy a {
@@ -229,7 +228,6 @@ header {
 
 .menu_bar_login img {
   width: 30px;
-  margin-right: 10px;
   height: auto;
 }
 
@@ -249,7 +247,7 @@ header {
 .policy_docs a:hover {
   width: 73%;
   transform: scale(1.01);
-  background-color: #2c4972;
+  color: #29abe2ff;
 }
 
 /* Hauptinhalt (optional, wenn du Inhalt einfügst) */
