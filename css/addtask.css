@@ -722,6 +722,11 @@ input[type="radio"] {
   background-color: #eeeeee;
 }
 
+.checkbox-dropdown ul li:active{
+  background-color: #2a3647;
+  color: white;
+}
+
 .avatar {
   display: inline-flex;
   justify-content: center;
