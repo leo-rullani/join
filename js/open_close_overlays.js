@@ -34,6 +34,7 @@ function closeOverlay() {
 
 function openEditOverlay(contactId, name, email, phone) {
   let overlay = document.getElementById("editOverlay");
+  let deleteBtn = document.getElementById("contactDeleteButton");
   overlay.classList.add("active");
   overlay.classList.remove("closing");
 
@@ -42,6 +43,17 @@ function openEditOverlay(contactId, name, email, phone) {
   document.getElementById("editPhone").value = phone;
 
   document.getElementById("editContactForm").dataset.contactId = contactId;
+
+  if (deleteBtn) {
+    deleteBtn.onclick = async () => {
+      try {
+        await deleteContact(contactId);
+      } catch (err) {
+        console.error("Delete failed:", err);
+      }
+      closeEditOverlay();
+    };
+  }
 }
 
 function closeEditOverlay() {
@@ -130,8 +142,6 @@ function openBoardOverlay(taskId) {
   }
 }
 
-/* To close all overlays with a click on desktop*/
-
 function closeBoardOverlay() {
   const overlay = document.getElementById("boardOverlay");
   const content = overlay.querySelector(".board_overlay_content");
@@ -194,6 +204,8 @@ function closeAddTaskOverlay() {
     { once: true }
   );
 }
+
+/* To close all overlays with a click on desktop*/
 
 const addTaskOverlay = document.getElementById("addTaskOverlay");
 if (addTaskOverlay) {

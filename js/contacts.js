@@ -333,9 +333,8 @@ async function deleteContact(contactId) {
       throw new Error(`Failed to delete contact: ${response.statusText}`);
     }
 
-    // UI aktualisieren
     document.getElementById("contact-info").innerHTML = "";
-    await fetchContactsFromDatabase(); // Kontakte direkt neu laden
+    await fetchContactsFromDatabase();
   } catch (error) {
     console.error("Error deleting contact:", error);
   }
