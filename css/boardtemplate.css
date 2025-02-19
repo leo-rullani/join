@@ -34,10 +34,15 @@
 
 /* Beschreibung in Grau */
 .task-description {
-  color: #6b6b6b;
-  margin-bottom: 12px;
-  font-size: 14px;
+  display: -webkit-box;        
+  -webkit-box-orient: vertical;
+  -webkit-line-clamp: 2;     
+  overflow: hidden;            
+  text-overflow: ellipsis;    
+  width: 200px;
   line-height: 1.4;
+  font-size: 14px;
+  color: #6b6b6b;
 }
 
 /* Subtask-Balken: Container, Hintergrund, Füllung */
