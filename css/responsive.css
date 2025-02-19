@@ -1561,6 +1561,7 @@
 @media (max-width: 1200px) {
   .add-task-container {
     flex-direction: column;
+    margin-left: -15px;
   }
 
   .add-task-all-content {
@@ -1596,8 +1597,19 @@
     align-items: flex-start;
     background-color: #f6f7f8;
     gap: 8px;
+    height: 100px;
+    padding: 15px;
     position: sticky;
     bottom: -2px;
+    margin-left: -15px;
+  }
+
+  .add-task-required-container{
+    display: none;
+  }
+
+  .add-task-required-responsive{
+    display: flex;
   }
 
 }
@@ -1605,7 +1617,7 @@
 @media(max-width:860px) {
   .add-task-bottom {
     align-items: flex-start;
-    padding: 0;
+    margin-left: -15px;
     bottom: 50px;
   }
 }
@@ -1669,6 +1681,10 @@
 
   .add-task-subtasks-icon-plus-check {
     left: 75px;
+  }
+
+  .add-task-bottom{
+    align-items: flex-start;
   }
 }
 

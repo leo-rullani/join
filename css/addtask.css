@@ -521,6 +521,11 @@ input:focus {
   display: none !important;
 }
 
+.add-task-required-responsive{
+  display: none;
+  font-size: 16px;
+}
+
 .add-task-bottom {
   display: flex;
   justify-content: space-between;
