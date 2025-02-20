@@ -287,17 +287,8 @@ function showToast(message) {
   if (!notification) return;
   notification.innerHTML = message;
   notification.classList.add("show");
-  notification.style.right = "-50px";
-  notification.style.bottom = "150px";
-  notification.offsetHeight;
-  notification.style.transition = "right 0.3s ease-in-out";
-  notification.style.right = "150px";
-  setTimeout(() => {
-    notification.style.transition = "right 0.3s ease-in-out";
-    notification.style.right = "-500px";
-  }, 3000);
   setTimeout(() => {
     notification.classList.remove("show");
-  }, 3300);
+  }, 3000);
 }
 window.showToast = showToast;

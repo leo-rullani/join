@@ -91,35 +91,6 @@ function insertAt(target, dragged, position) {
   }
 }
 
-let draggedElement = null;
-
-document.querySelectorAll(".task_list").forEach((container) => {
-  container.addEventListener("dragover", (e) => {
-    e.preventDefault();
-  });
-
-  container.addEventListener("drop", (e) => {
-    e.preventDefault();
-    if (draggedElement) {
-      container.appendChild(draggedElement);
-      draggedElement.classList.remove("dragging");
-      draggedElement = null;
-    }
-  });
-});
-
-document.querySelectorAll(".task").forEach((task) => {
-  task.addEventListener("dragstart", (e) => {
-    draggedElement = task;
-    draggedElement.classList.add("dragging");
-    e.dataTransfer.effectAllowed = "move";
-  });
-
-  task.addEventListener("dragend", () => {
-    draggedElement.classList.remove("dragging");
-    draggedElement = null;
-  });
-});
 /**
  * Suchfunktion für Tasks
  */
@@ -130,25 +101,4 @@ function handleSearch(e) {
     let txt = task.innerText.toLowerCase();
     task.style.display = txt.includes(q) ? "" : "none";
   });
-}
-
-/**
- * Speichert neuen Task und legt ihn in "To Do" an
- */
-function saveNewTask() {
-  let val = document.getElementById("newTaskInput").value.trim();
-  if (!val) return;
-
-  let el = document.createElement("div");
-  el.id = "task_" + Date.now();
-  el.className = "task";
-  el.draggable = true;
-  el.ondragstart = drag;
-  el.innerText = val;
-  el.onclick = () => openBoardOverlay(el.id);
-
-  document.getElementById("todo").querySelector(".task_list").appendChild(el);
-
-  document.getElementById("newTaskInput").value = "";
-  closeAddTaskOverlay();
 }

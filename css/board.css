@@ -196,7 +196,7 @@
 .task_list:has(.task) {
   background-color: transparent;
   border: none;
-  min-height: 250px;
+  min-height: 900px;
 }
 
 .task {

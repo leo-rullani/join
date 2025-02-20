@@ -843,46 +843,39 @@ form {
 }
 
 .notification {
-  position: fixed;
-  left: 50%;
-  bottom: -120px;
-  transform: translateX(-50%);
-  background-color: #2b3647;
-  color: #fff;
-  padding: 15px 20px;
-  border-radius: 6px;
+  display: flex;
+  justify-content: space-between;
   text-align: center;
-  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.15);
-  opacity: 0;
-  z-index: 9999;
-  transition: bottom 0.7s ease, opacity 0.7s ease;
-}
-
-.notification.show {
-  bottom: 40%;
-  opacity: 1;
-}
-
-.hidden {
-  display: none !important;
+  align-items: center;
 }
 
 .notification img {
-  vertical-align: middle;
-}
-
-.notification.hidden {
-  display: none;
-}
-
-.notification.show {
-  display: block;
+  margin-left: 30px;
 }
 
 #add_notification {
-  bottom: -120px; /* Start unsichtbar unterhalb des Bildschirms */
+  position: fixed;
+  left: 50%;
+  bottom: 0;
+  transform: translateX(0%) translateY(150%);
+  opacity: 0;
+  background-color: #2a3647;
+  color: #fff;
+  padding: 20px 20px;
+  border-radius: 20px;
+  transition: transform 0.4s ease, opacity 0.4s ease;
+  z-index: 100000;
 }
 
+#add_notification.show {
+  transform: translateX(0%) translateY(-700%);
+  opacity: 1;
+}
+
+#add_notification.hide {
+  transform: translateX(200%) translateY(0);
+  opacity: 0;
+}
 @media (max-width: 860px) {
   .edit-task-bottom {
     display: flex;

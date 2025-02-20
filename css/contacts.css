@@ -595,24 +595,21 @@
   transition: all 0.3s ease;
 }
 
-.notification {
+#add_notification {
   position: fixed;
-  transform: translateX(0);
-  background-color: #2b3647;
-  right: 150px;
+  bottom: 150px;
+  right: -500px;
+  padding: 20px 20px;
+  background: #2a3647;
   color: #fff;
-  padding: 15px 20px;
-  border-radius: 6px;
-  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.15);
+  border-radius: 20px;
   opacity: 0;
-  z-index: 9999;
-  transition: right 0.5s ease-in-out, opacity 0.5s ease-in-out;
+  transition: right 0.3s ease-in-out, opacity 0.3s ease-in-out;
 }
 
-.notification.show {
+#add_notification.show {
+  right: 150px;
   opacity: 1;
-  right: -200%;
-  transform: translateX(-200%);
 }
 
 .return_button_contacts {

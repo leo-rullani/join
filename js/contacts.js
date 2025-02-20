@@ -285,7 +285,7 @@ async function updateContact(contactId, name, email, phone) {
       throw new Error("Update Contact Failed.");
     }
 
-    await fetchContactsFromDatabase(); // UI aktualisieren
+    await fetchContactsFromDatabase();
   } catch (error) {
     console.error("Update Error:", error);
   }
@@ -365,28 +365,4 @@ async function deleteContactFromServer(userId, contactId) {
       `Failed to delete contact with ID ${contactId}: ${response.statusText}`
     );
   }
-}
-
-function toggleRespMenu() {
-  let menu = document.getElementById("resp_menu");
-  menu.classList.toggle("resp_menu_closed");
-  menu.classList.toggle("resp_menu_open");
-}
-
-function showToast(message) {
-  const notification = document.getElementById("add_notification");
-  notification.textContent = message;
-  notification.classList.add("show");
-  notification.style.right = "-50px";
-  notification.style.bottom = "150px";
-  notification.offsetHeight;
-  notification.style.transition = "right 0.3s ease-in-out";
-  notification.style.right = "150px";
-  setTimeout(() => {
-    notification.style.transition = "right 0.3s ease-in-out";
-    notification.style.right = "-500px";
-  }, 3000);
-  setTimeout(() => {
-    notification.classList.remove("show");
-  }, 3300);
 }
