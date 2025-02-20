@@ -24,6 +24,7 @@
   box-shadow: rgba(0, 0, 0, 0.15) 5px 0px 8px 0px;
   border: none;
   z-index: 1;
+  margin-bottom: 80px;
 }
 
 .contacts_div::-webkit-scrollbar-track {
