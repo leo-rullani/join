@@ -253,6 +253,10 @@ input:focus {
   transition: all 200ms ease-in-out;
 }
 
+.assignedSelected {
+  background-color: #2b3647;
+}
+
 .add-task-category-input-container button:hover {
   background-color: #ededef;
 }
@@ -523,7 +527,7 @@ input:focus {
   display: none !important;
 }
 
-.add-task-required-responsive{
+.add-task-required-responsive {
   display: none;
   font-size: 16px;
 }
@@ -724,11 +728,6 @@ input[type="radio"] {
   background-color: #eeeeee;
 }
 
-.checkbox-dropdown ul li:active{
-  background-color: #2a3647;
-  color: white;
-}
-
 .avatar {
   display: inline-flex;
   justify-content: center;
@@ -742,8 +741,10 @@ input[type="radio"] {
   color: #fff;
 }
 
-.checkbox-dropdown ul li .add-task-checkbox,
-.checkbox-dropdown ul li .add-task-checkbox-edit {
+.checkbox-dropdown ul li,
+.add-task-checkbox,
+.checkbox-dropdown ul li,
+.add-task-checkbox-edit {
   opacity: 1;
   cursor: pointer;
 }
@@ -843,24 +844,24 @@ form {
 
 .notification {
   position: fixed;
-  top: 40%;                   
+  top: 40%;
   left: 50%;
   transform: translate(-50%, -50%);
-  width: 0;                   
-  max-width: 80%;         
+  width: 0;
+  max-width: 80%;
   background-color: #2b3647;
   color: #fff;
   border-radius: 6px;
   text-align: center;
-  box-shadow: 0 4px 10px rgba(0,0,0,0.15);
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.15);
   opacity: 0;
-  overflow: hidden;         
-  transition: all 0.7s ease; 
+  overflow: hidden;
+  transition: all 0.7s ease;
   z-index: 9999;
 }
 .notification.show {
-  width: 300px; 
-  padding: 15px 20px; 
+  width: 300px;
+  padding: 15px 20px;
   opacity: 1;
 }
 .hidden {
@@ -868,7 +869,7 @@ form {
 }
 
 .notification img {
-  vertical-align: middle; 
+  vertical-align: middle;
 }
 
 .notification.hidden {
@@ -883,40 +884,40 @@ form {
   bottom: -120px; /* Start unsichtbar unterhalb des Bildschirms */
 }
 
-@media(max-width: 860px) {
+@media (max-width: 860px) {
   .edit-task-bottom {
     display: flex;
     justify-content: flex-end;
     align-items: flex-end;
     margin-top: 200px;
     margin-right: 8px;
-}
-.checkbox-overlay-dropdown .search-overlay > input  {
-  font-size: 12px;
-}
-.checkbox-overlay-dropdown ul li label {
-  cursor: pointer;
-  width: 100%;
-  display: flex;
-  align-items: center;
-  font-size: 12px;
-}
-.add-task-overlay-title-input {
-  font-size: 12px;
-}
-.add-task-overlay-subtasks-input {
-  font-size: 12px;
-}
-.add-task-overlay-subtasks-icon-plus-check button {
-  padding: 0px;
-}
-.add-task-overlay-subtasks-choosen ul {
-  font-size: 12px;
-}
-.add-task-overlay-subtasks-icon-plus button {
-  padding: 0px;
-}
-.add-task-overlay-due-date-input {
-  font-size: 12px;
-}
+  }
+  .checkbox-overlay-dropdown .search-overlay > input {
+    font-size: 12px;
+  }
+  .checkbox-overlay-dropdown ul li label {
+    cursor: pointer;
+    width: 100%;
+    display: flex;
+    align-items: center;
+    font-size: 12px;
+  }
+  .add-task-overlay-title-input {
+    font-size: 12px;
+  }
+  .add-task-overlay-subtasks-input {
+    font-size: 12px;
+  }
+  .add-task-overlay-subtasks-icon-plus-check button {
+    padding: 0px;
+  }
+  .add-task-overlay-subtasks-choosen ul {
+    font-size: 12px;
+  }
+  .add-task-overlay-subtasks-icon-plus button {
+    padding: 0px;
+  }
+  .add-task-overlay-due-date-input {
+    font-size: 12px;
+  }
 }
