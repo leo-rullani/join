@@ -656,8 +656,8 @@
 }
 
 .add-task-overlay-subtasks-choosen {
-  max-height: 200px;
-  overflow-y: auto;
+  max-height: 90px;
+  overflow-y: scroll;
 }
 
 .add-task-overlay-subtasks-choosen li {
