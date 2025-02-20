@@ -100,13 +100,13 @@
 
 .board_overlay_close {
   position: absolute;
-  top: 40px;
-  right: 30px;
+  top: 20px;
+  right: 20px;
   background: none;
   animation-duration: 1s;
-  color: #3f3f3f;
+  color: #999fa7;
   border: none;
-  font-size: 32px;
+  font-size: 28px;
   cursor: pointer;
   transition: background-color 1sease, border-radius 1sease;
   width: 40px;
@@ -327,7 +327,6 @@
     width: 350px;
     height: 670px;
     top: 10px;
-    overflow-y: auto;
   }
 }
 

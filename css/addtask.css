@@ -344,6 +344,7 @@ input:focus {
   width: 1px;
   height: 26px;
   border: 1px solid #bbb9b9;
+  margin-right: 0px;
 }
 
 .add-task-subtasks-icon-plus button {
@@ -385,6 +386,7 @@ input:focus {
   border: none;
   padding: 10px;
   cursor: pointer;
+  margin-top: 5px;
 }
 
 .add-task-subtasks-icon-plus-check button:hover {
