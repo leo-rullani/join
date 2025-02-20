@@ -876,6 +876,11 @@ form {
   transform: translateX(200%) translateY(0);
   opacity: 0;
 }
+
+.selectedContact {
+  background-color: #2a3647 !important;
+  color: white;
+}
 @media (max-width: 860px) {
   .edit-task-bottom {
     display: flex;

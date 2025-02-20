@@ -321,7 +321,7 @@ function overlayShowContactList() {
     const bg = assignColor(contact.name);
     const chk = window.overlayAssignedContacts.includes(contact.name);
     container.innerHTML += `
-      <li>
+          <li class="${chk ? "selectedContact" : ""}">
         <label for="overlay-person${i}">
           <span class="avatar" style="background-color:${bg};">${getUserInitials(
       contact.name
@@ -354,7 +354,7 @@ function overlayAddTaskAssignedToSearch() {
     const bg = assignColor(c.name);
     const chk = window.overlayAssignedContacts.includes(c.name);
     container.innerHTML += `
-      <li>
+        <li class="${chk ? "selectedContact" : ""}">
         <label for="overlay-person${i}">
           <span class="avatar" style="background-color:${bg};">${getUserInitials(
       c.name
@@ -379,9 +379,20 @@ window.overlayAddTaskAssignedToSearch = overlayAddTaskAssignedToSearch;
  */
 function overlayToggleContactSelection(contactName) {
   const idx = window.overlayAssignedContacts.indexOf(contactName);
-  if (idx >= 0) window.overlayAssignedContacts.splice(idx, 1);
-  else window.overlayAssignedContacts.push(contactName);
+  if (idx >= 0) {
+    window.overlayAssignedContacts.splice(idx, 1);
+  } else {
+    window.overlayAssignedContacts.push(contactName);
+  }
   overlayShowAvatars();
+  const searchValue = document
+    .getElementById("overlay-find-person")
+    .value.trim();
+  if (searchValue) {
+    overlayAddTaskAssignedToSearch();
+  } else {
+    overlayShowContactList();
+  }
 }
 window.overlayToggleContactSelection = overlayToggleContactSelection;
 

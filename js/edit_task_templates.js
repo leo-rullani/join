@@ -66,7 +66,7 @@ window.createExistingSubtaskLi = function (sub, i) {
  */
 window.createEditOverlayContactLi = function (contact, i, bgColor, checked) {
   return `
-    <li>
+     <li class="${checked ? "selectedContact" : ""}">
       <label for="edit-person${i}">
         <span class="avatar" style="background-color:${bgColor};">${getUserInitials(
     contact.name

@@ -142,7 +142,7 @@ function createAssignedTo() {
     const bg = assignColor(c.name);
     const chk = window.assignedContacts.includes(c.name);
     container.innerHTML += `
-      <li>
+      <li class="${chk ? "selectedContact" : ""}">
         <label for="person${i}">
           <span class="avatar" style="background-color:${bg};">${getUserInitials(
       c.name
@@ -172,7 +172,7 @@ function addTaskAssignedToSearch() {
     const bg = assignColor(c.name);
     const chk = window.assignedContacts.includes(c.name);
     container.innerHTML += `
-      <li>
+      <li class="${chk ? "selectedContact" : ""}">
         <label for="person${i}">
           <span class="avatar" style="background-color:${bg};">${getUserInitials(
       c.name
@@ -196,9 +196,19 @@ window.addTaskAssignedToSearch = addTaskAssignedToSearch;
  */
 function toggleContactSelection(contactName) {
   const idx = window.assignedContacts.indexOf(contactName);
-  if (idx >= 0) window.assignedContacts.splice(idx, 1);
-  else window.assignedContacts.push(contactName);
+  if (idx >= 0) {
+    window.assignedContacts.splice(idx, 1);
+  } else {
+    window.assignedContacts.push(contactName);
+  }
+
   addTaskShowAvatars();
+  const searchValue = document.getElementById("find-person").value.trim();
+  if (searchValue) {
+    addTaskAssignedToSearch();
+  } else {
+    createAssignedTo();
+  }
 }
 window.toggleContactSelection = toggleContactSelection;
 

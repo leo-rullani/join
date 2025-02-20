@@ -364,7 +364,15 @@ function editToggleContactSelection(contactName) {
   const idx = window.editAssignedContacts.indexOf(contactName);
   if (idx >= 0) window.editAssignedContacts.splice(idx, 1);
   else window.editAssignedContacts.push(contactName);
-  editShowAvatars();
+  overlayShowAvatars();
+  const searchValue = document
+    .getElementById("overlay-find-person")
+    .value.trim();
+  if (searchValue) {
+    editAssignedToSearch();
+  } else {
+    editShowContactList();
+  }
 }
 window.editToggleContactSelection = editToggleContactSelection;
 
