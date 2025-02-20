@@ -8,8 +8,7 @@
 
 .contacts_container {
   position: relative;
-  height: 100%;
-  max-height: 825px;
+  height: 100vh;
   margin: 0;
   top: 76px;
   padding: 0px;
@@ -205,6 +204,7 @@
 .contacts {
   padding-left: 20px;
   padding-right: 20px;
+  padding-bottom: 20px;
 }
 
 .contact {
@@ -217,6 +217,7 @@
   cursor: pointer;
   transition: background-color 0.3s ease;
   gap: 30px;
+  padding-bottom: 20px;
 }
 
 .contact:hover {
