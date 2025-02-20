@@ -15,6 +15,12 @@ window.editTask = editTask;
  * @param {string} taskId - The ID of the task to update.
  * @returns {Promise<void>}
  */
+/**
+ * Updates the existing task in Firebase with edited data from the overlay.
+ * @async
+ * @param {string} taskId - The ID of the task to update.
+ * @returns {Promise<void>}
+ */
 async function updateTask(taskId) {
   const taskRef = `${window.databaseURL}/tasks/${taskId}.json`;
 
@@ -63,6 +69,7 @@ async function updateTask(taskId) {
 
     if (response.ok) {
       console.log("Task updated:", updatedTask);
+      // Hier wird das Toast angezeigt, welches von unten hoch "fliegt".
       showToast("Task updated!");
       await displayTasks();
       window.editingMode = false;
@@ -76,6 +83,8 @@ async function updateTask(taskId) {
   }
 }
 window.updateTask = updateTask;
+
+
 
 /**
  * Fills the edit overlay form fields with the existing task data.

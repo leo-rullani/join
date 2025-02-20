@@ -276,9 +276,3 @@ a:active {
   transition: background-color 0.3s ease;
   border: 3px solid rgb(0, 0, 0);
 }
-
-/* Hover-Effekt => Füllt den Kreis mit Hellgrau */
-.profile_initials:hover {
-  background-color: #f5f5f5;
-  cursor: pointer;
-}

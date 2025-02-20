@@ -843,21 +843,32 @@ form {
 
 .notification {
   position: fixed;
+  top: 40%;                   
   left: 50%;
-  transform: translateX(-50%);
-  width: 300px;
-  background-color: #2b3647; /* Dunkelblau */
+  transform: translate(-50%, -50%);
+  width: 0;                   
+  max-width: 80%;         
+  background-color: #2b3647;
   color: #fff;
-  padding: 12px 16px;
-  border-radius: 8px;
+  border-radius: 6px;
   text-align: center;
-  transition: bottom 0.5s ease, opacity 0.5s ease;
-  opacity: 1;
+  box-shadow: 0 4px 10px rgba(0,0,0,0.15);
+  opacity: 0;
+  overflow: hidden;         
+  transition: all 0.7s ease; 
   z-index: 9999;
+}
+.notification.show {
+  width: 300px; 
+  padding: 15px 20px; 
+  opacity: 1;
+}
+.hidden {
+  display: none !important;
 }
 
 .notification img {
-  vertical-align: middle; /* Icon etwas ausrichten */
+  vertical-align: middle; 
 }
 
 .notification.hidden {
