@@ -33,6 +33,7 @@
   color: #2b3647;
   font-weight: normal;
   margin-top: -16px;
+  overflow-y: auto;
 }
 
 .board_overlay_details_content {
@@ -42,7 +43,6 @@
 
 .edit-task-overlay-container {
   height: 95%;
-  overflow-y: auto;
   margin: 10px;
   width: 100%;
 }
