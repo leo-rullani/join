@@ -1,6 +1,6 @@
+"use strict";
 /**
- * Initializes the add-task form on the main HTML page.
- * @async
+ * Initializes the main add-task form.
  * @returns {Promise<void>}
  */
 function initAddTask() {
@@ -12,42 +12,41 @@ function initAddTask() {
 window.initAddTask = initAddTask;
 
 /**
- * Gets the category from URL parameters.
+ * Retrieves category from URL parameters.
+ * @returns {void}
  */
 function getCategoryFromUrl() {
-  const urlParams = new URLSearchParams(window.location.search);
-  if (urlParams.get("category")) {
-    window.globalBoardCategory = urlParams.get("category");
-  }
+  const params = new URLSearchParams(window.location.search);
+  if (params.get("category"))
+    window.globalBoardCategory = params.get("category");
 }
 window.getCategoryFromUrl = getCategoryFromUrl;
 
 /**
- * Retrieves the task title from the input field and clears it.
- * @returns {string} The entered task title.
+ * Gets and clears the task title.
+ * @returns {string}
  */
 function addTaskTitle() {
-  const valueFromTitle = document.getElementById("add-task-title-input").value;
+  const title = document.getElementById("add-task-title-input").value;
   document.getElementById("add-task-title-input").value = "";
-  return valueFromTitle;
+  return title;
 }
 window.addTaskTitle = addTaskTitle;
 
 /**
- * Retrieves the task description from the textarea and clears it.
- * @returns {string} The entered task description.
+ * Gets and clears the task description.
+ * @returns {string}
  */
 function addTaskDescription() {
-  const valueFromDescription =
-    document.getElementById("add-task-textarea").value;
+  const desc = document.getElementById("add-task-textarea").value;
   document.getElementById("add-task-textarea").value = "";
-  return valueFromDescription;
+  return desc;
 }
 window.addTaskDescription = addTaskDescription;
 
 /**
- * Retrieves the due date from the input field and clears it.
- * @returns {string} The selected due date.
+ * Gets and clears the due date.
+ * @returns {string}
  */
 function addTaskDueDate() {
   const date = document.getElementById("date").value;
@@ -57,20 +56,20 @@ function addTaskDueDate() {
 window.addTaskDueDate = addTaskDueDate;
 
 /**
- * Creates a new task object and saves it to Firebase.
+ * Creates a new task and saves it to Firebase.
+ * @returns {void}
  */
 function addTaskCreateTask() {
   const taskId = "task_" + Date.now();
   const title = addTaskTitle();
-  const description = addTaskDescription();
+  const desc = addTaskDescription();
   const names = window.assignedContacts.slice();
   const date = addTaskDueDate();
   const subtasks = window.globalSubtasks || [];
-
   const newTask = {
     id: taskId,
     title: title,
-    description: description,
+    description: desc,
     assignees: names,
     date: date,
     priority: window.globalPrio,
@@ -78,29 +77,28 @@ function addTaskCreateTask() {
     boardCategory: "todo",
     subtasks: subtasks.map((sb) => ({ name: sb, done: false })),
   };
-
-  const taskRef = `${window.databaseURL}/tasks/${taskId}.json`;
-  fetch(taskRef, {
+  const ref = `${window.databaseURL}/tasks/${taskId}.json`;
+  fetch(ref, {
     method: "PUT",
     headers: { "Content-Type": "application/json" },
     body: JSON.stringify(newTask),
   })
-    .then((response) => {
-      if (response.ok) {
+    .then((resp) => {
+      if (resp.ok) {
         addTaskClearFormularReset();
         addTaskCreateTaskConfirmation();
-        console.log("Task erfolgreich gespeichert!");
       } else {
-        console.error("Fehler beim Speichern des Tasks");
+        console.error("Error saving task");
       }
     })
-    .catch((err) => console.error("Fehler:", err));
+    .catch((err) => console.error("Error:", err));
 }
 window.addTaskCreateTask = addTaskCreateTask;
 
 /**
- * Chooses a category for the task.
- * @param {string} category - The category string to set.
+ * Sets the task category.
+ * @param {string} category
+ * @returns {void}
  */
 function addTaskChoseCategory(category) {
   document.getElementById("add-task-category").value = category;
@@ -109,59 +107,52 @@ function addTaskChoseCategory(category) {
 window.addTaskChoseCategory = addTaskChoseCategory;
 
 /**
- * Handles adding a subtask for the main form.
- * @param {Event} event - The keypress or click event.
+ * Adds a subtask to the main form.
+ * @param {Event} event
+ * @returns {void}
  */
 function addTaskSubtasks(event) {
   if (event.type === "keypress" && event.key !== "Enter") return;
   event.preventDefault();
-  const subtasks = document.getElementById("add-task-subtasks-input");
-  const subtaskValue = subtasks.value.trim();
-  if (!subtaskValue) return;
-
-  window.globalSubtasks.unshift(subtaskValue);
-  window.subtasksList.unshift(subtaskValue);
+  const input = document.getElementById("add-task-subtasks-input");
+  const val = input.value.trim();
+  if (!val) return;
+  window.globalSubtasks.unshift(val);
+  window.subtasksList.unshift(val);
   addTaskSubtasksList();
-
   document
     .getElementById("add-task-subtasks-icon-plus")
     .classList.remove("d-none");
   document
     .getElementById("add-task-subtasks-icon-plus-check")
     .classList.add("d-none");
-  subtasks.value = "";
+  input.value = "";
 }
 window.addTaskSubtasks = addTaskSubtasks;
 
 /**
- * Creates the contact list for the main add-task form.
+ * Renders the contact list for assignment.
+ * @returns {void}
  */
 function createAssignedTo() {
-  const createContactsContainer = document.getElementById("add-task-contact");
-  if (!createContactsContainer) return;
-
-  createContactsContainer.innerHTML = "";
-  window.contactsToAssigned.forEach((contact, i) => {
-    const bgColor = assignColor(contact.name);
-    const checked = window.assignedContacts.includes(contact.name);
-
-    createContactsContainer.innerHTML += `
+  const container = document.getElementById("add-task-contact");
+  if (!container) return;
+  container.innerHTML = "";
+  window.contactsToAssigned.forEach((c, i) => {
+    const bg = assignColor(c.name);
+    const chk = window.assignedContacts.includes(c.name);
+    container.innerHTML += `
       <li>
         <label for="person${i}">
-          <span class="avatar" style="background-color:${bgColor};">
-            ${getUserInitials(contact.name)}
-          </span>
-          <span>${contact.name}</span>
+          <span class="avatar" style="background-color:${bg};">${getUserInitials(
+      c.name
+    )}</span>
+          <span>${c.name}</span>
         </label>
-        <input
-          class="add-task-checkbox"
-          type="checkbox"
-          name="person[${i}]"
-          id="person${i}"
-          value="${contact.name}"
-          ${checked ? "checked" : ""}
-          onclick="toggleContactSelection('${contact.name}')"
-        >
+        <input class="add-task-checkbox" type="checkbox" name="person[${i}]" id="person${i}"
+          value="${c.name}" ${
+      chk ? "checked" : ""
+    } onclick="toggleContactSelection('${c.name}')">
       </li>
     `;
   });
@@ -169,38 +160,29 @@ function createAssignedTo() {
 window.createAssignedTo = createAssignedTo;
 
 /**
- * Searches for contacts in the main add-task form and updates the list.
+ * Filters contacts in the main form.
+ * @returns {void}
  */
 function addTaskAssignedToSearch() {
-  let search = document.getElementById("find-person").value.toLowerCase();
+  const search = document.getElementById("find-person").value.toLowerCase();
   const container = document.getElementById("add-task-contact");
   container.innerHTML = "";
-
   window.contactsToAssigned.forEach((c, i) => {
-    let contactName = c.name;
-    if (!contactName.toLowerCase().includes(search)) {
-      return;
-    }
-    const bgColor = assignColor(contactName);
-    const checked = window.assignedContacts.includes(contactName);
-
+    if (!c.name.toLowerCase().includes(search)) return;
+    const bg = assignColor(c.name);
+    const chk = window.assignedContacts.includes(c.name);
     container.innerHTML += `
       <li>
         <label for="person${i}">
-          <span class="avatar" style="background-color:${bgColor};">
-            ${getUserInitials(contactName)}
-          </span>
-          <span>${contactName}</span>
+          <span class="avatar" style="background-color:${bg};">${getUserInitials(
+      c.name
+    )}</span>
+          <span>${c.name}</span>
         </label>
-        <input
-          class="add-task-checkbox"
-          type="checkbox"
-          name="person[${i}]"
-          id="person${i}"
-          value="${contactName}"
-          ${checked ? "checked" : ""}
-          onclick="toggleContactSelection('${contactName}')"
-        >
+        <input class="add-task-checkbox" type="checkbox" name="person[${i}]" id="person${i}"
+          value="${c.name}" ${
+      chk ? "checked" : ""
+    } onclick="toggleContactSelection('${c.name}')">
       </li>
     `;
   });
@@ -208,112 +190,108 @@ function addTaskAssignedToSearch() {
 window.addTaskAssignedToSearch = addTaskAssignedToSearch;
 
 /**
- * Toggles a contact in the assignedContacts array for the main form.
- * @param {string} contactName - The name of the contact.
+ * Toggles a contact selection.
+ * @param {string} contactName
+ * @returns {void}
  */
 function toggleContactSelection(contactName) {
-  const index = window.assignedContacts.indexOf(contactName);
-  if (index >= 0) {
-    window.assignedContacts.splice(index, 1);
-  } else {
-    window.assignedContacts.push(contactName);
-  }
+  const idx = window.assignedContacts.indexOf(contactName);
+  if (idx >= 0) window.assignedContacts.splice(idx, 1);
+  else window.assignedContacts.push(contactName);
   addTaskShowAvatars();
 }
 window.toggleContactSelection = toggleContactSelection;
 
 /**
- * Displays the avatars for assigned contacts in the main add-task form.
+ * Displays assigned contact avatars.
+ * @returns {void}
  */
 function addTaskShowAvatars() {
-  const avatarContainer = document.getElementById("add-task-assigned-avatar");
-  if (!avatarContainer) return;
-
-  avatarContainer.innerHTML = "";
-  window.assignedContacts.forEach((contact) => {
-    const color = assignColor(contact);
-    avatarContainer.innerHTML += `
-      <div class="avatar" style="background:${color}">
-        ${getUserInitials(contact)}
-      </div>
-    `;
+  const container = document.getElementById("add-task-assigned-avatar");
+  if (!container) return;
+  container.innerHTML = "";
+  window.assignedContacts.forEach((c) => {
+    const col = assignColor(c);
+    container.innerHTML += `<div class="avatar" style="background:${col}">${getUserInitials(
+      c
+    )}</div>`;
   });
 }
 window.addTaskShowAvatars = addTaskShowAvatars;
 
 /**
- * Loads contacts from Firebase (contacts.json) and populates the list.
- * @async
+ * Loads contacts from Firebase.
  * @returns {Promise<void>}
  */
 async function loadContacts() {
-  const response = await fetch(`${window.databaseURL}/contacts.json`);
-  const data = await response.json();
+  const resp = await fetch(`${window.databaseURL}/contacts.json`);
+  const data = await resp.json();
   window.contactsToAssigned = Object.values(data || {});
   createAssignedTo();
 }
 window.loadContacts = loadContacts;
 
 /**
- * Sets the minimum date for the date input in the main add-task form.
+ * Sets the minimum due date.
+ * @returns {void}
  */
 function addTaskMinimumDate() {
-  let today = new Date().toISOString().split("T")[0];
+  const today = new Date().toISOString().split("T")[0];
   document.getElementById("date").setAttribute("min", today);
 }
 window.addTaskMinimumDate = addTaskMinimumDate;
 
 /**
- * Updates the priority toggle buttons based on the provided priority value for the main form.
- * @param {string} prio - The priority value ('urgent', 'medium', or 'low').
- * @param {string} container - The DOM element ID containing the buttons.
+ * Toggles the priority buttons.
+ * @param {string} prio
+ * @param {string} containerId
+ * @returns {void}
  */
-function addTaskPrioToggleButton(prio, container) {
-  const buttonContainer = document.getElementById(container);
-  const buttons = buttonContainer.children;
-
-  for (const button of buttons) {
-    if (button.dataset.priority == prio) {
-      button.classList.add("add-task-clicked");
-      button.children[0].children[1].src = `/assets/icons/${button.dataset.priority}_white.svg`;
+function addTaskPrioToggleButton(prio, containerId) {
+  const container = document.getElementById(containerId);
+  const btns = container.children;
+  for (const btn of btns) {
+    if (btn.dataset.priority === prio) {
+      btn.classList.add("add-task-clicked");
+      btn.children[0].children[1].src = `/assets/icons/${btn.dataset.priority}_white.svg`;
     } else {
-      button.classList.remove("add-task-clicked");
-      button.children[0].children[1].src = `/assets/icons/${button.dataset.priority}.svg`;
+      btn.classList.remove("add-task-clicked");
+      btn.children[0].children[1].src = `/assets/icons/${btn.dataset.priority}.svg`;
     }
   }
 }
 window.addTaskPrioToggleButton = addTaskPrioToggleButton;
 
 /**
- * Unchecks all checkboxes in the main add-task form.
+ * Unchecks all contact checkboxes.
+ * @returns {void}
  */
 function addTaskAssignedToUnCheck() {
-  const checkBoxes = document.querySelectorAll(".add-task-checkbox");
-  for (let i = 0; i < checkBoxes.length; i++) {
-    if (checkBoxes[i].checked) {
-      checkBoxes[i].checked = false;
-    }
+  const boxes = document.querySelectorAll(".add-task-checkbox");
+  for (let i = 0; i < boxes.length; i++) {
+    if (boxes[i].checked) boxes[i].checked = false;
   }
 }
 window.addTaskAssignedToUnCheck = addTaskAssignedToUnCheck;
 
 /**
- * Renders the subtask list in the main add-task form.
+ * Renders the subtasks list.
+ * @returns {void}
  */
 function addTaskSubtasksList() {
-  const lists = document.getElementById("add-task-subtasks-list");
-  lists.innerHTML = "";
+  const ul = document.getElementById("add-task-subtasks-list");
+  ul.innerHTML = "";
   for (let i = 0; i < window.subtasksList.length; i++) {
-    const element = window.subtasksList[i];
-    lists.innerHTML += subTaskTemplate(element, i);
+    ul.innerHTML += subTaskTemplate(window.subtasksList[i], i);
   }
 }
 window.addTaskSubtasksList = addTaskSubtasksList;
 
 /**
- * Removes a subtask from the main form by index.
- * @param {number} i - The index of the subtask to remove.
- * @param {Event} event - The click event.
+ * Removes a subtask from the list.
+ * @param {number} i
+ * @param {Event} event
+ * @returns {void}
  */
 function removeFromAddTaskSubtasksList(i, event) {
   event.stopPropagation();
@@ -324,124 +302,102 @@ function removeFromAddTaskSubtasksList(i, event) {
 window.removeFromAddTaskSubtasksList = removeFromAddTaskSubtasksList;
 
 /**
- * Edits a subtask in the main form (shows input for editing).
- * @param {number} param - The index of the subtask to edit.
- * @param {Event} event - The click event.
+ * Edits a subtask (shows input for editing).
+ * @param {number} param
+ * @param {Event} event
+ * @returns {void}
  */
 function editTaskSubtasksList(param, event) {
   event.stopPropagation();
-  const ulElement = document.getElementById("add-task-subtasks-list");
-  ulElement.innerHTML = "";
-
+  const ul = document.getElementById("add-task-subtasks-list");
+  ul.innerHTML = "";
   for (let i = 0; i < window.subtasksList.length; i++) {
-    const lists = window.subtasksList[i];
     if (i === param) {
-      let liElement = document.createElement("li");
-      liElement.setAttribute("class", "add-task-subtask-li-edit");
-
-      let inputElement = document.createElement("input");
+      let li = document.createElement("li");
+      li.className = "add-task-subtask-li-edit";
+      let input = document.createElement("input");
+      input.className = "add-task-subtasks-input-edit";
+      input.id = "add-task-subtasks-input-edit";
+      input.setAttribute("onkeypress", `confirmTaskSubtasksList(${i}, event)`);
+      input.type = "text";
+      let div = document.createElement("div");
+      div.className = "add-task-subtasks-icons-edit";
+      let trash = document.createElement("img");
+      trash.className = "add-task-trash";
+      trash.src = "/assets/icons/add-subtask-delete.svg";
+      trash.setAttribute(
+        "onclick",
+        `removeFromAddTaskSubtasksList(${i}, event)`
+      );
+      let border = document.createElement("div");
+      border.className = "add-tasks-border";
+      let confirm = document.createElement("img");
+      confirm.className = "add-task-confirm";
+      confirm.src = "/assets/icons/done_inverted.svg";
+      confirm.setAttribute("onclick", `confirmTaskSubtasksList(${i}, event)`);
+      div.appendChild(trash);
+      div.appendChild(border);
+      div.appendChild(confirm);
       let inputDiv = document.createElement("div");
-      inputDiv.setAttribute("class", "add-task-subtasks-input-edit-div");
-      inputElement.setAttribute("class", "add-task-subtasks-input-edit");
-      inputElement.setAttribute("id", "add-task-subtasks-input-edit");
-      inputElement.setAttribute(
-        "onkeypress",
-        `confirmTaskSubtasksList(${i}, event)`
-      );
-      inputElement.setAttribute("type", "text");
-
-      let iconsDiv = document.createElement("div");
-      iconsDiv.className = "add-task-subtasks-icons-edit";
-
-      let trashIcon = document.createElement("img");
-      trashIcon.className = "add-task-trash";
-      trashIcon.src = "/assets/icons/add-subtask-delete.svg";
-      trashIcon.setAttribute(
-        "onclick",
-        `removeFromAddTaskSubtasksList(${i}, event)`
-      );
-
-      let borderDiv = document.createElement("div");
-      borderDiv.className = "add-tasks-border";
-
-      let confirmIcon = document.createElement("img");
-      confirmIcon.className = "add-task-confirm";
-      confirmIcon.src = "/assets/icons/done_inverted.svg";
-      confirmIcon.setAttribute(
-        "onclick",
-        `confirmTaskSubtasksList(${i}, event)`
-      );
-
-      iconsDiv.appendChild(trashIcon);
-      iconsDiv.appendChild(borderDiv);
-      iconsDiv.appendChild(confirmIcon);
-
-      inputDiv.appendChild(inputElement);
-      inputDiv.appendChild(iconsDiv);
-      liElement.appendChild(inputDiv);
-
-      ulElement.appendChild(liElement);
-
-      inputElement.value = lists;
+      inputDiv.className = "add-task-subtasks-input-edit-div";
+      inputDiv.appendChild(input);
+      inputDiv.appendChild(div);
+      li.appendChild(inputDiv);
+      ul.appendChild(li);
+      input.value = window.subtasksList[i];
     } else {
-      let listItem = document.createElement("li");
-      let spanElement = document.createElement("span");
-      spanElement.className = "add-task-subtasks-extra-task";
-      spanElement.id = "add-task-subtasks-extra-task";
-      let textContent = document.createTextNode(lists);
-      spanElement.appendChild(textContent);
-
-      let iconsDiv = document.createElement("div");
-      iconsDiv.className = "add-task-subtasks-icons";
-
-      let trashIcon = document.createElement("img");
-      trashIcon.className = "add-task-trash";
-      trashIcon.src = "/assets/icons/add-subtask-delete.svg";
-      trashIcon.setAttribute(
+      let li = document.createElement("li");
+      let span = document.createElement("span");
+      span.className = "add-task-subtasks-extra-task";
+      span.id = "add-task-subtasks-extra-task";
+      span.textContent = window.subtasksList[i];
+      let div = document.createElement("div");
+      div.className = "add-task-subtasks-icons";
+      let edit = document.createElement("img");
+      edit.className = "add-task-edit";
+      edit.src = "/assets/icons/add-subtask-edit.svg";
+      edit.setAttribute("onclick", `editTaskSubtasksList(${i}, event)`);
+      let border = document.createElement("div");
+      border.className = "add-tasks-border";
+      let trash = document.createElement("img");
+      trash.className = "add-task-trash";
+      trash.src = "/assets/icons/add-subtask-delete.svg";
+      trash.setAttribute(
         "onclick",
         `removeFromAddTaskSubtasksList(${i}, event)`
       );
-
-      let borderDiv = document.createElement("div");
-      borderDiv.className = "add-tasks-border";
-
-      let editIcon = document.createElement("img");
-      editIcon.className = "add-task-edit";
-      editIcon.src = "/assets/icons/add-subtask-edit.svg";
-      editIcon.setAttribute("onclick", `editTaskSubtasksList(${i}, event)`);
-
-      iconsDiv.appendChild(editIcon);
-      iconsDiv.appendChild(borderDiv);
-      iconsDiv.appendChild(trashIcon);
-
-      listItem.appendChild(spanElement);
-      listItem.appendChild(iconsDiv);
-
-      ulElement.appendChild(listItem);
+      div.appendChild(edit);
+      div.appendChild(border);
+      div.appendChild(trash);
+      li.appendChild(span);
+      li.appendChild(div);
+      ul.appendChild(li);
     }
   }
 }
 window.editTaskSubtasksList = editTaskSubtasksList;
 
 /**
- * Confirms an edited subtask in the main form.
- * @param {number} i - The index of the subtask to confirm.
- * @param {Event} event - The keypress or click event.
+ * Confirms editing of a subtask.
+ * @param {number} i
+ * @param {Event} event
+ * @returns {void}
  */
 function confirmTaskSubtasksList(i, event) {
   if (event.type === "keypress" && event.key !== "Enter") return;
   event.preventDefault();
-  const subtasks = document.getElementById("add-task-subtasks-input-edit");
-  const subtaskValue = subtasks.value.trim();
-  if (!subtaskValue) return;
-  window.subtasksList.splice(i, 1, subtaskValue);
+  const input = document.getElementById("add-task-subtasks-input-edit");
+  const val = input.value.trim();
+  if (!val) return;
+  window.subtasksList.splice(i, 1, val);
   addTaskSubtasksList();
 }
 window.confirmTaskSubtasksList = confirmTaskSubtasksList;
 
 /**
- * Shows the subtask input (plus icon) in the main form.
- * @param {Event} event - The click event.
+ * Focuses the subtask input.
+ * @param {Event} event
+ * @returns {void}
  */
 function addSubtasksPlus(event) {
   event.preventDefault();
@@ -452,7 +408,8 @@ function addSubtasksPlus(event) {
 window.addSubtasksPlus = addSubtasksPlus;
 
 /**
- * Hides the plus icon and shows the check icon in the main form for subtasks.
+ * Toggles subtask plus/check icons.
+ * @returns {void}
  */
 function addTaskSubtasksClicked() {
   document
@@ -465,8 +422,9 @@ function addTaskSubtasksClicked() {
 window.addTaskSubtasksClicked = addTaskSubtasksClicked;
 
 /**
- * Clears the subtask input in the main form.
- * @param {Event} event - The click event.
+ * Clears the subtask input.
+ * @param {Event} event
+ * @returns {void}
  */
 function clearSubtasks(event) {
   event.preventDefault();
@@ -481,7 +439,8 @@ function clearSubtasks(event) {
 window.clearSubtasks = clearSubtasks;
 
 /**
- * Resets the entire add-task form, clearing all fields and arrays.
+ * Resets the add-task form.
+ * @returns {void}
  */
 function addTaskClearFormularReset() {
   window.globalSubtasks = [];
@@ -505,8 +464,9 @@ function addTaskClearFormularReset() {
 window.addTaskClearFormularReset = addTaskClearFormularReset;
 
 /**
- * Prevents default form submission and resets the add-task form.
- * @param {Event} event - The click or submit event.
+ * Prevents default form submission and resets the form.
+ * @param {Event} event
+ * @returns {void}
  */
 function addTaskClearFormular(event) {
   event.preventDefault();
@@ -515,10 +475,10 @@ function addTaskClearFormular(event) {
 window.addTaskClearFormular = addTaskClearFormular;
 
 /**
- * Template for rendering a single subtask in the main form's list.
- * @param {string} name - The subtask name.
- * @param {number} i - The index of the subtask.
- * @returns {string} HTML string for the subtask.
+ * Returns HTML for a single subtask.
+ * @param {string} name
+ * @param {number} i
+ * @returns {string}
  */
 function subTaskTemplate(name, i) {
   return `

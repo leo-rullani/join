@@ -330,7 +330,7 @@ function subTaskTemplate(element, i) {
 }
 
 /****************************************
- * The DETAIL template (unchanged from your code)
+ * The DETAIL template
  ****************************************/
 function taskBoardTemplate(task) {
   const assigneeHTML = generateOverlayAssigneeHTML(task.assignees);

@@ -1,43 +1,33 @@
 "use strict";
-
 /**
- * Öffnet/Schließt das kleine Menü am Profil-Icon.
- * Wird aufgerufen, wenn der Nutzer
- * auf das .profile_initials-Bild klickt.
+ * Toggles the responsive profile menu.
+ * @returns {void}
  */
 function toggleRespMenu() {
-  let menu = document.getElementById("resp_menu");
+  const menu = document.getElementById("resp_menu");
   menu.classList.toggle("resp_menu_closed");
   menu.classList.toggle("resp_menu_open");
 }
+window.toggleRespMenu = toggleRespMenu;
 
+/**
+ * Returns the initials of a given name.
+ * @param {string} name
+ * @returns {string}
+ */
 function getUserInitials(name) {
   return name
     .split(" ")
-    .map((word) => word.charAt(0).toUpperCase())
+    .map((w) => w.charAt(0).toUpperCase())
     .join("");
 }
+window.getUserInitials = getUserInitials;
 
-document.addEventListener("DOMContentLoaded", function () {
-  const userData = sessionStorage.getItem("loggedInUser");
-
-  const isGuest = !userData;
-  const user = isGuest ? { userName: "Gast" } : JSON.parse(userData);
-  const userName = user.userName || "User";
-
-  const initials = isGuest ? "G" : getUserInitials(userName);
-  const firstLetter = initials.charAt(0);
-  const textColor = getColorForLetter(firstLetter);
-
-  const initialsDiv = document.getElementById("userInitials");
-  if (initialsDiv) {
-    initialsDiv.textContent = initials;
-    initialsDiv.style.color = textColor;
-  }
-
-  return { initials, textColor, userName };
-});
-
+/**
+ * Returns a color for a given letter.
+ * @param {string} letter
+ * @returns {string}
+ */
 function getColorForLetter(letter) {
   const colors = {
     A: "#FF5733",
@@ -67,22 +57,40 @@ function getColorForLetter(letter) {
     Y: "#A8FF33",
     Z: "#FF8C33",
   };
-
-  let upperLetter = letter.toUpperCase();
-  return colors[upperLetter] || "#999999";
+  return colors[letter.toUpperCase()] || "#999999";
 }
+window.getColorForLetter = getColorForLetter;
 
+/**
+ * Checks if the current user is a guest.
+ * @returns {boolean}
+ */
+function isGuest() {
+  return !sessionStorage.getItem("loggedInUser");
+}
+window.isGuest = isGuest;
+
+/**
+ * Logs out the user.
+ * @returns {void}
+ */
 function logout() {
   sessionStorage.clear();
   window.location.href = "login.html";
 }
+window.logout = logout;
 
-document.addEventListener("DOMContentLoaded", function () {
-  let summaryLink = document.getElementById("summaryLink");
-
-  if (!summaryLink) return;
-
-  if (isGuest()) {
-    summaryLink.href = "summary.html";
+document.addEventListener("DOMContentLoaded", () => {
+  const userData = sessionStorage.getItem("loggedInUser");
+  const user = userData ? JSON.parse(userData) : { userName: "Gast" };
+  const initials = userData ? getUserInitials(user.userName || "User") : "G";
+  const textColor = getColorForLetter(initials.charAt(0));
+  const div = document.getElementById("userInitials");
+  if (div) {
+    div.textContent = initials;
+    div.style.color = textColor;
   }
+
+  const summaryLink = document.getElementById("summaryLink");
+  if (summaryLink && isGuest()) summaryLink.href = "summary.html";
 });

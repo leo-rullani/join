@@ -1,6 +1,8 @@
+"use strict";
 /**
- * Opens the overlay in "edit mode" for a given task.
- * @param {string} taskId - The ID of the task to edit.
+ * Opens the edit overlay for a task.
+ * @param {string} taskId
+ * @returns {void}
  */
 function editTask(taskId) {
   window.editingMode = true;
@@ -10,38 +12,31 @@ function editTask(taskId) {
 window.editTask = editTask;
 
 /**
- * Updates the existing task in Firebase with edited data from the overlay.
- * @async
- * @param {string} taskId - The ID of the task to update.
+ * Updates an edited task in Firebase.
+ * @param {string} taskId
  * @returns {Promise<void>}
  */
 async function updateTask(taskId) {
-  const taskRef = `${window.databaseURL}/tasks/${taskId}.json`;
-
+  const ref = `${window.databaseURL}/tasks/${taskId}.json`;
   const titleEl = document.getElementById("overlay-edit-task-title-input");
   const descEl = document.getElementById("overlay-edit-task-textarea");
   const dateEl = document.getElementById("overlay-edit-date");
   const catEl = document.getElementById("overlay-edit-task-category");
-
   if (!titleEl || !descEl || !dateEl || !catEl) {
-    console.error("One or more edit form elements not found!");
+    console.error("Missing edit form elements");
     return;
   }
-
-  const title = titleEl.value.trim();
-  const description = descEl.value.trim();
-  const date = dateEl.value;
-  const category = catEl.value.trim();
-  const priority = getEditTaskPriority();
-
+  const title = titleEl.value.trim(),
+    description = descEl.value.trim(),
+    date = dateEl.value,
+    category = catEl.value.trim(),
+    priority = getEditTaskPriority();
   const spans = document.querySelectorAll(
     "#overlay-edit-task-subtasks-list li span"
   );
   let overlaySubtasks = [];
   spans.forEach((s) => overlaySubtasks.push(s.textContent.trim()));
-
   const assignees = window.editAssignedContacts.slice();
-
   const updatedTask = {
     id: taskId,
     title,
@@ -53,15 +48,13 @@ async function updateTask(taskId) {
     boardCategory: window.oldBoardCategory || "todo",
     subtasks: overlaySubtasks.map((st) => ({ name: st, done: false })),
   };
-
   try {
-    const response = await fetch(taskRef, {
+    const resp = await fetch(ref, {
       method: "PUT",
       headers: { "Content-Type": "application/json" },
       body: JSON.stringify(updatedTask),
     });
-
-    if (response.ok) {
+    if (resp.ok) {
       console.log("Task updated:", updatedTask);
       showToast("Task updated!");
       await displayTasks();
@@ -69,7 +62,7 @@ async function updateTask(taskId) {
       window.editingTaskId = null;
       openBoardOverlay(taskId);
     } else {
-      console.error("Update failed with status:", response.status);
+      console.error("Update failed with status:", resp.status);
     }
   } catch (err) {
     console.error("Error updating task:", err);
@@ -78,8 +71,9 @@ async function updateTask(taskId) {
 window.updateTask = updateTask;
 
 /**
- * Fills the edit overlay form fields with the existing task data.
- * @param {Object} task - The task object to fill in.
+ * Fills the edit overlay form with task data.
+ * @param {Object} task
+ * @returns {void}
  */
 function fillEditFormData(task) {
   document.getElementById("overlay-edit-task-title-input").value = task.title;
@@ -88,37 +82,31 @@ function fillEditFormData(task) {
   document.getElementById("overlay-edit-date").value = task.date || "";
   document.getElementById("overlay-edit-task-category").value =
     task.category || "";
-
   editTogglePrioButton(
     task.priority || "medium",
     "overlay-edit-task-urgent-medium-low-buttons"
   );
   window.editOverlaySubtasksList = (task.subtasks || []).map((sub) => sub.name);
-
   renderEditOverlaySubtasksList();
-
   window.editAssignedContacts = [...(task.assignees || [])];
   editShowAvatars();
-
   const ul = document.getElementById("overlay-edit-task-subtasks-list");
   ul.innerHTML = "";
-
-  // Hier statt Inline-Template => rufen wir jetzt createExistingSubtaskLi(...) auf
   (task.subtasks || []).forEach((sub, i) => {
     const li = document.createElement("li");
     li.innerHTML = createExistingSubtaskLi(sub, i);
     ul.appendChild(li);
   });
-
   window.oldBoardCategory = task.boardCategory;
 }
 window.fillEditFormData = fillEditFormData;
 
 /**
- * Sets the task priority in the edit overlay by toggling the relevant button.
- * @param {string} prio - The priority to set.
- * @param {string} containerId - The container ID with the priority buttons.
- * @param {Event} event - The click event.
+ * Sets task priority in edit overlay.
+ * @param {string} prio
+ * @param {string} containerId
+ * @param {Event} event
+ * @returns {void}
  */
 function editSetTaskPrio(prio, containerId, event) {
   event.preventDefault();
@@ -127,52 +115,48 @@ function editSetTaskPrio(prio, containerId, event) {
 window.editSetTaskPrio = editSetTaskPrio;
 
 /**
- * Toggles the priority button in the edit overlay.
- * @param {string} prio - The priority value.
- * @param {string} containerId - The DOM element ID of the button container.
+ * Toggles priority buttons in edit overlay.
+ * @param {string} prio
+ * @param {string} containerId
+ * @returns {void}
  */
 function editTogglePrioButton(prio, containerId) {
   const container = document.getElementById(containerId);
   if (!container) return;
-  const buttons = container.querySelectorAll("button");
-
-  buttons.forEach((btn) => {
+  const btns = container.querySelectorAll("button");
+  btns.forEach((btn) => {
     btn.classList.remove("add-task-clicked");
     const icon = btn.querySelector("img");
-    const p = btn.dataset.priority;
-    if (icon) icon.src = `/assets/icons/${p}.svg`;
+    if (icon) icon.src = `/assets/icons/${btn.dataset.priority}.svg`;
   });
-
-  const activeBtn = container.querySelector(`button[data-priority="${prio}"]`);
-  if (activeBtn) {
-    activeBtn.classList.add("add-task-clicked");
-    const icon = activeBtn.querySelector("img");
+  const active = container.querySelector(`button[data-priority="${prio}"]`);
+  if (active) {
+    active.classList.add("add-task-clicked");
+    const icon = active.querySelector("img");
     if (icon) icon.src = `/assets/icons/${prio}_white.svg`;
   }
 }
 window.editTogglePrioButton = editTogglePrioButton;
 
 /**
- * Retrieves the currently selected priority in the edit overlay.
- * @returns {string} The priority value ('urgent', 'medium', or 'low').
+ * Retrieves the selected priority in edit overlay.
+ * @returns {string}
  */
 function getEditTaskPriority() {
   const container = document.getElementById(
     "overlay-edit-task-urgent-medium-low-buttons"
   );
   if (!container) return "medium";
-  const activeBtn = container.querySelector(".add-task-clicked");
-  if (activeBtn) {
-    return activeBtn.dataset.priority;
-  }
-  return "medium";
+  const active = container.querySelector(".add-task-clicked");
+  return active ? active.dataset.priority : "medium";
 }
 window.getEditTaskPriority = getEditTaskPriority;
 
 /**
- * Sets the category in the edit overlay form.
- * @param {string} value - The category value.
- * @param {Event} event - The click event.
+ * Sets the category in edit overlay.
+ * @param {string} value
+ * @param {Event} event
+ * @returns {void}
  */
 function editSetCategory(value, event) {
   if (event) event.preventDefault();
@@ -181,7 +165,8 @@ function editSetCategory(value, event) {
 window.editSetCategory = editSetCategory;
 
 /**
- * Shows the subtask plus-check icons in the edit overlay.
+ * Toggles subtask icon display in edit overlay.
+ * @returns {void}
  */
 function editSubtasksClicked() {
   document
@@ -194,8 +179,9 @@ function editSubtasksClicked() {
 window.editSubtasksClicked = editSubtasksClicked;
 
 /**
- * Adds a new subtask to the edit overlay form.
- * @param {Event} event - The keypress or click event.
+ * Adds a new subtask in edit overlay.
+ * @param {Event} event
+ * @returns {void}
  */
 function editAddSubtask(event) {
   if (event.type === "keypress" && event.key !== "Enter") return;
@@ -204,7 +190,6 @@ function editAddSubtask(event) {
   if (!input) return;
   const val = input.value.trim();
   if (!val) return;
-
   window.editOverlaySubtasksList.unshift(val);
   input.value = "";
   document
@@ -213,50 +198,56 @@ function editAddSubtask(event) {
   document
     .getElementById("overlay-edit-task-subtasks-icon-plus-check")
     .classList.add("d-none");
-
   renderEditOverlaySubtasksList();
 }
 window.editAddSubtask = editAddSubtask;
 
 /**
- * Renders the entire subtask list in the edit overlay.
+ * Renders the edit overlay subtasks list.
+ * @returns {void}
  */
 function renderEditOverlaySubtasksList() {
   const ul = document.getElementById("overlay-edit-task-subtasks-list");
   ul.innerHTML = "";
-
   for (let i = 0; i < window.editOverlaySubtasksList.length; i++) {
-    const subtaskName = window.editOverlaySubtasksList[i];
-    ul.innerHTML += createEditOverlaySubtaskTemplate(subtaskName, i);
+    ul.innerHTML += createEditOverlaySubtaskTemplate(
+      window.editOverlaySubtasksList[i],
+      i
+    );
   }
 }
 window.renderEditOverlaySubtasksList = renderEditOverlaySubtasksList;
 
 /**
- * Switches a subtask in the edit overlay into "edit mode."
- * @param {number} index - The index of the subtask to edit.
- * @param {Event} event - The click event.
+ * Switches a subtask into edit mode.
+ * @param {number} index
+ * @param {Event} event
+ * @returns {void}
  */
 function editOverlaySubtask(index, event) {
   event.stopPropagation();
   const ul = document.getElementById("overlay-edit-task-subtasks-list");
   ul.innerHTML = "";
-
   for (let i = 0; i < window.editOverlaySubtasksList.length; i++) {
-    const subtaskName = window.editOverlaySubtasksList[i];
-    if (i === index) {
-      ul.innerHTML += createEditOverlaySubtaskEditMode(subtaskName, i);
-    } else {
-      ul.innerHTML += createEditOverlaySubtaskTemplate(subtaskName, i);
-    }
+    if (i === index)
+      ul.innerHTML += createEditOverlaySubtaskEditMode(
+        window.editOverlaySubtasksList[i],
+        i
+      );
+    else
+      ul.innerHTML += createEditOverlaySubtaskTemplate(
+        window.editOverlaySubtasksList[i],
+        i
+      );
   }
 }
 window.editOverlaySubtask = editOverlaySubtask;
 
 /**
- * Confirms an edited subtask in the edit overlay form.
- * @param {number} index - The index of the subtask being edited.
- * @param {Event} event - The keypress or click event.
+ * Confirms an edited subtask in edit overlay.
+ * @param {number} index
+ * @param {Event} event
+ * @returns {void}
  */
 function confirmEditOverlaySubtask(index, event) {
   if (event.type === "keypress" && event.key !== "Enter") return;
@@ -272,9 +263,10 @@ function confirmEditOverlaySubtask(index, event) {
 window.confirmEditOverlaySubtask = confirmEditOverlaySubtask;
 
 /**
- * Removes a subtask by index from the editOverlaySubtasksList array.
- * @param {number} index - The index of the subtask to remove.
- * @param {Event} event - The click event.
+ * Removes an edited subtask from edit overlay.
+ * @param {number} index
+ * @param {Event} event
+ * @returns {void}
  */
 function removeEditOverlaySubtask(index, event) {
   event.stopPropagation();
@@ -284,8 +276,9 @@ function removeEditOverlaySubtask(index, event) {
 window.removeEditOverlaySubtask = removeEditOverlaySubtask;
 
 /**
- * Removes a subtask <li> element in the edit overlay (old method).
- * @param {HTMLElement} el - The element that triggered removal.
+ * Removes a subtask element (legacy).
+ * @param {HTMLElement} el
+ * @returns {void}
  */
 function editRemoveSubtask(el) {
   const li = el.closest("li");
@@ -294,8 +287,9 @@ function editRemoveSubtask(el) {
 window.editRemoveSubtask = editRemoveSubtask;
 
 /**
- * Shows the plus/check icons for adding a subtask in the edit overlay.
- * @param {Event} event - The click event.
+ * Focuses the subtask input in edit overlay.
+ * @param {Event} event
+ * @returns {void}
  */
 function editSubtasksPlus(event) {
   event.preventDefault();
@@ -309,8 +303,9 @@ function editSubtasksPlus(event) {
 window.editSubtasksPlus = editSubtasksPlus;
 
 /**
- * Clears the subtask input in the edit overlay.
- * @param {Event} event - The click event.
+ * Clears the subtask input in edit overlay.
+ * @param {Event} event
+ * @returns {void}
  */
 function editClearSubtasksInput(event) {
   event.preventDefault();
@@ -326,29 +321,24 @@ function editClearSubtasksInput(event) {
 window.editClearSubtasksInput = editClearSubtasksInput;
 
 /**
- * Shows the list of contacts in the edit overlay form.
+ * Displays the contact list in edit overlay.
+ * @returns {void}
  */
 function editShowContactList() {
   const container = document.getElementById("overlay-edit-task-contact");
   if (!container) return;
   container.innerHTML = "";
-
-  (window.contactsToAssigned || []).forEach((contact, i) => {
-    const bgColor = assignColor(contact.name);
-    const checked = window.editAssignedContacts.includes(contact.name);
-
-    container.innerHTML += createEditOverlayContactLi(
-      contact,
-      i,
-      bgColor,
-      checked
-    );
+  (window.contactsToAssigned || []).forEach((c, i) => {
+    const bg = assignColor(c.name);
+    const chk = window.editAssignedContacts.includes(c.name);
+    container.innerHTML += createEditOverlayContactLi(c, i, bg, chk);
   });
 }
 window.editShowContactList = editShowContactList;
 
 /**
- * Searches contacts in edit overlay and updates the list.
+ * Filters contacts in edit overlay.
+ * @returns {void}
  */
 function editAssignedToSearch() {
   const search = document
@@ -356,51 +346,41 @@ function editAssignedToSearch() {
     .value.toLowerCase();
   const container = document.getElementById("overlay-edit-task-contact");
   container.innerHTML = "";
-
   (window.contactsToAssigned || []).forEach((c, i) => {
-    const contactName = c.name;
-    if (!contactName.toLowerCase().includes(search)) return;
-
-    const bgColor = assignColor(contactName);
-    const checked = window.editAssignedContacts.includes(contactName);
-
-    container.innerHTML += createEditOverlayContactLi(c, i, bgColor, checked);
+    if (!c.name.toLowerCase().includes(search)) return;
+    const bg = assignColor(c.name);
+    const chk = window.editAssignedContacts.includes(c.name);
+    container.innerHTML += createEditOverlayContactLi(c, i, bg, chk);
   });
 }
 window.editAssignedToSearch = editAssignedToSearch;
 
 /**
- * Toggles a contact in the editAssignedContacts array.
- * @param {string} contactName - The name of the contact to toggle.
+ * Toggles contact selection in edit overlay.
+ * @param {string} contactName
+ * @returns {void}
  */
 function editToggleContactSelection(contactName) {
   const idx = window.editAssignedContacts.indexOf(contactName);
-  if (idx >= 0) {
-    window.editAssignedContacts.splice(idx, 1);
-  } else {
-    window.editAssignedContacts.push(contactName);
-  }
+  if (idx >= 0) window.editAssignedContacts.splice(idx, 1);
+  else window.editAssignedContacts.push(contactName);
   editShowAvatars();
 }
 window.editToggleContactSelection = editToggleContactSelection;
 
 /**
- * Displays the avatars for assigned contacts in the edit overlay.
+ * Displays assigned contact avatars in edit overlay.
+ * @returns {void}
  */
 function editShowAvatars() {
-  const avatarDiv = document.getElementById(
-    "overlay-edit-task-assigned-avatar"
-  );
-  if (!avatarDiv) return;
-  avatarDiv.innerHTML = "";
-
-  window.editAssignedContacts.forEach((contactName) => {
-    const bgColor = assignColor(contactName);
-    avatarDiv.innerHTML += `
-      <div class="avatar" style="background:${bgColor}">
-        ${getUserInitials(contactName)}
-      </div>
-    `;
+  const div = document.getElementById("overlay-edit-task-assigned-avatar");
+  if (!div) return;
+  div.innerHTML = "";
+  window.editAssignedContacts.forEach((name) => {
+    const bg = assignColor(name);
+    div.innerHTML += `<div class="avatar" style="background:${bg}">${getUserInitials(
+      name
+    )}</div>`;
   });
 }
 window.editShowAvatars = editShowAvatars;
