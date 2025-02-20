@@ -18,7 +18,7 @@ function getContactsPath() {
     console.error("No logged-in user found.");
     return null;
   }
-  return `${databaseURL}/users/${user.id}/contacts`;
+  return `${databaseURL}/contacts`;
 }
 
 async function fetchContactsFromDatabase() {

@@ -6,8 +6,8 @@ let draggedTaskId = null;
  * Lädt initial Beispiel-Tasks und konfiguriert Drag & Drop.
  */
 async function initBoard() {
-  await loadContacts(); // Kontakte holen
-  displayTasks(); // Board rendern
+  await loadContacts();
+  displayTasks();
 }
 
 /**
@@ -28,7 +28,6 @@ function allowDrop(e) {
 /**
  * Startet den Drag-Vorgang
  */
-// Mouse-Events
 function drag(e) {
   e.dataTransfer.setData("text", e.target.id);
   e.target.classList.add("dragging");
@@ -65,7 +64,6 @@ function drop(e) {
   }
 }
 
-// Funktion zum Aktualisieren der boardCategory in der Firebase-Datenbank
 async function updateTaskBoardCategory(taskId, newBoardCategory) {
   const taskRef = `${databaseURL}/tasks/${taskId}.json`;
 
@@ -87,9 +85,9 @@ async function updateTaskBoardCategory(taskId, newBoardCategory) {
 function insertAt(target, dragged, position) {
   const children = target.children;
   if (position >= children.length) {
-    target.appendChild(dragged); // Füge am Ende hinzu
+    target.appendChild(dragged);
   } else {
-    target.insertBefore(dragged, children[position]); // Füge an der angegebenen Position hinzu
+    target.insertBefore(dragged, children[position]);
   }
 }
 

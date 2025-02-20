@@ -15,12 +15,6 @@ window.editTask = editTask;
  * @param {string} taskId - The ID of the task to update.
  * @returns {Promise<void>}
  */
-/**
- * Updates the existing task in Firebase with edited data from the overlay.
- * @async
- * @param {string} taskId - The ID of the task to update.
- * @returns {Promise<void>}
- */
 async function updateTask(taskId) {
   const taskRef = `${window.databaseURL}/tasks/${taskId}.json`;
 
@@ -69,7 +63,6 @@ async function updateTask(taskId) {
 
     if (response.ok) {
       console.log("Task updated:", updatedTask);
-      // Hier wird das Toast angezeigt, welches von unten hoch "fliegt".
       showToast("Task updated!");
       await displayTasks();
       window.editingMode = false;
@@ -83,8 +76,6 @@ async function updateTask(taskId) {
   }
 }
 window.updateTask = updateTask;
-
-
 
 /**
  * Fills the edit overlay form fields with the existing task data.
@@ -103,6 +94,7 @@ function fillEditFormData(task) {
     "overlay-edit-task-urgent-medium-low-buttons"
   );
   window.editOverlaySubtasksList = (task.subtasks || []).map((sub) => sub.name);
+
   renderEditOverlaySubtasksList();
 
   window.editAssignedContacts = [...(task.assignees || [])];
@@ -110,16 +102,11 @@ function fillEditFormData(task) {
 
   const ul = document.getElementById("overlay-edit-task-subtasks-list");
   ul.innerHTML = "";
+
+  // Hier statt Inline-Template => rufen wir jetzt createExistingSubtaskLi(...) auf
   (task.subtasks || []).forEach((sub, i) => {
     const li = document.createElement("li");
-    li.innerHTML = `
-      <span class="add-task-subtasks-extra-task">${sub.name}</span>
-      <div class="edit-task-subtasks-icons">
-        <img class="add-task-edit" src="/assets/icons/add-subtask-edit.svg" onclick="editOverlaySubtask(${i}, event)">
-        <div class="add-tasks-border"></div>
-        <img class="add-task-trash" src="/assets/icons/add-subtask-delete.svg" onclick="editRemoveSubtask(this)">
-      </div>
-    `;
+    li.innerHTML = createExistingSubtaskLi(sub, i);
     ul.appendChild(li);
   });
 
@@ -226,6 +213,7 @@ function editAddSubtask(event) {
   document
     .getElementById("overlay-edit-task-subtasks-icon-plus-check")
     .classList.add("d-none");
+
   renderEditOverlaySubtasksList();
 }
 window.editAddSubtask = editAddSubtask;
@@ -236,34 +224,13 @@ window.editAddSubtask = editAddSubtask;
 function renderEditOverlaySubtasksList() {
   const ul = document.getElementById("overlay-edit-task-subtasks-list");
   ul.innerHTML = "";
+
   for (let i = 0; i < window.editOverlaySubtasksList.length; i++) {
     const subtaskName = window.editOverlaySubtasksList[i];
     ul.innerHTML += createEditOverlaySubtaskTemplate(subtaskName, i);
   }
 }
 window.renderEditOverlaySubtasksList = renderEditOverlaySubtasksList;
-
-/**
- * Creates the HTML template for a single subtask in the edit overlay.
- * @param {string} name - The subtask name.
- * @param {number} i - The index of the subtask.
- * @returns {string} The HTML string for the subtask.
- */
-function createEditOverlaySubtaskTemplate(name, i) {
-  return `
-    <li>
-      <span class="add-task-subtasks-extra-task">${name}</span>
-      <div class="edit-task-subtasks-icons">
-        <img class="add-task-edit" src="/assets/icons/add-subtask-edit.svg"
-             onclick="editOverlaySubtask(${i}, event)">
-        <div class="add-tasks-border"></div>
-        <img class="add-task-trash" src="/assets/icons/add-subtask-delete.svg"
-             onclick="removeEditOverlaySubtask(${i}, event)">
-      </div>
-    </li>
-  `;
-}
-window.createEditOverlaySubtaskTemplate = createEditOverlaySubtaskTemplate;
 
 /**
  * Switches a subtask in the edit overlay into "edit mode."
@@ -278,24 +245,7 @@ function editOverlaySubtask(index, event) {
   for (let i = 0; i < window.editOverlaySubtasksList.length; i++) {
     const subtaskName = window.editOverlaySubtasksList[i];
     if (i === index) {
-      ul.innerHTML += `
-        <li class="add-task-subtask-li-edit">
-          <div class="add-task-subtasks-input-edit-div">
-            <input class="add-task-subtasks-input-edit"
-                   id="overlay-edit-task-subtasks-input-edit"
-                   type="text"
-                   value="${subtaskName}"
-                   onkeypress="confirmEditOverlaySubtask(${i}, event)">
-            <div class="add-task-subtasks-icons-edit">
-              <img class="add-task-trash" src="/assets/icons/add-subtask-delete.svg"
-                   onclick="removeEditOverlaySubtask(${i}, event)">
-              <div class="add-tasks-border"></div>
-              <img class="add-task-confirm" src="/assets/icons/done_inverted.svg"
-                   onclick="confirmEditOverlaySubtask(${i}, event)">
-            </div>
-          </div>
-        </li>
-      `;
+      ul.innerHTML += createEditOverlaySubtaskEditMode(subtaskName, i);
     } else {
       ul.innerHTML += createEditOverlaySubtaskTemplate(subtaskName, i);
     }
@@ -387,24 +337,12 @@ function editShowContactList() {
     const bgColor = assignColor(contact.name);
     const checked = window.editAssignedContacts.includes(contact.name);
 
-    container.innerHTML += `
-      <li>
-        <label for="edit-person${i}">
-          <span class="avatar" style="background-color:${bgColor};">
-            ${getUserInitials(contact.name)}
-          </span>
-          <span>${contact.name}</span>
-        </label>
-        <input
-          class="overlay-add-task-checkbox"
-          type="checkbox"
-          id="edit-person${i}"
-          value="${contact.name}"
-          ${checked ? "checked" : ""}
-          onclick="editToggleContactSelection('${contact.name}')"
-        >
-      </li>
-    `;
+    container.innerHTML += createEditOverlayContactLi(
+      contact,
+      i,
+      bgColor,
+      checked
+    );
   });
 }
 window.editShowContactList = editShowContactList;
@@ -426,24 +364,7 @@ function editAssignedToSearch() {
     const bgColor = assignColor(contactName);
     const checked = window.editAssignedContacts.includes(contactName);
 
-    container.innerHTML += `
-      <li>
-        <label for="edit-person${i}">
-          <span class="avatar" style="background-color:${bgColor};">
-            ${getUserInitials(contactName)}
-          </span>
-          <span>${contactName}</span>
-        </label>
-        <input
-          class="overlay-add-task-checkbox"
-          type="checkbox"
-          id="edit-person${i}"
-          value="${contactName}"
-          ${checked ? "checked" : ""}
-          onclick="editToggleContactSelection('${contactName}')"
-        >
-      </li>
-    `;
+    container.innerHTML += createEditOverlayContactLi(c, i, bgColor, checked);
   });
 }
 window.editAssignedToSearch = editAssignedToSearch;
