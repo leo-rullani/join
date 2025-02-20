@@ -871,3 +871,41 @@ form {
 #add_notification {
   bottom: -120px; /* Start unsichtbar unterhalb des Bildschirms */
 }
+
+@media(max-width: 860px) {
+  .edit-task-bottom {
+    display: flex;
+    justify-content: flex-end;
+    align-items: flex-end;
+    margin-top: 200px;
+    margin-right: 8px;
+}
+.checkbox-overlay-dropdown .search-overlay > input  {
+  font-size: 12px;
+}
+.checkbox-overlay-dropdown ul li label {
+  cursor: pointer;
+  width: 100%;
+  display: flex;
+  align-items: center;
+  font-size: 12px;
+}
+.add-task-overlay-title-input {
+  font-size: 12px;
+}
+.add-task-overlay-subtasks-input {
+  font-size: 12px;
+}
+.add-task-overlay-subtasks-icon-plus-check button {
+  padding: 0px;
+}
+.add-task-overlay-subtasks-choosen ul {
+  font-size: 12px;
+}
+.add-task-overlay-subtasks-icon-plus button {
+  padding: 0px;
+}
+.add-task-overlay-due-date-input {
+  font-size: 12px;
+}
+}
