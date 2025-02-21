@@ -254,15 +254,15 @@ async function saveContactToDatabase(event) {
   }
   try {
     let newContact = getContactFormData(),
-      path = getContactsPath(); // <-- Deine eigene Funktion
+      path = getContactsPath();
     if (!path) return;
     clearContactForm();
 
     let data = await postContact(newContact, path);
-    showToast("Contact successfully created!"); // <-- Deine eigene Funktion
-    addContactToGroup(data.name, newContact); // <-- Deine eigene Funktion
-    selectNewContact(data.name, newContact); // <-- Deine eigene Funktion
-    closeOverlay(); // <-- Deine eigene Funktion
+    showToast("Contact successfully created!");
+    addContactToGroup(data.name, newContact);
+    selectNewContact(data.name, newContact);
+    closeOverlay();
   } catch (err) {
     console.error("Error:", err);
   }
