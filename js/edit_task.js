@@ -18,26 +18,103 @@ window.editTask = editTask;
  */
 async function updateTask(taskId) {
   const ref = `${window.databaseURL}/tasks/${taskId}.json`;
+  const formElements = getFormElements();
+  if (!formElements) return;
+
+  const { title, description, date, category } = getTaskDetails(formElements);
+  const priority = getEditTaskPriority();
+  const overlaySubtasks = getOverlaySubtasks();
+  const assignees = window.editAssignedContacts.slice();
+
+  const updatedTask = createUpdatedTask(
+    taskId,
+    title,
+    description,
+    assignees,
+    date,
+    priority,
+    category,
+    overlaySubtasks
+  );
+
+  try {
+    const resp = await fetch(ref, {
+      method: "PUT",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify(updatedTask),
+    });
+    handleUpdateResponse(resp, updatedTask, taskId);
+  } catch (err) {
+    console.error("Error updating task:", err);
+  }
+}
+
+/**
+ * Retrieves the form elements for editing the task.
+ * @returns {Object|null} The form elements or null if missing.
+ */
+function getFormElements() {
   const titleEl = document.getElementById("overlay-edit-task-title-input");
   const descEl = document.getElementById("overlay-edit-task-textarea");
   const dateEl = document.getElementById("overlay-edit-date");
   const catEl = document.getElementById("overlay-edit-task-category");
+
   if (!titleEl || !descEl || !dateEl || !catEl) {
     console.error("Missing edit form elements");
-    return;
+    return null;
   }
-  const title = titleEl.value.trim(),
-    description = descEl.value.trim(),
-    date = dateEl.value,
-    category = catEl.value.trim(),
-    priority = getEditTaskPriority();
+
+  return { titleEl, descEl, dateEl, catEl };
+}
+
+/**
+ * Extracts task details from the form elements.
+ * @param {Object} elements - The form elements.
+ * @returns {Object} The extracted task details.
+ */
+function getTaskDetails(elements) {
+  return {
+    title: elements.titleEl.value.trim(),
+    description: elements.descEl.value.trim(),
+    date: elements.dateEl.value,
+    category: elements.catEl.value.trim(),
+  };
+}
+
+/**
+ * Retrieves the subtasks from the overlay.
+ * @returns {Array} The array of overlay subtasks.
+ */
+function getOverlaySubtasks() {
   const spans = document.querySelectorAll(
     "#overlay-edit-task-subtasks-list li span"
   );
-  let overlaySubtasks = [];
-  spans.forEach((s) => overlaySubtasks.push(s.textContent.trim()));
-  const assignees = window.editAssignedContacts.slice();
-  const updatedTask = {
+  return Array.from(spans).map((s) => s.textContent.trim());
+}
+
+/**
+ * Creates the updated task object.
+ * @param {string} taskId - The ID of the task.
+ * @param {string} title - The task title.
+ * @param {string} description - The task description.
+ * @param {Array} assignees - The list of assignees.
+ * @param {string} date - The task date.
+ * @param {string} priority - The task priority.
+ * @param {string} category - The task category.
+ * @param {Array} overlaySubtasks - The list of subtasks.
+ * @returns {Object} The updated task object.
+ */
+function createUpdatedTask(
+  taskId,
+  title,
+  description,
+  assignees,
+  date,
+  priority,
+  category,
+  overlaySubtasks
+) {
+  return {
     id: taskId,
     title,
     description,
@@ -48,40 +125,35 @@ async function updateTask(taskId) {
     boardCategory: window.oldBoardCategory || "todo",
     subtasks: overlaySubtasks.map((st) => ({ name: st, done: false })),
   };
-  try {
-    const resp = await fetch(ref, {
-      method: "PUT",
-      headers: { "Content-Type": "application/json" },
-      body: JSON.stringify(updatedTask),
-    });
-    if (resp.ok) {
-      console.log("Task updated:", updatedTask);
-      showToast("Task updated!");
-      await displayTasks();
-      window.editingMode = false;
-      window.editingTaskId = null;
-      openBoardOverlay(taskId);
-    } else {
-      console.error("Update failed with status:", resp.status);
-    }
-  } catch (err) {
-    console.error("Error updating task:", err);
+}
+
+/**
+ * Handles the response from the update request.
+ * @param {Response} resp - The response from the fetch request.
+ * @param {Object} updatedTask - The updated task object.
+ * @param {string} taskId - The ID of the task.
+ */
+async function handleUpdateResponse(resp, updatedTask, taskId) {
+  if (resp.ok) {
+    console.log("Task updated:", updatedTask);
+    showToast("Task updated!");
+    await displayTasks();
+    window.editingMode = false;
+    window.editingTaskId = null;
+    openBoardOverlay(taskId);
+  } else {
+    console.error("Update failed with status:", resp.status);
   }
 }
+
 window.updateTask = updateTask;
 
 /**
- * Fills the edit overlay form with task data.
- * @param {Object} task
- * @returns {void}
+ * Fills the edit form with task data.
+ * @param {Object} task - The task object containing details to fill in the form.
  */
 function fillEditFormData(task) {
-  document.getElementById("overlay-edit-task-title-input").value = task.title;
-  document.getElementById("overlay-edit-task-textarea").value =
-    task.description;
-  document.getElementById("overlay-edit-date").value = task.date || "";
-  document.getElementById("overlay-edit-task-category").value =
-    task.category || "";
+  setTaskDetails(task);
   editTogglePrioButton(
     task.priority || "medium",
     "overlay-edit-task-urgent-medium-low-buttons"
@@ -90,17 +162,38 @@ function fillEditFormData(task) {
   renderEditOverlaySubtasksList();
   window.editAssignedContacts = [...(task.assignees || [])];
   editShowAvatars();
+  populateSubtasksList(task.subtasks || []);
+  window.oldBoardCategory = task.boardCategory;
+}
+
+/**
+ * Sets the basic task details in the form.
+ * @param {Object} task - The task object containing title, description, date, and category.
+ */
+function setTaskDetails(task) {
+  document.getElementById("overlay-edit-task-title-input").value = task.title;
+  document.getElementById("overlay-edit-task-textarea").value =
+    task.description;
+  document.getElementById("overlay-edit-date").value = task.date || "";
+  document.getElementById("overlay-edit-task-category").value =
+    task.category || "";
+}
+
+/**
+ * Populates the subtasks list in the edit overlay.
+ * @param {Array} subtasks - The array of subtask objects to populate the list.
+ */
+function populateSubtasksList(subtasks) {
   const ul = document.getElementById("overlay-edit-task-subtasks-list");
   ul.innerHTML = "";
-  (task.subtasks || []).forEach((sub, i) => {
+  subtasks.forEach((sub, i) => {
     const li = document.createElement("li");
     li.innerHTML = createExistingSubtaskLi(sub, i);
     ul.appendChild(li);
   });
-  window.oldBoardCategory = task.boardCategory;
 }
-window.fillEditFormData = fillEditFormData;
 
+window.fillEditFormData = fillEditFormData;
 /**
  * Sets task priority in edit overlay.
  * @param {string} prio

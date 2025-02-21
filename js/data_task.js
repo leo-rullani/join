@@ -147,51 +147,75 @@ async function displayTasks() {
   const tasks = await getTasks();
   window.tasks = tasks;
 
-  const todoContainer = document
-    .getElementById("todo")
-    .querySelector(".task_list");
-  const doingContainer = document
-    .getElementById("doing")
-    .querySelector(".task_list");
-  const feedbackContainer = document
-    .getElementById("feedback")
-    .querySelector(".task_list");
-  const doneContainer = document
-    .getElementById("done")
-    .querySelector(".task_list");
-
-  todoContainer.innerHTML = "";
-  doingContainer.innerHTML = "";
-  feedbackContainer.innerHTML = "";
-  doneContainer.innerHTML = "";
+  clearTaskContainers();
 
   tasks.forEach((task) => {
-    const template = document.createElement("div");
-    template.innerHTML = createTaskTemplate(task);
-    const taskElement = template.firstElementChild;
+    const taskElement = createTaskElement(task);
     if (taskElement) {
-      taskElement.draggable = true;
-      taskElement.ondragstart = drag;
-      taskElement.ondragend = dragEnd;
-      switch (task.boardCategory) {
-        case "todo":
-          todoContainer.appendChild(taskElement);
-          break;
-        case "doing":
-          doingContainer.appendChild(taskElement);
-          break;
-        case "feedback":
-          feedbackContainer.appendChild(taskElement);
-          break;
-        case "done":
-          doneContainer.appendChild(taskElement);
-          break;
-        default:
-          console.error("Unbekannte Kategorie:", task.boardCategory);
-      }
+      appendTaskToContainer(task, taskElement);
     }
   });
 }
+
+/**
+ * Clears the contents of all task containers.
+ */
+function clearTaskContainers() {
+  const containers = getTaskContainers();
+  containers.forEach((container) => (container.innerHTML = ""));
+}
+
+/**
+ * Retrieves task containers for each category.
+ * @returns {Array} The array of task container elements.
+ */
+function getTaskContainers() {
+  return [
+    document.getElementById("todo").querySelector(".task_list"),
+    document.getElementById("doing").querySelector(".task_list"),
+    document.getElementById("feedback").querySelector(".task_list"),
+    document.getElementById("done").querySelector(".task_list"),
+  ];
+}
+
+/**
+ * Creates a task element from a task object.
+ * @param {Object} task - The task object.
+ * @returns {HTMLElement} The created task element.
+ */
+function createTaskElement(task) {
+  const template = document.createElement("div");
+  template.innerHTML = createTaskTemplate(task);
+  const taskElement = template.firstElementChild;
+  if (taskElement) {
+    taskElement.draggable = true;
+    taskElement.ondragstart = drag;
+    taskElement.ondragend = dragEnd;
+  }
+  return taskElement;
+}
+
+/**
+ * Appends a task element to the appropriate container based on its category.
+ * @param {Object} task - The task object.
+ * @param {HTMLElement} taskElement - The task element to append.
+ */
+function appendTaskToContainer(task, taskElement) {
+  const containers = {
+    todo: document.getElementById("todo").querySelector(".task_list"),
+    doing: document.getElementById("doing").querySelector(".task_list"),
+    feedback: document.getElementById("feedback").querySelector(".task_list"),
+    done: document.getElementById("done").querySelector(".task_list"),
+  };
+
+  const container = containers[task.boardCategory];
+  if (container) {
+    container.appendChild(taskElement);
+  } else {
+    console.error("Unknown category:", task.boardCategory);
+  }
+}
+
 window.displayTasks = displayTasks;
 
 /**

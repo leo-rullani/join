@@ -1,18 +1,30 @@
+"use strict";
+
+/** The base URL for the Firebase Realtime Database. */
 let databaseURL =
   "https://join-5d739-default-rtdb.europe-west1.firebasedatabase.app";
 
+/** Stores the currently active contact DOM element. */
 let currentActiveContact = null;
+/** Stores the contact ID to be deleted. */
 let contactToDelete = null;
 
+/**
+ * Initializes the application by fetching contacts from the database.
+ * @returns {void}
+ */
 function init() {
   fetchContactsFromDatabase();
 }
 
+/**
+ * Determines the path to the contacts resource based on whether the user is a guest.
+ * @returns {string|null} The contacts path URL, or null if no user is found.
+ */
 function getContactsPath() {
   if (isGuest()) {
     return `${databaseURL}/contacts`;
   }
-
   let user = JSON.parse(sessionStorage.getItem("loggedInUser"));
   if (!user) {
     console.error("No logged-in user found.");
@@ -21,6 +33,10 @@ function getContactsPath() {
   return `${databaseURL}/contacts`;
 }
 
+/**
+ * Fetches contacts from the database, processes them, and renders them.
+ * @returns {Promise<void>}
+ */
 async function fetchContactsFromDatabase() {
   try {
     let contactsPath = getContactsPath();
@@ -36,6 +52,10 @@ async function fetchContactsFromDatabase() {
   }
 }
 
+/**
+ * Fetches contacts for a guest user and renders them.
+ * @returns {Promise<void>}
+ */
 async function fetchGuestContacts() {
   try {
     let guestId = sessionStorage.getItem("guestSession");
@@ -44,7 +64,6 @@ async function fetchGuestContacts() {
       return;
     }
     const contactsData = await getGuestContactsFromServer();
-
     let contactsArray = processContactsData(contactsData);
     renderContacts(contactsArray);
   } catch (error) {
@@ -52,15 +71,29 @@ async function fetchGuestContacts() {
   }
 }
 
+/**
+ * Retrieves guest contacts from the server (Firebase).
+ * @returns {Promise<Object>} The raw contacts data from the server.
+ */
 async function getGuestContactsFromServer() {
   const response = await fetch(`${databaseURL}/contacts.json`);
   return await response.json();
 }
 
+/**
+ * Checks if the current user is a guest.
+ * @returns {boolean} True if the user is a guest, otherwise false.
+ */
 function isGuest() {
   return sessionStorage.getItem("guestSession") !== null;
 }
 
+/**
+ * Fetches contacts for a specific logged-in user from the server.
+ * @param {string} userId - The ID of the logged-in user.
+ * @returns {Promise<Object>} The raw contacts data for the given user.
+ * @throws {Error} If the fetch operation fails.
+ */
 async function getContactsFromServer(userId) {
   let response = await fetch(`${databaseURL}/users/${userId}/contacts.json`);
   if (!response.ok) {
@@ -69,6 +102,11 @@ async function getContactsFromServer(userId) {
   return await response.json();
 }
 
+/**
+ * Processes the raw contacts data into an array, filtering and sorting by name.
+ * @param {Object} contactsData - The raw contacts data object from Firebase.
+ * @returns {Array<Object>} An array of contact objects.
+ */
 function processContactsData(contactsData) {
   if (!contactsData || typeof contactsData !== "object") {
     return [];
@@ -85,6 +123,11 @@ function processContactsData(contactsData) {
   return contactsArray;
 }
 
+/**
+ * Renders an array of contacts by grouping them and inserting into the DOM.
+ * @param {Array<Object>} contactsArray - The processed array of contacts.
+ * @returns {Promise<void>}
+ */
 async function renderContacts(contactsArray) {
   clearContactsList();
 
@@ -96,6 +139,10 @@ async function renderContacts(contactsArray) {
   renderGroupedContacts(groupedContacts);
 }
 
+/**
+ * Clears the contact list in the DOM for each letter section.
+ * @returns {void}
+ */
 function clearContactsList() {
   for (let letter of "ABCDEFGHIJKLMNOPQRSTUVWXYZ") {
     let section = document.getElementById(letter);
@@ -105,6 +152,11 @@ function clearContactsList() {
   }
 }
 
+/**
+ * Renders grouped contacts into their respective letter sections in the DOM.
+ * @param {Object} groupedContacts - An object where each key is a letter and its value is an array of contacts.
+ * @returns {void}
+ */
 function renderGroupedContacts(groupedContacts) {
   Object.keys(groupedContacts).forEach((letter) => {
     let section = document.getElementById(letter);
@@ -117,6 +169,11 @@ function renderGroupedContacts(groupedContacts) {
   });
 }
 
+/**
+ * Groups contacts by their first letter.
+ * @param {Array<Object>} contacts - The array of contact objects.
+ * @returns {Object} An object with letters as keys and arrays of contacts as values.
+ */
 function groupContactsByLetter(contacts) {
   let grouped = {};
 
@@ -131,25 +188,44 @@ function groupContactsByLetter(contacts) {
   return grouped;
 }
 
+/**
+ * Selects a contact and highlights it in the UI, then displays its details.
+ * @param {HTMLElement} contactElement - The DOM element representing the contact.
+ * @param {string} contactId - The ID of the contact.
+ * @param {string} name - The name of the contact.
+ * @param {string} email - The email of the contact.
+ * @param {string} phone - The phone number of the contact.
+ * @returns {void}
+ */
 function selectContact(contactElement, contactId, name, email, phone) {
   if (currentActiveContact !== null) {
     currentActiveContact.classList.remove("is-Active");
   }
 
   contactElement.classList.add("is-Active");
-
   currentActiveContact = contactElement;
-
   showContactDetails(contactId, name, email, phone);
 }
 
+/**
+ * Displays the contact details in the designated UI section.
+ * @param {string} id - The contact ID.
+ * @param {string} name - The contact name.
+ * @param {string} email - The contact email.
+ * @param {string} phone - The contact phone number.
+ * @returns {void}
+ */
 function showContactDetails(id, name, email, phone) {
   let detailsContainer = document.getElementById("contact-info");
   detailsContainer.innerHTML = "";
-
   detailsContainer.innerHTML += contactDetailsTemplate(id, name, email, phone);
 }
 
+/**
+ * Returns the initials for a given full name and sets the background color.
+ * @param {string} fullName - The full name of the contact.
+ * @returns {string} The initials derived from the full name.
+ */
 function getContactInitials(fullName) {
   let initialEdit = document.getElementById("initials-edit");
 
@@ -162,10 +238,14 @@ function getContactInitials(fullName) {
   initialEdit.innerHTML = `
     <div class="edit-initials" style="background-color: ${bgColor};">${initials}</div>
   `;
-
   return initials;
 }
 
+/**
+ * Saves a new contact to the database based on the form data.
+ * @param {Event} event - The form submission event.
+ * @returns {boolean} False to prevent default form submission.
+ */
 async function saveContactToDatabase(event) {
   event.preventDefault();
 
@@ -200,6 +280,10 @@ async function saveContactToDatabase(event) {
   return false;
 }
 
+/**
+ * Retrieves the logged-in user's ID from sessionStorage.
+ * @returns {string|undefined} The user ID, or undefined if not found.
+ */
 function getUserId() {
   let userId = JSON.parse(sessionStorage.getItem("loggedInUser"))?.id;
   if (!userId) {
@@ -208,6 +292,12 @@ function getUserId() {
   return userId;
 }
 
+/**
+ * Adds a contact to the UI group section, creating the section if needed.
+ * @param {string} contactId - The ID of the newly created contact.
+ * @param {Object} contact - The contact data object.
+ * @returns {void}
+ */
 function addContactToGroup(contactId, contact) {
   let firstLetter = contact.name.charAt(0).toUpperCase();
   let section = document.getElementById(firstLetter);
@@ -222,6 +312,12 @@ function addContactToGroup(contactId, contact) {
   }
 }
 
+/**
+ * Selects the newly created contact in the UI.
+ * @param {string} contactId - The ID of the newly created contact.
+ * @param {Object} newContact - The new contact data object.
+ * @returns {void}
+ */
 function selectNewContact(contactId, newContact) {
   let newContactElement = document.querySelector(
     `[data-contact-id="${contactId}"]`
@@ -237,6 +333,10 @@ function selectNewContact(contactId, newContact) {
   }
 }
 
+/**
+ * Retrieves the contact form data (name, email, phone) from the DOM.
+ * @returns {Object} The contact form data object.
+ */
 function getContactFormData() {
   return {
     name: document.getElementById("name").value.trim(),
@@ -245,6 +345,10 @@ function getContactFormData() {
   };
 }
 
+/**
+ * Clears the contact form inputs.
+ * @returns {void}
+ */
 function clearContactForm() {
   document.getElementById("name").value =
     document.getElementById("email").value =
@@ -252,6 +356,13 @@ function clearContactForm() {
       "";
 }
 
+/**
+ * Saves a contact to the server for a specific user.
+ * @param {Object} contact - The contact data.
+ * @param {string} userId - The ID of the user.
+ * @returns {Promise<string>} The Firebase-generated ID for the new contact.
+ * @throws {Error} If the contact could not be saved.
+ */
 async function saveContactToServer(contact, userId) {
   let response = await fetch(`${databaseURL}/users/${userId}/contacts.json`, {
     method: "POST",
@@ -269,6 +380,14 @@ async function saveContactToServer(contact, userId) {
   return data.name;
 }
 
+/**
+ * Updates an existing contact in the database.
+ * @param {string} contactId - The ID of the contact to update.
+ * @param {string} name - The updated name.
+ * @param {string} email - The updated email.
+ * @param {string} phone - The updated phone number.
+ * @returns {Promise<void>}
+ */
 async function updateContact(contactId, name, email, phone) {
   let updatedContact = { name, email, phone };
   const contactsPath = getContactsPath();
@@ -291,6 +410,11 @@ async function updateContact(contactId, name, email, phone) {
   }
 }
 
+/**
+ * Handles the edit contact form submission.
+ * @param {Event} event - The form submission event.
+ * @returns {Promise<void>}
+ */
 async function submitEditForm(event) {
   event.preventDefault();
 
@@ -307,20 +431,30 @@ async function submitEditForm(event) {
   restoreActiveContact(contactId, name, email, phone);
 }
 
+/**
+ * Restores the active contact style and re-displays its details after editing.
+ * @param {string} contactId - The ID of the contact.
+ * @param {string} name - The contact's name.
+ * @param {string} email - The contact's email.
+ * @param {string} phone - The contact's phone number.
+ * @returns {void}
+ */
 function restoreActiveContact(contactId, name, email, phone) {
   let contactElement = document.getElementById(`contact-${contactId}`);
-
   if (contactElement) {
     contactElement.classList.add("is-Active");
     currentActiveContact = contactElement;
   }
-
   showContactDetails(contactId, name, email, phone);
 }
 
+/**
+ * Deletes a contact from the database.
+ * @param {string} contactId - The ID of the contact to be deleted.
+ * @returns {Promise<void>}
+ */
 async function deleteContact(contactId) {
   if (!contactId) return;
-
   try {
     const contactsPath = getContactsPath();
     if (!contactsPath) return;
@@ -340,6 +474,12 @@ async function deleteContact(contactId) {
   }
 }
 
+/**
+ * Deletes a guest contact from the global contacts path in Firebase.
+ * @param {string} contactId - The ID of the contact to delete.
+ * @returns {Promise<void>}
+ * @throws {Error} If the contact cannot be deleted.
+ */
 async function deleteGuestContacts(contactId) {
   const response = await fetch(`${databaseURL}/contacts/${contactId}.json`, {
     method: "DELETE",
@@ -352,6 +492,13 @@ async function deleteGuestContacts(contactId) {
   }
 }
 
+/**
+ * Deletes a contact from the server for a specific user.
+ * @param {string} userId - The user's ID.
+ * @param {string} contactId - The contact's ID to delete.
+ * @returns {Promise<void>}
+ * @throws {Error} If the contact cannot be deleted.
+ */
 async function deleteContactFromServer(userId, contactId) {
   const response = await fetch(
     `${databaseURL}/users/${userId}/contacts/${contactId}.json`,

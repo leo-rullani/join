@@ -83,38 +83,78 @@ function signUp(event) {
     c = document.getElementById("confirm-password"),
     chk = document.getElementById("policy-checkbox"),
     err = document.getElementById("errorMessage");
+
   clearErrorStyles(p, c, err);
-  if (p.value.trim() !== c.value.trim()) {
-    showErrorStyles(p, c, err, "Your passwords don’t match. Please try again.");
-    return;
-  }
-  if (!chk.checked) {
-    alert("You must accept the Privacy Policy to sign up!");
-    return;
-  }
+
+  if (!validatePasswords(p, c, err)) return;
+  if (!validatePolicy(chk)) return;
+
   const userData = {
     userName: n.value.trim(),
     userEmail: e.value.trim(),
     password: p.value.trim(),
   };
+
   registerUser(userData)
-    .then((newUserKey) => {
-      sessionStorage.setItem(
-        "loggedInUser",
-        JSON.stringify({ ...userData, userId: newUserKey })
-      );
-      showToast("You signed up successfully!");
-      setTimeout(() => (window.location.href = "/html/summary.html"), 2000);
-    })
-    .catch((er) => {
-      console.error("There was a problem with the fetch operation:", er);
-      showErrorStyles(
-        null,
-        null,
-        err,
-        "Ein Fehler ist aufgetreten. Bitte versuche es später erneut."
-      );
-    });
+    .then((newUserKey) => handleUserRegistration(userData, newUserKey))
+    .catch((er) => handleError(er, err));
+}
+
+/**
+ * Validates that the password and confirm password fields match.
+ * @param {HTMLInputElement} p - Password input element.
+ * @param {HTMLInputElement} c - Confirm password input element.
+ * @param {HTMLElement} err - Error message element.
+ * @returns {boolean} True if passwords match, otherwise false.
+ */
+function validatePasswords(p, c, err) {
+  if (p.value.trim() !== c.value.trim()) {
+    showErrorStyles(p, c, err, "Your passwords don’t match. Please try again.");
+    return false;
+  }
+  return true;
+}
+
+/**
+ * Validates that the policy checkbox is checked.
+ * @param {HTMLInputElement} chk - Checkbox input element.
+ * @returns {boolean} True if checked, otherwise false.
+ */
+function validatePolicy(chk) {
+  if (!chk.checked) {
+    alert("You must accept the Privacy Policy to sign up!");
+    return false;
+  }
+  return true;
+}
+
+/**
+ * Handles user registration by saving user data and redirecting.
+ * @param {{ userName: string, userEmail: string, password: string }} userData - The user data to save.
+ * @param {string} newUserKey - The new user's unique key.
+ */
+function handleUserRegistration(userData, newUserKey) {
+  sessionStorage.setItem(
+    "loggedInUser",
+    JSON.stringify({ ...userData, userId: newUserKey })
+  );
+  showToast("You signed up successfully!");
+  setTimeout(() => (window.location.href = "/html/summary.html"), 2000);
+}
+
+/**
+ * Handles errors during user registration.
+ * @param {Error} er - The error object.
+ * @param {HTMLElement} err - Error message element.
+ */
+function handleError(er, err) {
+  console.error("There was a problem with the fetch operation:", er);
+  showErrorStyles(
+    null,
+    null,
+    err,
+    "An error occurred. Please try again later."
+  );
 }
 
 /**

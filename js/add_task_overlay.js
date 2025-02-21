@@ -4,6 +4,26 @@
  * @returns {Promise<void>}
  */
 async function overlayAddTaskCreateTask() {
+  const newTask = createNewTask();
+  const ref = `${window.databaseURL}/tasks/${newTask.id}.json`;
+
+  try {
+    const resp = await fetch(ref, {
+      method: "PUT",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify(newTask),
+    });
+    await handleResponse(resp, newTask);
+  } catch (err) {
+    console.error("Error (Overlay):", err);
+  }
+}
+
+/**
+ * Creates a new task object from the input values.
+ * @returns {Object} The new task object.
+ */
+function createNewTask() {
   const taskId = "task_" + Date.now();
   const title = document
     .getElementById("overlay-add-task-title-input")
@@ -17,7 +37,8 @@ async function overlayAddTaskCreateTask() {
   const category = document
     .getElementById("overlay-add-task-category")
     .value.trim();
-  const newTask = {
+
+  return {
     id: taskId,
     title,
     description,
@@ -31,26 +52,25 @@ async function overlayAddTaskCreateTask() {
       done: false,
     })),
   };
-  const ref = `${window.databaseURL}/tasks/${taskId}.json`;
-  try {
-    const resp = await fetch(ref, {
-      method: "PUT",
-      headers: { "Content-Type": "application/json" },
-      body: JSON.stringify(newTask),
-    });
-    if (resp.ok) {
-      console.log("Overlay task saved:", newTask);
-      addTaskCreateTaskConfirmation();
-      overlayClearForm();
-      document.getElementById("addTaskOverlay").style.display = "none";
-      await displayTasks();
-    } else {
-      console.error("Error saving overlay task:", resp.status);
-    }
-  } catch (err) {
-    console.error("Error (Overlay):", err);
+}
+
+/**
+ * Handles the response from the fetch request.
+ * @param {Response} resp - The response from the fetch call.
+ * @param {Object} newTask - The newly created task object.
+ */
+async function handleResponse(resp, newTask) {
+  if (resp.ok) {
+    console.log("Overlay task saved:", newTask);
+    addTaskCreateTaskConfirmation();
+    overlayClearForm();
+    document.getElementById("addTaskOverlay").style.display = "none";
+    await displayTasks();
+  } else {
+    console.error("Error saving overlay task:", resp.status);
   }
 }
+
 window.overlayAddTaskCreateTask = overlayAddTaskCreateTask;
 
 /**
@@ -184,26 +204,6 @@ function overlayAddTaskSubtasksList() {
 window.overlayAddTaskSubtasksList = overlayAddTaskSubtasksList;
 
 /**
- * Returns HTML for an overlay subtask.
- * @param {string} subtaskName
- * @param {number} index
- * @returns {string}
- */
-function overlaySubTaskTemplate(subtaskName, index) {
-  return `
-    <li>
-      <span class="add-task-subtasks-extra-task">${subtaskName}</span>
-      <div class="overlay-add-task-subtasks-icons">
-        <img class="add-task-edit" src="/assets/icons/add-subtask-edit.svg" onclick="overlayEditTaskSubtasksList(${index}, event)">
-        <div class="add-tasks-border"></div>
-        <img class="add-task-trash" src="/assets/icons/add-subtask-delete.svg" onclick="overlayRemoveOverlaySubtask(${index}, event)">
-      </div>
-    </li>
-  `;
-}
-window.overlaySubTaskTemplate = overlaySubTaskTemplate;
-
-/**
  * Allows editing an overlay subtask.
  * @param {number} index
  * @param {Event} event
@@ -215,20 +215,9 @@ function overlayEditTaskSubtasksList(index, event) {
   ul.innerHTML = "";
   for (let i = 0; i < window.overlaySubtasksList.length; i++) {
     if (i === index) {
-      ul.innerHTML += `
-        <li class="add-task-subtask-li-edit">
-          <div class="add-task-subtasks-input-edit-div">
-            <input class="add-task-subtasks-input-edit" id="overlay-add-task-subtasks-input-edit" type="text" value="${window.overlaySubtasksList[i]}" onkeypress="overlayConfirmEditSubtask(${i}, event)">
-            <div class="add-task-subtasks-icons-edit">
-              <img class="add-task-trash" src="/assets/icons/add-subtask-delete.svg" onclick="overlayRemoveOverlaySubtask(${i}, event)">
-              <div class="add-tasks-border"></div>
-              <img class="add-task-confirm" src="/assets/icons/done_inverted.svg" onclick="overlayConfirmEditSubtask(${i}, event)">
-            </div>
-          </div>
-        </li>
-      `;
+      ul.innerHTML += overlayEditTaskSubtasksListTemplate(i);
     } else {
-      ul.innerHTML += overlaySubTaskTemplate(window.overlaySubtasksList[i], i);
+      ul.innerHTML += overlaySubTaskTemplate(i);
     }
   }
 }
@@ -320,21 +309,7 @@ function overlayShowContactList() {
   window.contactsToAssigned.forEach((contact, i) => {
     const bg = assignColor(contact.name);
     const chk = window.overlayAssignedContacts.includes(contact.name);
-    container.innerHTML += `
-          <li class="${chk ? "selectedContact" : ""}">
-        <label for="overlay-person${i}">
-          <span class="avatar" style="background-color:${bg};">${getUserInitials(
-      contact.name
-    )}</span>
-          <span>${contact.name}</span>
-        </label>
-        <input class="overlay-add-task-checkbox" type="checkbox" id="overlay-person${i}" value="${
-      contact.name
-    }" ${chk ? "checked" : ""} onclick="overlayToggleContactSelection('${
-      contact.name
-    }')">
-      </li>
-    `;
+    container.innerHTML += overlayShowContactListTemplate(chk, i, bg, c);
   });
 }
 window.overlayShowContactList = overlayShowContactList;
@@ -353,21 +328,12 @@ function overlayAddTaskAssignedToSearch() {
     if (!c.name.toLowerCase().includes(search)) return;
     const bg = assignColor(c.name);
     const chk = window.overlayAssignedContacts.includes(c.name);
-    container.innerHTML += `
-        <li class="${chk ? "selectedContact" : ""}">
-        <label for="overlay-person${i}">
-          <span class="avatar" style="background-color:${bg};">${getUserInitials(
-      c.name
-    )}</span>
-          <span>${c.name}</span>
-        </label>
-        <input class="overlay-add-task-checkbox" type="checkbox" id="overlay-person${i}" value="${
-      c.name
-    }" ${chk ? "checked" : ""} onclick="overlayToggleContactSelection('${
-      c.name
-    }')">
-      </li>
-    `;
+    container.innerHTML += overlayAddTaskAssignedToSearchTemplate(
+      chk,
+      i,
+      bg,
+      c
+    );
   });
 }
 window.overlayAddTaskAssignedToSearch = overlayAddTaskAssignedToSearch;

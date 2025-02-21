@@ -1,25 +1,10 @@
 "use strict";
-/**
- * @file login.js
- * Contains all logic for initialization, data fetching, authentication, and UI helpers.
- */
 window.databaseURL =
   "https://join-5d739-default-rtdb.europe-west1.firebasedatabase.app";
-/**
- * A sample list of dummy users for demo purposes.
- * In a real app, you'd typically fetch from a server/db.
- */
 const dummyUsers = [{ email: "test@user.com", password: "test123" }];
 
-/**
- * Fires once the DOM is fully loaded.
- */
 document.addEventListener("DOMContentLoaded", init);
 
-/**
- * init
- * Gathers elements, fetches user data, adjusts layout, and initializes listeners.
- */
 function init() {
   const {
     logoContainer,
@@ -37,10 +22,6 @@ function init() {
   initFocusClear(passwordInput, errorDiv);
 }
 
-/**
- * getElements
- * @returns {Object} An object containing references to DOM elements.
- */
 function getElements() {
   return {
     logoContainer: document.querySelector(".logo-container"),
@@ -55,8 +36,7 @@ function getElements() {
 }
 
 /**
- * handleScreenSize
- * Shows or hides elements based on screen width (≤ 500px).
+ * Handles screen size adjustments.
  * @param {HTMLElement} topRight - The top-right element
  * @param {HTMLElement} footer - The footer element
  */
@@ -71,8 +51,7 @@ function handleScreenSize(topRight, footer) {
 }
 
 /**
- * initLogoAnimation
- * Handles logo animation and color changes for small screens, then shows the form.
+ * Initializes logo animation.
  * @param {HTMLElement} logo - The logo container
  * @param {HTMLElement} form - The form container
  */
@@ -95,15 +74,7 @@ function initLogoAnimation(logo, form) {
 }
 
 /**
- * initGuestLogin
- * Redirects to the summary page on guest login click.
- * @param {HTMLElement} guestLoginBtn - The "guest login" button
- */
-
-/**
- * initFocusClear
- * Removes error styles and messages when focusing on an input element.
- *
+ * Clears error styles on focus.
  * @param {HTMLInputElement} inputElement - The input field
  * @param {HTMLElement} errorDiv - The container for error messages
  */
@@ -115,8 +86,7 @@ function initFocusClear(inputElement, errorDiv) {
 }
 
 /**
- * getUserData
- * Fetches user data from the database and converts it to an array.
+ * Fetches user data from the database.
  * @async
  * @returns {Promise<Array>} An array of user objects
  */
@@ -139,8 +109,7 @@ async function getUserData() {
 }
 
 /**
- * handleLogin
- * Form submission handler that fetches user data and calls the login logic.
+ * Handles form submission for login.
  * @async
  * @param {Event} event - The form submit event
  */
@@ -155,8 +124,7 @@ async function handleLogin(event) {
 }
 
 /**
- * login
- * Verifies user credentials and triggers success or error feedback.
+ * Verifies user credentials.
  * @async
  * @param {Event} event - The form submit event
  * @param {Array} users - The list of user objects
@@ -179,7 +147,6 @@ async function login(event, users) {
 }
 
 /**
- * fillEmail
  * Fills the email input with a default value if empty.
  */
 function fillEmail() {
@@ -188,8 +155,7 @@ function fillEmail() {
 }
 
 /**
- * togglePassword
- * Toggles password visibility and updates the icon.
+ * Toggles password visibility.
  */
 function togglePassword() {
   const p = document.getElementById("password"),
@@ -207,8 +173,7 @@ function togglePassword() {
 }
 
 /**
- * clearErrorStyles
- * Removes error classes and clears the error message.
+ * Clears error styles.
  * @param {HTMLInputElement} emailInput - The email input element
  * @param {HTMLInputElement} passwordInput - The password input element
  * @param {HTMLElement} errorDiv - The container for error messages
@@ -220,8 +185,7 @@ function clearErrorStyles(emailInput, passwordInput, errorDiv) {
 }
 
 /**
- * showErrorStyles
- * Adds error classes and sets the error message text.
+ * Displays error styles.
  * @param {HTMLInputElement} emailInput - The email input element
  * @param {HTMLInputElement} passwordInput - The password input element
  * @param {HTMLElement} errorDiv - The container for error messages
@@ -233,8 +197,7 @@ function showErrorStyles(emailInput, passwordInput, errorDiv) {
 }
 
 /**
- * loginSuccess
- * Displays a success toast message and redirects to the summary page.
+ * Displays a success message and redirects to the summary page.
  */
 function loginSuccess() {
   showToast("Login successful!");
@@ -242,8 +205,7 @@ function loginSuccess() {
 }
 
 /**
- * showToast
- * Displays an animated toast message.
+ * Displays a toast message.
  * @param {string} message - The message to display
  */
 function showToast(message) {
@@ -255,7 +217,7 @@ function showToast(message) {
   const r = document.querySelector(".login-box").getBoundingClientRect();
   const mY = r.top + r.height / 2;
   const fB = window.innerHeight - mY;
-  n.getBoundingClientRect(); // Force reflow
+  n.getBoundingClientRect();
   n.style.bottom = `${fB}px`;
   n.classList.add("show");
   setTimeout(() => {
@@ -264,32 +226,29 @@ function showToast(message) {
   }, 3000);
 }
 
-/**
- * guestLogin.js
- * Behandelt die Weiterleitung für den Guest-Login.
- * Wird in login.html & summary.html eingebunden.
- */
-
 document.addEventListener("DOMContentLoaded", () => {
   setGreeting();
 });
 
 /**
- * initGuestLogin()
- * Klick auf Guest-Login-Button -> weiter zur summaryguest.html
+ * Redirects to the summary page on guest login click.
  */
 function guestLogin() {
   let guestId = generateGuestId();
   sessionStorage.setItem("guestSession", guestId);
   window.location.href = "summary.html";
 }
+
+/**
+ * Generates a unique guest ID.
+ * @returns {string} The generated guest ID
+ */
 function generateGuestId() {
   return "guest_" + Math.random().toString(36).substr(2, 9);
 }
 
 /**
- * setGreeting()
- * Setzt die Begrüßung basierend auf der Tageszeit.
+ * Sets the greeting based on the time of day.
  */
 function setGreeting() {
   const greetingText = document.getElementById("greeting_text");

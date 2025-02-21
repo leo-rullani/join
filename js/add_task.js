@@ -141,20 +141,7 @@ function createAssignedTo() {
   window.contactsToAssigned.forEach((c, i) => {
     const bg = assignColor(c.name);
     const chk = window.assignedContacts.includes(c.name);
-    container.innerHTML += `
-      <li class="${chk ? "selectedContact" : ""}">
-        <label for="person${i}">
-          <span class="avatar" style="background-color:${bg};">${getUserInitials(
-      c.name
-    )}</span>
-          <span>${c.name}</span>
-        </label>
-        <input class="add-task-checkbox" type="checkbox" name="person[${i}]" id="person${i}"
-          value="${c.name}" ${
-      chk ? "checked" : ""
-    } onclick="toggleContactSelection('${c.name}')">
-      </li>
-    `;
+    container.innerHTML += createAssignedToTemplate(chk, i, bg, c);
   });
 }
 window.createAssignedTo = createAssignedTo;
@@ -171,20 +158,7 @@ function addTaskAssignedToSearch() {
     if (!c.name.toLowerCase().includes(search)) return;
     const bg = assignColor(c.name);
     const chk = window.assignedContacts.includes(c.name);
-    container.innerHTML += `
-      <li class="${chk ? "selectedContact" : ""}">
-        <label for="person${i}">
-          <span class="avatar" style="background-color:${bg};">${getUserInitials(
-      c.name
-    )}</span>
-          <span>${c.name}</span>
-        </label>
-        <input class="add-task-checkbox" type="checkbox" name="person[${i}]" id="person${i}"
-          value="${c.name}" ${
-      chk ? "checked" : ""
-    } onclick="toggleContactSelection('${c.name}')">
-      </li>
-    `;
+    container.innerHTML += addTaskAssignedToSearchTemplate(chk, i, bg, c);
   });
 }
 window.addTaskAssignedToSearch = addTaskAssignedToSearch;
@@ -317,75 +291,79 @@ window.removeFromAddTaskSubtasksList = removeFromAddTaskSubtasksList;
  * @param {Event} event
  * @returns {void}
  */
-function editTaskSubtasksList(param, event) {
+function editTaskSubtaskList(param, event) {
   event.stopPropagation();
   const ul = document.getElementById("add-task-subtasks-list");
   ul.innerHTML = "";
   for (let i = 0; i < window.subtasksList.length; i++) {
-    if (i === param) {
-      let li = document.createElement("li");
-      li.className = "add-task-subtask-li-edit";
-      let input = document.createElement("input");
-      input.className = "add-task-subtasks-input-edit";
-      input.id = "add-task-subtasks-input-edit";
-      input.setAttribute("onkeypress", `confirmTaskSubtasksList(${i}, event)`);
-      input.type = "text";
-      let div = document.createElement("div");
-      div.className = "add-task-subtasks-icons-edit";
-      let trash = document.createElement("img");
-      trash.className = "add-task-trash";
-      trash.src = "/assets/icons/add-subtask-delete.svg";
-      trash.setAttribute(
-        "onclick",
-        `removeFromAddTaskSubtasksList(${i}, event)`
-      );
-      let border = document.createElement("div");
-      border.className = "add-tasks-border";
-      let confirm = document.createElement("img");
-      confirm.className = "add-task-confirm";
-      confirm.src = "/assets/icons/done_inverted.svg";
-      confirm.setAttribute("onclick", `confirmTaskSubtasksList(${i}, event)`);
-      div.appendChild(trash);
-      div.appendChild(border);
-      div.appendChild(confirm);
-      let inputDiv = document.createElement("div");
-      inputDiv.className = "add-task-subtasks-input-edit-div";
-      inputDiv.appendChild(input);
-      inputDiv.appendChild(div);
-      li.appendChild(inputDiv);
-      ul.appendChild(li);
-      input.value = window.subtasksList[i];
-    } else {
-      let li = document.createElement("li");
-      let span = document.createElement("span");
-      span.className = "add-task-subtasks-extra-task";
-      span.id = "add-task-subtasks-extra-task";
-      span.textContent = window.subtasksList[i];
-      let div = document.createElement("div");
-      div.className = "add-task-subtasks-icons";
-      let edit = document.createElement("img");
-      edit.className = "add-task-edit";
-      edit.src = "/assets/icons/add-subtask-edit.svg";
-      edit.setAttribute("onclick", `editTaskSubtasksList(${i}, event)`);
-      let border = document.createElement("div");
-      border.className = "add-tasks-border";
-      let trash = document.createElement("img");
-      trash.className = "add-task-trash";
-      trash.src = "/assets/icons/add-subtask-delete.svg";
-      trash.setAttribute(
-        "onclick",
-        `removeFromAddTaskSubtasksList(${i}, event)`
-      );
-      div.appendChild(edit);
-      div.appendChild(border);
-      div.appendChild(trash);
-      li.appendChild(span);
-      li.appendChild(div);
-      ul.appendChild(li);
-    }
+    if (i === param) ul.appendChild(createEditLi(i));
+    else ul.appendChild(createNormalLi(i));
   }
 }
-window.editTaskSubtasksList = editTaskSubtasksList;
+
+window.editTaskSubtaskList = editTaskSubtaskList;
+
+function createIconsEdit(i) {
+  const div = document.createElement("div");
+  div.className = "add-task-subtasks-icons-edit";
+  const trash = document.createElement("img");
+  trash.className = "add-task-trash";
+  trash.src = "/assets/icons/add-subtask-delete.svg";
+  trash.setAttribute("onclick", `removeFromAddTaskSubtasksList(${i},event)`);
+  const border = document.createElement("div");
+  border.className = "add-tasks-border";
+  const confirm = document.createElement("img");
+  confirm.className = "add-task-confirm";
+  confirm.src = "/assets/icons/done_inverted.svg";
+  confirm.setAttribute("onclick", `confirmTaskSubtasksList(${i},event)`);
+  [trash, border, confirm].forEach((el) => div.appendChild(el));
+  return div;
+}
+
+function createIconsNormal(i) {
+  const div = document.createElement("div");
+  div.className = "add-task-subtasks-icons";
+  const edit = document.createElement("img");
+  edit.className = "add-task-edit";
+  edit.src = "/assets/icons/add-subtask-edit.svg";
+  edit.setAttribute("onclick", `editTaskSubtaskList(${i},event)`);
+  const border = document.createElement("div");
+  border.className = "add-tasks-border";
+  const trash = document.createElement("img");
+  trash.className = "add-task-trash";
+  trash.src = "/assets/icons/add-subtask-delete.svg";
+  trash.setAttribute("onclick", `removeFromAddTaskSubtasksList(${i},event)`);
+  [edit, border, trash].forEach((el) => div.appendChild(el));
+  return div;
+}
+
+function createEditLi(i) {
+  const li = document.createElement("li");
+  li.className = "add-task-subtask-li-edit";
+  const input = document.createElement("input");
+  input.className = "add-task-subtasks-input-edit";
+  input.id = "add-task-subtasks-input-edit";
+  input.type = "text";
+  input.setAttribute("onkeypress", `confirmTaskSubtasksList(${i},event)`);
+  const inputDiv = document.createElement("div");
+  inputDiv.className = "add-task-subtasks-input-edit-div";
+  inputDiv.appendChild(input);
+  inputDiv.appendChild(createIconsEdit(i));
+  li.appendChild(inputDiv);
+  input.value = window.subtasksList[i];
+  return li;
+}
+
+function createNormalLi(i) {
+  const li = document.createElement("li");
+  const span = document.createElement("span");
+  span.className = "add-task-subtasks-extra-task";
+  span.id = "add-task-subtasks-extra-task";
+  span.textContent = window.subtasksList[i];
+  li.appendChild(span);
+  li.appendChild(createIconsNormal(i));
+  return li;
+}
 
 /**
  * Confirms editing of a subtask.
@@ -483,23 +461,3 @@ function addTaskClearFormular(event) {
   addTaskClearFormularReset();
 }
 window.addTaskClearFormular = addTaskClearFormular;
-
-/**
- * Returns HTML for a single subtask.
- * @param {string} name
- * @param {number} i
- * @returns {string}
- */
-function subTaskTemplate(name, i) {
-  return `
-    <li>
-      <span class="add-task-subtasks-extra-task">${name}</span>
-      <div class="add-task-subtasks-icons">
-        <img class="add-task-edit" src="/assets/icons/add-subtask-edit.svg" onclick="editTaskSubtasksList(${i}, event)">
-        <div class="add-tasks-border"></div>
-        <img class="add-task-trash" src="/assets/icons/add-subtask-delete.svg" onclick="removeFromAddTaskSubtasksList(${i}, event)">
-      </div>
-    </li>
-  `;
-}
-window.subTaskTemplate = subTaskTemplate;

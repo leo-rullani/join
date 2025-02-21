@@ -481,3 +481,176 @@ window.taskEditTemplate = function (t) {
     </div>
   `;
 };
+
+/**
+ * Returns HTML for a single subtask.
+ * @param {string} name - The name of the subtask.
+ * @param {number} i - The index of the subtask.
+ * @returns {string} - The HTML string for the subtask.
+ */
+function subTaskTemplate(name, i) {
+  return `
+    <li>
+      <span class="add-task-subtasks-extra-task">${name}</span>
+      <div class="add-task-subtasks-icons">
+        <img class="add-task-edit" src="/assets/icons/add-subtask-edit.svg" onclick="editTaskSubtasksList(${i}, event)">
+        <div class="add-tasks-border"></div>
+        <img class="add-task-trash" src="/assets/icons/add-subtask-delete.svg" onclick="removeFromAddTaskSubtasksList(${i}, event)">
+      </div>
+    </li>
+  `;
+}
+window.subTaskTemplate = subTaskTemplate;
+
+/**
+ * Generates HTML for a contact in the assigned to search list.
+ * @param {boolean} chk - Indicates if the contact is selected.
+ * @param {number} i - The index of the contact.
+ * @param {string} bg - The background color for the avatar.
+ * @param {object} c - The contact object.
+ * @returns {string} - The HTML string for the contact.
+ */
+function addTaskAssignedToSearchTemplate(chk, i, bg, c) {
+  return `
+      <li class="${chk ? "selectedContact" : ""}">
+        <label for="person${i}">
+          <span class="avatar" style="background-color:${bg};">${getUserInitials(
+    c.name
+  )}</span>
+          <span>${c.name}</span>
+        </label>
+        <input class="add-task-checkbox" type="checkbox" name="person[${i}]" id="person${i}"
+          value="${c.name}" ${
+    chk ? "checked" : ""
+  } onclick="toggleContactSelection('${c.name}')">
+      </li>
+    `;
+}
+window.addTaskAssignedToSearchTemplate = addTaskAssignedToSearchTemplate;
+
+/**
+ * Creates an assigned contact template.
+ * @param {boolean} chk - Indicates if the contact is selected.
+ * @param {number} i - The index of the contact.
+ * @param {string} bg - The background color for the avatar.
+ * @param {object} c - The contact object.
+ * @returns {string} - The HTML string for the assigned contact.
+ */
+
+function createAssignedToTemplate(chk, i, bg, c) {
+  return `
+      <li class="${chk ? "selectedContact" : ""}">
+        <label for="person${i}">
+          <span class="avatar" style="background-color:${bg};">${getUserInitials(
+    c.name
+  )}</span>
+          <span>${c.name}</span>
+        </label>
+        <input class="add-task-checkbox" type="checkbox" name="person[${i}]" id="person${i}"
+          value="${c.name}" ${
+    chk ? "checked" : ""
+  } onclick="toggleContactSelection('${c.name}')">
+      </li>
+    `;
+}
+window.createAssignedToTemplate = createAssignedToTemplate;
+
+/**
+ * Template for rendering an assigned contact search list item.
+ *
+ * @param {boolean} chk - True if the contact is selected.
+ * @param {number} i - The index of the contact.
+ * @param {string} bg - The background color for the avatar.
+ * @param {Object} c - The contact object containing a 'name' property.
+ * @returns {string} The HTML string for the assigned contact list item.
+ */
+function overlayAddTaskAssignedToSearchTemplate(chk, i, bg, c) {
+  return `
+        <li class="${chk ? "selectedContact" : ""}">
+        <label for="overlay-person${i}">
+          <span class="avatar" style="background-color:${bg};">${getUserInitials(
+    c.name
+  )}</span>
+          <span>${c.name}</span>
+        </label>
+        <input class="overlay-add-task-checkbox" type="checkbox" id="overlay-person${i}" value="${
+    c.name
+  }" ${chk ? "checked" : ""} onclick="overlayToggleContactSelection('${
+    c.name
+  }')">
+      </li>
+    `;
+}
+window.overlayAddTaskAssignedToSearchTemplate =
+  overlayAddTaskAssignedToSearchTemplate;
+
+/**
+ * Template for rendering a contact list item.
+ *
+ * @param {boolean} chk - True if the contact is selected.
+ * @param {number} i - The index of the contact.
+ * @param {string} bg - The background color for the avatar.
+ * @param {Object} c - The contact object containing a 'name' property.
+ * @returns {string} The HTML string for the contact list item.
+ */
+function overlayShowContactListTemplate(chk, i, bg, c) {
+  return `
+          <li class="${chk ? "selectedContact" : ""}">
+        <label for="overlay-person${i}">
+          <span class="avatar" style="background-color:${bg};">${getUserInitials(
+    contact.name
+  )}</span>
+          <span>${contact.name}</span>
+        </label>
+        <input class="overlay-add-task-checkbox" type="checkbox" id="overlay-person${i}" value="${
+    contact.name
+  }" ${chk ? "checked" : ""} onclick="overlayToggleContactSelection('${
+    contact.name
+  }')">
+      </li>
+    `;
+}
+window.overlayShowContactListTemplate = overlayShowContactListTemplate;
+
+/**
+ * Template for rendering an editable subtask list item.
+ *
+ * @param {number} i - The index of the subtask in the overlaySubtasksList.
+ * @returns {string} The HTML string for the editable subtask list item.
+ */
+function overlayEditTaskSubtasksListTemplate(i) {
+  return `
+        <li class="add-task-subtask-li-edit">
+          <div class="add-task-subtasks-input-edit-div">
+            <input class="add-task-subtasks-input-edit" id="overlay-add-task-subtasks-input-edit" type="text" value="${window.overlaySubtasksList[i]}" onkeypress="overlayConfirmEditSubtask(${i}, event)">
+            <div class="add-task-subtasks-icons-edit">
+              <img class="add-task-trash" src="/assets/icons/add-subtask-delete.svg" onclick="overlayRemoveOverlaySubtask(${i}, event)">
+              <div class="add-tasks-border"></div>
+              <img class="add-task-confirm" src="/assets/icons/done_inverted.svg" onclick="overlayConfirmEditSubtask(${i}, event)">
+            </div>
+          </div>
+        </li>
+      `;
+}
+window.overlayEditTaskSubtasksListTemplate =
+  overlayEditTaskSubtasksListTemplate;
+
+/**
+ * Returns HTML for an overlay subtask.
+ * @param {string} subtaskName
+ * @param {number} index
+ * @returns {string}
+ */
+function overlaySubTaskTemplate(subtaskName, index) {
+  return `
+    <li>
+      <span class="add-task-subtasks-extra-task">${subtaskName}</span>
+      <div class="overlay-add-task-subtasks-icons">
+        <img class="add-task-edit" src="/assets/icons/add-subtask-edit.svg" onclick="overlayEditTaskSubtasksList(${index}, event)">
+        <div class="add-tasks-border"></div>
+        <img class="add-task-trash" src="/assets/icons/add-subtask-delete.svg" onclick="overlayRemoveOverlaySubtask(${index}, event)">
+      </div>
+    </li>
+  `;
+}
+window.overlaySubTaskTemplate = overlaySubTaskTemplate;
