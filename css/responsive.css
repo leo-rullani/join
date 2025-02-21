@@ -1597,7 +1597,6 @@
   .add-task-bottom {
     flex-direction: column;
     align-items: flex-start;
-    background-color: #f6f7f8;
     gap: 8px;
     height: 100px;
     padding: 15px;
@@ -1635,7 +1634,7 @@
   }
 
   .add-task-subtasks-input {
-    width: 71% !important;
+    width: 69% !important;
   }
 
   .add-task-textarea {
@@ -1664,7 +1663,7 @@
   }
 
   .add-task-subtasks-input {
-    width: 48% !important;
+    width: 45% !important;
   }
 
   .add-task-textarea {
@@ -1682,12 +1681,13 @@
   }
 
   .add-task-subtasks-icon-plus {
-    left: 87px;
+    left: 75px;
     top: -54px;
   }
 
   .add-task-subtasks-icon-plus-check {
-    left: 70px;
+    left: 55px;
+    top: -54px;
   }
 
   .add-task-bottom{
@@ -1701,7 +1701,7 @@
   }
 
   .add-task-subtasks-input {
-    width: 40% !important;
+    width: 37% !important;
   }
 
   .add-task-textarea {
@@ -1740,8 +1740,8 @@
   }
 
   .add-task-subtasks-icon-plus-check {
-    left: 24px;
-    top: -53px;
+    left: 30px;
+    top: -58px;
   }
 
   .add-task-bottom-create-button {

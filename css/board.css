@@ -636,6 +636,7 @@
   bottom: 5px;
   cursor: pointer;
   gap: 5px;
+  z-index: 1;
 }
 
 .add-task-overlay-subtasks-icon-plus-check button {
@@ -647,6 +648,7 @@
   border: none;
   padding: 10px;
   cursor: pointer;
+  z-index: 1;
 }
 
 .add-task-overlay-subtasks-icon-plus-check button:hover {
