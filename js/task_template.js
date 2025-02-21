@@ -42,7 +42,7 @@ window.generateTaskHTML = function (t, s, a, p) {
   return `
     <div 
       class="task" 
-      onclick="console.log('${t.id}');openBoardOverlay('${t.id}')" 
+      onclick="openBoardOverlay('${t.id}')" 
       id="${t.id}"
     >
       <div class="task-label" style="background-color:${c};">
@@ -593,7 +593,7 @@ window.overlayAddTaskAssignedToSearchTemplate =
  * @param {Object} c - The contact object containing a 'name' property.
  * @returns {string} The HTML string for the contact list item.
  */
-function overlayShowContactListTemplate(chk, i, bg, c) {
+function overlayShowContactListTemplate(chk, i, bg, contact) {
   return `
           <li class="${chk ? "selectedContact" : ""}">
         <label for="overlay-person${i}">

@@ -161,14 +161,7 @@ window.updateSubtaskInFirebase = function (id, i, c) {
     method: "PATCH",
     headers: { "Content-Type": "application/json" },
     body: JSON.stringify(d),
-  })
-    .then((r) => r.json())
-    .then((data) =>
-      console.log("Subtask-Status erfolgreich aktualisiert:", data)
-    )
-    .catch((e) =>
-      console.error("Fehler beim Speichern der Subtask-Status:", e)
-    );
+  }).then((r) => r.json());
 };
 
 /**

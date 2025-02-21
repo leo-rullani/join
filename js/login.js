@@ -100,7 +100,6 @@ async function getUserData() {
       id,
       ...data,
     }));
-    console.log("Converted usersArray:", usersArray);
     return usersArray;
   } catch (error) {
     console.error(error.message);

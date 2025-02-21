@@ -291,7 +291,7 @@ window.removeFromAddTaskSubtasksList = removeFromAddTaskSubtasksList;
  * @param {Event} event
  * @returns {void}
  */
-function editTaskSubtaskList(param, event) {
+function editTaskSubtasksList(param, event) {
   event.stopPropagation();
   const ul = document.getElementById("add-task-subtasks-list");
   ul.innerHTML = "";
@@ -301,7 +301,7 @@ function editTaskSubtaskList(param, event) {
   }
 }
 
-window.editTaskSubtaskList = editTaskSubtaskList;
+window.editTaskSubtasksList = editTaskSubtasksList;
 
 function createIconsEdit(i) {
   const div = document.createElement("div");

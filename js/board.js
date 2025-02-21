@@ -107,7 +107,6 @@ async function updateTaskBoardCategory(taskId, newBoardCategory) {
   });
 
   if (response.ok) {
-    console.log("Board category updated successfully:", newBoardCategory);
   } else {
     console.error("Error updating boardCategory");
   }

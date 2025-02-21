@@ -135,7 +135,6 @@ document.addEventListener("click", function (event) {
  * @param {string} taskId - The ID of the task to display.
  */
 function openBoardOverlay(taskId) {
-  console.log("Opening overlay for Task ID:", taskId);
   const task = findTaskById(taskId);
   if (!task) return;
 

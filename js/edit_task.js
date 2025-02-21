@@ -135,7 +135,6 @@ function createUpdatedTask(
  */
 async function handleUpdateResponse(resp, updatedTask, taskId) {
   if (resp.ok) {
-    console.log("Task updated:", updatedTask);
     showToast("Task updated!");
     await displayTasks();
     window.editingMode = false;

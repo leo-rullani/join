@@ -116,9 +116,7 @@ window.getTasks = getTasks;
 function deleteTaskInFirebase(taskId) {
   return fetch(`${window.databaseURL}/tasks/${taskId}.json`, {
     method: "DELETE",
-  })
-    .then(() => console.log("Task in Firebase gelöscht"))
-    .catch((error) => console.error("Fehler beim Löschen in Firebase", error));
+  });
 }
 window.deleteTaskInFirebase = deleteTaskInFirebase;
 
@@ -225,7 +223,6 @@ window.displayTasks = displayTasks;
 function loadTasks() {
   getTasks().then((loadedTasks) => {
     window.tasks = loadedTasks;
-    console.log("Tasks gespeichert in window.tasks:", window.tasks);
   });
 }
 window.loadTasks = loadTasks;

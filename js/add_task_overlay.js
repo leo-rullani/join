@@ -61,7 +61,6 @@ function createNewTask() {
  */
 async function handleResponse(resp, newTask) {
   if (resp.ok) {
-    console.log("Overlay task saved:", newTask);
     addTaskCreateTaskConfirmation();
     overlayClearForm();
     document.getElementById("addTaskOverlay").style.display = "none";
@@ -309,7 +308,7 @@ function overlayShowContactList() {
   window.contactsToAssigned.forEach((contact, i) => {
     const bg = assignColor(contact.name);
     const chk = window.overlayAssignedContacts.includes(contact.name);
-    container.innerHTML += overlayShowContactListTemplate(chk, i, bg, c);
+    container.innerHTML += overlayShowContactListTemplate(chk, i, bg, contact);
   });
 }
 window.overlayShowContactList = overlayShowContactList;
