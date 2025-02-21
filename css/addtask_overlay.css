@@ -1,11 +1,3 @@
-/* ========================================
-   addtaskoverlay.css
-   ======================================== */
-
-/* 
-   Grundlegendes Overlay für alle Bildschirme 
-   (Falls du willst, dass das Overlay auch über 1200px existiert)
-*/
 .add_task_overlay {
   position: fixed;
   top: 0;
@@ -43,7 +35,6 @@
   margin-top: -16px;
 }
 
-/* Slide-In-/Slide-Out-Animationen (optional) */
 @keyframes slideInFromRight {
   from {
     transform: translateX(300%);
@@ -64,11 +55,11 @@
     transform: translateX(100%);
   }
 }
+
 .overlay_content.slide-out {
   animation: slideOutToRight 3s ease-out forwards;
 }
 
-/* Close-Button oben rechts */
 .close_overlay_btn {
   border: none;
   height: 30px;
@@ -79,6 +70,7 @@
   align-items: center;
   padding: 0;
   margin: 0;
+
 }
 .close_overlay_btn button {
   background-color: transparent;
@@ -92,32 +84,35 @@
   align-items: center;
   padding: 0;
   margin: 0;
+
 }
 .close_overlay_btn button:hover {
   background-color: #aaa;
   cursor: pointer;
+
 }
 
-/* Das innere Formular + Container */
 .add-task-overlay-content {
   display: flex;
   flex-direction: column;
   padding: 20px;
+
 }
 .add-task-overlay-h1-container {
   display: flex;
   justify-content: space-between;
 }
+
 .add-task-overlay-h1-container h1 {
   font-size: 32px;
   margin: 20px 0 0 10px;
   padding: 0;
 }
+
 .add-task-overlay-container {
-  display: flex; /* Standard: left + right nebeneinander (für >1200px) */
+  display: flex; 
 }
 
-/* Linke Seite (Title, Description, Assigned) */
 .add-task-overlay-left-side {
   display: flex;
   flex-direction: column;
@@ -125,7 +120,7 @@
   flex: 1;
   font-size: 20px;
 }
-/* Rechte Seite (Due Date, Priority, Category, Subtasks) */
+
 .add-task-overlay-right-side {
   display: flex;
   flex-direction: column;
@@ -134,13 +129,13 @@
   font-size: 20px;
 }
 
-/* Titel */
 .add-task-overlay-title {
   display: flex;
   flex-direction: column;
   gap: 8px;
   margin: 10px;
 }
+
 .add-task-overlay-title-input {
   padding: 10px 15px;
   border-radius: 10px;
@@ -149,13 +144,13 @@
   width: 80%;
 }
 
-/* Description */
 .add-task-overlay-description {
   display: flex;
   flex-direction: column;
   gap: 8px;
   margin: 10px;
 }
+
 .add-task-overlay-textarea {
   border-radius: 10px;
   padding: 10px 15px;
@@ -166,7 +161,6 @@
   resize: none;
 }
 
-/* Assigned to */
 .add-task-overlay-assigned-to {
   display: flex;
   flex-direction: column;
@@ -174,7 +168,6 @@
   margin: 10px;
 }
 
-/* Checkbox-Dropdown */
 .checkbox-overlay-dropdown {
   position: relative;
   display: flex;
@@ -186,6 +179,7 @@
   flex-direction: column;
   gap: 8px;
 }
+
 .checkbox-overlay-dropdown .search-overlay > input {
   border: 1px solid #d7d7d7;
   border-radius: 10px;
@@ -198,6 +192,7 @@
   width: 78%;
   font-size: 18px;
 }
+
 .checkbox-overlay-dropdown ul {
   background: #fff;
   padding: 0;
@@ -212,6 +207,7 @@
   border-radius: 0 0 10px 10px;
   box-shadow: 0 4px 4px 0 rgba(0, 0, 0, 0.1);
 }
+
 .checkbox-overlay-dropdown ul li {
   padding: 8px;
   border-radius: 8px;
@@ -219,12 +215,14 @@
   justify-content: space-between;
   align-items: center;
 }
+
 .checkbox-overlay-dropdown ul li label {
   cursor: pointer;
   width: 100%;
   display: flex;
   align-items: center;
 }
+
 .checkbox-overlay-dropdown ul li:hover {
   background-color: #eeeeee;
 }
@@ -233,7 +231,6 @@
   display: none !important;
 }
 
-/* Avatare (zugewiesene Personen) */
 .add-task-assigned-avatar {
   display: flex;
   gap: 8px;
@@ -241,13 +238,13 @@
   margin-top: 8px;
 }
 
-/* Due Date */
 .add-task-overlay-due-date {
   display: flex;
   flex-direction: column;
   gap: 8px;
   margin: 10px;
 }
+
 .add-task-overlay-due-date-input {
   padding: 10px 15px;
   width: 80%;
@@ -257,17 +254,18 @@
   font-size: 18px;
 }
 
-/* Priority */
 .add-task-overlay-urgent-medium-low-container {
   display: flex;
   flex-direction: column;
   gap: 8px;
   margin: 10px;
 }
+
 .add-task-overlay-urgent-medium-low-buttons {
   display: flex;
   gap: 8px;
 }
+
 .add-task-overlay-urgent,
 .add-task-overlay-medium,
 .add-task-overlay-low {
@@ -281,6 +279,7 @@
   cursor: pointer;
   width: 28%;
 }
+
 .add-task-overlay-urgent:hover,
 .add-task-overlay-medium:hover,
 .add-task-overlay-low:hover {
@@ -288,18 +287,22 @@
     rgba(0, 0, 0, 0.07) 0px 4px 8px, rgba(0, 0, 0, 0.07) 0px 8px 16px,
     rgba(0, 0, 0, 0.07) 0px 16px 32px, rgba(0, 0, 0, 0.07) 0px 32px 64px;
 }
+
 .add-task-overlay-urgent.add-task-clicked {
   background-color: #ff3d00;
   color: #ffffff;
 }
+
 .add-task-overlay-medium.add-task-clicked {
   background-color: #ffbb2b;
   color: #ffffff;
 }
+
 .add-task-overlay-low.add-task-clicked {
   background-color: #7ae229;
   color: #ffffff;
 }
+
 .add-task-overlay-important {
   display: flex;
   justify-content: center;
@@ -307,11 +310,11 @@
   gap: 8px;
   flex: 1;
 }
+
 .add-task-overlay-important-name {
   text-size-adjust: auto;
 }
 
-/* Kategorie-Auswahl */
 .add-task-overlay-category {
   position: relative;
   display: flex;
@@ -319,23 +322,25 @@
   gap: 8px;
   margin: 10px;
 }
+
 .add-task-radio {
   margin-left: 8px;
 }
 
-/* Subtasks */
 .add-task-overlay-subtasks {
   display: flex;
   flex-direction: column;
   gap: 8px;
   margin: 10px;
 }
+
 .add-task-overlay-subtasks-input-container {
   display: flex;
   flex-direction: column;
   position: relative;
   gap: 8px;
 }
+
 .add-task-overlay-subtasks-input {
   padding: 10px 15px;
   border-radius: 10px;
@@ -343,6 +348,7 @@
   width: 81%;
   font-size: 18px;
 }
+
 .add-task-overlay-subtasks-icon-plus {
   display: flex;
   justify-content: center;
@@ -353,6 +359,7 @@
   cursor: pointer;
   gap: 5px;
 }
+
 .add-task-overlay-subtasks-icon-plus button {
   display: flex;
   justify-content: center;
@@ -363,6 +370,7 @@
   padding: 10px;
   cursor: pointer;
 }
+
 .add-task-overlay-subtasks-icon-plus-check {
   display: flex;
   justify-content: center;
@@ -373,6 +381,7 @@
   cursor: pointer;
   gap: 5px;
 }
+
 .add-task-overlay-subtasks-icon-plus-check button {
   display: flex;
   justify-content: center;
@@ -383,25 +392,30 @@
   padding: 10px;
   cursor: pointer;
 }
+
 .add-tasks-border {
   width: 1px;
   height: 26px;
   border: 1px solid #bbb9b9;
 }
+
 .add-task-overlay-subtasks-choosen {
   max-height: 200px;
   overflow-y: auto;
 }
+
 .add-task-overlay-subtasks-list li {
   position: relative;
   margin-block: 8px;
 }
+
 .add-task-overlay-subtasks-extra-task {
   position: relative;
   word-break: break-all;
   padding-left: 10px;
   padding-right: 70px;
 }
+
 .add-task-overlay-subtasks-extra-task::before {
   content: "";
   background-color: black;
@@ -413,6 +427,7 @@
   width: 5px;
   height: 5px;
 }
+
 .add-task-overlay-subtasks-icons {
   position: absolute;
   right: 10px;
@@ -421,23 +436,25 @@
   gap: 8px;
   padding-right: 16px;
 }
+
 .add-task-overlay-subtasks-list li:hover .add-task-overlay-subtasks-icons {
   display: flex;
 }
 
-/* Footer (Cancel / Create) */
 .add-task-bottom {
   display: flex;
   align-items: center;
   justify-content: space-between;
   margin-top: 20px;
 }
+
 .add-task-bottom-clear-button,
 .add-task-bottom-create-button {
   border: none;
   background: none;
   cursor: pointer;
 }
+
 .add-task-bottom-clear {
   display: flex;
   gap: 5px;
@@ -447,9 +464,11 @@
   border-radius: 8px;
   transition: background-color 0.3s;
 }
+
 .add-task-bottom-clear:hover {
   background-color: #ededef;
 }
+
 .add-task-bottom-create-task {
   display: flex;
   gap: 5px;
@@ -460,33 +479,28 @@
   border-radius: 8px;
   transition: background-color 0.3s;
 }
+
 .add-task-bottom-create-task:hover {
   background-color: #28abe2;
 }
+
 .add-task-create-task {
   width: 14px;
   height: 14px;
 }
+
 .add-task-required {
   color: red;
 }
 
-/* ========================================
-     Ab 1200px und kleiner => alles untereinander
-     ======================================== */
 @media (max-width: 1200px) {
-  /* Container in eine Spalte */
   .add-task-overlay-container {
     flex-direction: column;
   }
-  /* Linke + rechte Seite je 100% Breite, 
-       damit Title, Description, Assigned, Due Date, etc. 
-       alle untereinander erscheinen */
+ 
   .add-task-overlay-left-side,
   .add-task-overlay-right-side {
     width: 100%;
     margin: 0;
   }
-  /* Titel, Beschreibung, usw. sind sowieso schon column,
-       also kein extra Code nötig */
 }

@@ -968,8 +968,6 @@
   }
 }
 
-/* summary-responsive */
-
 @media (max-width: 1075px) {
   .summary_details_header {
     margin-left: 20px;
@@ -1766,8 +1764,6 @@
     padding: 8px 8px 8px 8px;
   }
 }
-
-/* legal notice, privacy policy & help responsive */
 
 @media (max-width: 650px) {
   .privacypolicy_content {

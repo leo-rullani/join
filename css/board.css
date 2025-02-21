@@ -9,6 +9,7 @@
   height: calc(100vh - 130px);
   overflow: hidden;
 }
+
 .board_header {
   display: flex;
   align-items: center;
@@ -17,11 +18,13 @@
   margin-bottom: 60px;
   margin-left: 35px;
 }
+
 .board-title {
   font-size: 50px;
   margin: 0;
   color: #333;
 }
+
 .board_header_actions {
   display: flex;
   align-items: center;
@@ -40,6 +43,7 @@
   position: relative;
   margin-right: 10px;
 }
+
 .search_icon {
   position: absolute;
   top: 50%;
@@ -50,6 +54,7 @@
   height: 40px;
   pointer-events: none;
 }
+
 .search_container input {
   padding: 8px 8px 8px 8px;
   border: 2px solid #ccc;
@@ -59,6 +64,7 @@
   text-align: left;
   min-width: 100%;
 }
+
 .btn_add_task {
   background-color: #2b3647;
   color: #fff;
@@ -72,9 +78,11 @@
   align-items: center;
   gap: 6px;
 }
+
 .btn_add_task:hover {
   background-color: #28abe2;
 }
+
 .plus_icon {
   width: 20px;
   height: 20px;
@@ -108,15 +116,14 @@
   display: flex;
   flex-wrap: wrap;
   margin-left: 35px;
-  /* Eindeutigere Schreibweise für nur vertikales Scrollen */
   overflow-x: hidden;
   overflow-y: auto;
   height: calc(100vh - 290px);
   width: 100%;
   max-width: 1920px;
   padding-bottom: 20px;
-  align-items: flex-start; /* Spalten beginnen oben */
-  gap: 20px; /* Abstand zwischen Spalten + Zeilen */
+  align-items: flex-start; 
+  gap: 20px; 
 }
 
 .column_header {
@@ -161,16 +168,19 @@
   padding: 0;
   margin: 0;
 }
+
 .col_add_btn:hover {
   border-color: #28abe2;
   color: #28abe2;
 }
+
 .board_column {
   border-radius: 20px;
   min-height: 250px;
   width: 100%;
   margin-left: 4px;
 }
+
 .task_list {
   background-color: #e7e7e7;
   padding: 0px 0px 20px 0px;
@@ -200,15 +210,15 @@
 }
 
 .task {
-  cursor: grab; /* Zeigt an, dass Task greifbar ist */
-  user-select: none; /* Verhindert, dass Text markiert wird */
+  cursor: grab; 
+  user-select: none; 
   background-color: #fff;
   padding: 10px;
   margin-bottom: 10px;
   border-radius: 20px;
   cursor: grab;
   box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
-  transition: transform 0.2s ease; /* Sanfte Übergänge */
+  transition: transform 0.2s ease; 
   position: relative;
 }
 
@@ -221,8 +231,6 @@
   transform: rotate(5deg);
   z-index: 1000;
 }
-
-/*OVERLAY*/
 
 .add_task_overlay {
   position: fixed;
@@ -723,6 +731,7 @@
   padding: 0;
   margin: 0;
 }
+
 .close_overlay_btn button {
   background-color: transparent;
   border: none;
@@ -736,10 +745,12 @@
   padding: 0;
   margin: 0;
 }
+
 .close_overlay_btn button:hover {
   background-color: #aaa;
   cursor: pointer;
 }
+
 .save_task_btn {
   background-color: #2b3647;
   color: #fff;
@@ -749,11 +760,13 @@
   cursor: pointer;
   transition: background-color 0.3s;
 }
+
 .selection.active {
   background-color: #091931;
   display: flex;
   align-items: center;
 }
+
 .selection.active a {
   color: #ffffff;
   text-decoration: none;
@@ -935,14 +948,12 @@
   }
 
   .search_container {
-    /* Statt negative margin einfach 0 oder auto: */
     margin-left: 0;
     margin-right: 0;
     width: 100%;
-    box-sizing: border-box; /* Damit Padding und Border eingerechnet werden */
+    box-sizing: border-box; 
   }
 
-  /* Falls das Inputfeld nicht 100% bekommt, kannst du es so anpassen: */
   .search_container input {
     width: 100%;
   }
@@ -1003,11 +1014,11 @@
       width: 368px;
     }
     .board_section {
-      height: auto; /* Dynamische Höhe */
-      overflow-y: auto; /* Scroll wenn nötig */
+      height: auto; 
+      overflow-y: auto; 
     }
     .board_content {
-      min-width: auto; /* oder einfach entfernen */
+      min-width: auto; 
       width: 100%;
     }
   }
@@ -1081,7 +1092,6 @@
 
 @media (max-width: 500px) {
   .board_container {
-    /* Falls Du unten eine 60px hohe Sticky-Footer hast */
     margin-bottom: 60px;
   }
 }

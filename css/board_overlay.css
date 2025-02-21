@@ -64,7 +64,6 @@
   background-color: #a0a0a0;
 }
 
-/* Beispiel: Slide In */
 @keyframes slideInFromRight {
   from {
     transform: translateX(300%);
@@ -81,7 +80,6 @@
   animation: slideInFromRight 3s ease-in forwards;
 }
 
-/* Beispiel: Slide Out */
 @keyframes slideOutToRight {
   from {
     transform: translateX(0);
@@ -160,9 +158,6 @@
   color: black;
 }
 
-/* =====================
-   NEUE TEXT-KLASSEN
-===================== */
 .text-regular {
   font-size: 18px;
   color: #000;
