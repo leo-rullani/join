@@ -367,7 +367,7 @@
 
   .contacts_container {
     position: relative;
-    height: 86%;
+    height: 100%;
     max-height: 1000px;
   }
 
@@ -604,8 +604,8 @@
     background: transparent;
     margin: 0;
     position: fixed;
-    top: 700px;
-    right: 10px;
+    top: 850px;
+    right: 5px;
   }
 
   .addContact_button {
