@@ -1600,7 +1600,6 @@
     gap: 8px;
     height: 100px;
     padding: 15px;
-    position: sticky;
     bottom: -2px;
     margin-left: -23px;
   }
@@ -1615,9 +1614,7 @@
 
   .add-task-required-responsive{
     display: flex;
-    height: 100px;
   }
-
 }
 
 @media(max-width:860px) {
