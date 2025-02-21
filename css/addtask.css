@@ -749,6 +749,25 @@ input[type="radio"] {
   cursor: pointer;
 }
 
+.add-task-checkbox {
+  -webkit-appearance: none;
+  appearance: none;
+  width: 24px;
+  height: 24px;
+  border-radius: 3px;
+  border: 2px solid white; 
+  cursor: pointer;
+  margin-right: 8px;
+}
+
+.add-task-checkbox:checked {
+  background-color: #2a3647;
+  background-image: url("/assets/icons/add_task_check.svg");
+  background-repeat: no-repeat;
+  background-position: center;
+  background-size: 16px 16px;
+}
+
 .confirmation {
   display: flex;
   justify-content: center;
