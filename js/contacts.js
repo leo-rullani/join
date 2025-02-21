@@ -246,38 +246,36 @@ function getContactInitials(fullName) {
  * @param {Event} event - The form submission event.
  * @returns {boolean} False to prevent default form submission.
  */
+
 async function saveContactToDatabase(event) {
   event.preventDefault();
-
-  let newContact = getContactFormData();
-  clearContactForm();
-
-  try {
-    let contactsPath = getContactsPath();
-    if (!contactsPath) return;
-
-    let response = await fetch(`${contactsPath}.json`, {
-      method: "POST",
-      headers: {
-        "Content-Type": "application/json",
-      },
-      body: JSON.stringify(newContact),
-    });
-
-    if (!response.ok) {
-      throw new Error("Failed to save contact.");
-    }
-
-    let data = await response.json();
-    showToast("Contact successfully created!");
-    addContactToGroup(data.name, newContact);
-    selectNewContact(data.name, newContact);
-    closeOverlay();
-  } catch (error) {
-    console.error("Error saving contact:", error);
+  if (!validateContact("name", "email", "phone", "addErrorMessage")) {
+    return;
   }
+  try {
+    let newContact = getContactFormData(),
+      path = getContactsPath(); // <-- Deine eigene Funktion
+    if (!path) return;
+    clearContactForm();
 
-  return false;
+    let data = await postContact(newContact, path);
+    showToast("Contact successfully created!"); // <-- Deine eigene Funktion
+    addContactToGroup(data.name, newContact); // <-- Deine eigene Funktion
+    selectNewContact(data.name, newContact); // <-- Deine eigene Funktion
+    closeOverlay(); // <-- Deine eigene Funktion
+  } catch (err) {
+    console.error("Error:", err);
+  }
+}
+
+async function postContact(contact, path) {
+  let res = await fetch(path + ".json", {
+    method: "POST",
+    headers: { "Content-Type": "application/json" },
+    body: JSON.stringify(contact),
+  });
+  if (!res.ok) throw new Error("Failed to save contact.");
+  return await res.json();
 }
 
 /**
@@ -343,6 +341,82 @@ function getContactFormData() {
     email: document.getElementById("email").value.trim(),
     phone: document.getElementById("phone").value.trim(),
   };
+}
+/**
+ * Validates the name, email, and phone fields by their IDs.
+ * Displays an error message in the specified container if any field is invalid.
+ * @param {string} nameId - The ID of the name input field
+ * @param {string} emailId - The ID of the email input field
+ * @param {string} phoneId - The ID of the phone input field
+ * @param {string} errorContainerId - The ID of the element used to display error messages
+ * @returns {boolean} True if all fields are valid, otherwise false
+ */
+function validateContact(nameId, emailId, phoneId, errorContainerId) {
+  clearErrorStyles(nameId, emailId, phoneId, errorContainerId);
+
+  const nameValue = document.getElementById(nameId).value.trim();
+  const emailValue = document.getElementById(emailId).value.trim();
+  const phoneValue = document.getElementById(phoneId).value.trim();
+
+  let isValid = true;
+
+  if (!/^[a-zA-ZÀ-ž\s]+$/.test(nameValue)) {
+    document.getElementById(nameId).classList.add("error");
+    isValid = false;
+  }
+  if (!emailValue.includes("@")) {
+    document.getElementById(emailId).classList.add("error");
+    isValid = false;
+  }
+  if (!/^[0-9+]+$/.test(phoneValue)) {
+    document.getElementById(phoneId).classList.add("error");
+    isValid = false;
+  }
+
+  if (!isValid) {
+    const errDiv = document.getElementById(errorContainerId);
+    errDiv.textContent = "Please check your input.(Name(A-Z) Phone(0-9))";
+    errDiv.style.display = "block";
+    return false;
+  }
+  return true;
+}
+
+/**
+ * Displays a generic error message in the "errorContactMessage" element.
+ * @param {string} message - The message to display
+ */
+function showError(message) {
+  const errDiv = document.getElementById("errorContactMessage");
+  errDiv.textContent = message;
+  errDiv.style.display = "block";
+}
+
+/**
+ * Displays a generic error message in the "editErrorMessage" element.
+ * @param {string} message - The message to display
+ */
+function showEditError(message) {
+  const errDiv = document.getElementById("editErrorMessage");
+  errDiv.textContent = message;
+  errDiv.style.display = "block";
+}
+
+/**
+ * Removes the error styling from the specified fields and hides the error container.
+ * @param {string} nameId - The ID of the name input field
+ * @param {string} emailId - The ID of the email input field
+ * @param {string} phoneId - The ID of the phone input field
+ * @param {string} errorContainerId - The ID of the element used to display error messages
+ */
+function clearErrorStyles(nameId, emailId, phoneId, errorContainerId) {
+  document.getElementById(nameId).classList.remove("error");
+  document.getElementById(emailId).classList.remove("error");
+  document.getElementById(phoneId).classList.remove("error");
+
+  const errDiv = document.getElementById(errorContainerId);
+  errDiv.textContent = "";
+  errDiv.style.display = "none";
 }
 
 /**
@@ -417,6 +491,11 @@ async function updateContact(contactId, name, email, phone) {
  */
 async function submitEditForm(event) {
   event.preventDefault();
+  if (
+    !validateContact("editName", "editEmail", "editPhone", "editErrorMessage")
+  ) {
+    return;
+  }
 
   let form = document.getElementById("editContactForm");
   let contactId = form.getAttribute("data-contact-id");
