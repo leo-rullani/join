@@ -937,16 +937,3 @@ form {
     font-size: 12px;
   }
 }
-
-@media (max-width: 1200px) {
-  .add-task-subtasks-input {
-    width: 66%;
-  }
-  .add-task-subtasks-icon-plus {
-    left: 147px;
-  }
-  .add-task-subtasks-icon-plus-check {
-    left: 125px;
-    bottom: 58px;
-  }
-}

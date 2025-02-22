@@ -1597,24 +1597,41 @@
   .add-task-bottom {
     flex-direction: column;
     align-items: flex-start;
+    background-color: #f6f7f8;
     gap: 8px;
     height: 100px;
     padding: 15px;
+    position: sticky;
     bottom: -2px;
     margin-left: -23px;
   }
 
-  .add-task-subtasks-choosen{
+  .add-task-subtasks-choosen {
     height: 100%;
   }
 
-  .add-task-required-container{
+  .add-task-required-container {
     display: none;
   }
 
-  .add-task-required-responsive{
+  .add-task-required-responsive {
     display: flex;
+    height: 100px;
   }
+
+  .add-task-subtasks-input {
+    width: 70%;
+  }
+
+  .add-task-subtasks-icon-plus {
+    left: 171px;
+  }
+
+  .add-task-subtasks-icon-plus-check {
+    left: 144px;
+    bottom: 58px;
+  }
+
 }
 
 @media(max-width:860px) {
@@ -1631,7 +1648,7 @@
   }
 
   .add-task-subtasks-input {
-    width: 69% !important;
+    width: 71% !important;
   }
 
   .add-task-textarea {
@@ -1660,7 +1677,7 @@
   }
 
   .add-task-subtasks-input {
-    width: 45% !important;
+    width: 48% !important;
   }
 
   .add-task-textarea {
@@ -1678,7 +1695,7 @@
   }
 
   .add-task-subtasks-icon-plus {
-    left: 75px;
+    left: 81px;
     top: -54px;
   }
 
@@ -1687,7 +1704,7 @@
     top: -54px;
   }
 
-  .add-task-bottom{
+  .add-task-bottom {
     align-items: flex-start;
   }
 }
@@ -1698,7 +1715,7 @@
   }
 
   .add-task-subtasks-input {
-    width: 37% !important;
+    width: 40% !important;
   }
 
   .add-task-textarea {
@@ -1750,7 +1767,7 @@
     font-size: 16px;
   }
 
-  .add-task-bottom-clear-button{
+  .add-task-bottom-clear-button {
     width: 112px;
   }
 
