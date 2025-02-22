@@ -279,7 +279,7 @@
 
   .selection {
     display: inline-block;
-    width: auto;
+    width: 100px;
     text-align: center;
     margin: 0 auto;
     align-items: center;
@@ -581,6 +581,8 @@
 
   .contacts_div {
     width: 100%;
+    height: 90%;
+    margin-bottom: -13px;
   }
 
   .contact-details-container {
@@ -612,6 +614,9 @@
     width: 50px;
     height: 50px;
     border-radius: 50%;
+    position: fixed;
+    bottom: 100px;
+    right: 5px;
   }
 
   .addContact_button span {
@@ -778,12 +783,15 @@
 
   .selection {
     display: inline-block;
-    width: auto;
+    width: 70px;
     text-align: center;
     margin: 0 auto;
     align-items: center;
     border-radius: 10px;
     font-size: 12px;
+    padding: 0;
+    padding-top: 10px;
+    padding-bottom: 10px;
   }
 
   .selection:hover {
@@ -904,6 +912,13 @@
   .overlay-content {
     width: 300px;
     height: 700px;
+  }
+
+  .selection {
+    width: 70px;
+    padding: 0;
+    padding-top: 10px;
+    padding-bottom: 10px;
   }
 
   .policy_docs_privacy a {
@@ -1631,10 +1646,9 @@
     left: 144px;
     bottom: 58px;
   }
-
 }
 
-@media(max-width:860px) {
+@media (max-width: 860px) {
   .add-task-bottom {
     align-items: flex-start;
     margin-left: -23px;
@@ -1770,8 +1784,6 @@
   .add-task-bottom-clear-button {
     width: 112px;
   }
-
-
 
   .add-task-bottom-clear,
   .add-task-bottom-create-task {
