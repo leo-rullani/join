@@ -563,10 +563,6 @@ input:focus {
   cursor: pointer;
 }
 
-.add-task-bottom-clear {
-  font-size: 20px;
-}
-
 .add-task-bottom-clear-button {
   border: 1px solid #2a3647;
   outline: 1px solid white;
@@ -756,10 +752,10 @@ input[type="radio"] {
   width: 24px;
   height: 24px;
   border-radius: 3px;
-  border: 2px solid white; 
+  border: 2px solid white;
   cursor: pointer;
   margin-right: 8px;
-  vertical-align: middle; 
+  vertical-align: middle;
   display: none;
 }
 

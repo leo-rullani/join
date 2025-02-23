@@ -375,7 +375,7 @@ window.taskEditTemplate = function (t) {
                   name="overlay-category"
                   id="edit-technical-task"
                   value="Technical Task"
-                  onclick="editSetCategory('technical',event)"
+                  onclick="editSetCategory('Technical Task',event)"
                 />
               </label>
             </li>
@@ -388,7 +388,7 @@ window.taskEditTemplate = function (t) {
                   name="overlay-category"
                   id="edit-user-story"
                   value="User Story"
-                  onclick="editSetCategory('user story',event)"
+                  onclick="editSetCategory('User story',event)"
                 />
               </label>
             </li>

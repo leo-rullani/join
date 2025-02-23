@@ -94,3 +94,13 @@ document.addEventListener("DOMContentLoaded", () => {
   const summaryLink = document.getElementById("summaryLink");
   if (summaryLink && isGuest()) summaryLink.href = "summary.html";
 });
+
+const resizeOps = () => {
+  document.documentElement.style.setProperty(
+    "--vh",
+    window.innerHeight * 0.01 + "px"
+  );
+};
+
+resizeOps();
+window.addEventListener("resize", resizeOps);

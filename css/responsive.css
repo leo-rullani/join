@@ -227,6 +227,10 @@
     display: none;
   }
 
+  .add-task-bottom-create-button {
+    margin-right: 26px;
+  }
+
   .side_menu {
     background-color: #2a3647;
     width: 100%;
@@ -285,11 +289,12 @@
     align-items: center;
     border-radius: 10px;
     font-size: 14px;
+    transition: none;
   }
 
   .selection:hover {
-    transition: background-color 0.3s ease-in-out;
-    width: fit-content;
+    width: 100px;
+    transform: none !important;
   }
 
   .selection span {
@@ -557,6 +562,11 @@
     display: flex !important;
   }
 
+  .selection:hover {
+    width: 100px;
+    transform: none !important;
+  }
+
   .policy_docs {
     display: none;
   }
@@ -800,8 +810,7 @@
   }
 
   .selection:hover {
-    transition: background-color 0.3s ease-in-out;
-    width: fit-content;
+    width: 70px;
   }
 
   .selection span {
@@ -1602,10 +1611,13 @@
     position: sticky;
     bottom: -2px;
     margin-left: -23px;
+    background-color: #f6f7f8;
   }
 
   .add-task-subtasks-choosen {
     height: 100%;
+    margin-bottom: 10px;
+    overflow: hidden;
   }
 
   .add-task-required-container {
@@ -1615,10 +1627,11 @@
   .add-task-required-responsive {
     display: flex;
     height: 100px;
+    margin-left: 12px;
   }
 
   .add-task-subtasks-input {
-    width: 66%;
+    width: 70%;
   }
 
   .add-task-subtasks-icon-plus {
@@ -1633,9 +1646,9 @@
 
 @media (max-width: 860px) {
   .add-task-bottom {
-    align-items: flex-start;
+    align-items: flex-end;
     margin-left: -23px;
-    bottom: 100px;
+    bottom: 50px;
   }
 }
 
@@ -1645,7 +1658,7 @@
   }
 
   .add-task-subtasks-input {
-    width: 69% !important;
+    width: 71% !important;
   }
 
   .add-task-textarea {
@@ -1673,8 +1686,25 @@
     font-size: 14px;
   }
 
+  .add-task-subtasks-icons {
+    padding-right: 0px;
+  }
+
+  .add-task-subtasks-choosen li {
+    padding-bottom: 10px;
+  }
+
+  .add-task-subtasks-choosen ul {
+    padding-right: 0px;
+  }
+
+  .add-task-edit,
+  .add-task-trash {
+    width: 20px;
+  }
+
   .add-task-subtasks-input {
-    width: 43% !important;
+    width: 47% !important;
   }
 
   .add-task-textarea {
@@ -1692,71 +1722,17 @@
   }
 
   .add-task-subtasks-icon-plus {
-    left: 72px;
+    left: 82px;
     top: -54px;
   }
 
   .add-task-subtasks-icon-plus-check {
-    left: 55px;
+    left: 65px;
     top: -54px;
   }
 
   .add-task-bottom {
-    align-items: flex-start;
-  }
-}
-
-@media (max-width: 380px) {
-  .add-task-main-content input {
-    width: 63%;
-  }
-
-  .add-task-subtasks-input {
-    width: 36% !important;
-  }
-
-  .add-task-textarea {
-    width: 66% !important;
-  }
-
-  .checkbox-dropdown ul {
-    width: 77%;
-  }
-
-  .add-task-urgent,
-  .add-task-medium,
-  .add-task-low {
-    width: 77%;
-  }
-
-  .add-task-subtasks-icon-plus {
-    left: 56px;
-    top: -54px;
-  }
-
-  .add-task-subtasks-icon-plus-check img {
-    height: 23px;
-  }
-
-  .add-task-subtasks-icons {
-    padding-right: 79px;
-  }
-
-  .add-task-subtasks-input-edit-div {
-    width: 84%;
-  }
-
-  .add-task-subtasks-icons-edit {
-    right: 40px;
-  }
-
-  .add-task-subtasks-icon-plus-check {
-    left: 30px;
-    top: -58px;
-  }
-
-  .add-task-bottom-create-button {
-    padding: 0;
+    background-color: #f6f7f8;
   }
 
   .add-task-bottom-clear-button,
@@ -1764,13 +1740,43 @@
     font-size: 16px;
   }
 
-  .add-task-bottom-clear-button {
-    width: 112px;
+  .add-task-bottom {
+    align-items: flex-start;
+    margin-left: -38px;
   }
 
-  .add-task-bottom-clear,
-  .add-task-bottom-create-task {
-    padding: 8px 8px 8px 8px;
+  .add-task-container {
+    margin-left: -26px;
+  }
+
+  .add-task-subtasks-extra-task {
+    font-size: 14px;
+  }
+  .add-task-subtasks-choosen {
+    width: 83%;
+  }
+}
+
+@media (max-width: 380px) {
+  .checkbox-dropdown ul {
+    width: 77%;
+  }
+
+  .add-task-subtasks-icon-plus-check img {
+    height: 23px;
+  }
+
+  .add-task-subtasks-input-edit-div {
+    width: 84%;
+  }
+
+  .add-task-subtasks-icons-edit {
+    right: -22px;
+  }
+
+  .add-task-subtasks-icon-plus-check {
+    left: 65px;
+    top: -58px;
   }
 }
 
