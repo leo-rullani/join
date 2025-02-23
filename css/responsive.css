@@ -582,7 +582,7 @@
   .contacts_div {
     width: 100%;
     height: 90%;
-    margin-bottom: 40px;
+    margin-bottom: -300px;
   }
 
   .contact-details-container {
@@ -1125,7 +1125,7 @@
   }
 
   .summary_smallbox {
-    width: 124px;
+    width: 117px;
   }
 }
 
@@ -1182,10 +1182,11 @@
   }
 }
 
-@media (max-width: 430px) {
+@media (max-width: 860px) {
   .summary_card {
     width: 180px;
-    height: 131px;
+    height: 88px;
+    font-size: 32px;
   }
 
   .icon_small {
@@ -1193,19 +1194,30 @@
   }
 
   .box_number {
-    font-size: 42px;
+    font-size: 32px;
   }
 
   .summary_longbox {
-    width: 335px;
-    height: 131px;
+    width: 350px;
+    height: 88px;
+    font-size: 32px;
+  }
+  .box_date {
+    font-size: 16px;
+  }
+  .summary_smallbox {
+    width: 117px;
+    height: 88px;
+    font-size: 32px;
+  }
+  .smallbox_number {
+    font-size: 32px;
   }
 }
 
 @media (max-width: 430px) {
   .summary_longbox {
     width: 335px;
-    height: 131px;
   }
 
   .icon_small {
@@ -1228,7 +1240,6 @@
 @media (max-width: 410px) {
   .summary_card {
     width: 170px;
-    height: 126px;
   }
 
   .icon_small {
@@ -1243,7 +1254,6 @@
 @media (max-width: 410px) {
   .summary_longbox {
     width: 315px;
-    height: 126px;
   }
 
   .icon_small {
@@ -1266,7 +1276,6 @@
 @media (max-width: 390px) {
   .summary_card {
     width: 160px;
-    height: 121px;
     gap: 10px;
   }
 
@@ -1279,7 +1288,6 @@
   }
 
   .summary_smallboxes {
-    height: 121px;
     gap: 10px;
   }
 }
@@ -1287,7 +1295,6 @@
 @media (max-width: 390px) {
   .summary_longbox {
     width: 295px;
-    height: 90px;
     gap: 10px;
   }
 
@@ -1301,7 +1308,6 @@
 
   .summary_smallbox {
     width: 104px;
-    height: 121px;
   }
 
   .smallbox_number {
@@ -1316,7 +1322,6 @@
 @media (max-width: 370px) {
   .summary_card {
     width: 150px;
-    height: 116px;
     gap: 10px;
   }
 
@@ -1332,7 +1337,6 @@
 @media (max-width: 370px) {
   .summary_longbox {
     width: 275px;
-    height: 116px;
     gap: 10px;
   }
 
@@ -1350,7 +1354,6 @@
 
   .summary_smallbox {
     width: 98px;
-    height: 116px;
   }
 
   .smallbox_number {
@@ -1361,7 +1364,6 @@
 @media (max-width: 350px) {
   .summary_card {
     width: 140px;
-    height: 111px;
     gap: 10px;
   }
 }
@@ -1369,7 +1371,6 @@
 @media (max-width: 350px) {
   .summary_longbox {
     width: 255px;
-    height: 111px;
     gap: 10px;
   }
 
@@ -1383,7 +1384,6 @@
 
   .summary_smallbox {
     width: 92px;
-    height: 111px;
   }
 
   .smallbox_number {
@@ -1394,7 +1394,6 @@
 @media (max-width: 330px) {
   .summary_card {
     width: 130px;
-    height: 106px;
     gap: 10px;
   }
 }
@@ -1402,7 +1401,6 @@
 @media (max-width: 330px) {
   .summary_longbox {
     width: 235px;
-    height: 106px;
   }
 
   .box_date {
@@ -1411,25 +1409,6 @@
 
   .summary_smallbox {
     width: 86px;
-    height: 106px;
-  }
-
-  .smallbox_number {
-    font-size: 27px;
-  }
-}
-
-@media (max-width: 320px) {
-  .summary_longbox {
-    height: 90px;
-  }
-
-  .summary_card {
-    height: 100px;
-  }
-
-  .summary_smallbox {
-    height: 100px;
   }
 }
 
@@ -1509,7 +1488,7 @@
     right: 0;
     margin-bottom: 20px;
     width: 100%;
-    height: 84%;
+    height: 80%;
     background-color: #f6f7f8;
     display: flex;
     align-items: center;
