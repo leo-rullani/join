@@ -372,7 +372,7 @@
   }
 
   .contact_list {
-    height: 805px;
+    height: 100vh;
   }
 
   #phonebook {
@@ -577,13 +577,13 @@
   .contact_list {
     width: 100%;
     display: block;
-    height: 868px;
+    height: 100vh;
   }
 
   .contacts_div {
     width: 100%;
-    height: 90%;
-    margin-bottom: -300px;
+    height: 79%;
+    margin-bottom: -15px;
   }
 
   .contact-details-container {
@@ -1592,7 +1592,6 @@
   .add-task-bottom {
     flex-direction: column;
     align-items: flex-start;
-    background-color: #f6f7f8;
     gap: 8px;
     height: 100px;
     padding: 15px;
@@ -1615,15 +1614,15 @@
   }
 
   .add-task-subtasks-input {
-    width: 70%;
+    width: 66%;
   }
 
   .add-task-subtasks-icon-plus {
-    left: 171px;
+    left: 145px;
   }
 
   .add-task-subtasks-icon-plus-check {
-    left: 144px;
+    left: 120px;
     bottom: 58px;
   }
 }
@@ -1642,7 +1641,7 @@
   }
 
   .add-task-subtasks-input {
-    width: 71% !important;
+    width: 69% !important;
   }
 
   .add-task-textarea {
@@ -1659,8 +1658,8 @@
     width: 100%;
   }
 
-  .checkbox-dropdown ul li input {
-    width: auto !important;
+  .checkbox-dropdown ul li label {
+    font-size: 12px;
   }
 }
 
@@ -1671,7 +1670,7 @@
   }
 
   .add-task-subtasks-input {
-    width: 48% !important;
+    width: 43% !important;
   }
 
   .add-task-textarea {
@@ -1679,7 +1678,7 @@
   }
 
   .checkbox-dropdown ul {
-    width: 80%;
+    width: 85%;
   }
 
   .add-task-urgent,
@@ -1689,7 +1688,7 @@
   }
 
   .add-task-subtasks-icon-plus {
-    left: 81px;
+    left: 72px;
     top: -54px;
   }
 
@@ -1709,7 +1708,7 @@
   }
 
   .add-task-subtasks-input {
-    width: 40% !important;
+    width: 36% !important;
   }
 
   .add-task-textarea {

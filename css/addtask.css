@@ -750,6 +750,7 @@ input[type="radio"] {
 }
 
 .add-task-checkbox {
+  display: inline-block;
   -webkit-appearance: none;
   appearance: none;
   width: 24px;
@@ -758,6 +759,8 @@ input[type="radio"] {
   border: 2px solid white; 
   cursor: pointer;
   margin-right: 8px;
+  vertical-align: middle; 
+  display: none;
 }
 
 .add-task-checkbox:checked {
@@ -766,6 +769,9 @@ input[type="radio"] {
   background-repeat: no-repeat;
   background-position: center;
   background-size: 16px 16px;
+  width: 24px;
+  height: 24px;
+  display: flex;
 }
 
 .confirmation {
@@ -905,7 +911,7 @@ form {
     display: flex;
     justify-content: flex-end;
     align-items: flex-end;
-    margin-top: 312px;
+    margin-top: 200px;
     margin-right: 8px;
   }
   .checkbox-overlay-dropdown .search-overlay > input {
