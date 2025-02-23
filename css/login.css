@@ -240,6 +240,7 @@ h2 {
     align-items: center;
     gap: 0px;
   }
+
   h2 {
     font-size: 40px;
   }
@@ -255,13 +256,14 @@ h2 {
   .top-right {
     top: auto;
     right: auto;
-    margin-top: 500px;
+    margin-top: 440px;
     display: flex;
     align-items: center;
     text-align: center;
   }
   .login-box {
     padding: 20px 20px;
+    margin-top: -40px;
  }
  .footer {
   margin-bottom: -16px;
@@ -269,9 +271,6 @@ h2 {
 }
 
 @media (max-width: 375px) {
-  .login-box {
-    padding: 20px 20px;
-  }
   .input-container input {
     width: 95%;
   }
@@ -289,9 +288,6 @@ h2 {
   .input-container input {
     width: 90%;
   }
-  .login-box {
-    padding: 48px 10px;
-  }
   .input-icon {
     position: absolute;
     right: -25px;
@@ -305,9 +301,6 @@ h2 {
 @media (max-width: 330px) {
   .input-container input {
     width: 90%;
-  }
-  .login-box {
-    padding: 48px 5px;
   }
   .input-icon {
     position: absolute;
