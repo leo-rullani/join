@@ -73,7 +73,7 @@ window.createEditOverlayContactLi = function (contact, i, bgColor, checked) {
   )}</span>
         <span>${contact.name}</span>
       </label>
-      <input class="overlay-add-task-checkbox" type="checkbox" id="edit-person${i}" value="${
+      <input class="add-task-checkbox" type="checkbox" id="edit-person${i}" value="${
     contact.name
   }" ${checked ? "checked" : ""} onclick="editToggleContactSelection('${
     contact.name

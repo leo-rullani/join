@@ -573,7 +573,7 @@ function overlayAddTaskAssignedToSearchTemplate(chk, i, bg, c) {
   )}</span>
           <span>${c.name}</span>
         </label>
-        <input class="overlay-add-task-checkbox" type="checkbox" id="overlay-person${i}" value="${
+        <input class="add-task-checkbox" type="checkbox" id="overlay-person${i}" value="${
     c.name
   }" ${chk ? "checked" : ""} onclick="overlayToggleContactSelection('${
     c.name
@@ -602,7 +602,7 @@ function overlayShowContactListTemplate(chk, i, bg, contact) {
   )}</span>
           <span>${contact.name}</span>
         </label>
-        <input class="overlay-add-task-checkbox" type="checkbox" id="overlay-person${i}" value="${
+        <input class="add-task-checkbox" type="checkbox" id="overlay-person${i}" value="${
     contact.name
   }" ${chk ? "checked" : ""} onclick="overlayToggleContactSelection('${
     contact.name
