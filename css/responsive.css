@@ -583,7 +583,7 @@
   .contacts_div {
     width: 100%;
     height: 79%;
-    margin-bottom: -15px;
+    margin-bottom: -25px;
   }
 
   .contact-details-container {
@@ -1631,7 +1631,7 @@
   .add-task-bottom {
     align-items: flex-start;
     margin-left: -23px;
-    bottom: 50px;
+    bottom: 100px;
   }
 }
 

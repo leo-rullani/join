@@ -905,7 +905,7 @@
     margin-bottom: 0px;
   }
   .task_list:has(.task) {
-    margin-bottom: 30px;
+    margin-bottom: 60px;
     min-height: 0px;
   }
 }

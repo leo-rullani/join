@@ -224,6 +224,9 @@ body {
   .signup-box {
     padding: 30px 30px;
   }
+  .footer {
+    bottom: 16px;
+  }
   .logo {
     margin-top: 0;
     margin-left: 0;
