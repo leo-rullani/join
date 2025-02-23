@@ -946,6 +946,7 @@
     min-height: 0px;
     overflow-x: auto;
     border-radius: 0px;
+    scrollbar-width: none;
   }
   .task {
     margin-left: 0px !important;
@@ -995,7 +996,7 @@
       flex-direction: row;
       flex-wrap: nowrap;
       gap: 15px;
-      width: 100%;
+      width: 98%;
     }
     .task {
       flex: 0 0 auto;

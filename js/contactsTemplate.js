@@ -54,7 +54,7 @@ function contactDetailsTemplate(id, name, email, phone) {
       <h3>Contact Information</h3>
       <br>
       <strong>Email</strong> <br>
-      <p style="font-size: 14px; color:#29abe2ff"><a href="mailto:${email}">${email}</a></p>
+      <p><a class="email_info" href="mailto:${email}">${email}</a></p>
       <strong>Phone</strong><br><br>
       ${phone}
     </div>

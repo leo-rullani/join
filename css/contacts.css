@@ -16,6 +16,12 @@
   flex-direction: column;
 }
 
+.email_info {
+  font-size: 14px;
+  color: #29abe2;
+  text-decoration: none;
+}
+
 .contacts_div {
   width: 400px;
   color: white;
@@ -24,7 +30,7 @@
   box-shadow: rgba(0, 0, 0, 0.15) 5px 0px 8px 0px;
   border: none;
   z-index: 1;
-  margin-bottom: 80px;
+  margin-bottom: 77px;
 }
 
 .contacts_div::-webkit-scrollbar-track {

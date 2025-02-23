@@ -5,12 +5,6 @@ body {
   background-color: #f6f7f8;
   overflow: hidden;
   max-width: 1920px;
-  height: 100vh;
-  height: calc(var(--vh, 1vh) * 100);
-}
-html {
-  height: 100vh;
-  height: calc(var(--vh, 1vh) * 100);
 }
 
 input,
