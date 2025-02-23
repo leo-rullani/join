@@ -582,7 +582,7 @@
 
   .contacts_div {
     width: 100%;
-    height: 79%;
+    height: 100%;
     margin-bottom: -25px;
   }
 
@@ -1854,4 +1854,10 @@
 .help_content {
   padding-left: 12px;
   padding-right: 12px;
+}
+
+@media (max-width: 860px) {
+  .add-task-bottom {
+    background-color: #f6f7f8;
+  }
 }
