@@ -341,7 +341,7 @@
   .policy_docs_privacy a {
     align-items: center;
     margin-left: 0px;
-    padding: 26px;
+    padding: 25px;
     font-size: 12px;
   }
 
@@ -419,6 +419,7 @@
 
   .contact_overlay.active .overlay-content {
     transform: translateY(0);
+    scale: 0.9;
   }
 
   .contact_overlay.closing .overlay-content {
@@ -1778,7 +1779,7 @@
   }
 
   .privacypolicy_header {
-    height: 85vh;
+    height: 84vh;
   }
 
   h1 {

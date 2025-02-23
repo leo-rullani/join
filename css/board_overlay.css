@@ -323,15 +323,17 @@
 @media (max-width: 860px) {
   .board_overlay_content {
     width: 350px;
-    height: 670px;
+    height: 500px;
     top: 10px;
+  }
+  .task-detail-footer {
+    margin-bottom: -80px;
   }
 }
 
 @media (max-width: 427px) {
   .board_overlay_content {
     width: 320px;
-    height: 670px;
     top: 10px;
     overflow-y: auto;
   }
@@ -340,7 +342,6 @@
 @media (max-width: 360px) {
   .board_overlay_content {
     width: 290px;
-    height: 670px;
     top: 10px;
     overflow-y: auto;
   }
@@ -349,7 +350,6 @@
 @media (max-width: 340px) {
   .board_overlay_content {
     width: 250px !important;
-    height: 670px;
     top: 10px;
     overflow-y: auto;
   }
