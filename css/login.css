@@ -243,6 +243,9 @@ h2 {
   h2 {
     font-size: 40px;
   }
+  .logo-container img {
+    width: 100px;
+  }
 
   .button-container button {
     width: auto; 
@@ -252,40 +255,22 @@ h2 {
   .top-right {
     top: auto;
     right: auto;
-    margin-top: 600px;
+    margin-top: 500px;
     display: flex;
     align-items: center;
     text-align: center;
   }
-}
-
-@media (max-width: 560px) {
   .login-box {
-    padding: 48px 60px;
-  }
-}
-
-@media (max-width: 490px) {
-  .login-box {
-    padding: 48px 50px;
-  }
-}
-
-@media (max-width: 450px) {
-  .login-box {
-    padding: 48px 40px;
-  }
-}
-
-@media (max-width: 420px) {
-  .login-box {
-    padding: 48px 30px;
-  }
+    padding: 20px 20px;
+ }
+ .footer {
+  margin-bottom: -16px;
+ }
 }
 
 @media (max-width: 375px) {
   .login-box {
-    padding: 48px 20px;
+    padding: 20px 20px;
   }
   .input-container input {
     width: 95%;
