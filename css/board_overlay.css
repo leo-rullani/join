@@ -34,6 +34,8 @@
   font-weight: normal;
   margin-top: -16px;
   overflow-y: auto;
+  scrollbar-width: none;
+  overflow-x: hidden;
 }
 
 .board_overlay_details_content {
@@ -156,11 +158,11 @@
   margin-block-start: 0;
   margin-block-end: 0;
   color: black;
-  word-wrap: break-word; /
-  overflow-wrap: break-word; 
-  hyphens: auto; 
-  max-width: 100%; 
-  white-space: normal; 
+  word-wrap: break-word;
+  overflow-wrap: break-word;
+  hyphens: auto;
+  max-width: 100%;
+  white-space: normal;
 }
 
 .text-regular {

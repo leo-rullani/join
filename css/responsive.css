@@ -679,12 +679,13 @@
     z-index: 900;
     height: 80px;
     width: 100px;
-    top: 680px;
-    right: 10px;
+    top: 518px;
+    right: 5px;
     border-radius: 20px 20px 0px 20px;
     box-shadow: rgba(50, 50, 93, 0.25) 0px 30px 60px -12px,
       rgba(0, 0, 0, 0.3) 0px 18px 36px -18px;
     justify-content: space-evenly;
+    transition: right 0.3ms ease-in-out;
   }
 
   .contact_links a {
@@ -716,6 +717,9 @@
     align-items: center;
     border: none;
     z-index: 999;
+    position: fixed;
+    bottom: 140px;
+    right: 8px;
   }
 
   .seeMore_button:hover {
