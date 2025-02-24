@@ -484,7 +484,6 @@ function addTaskClearFormular(event) {
 }
 window.addTaskClearFormular = addTaskClearFormular;
 
-
 function validateTask(
   titleId,
   descriptionId,
@@ -502,14 +501,14 @@ function validateTask(
 
   let isValid = true;
 
-  if (!/^[a-zA-ZÀ-ž\s]+$/.test(titleValue)) {
+  if (!/^[-a-zA-ZÀ-ž\s0-9/"!,–]+$/.test(titleValue)) {
     document.getElementById(titleId).classList.add("error");
     const errDivTitle = document.getElementById(errorTitleId);
     errDivTitle.textContent = "Please enter a Title.";
     errDivTitle.style.display = "flex";
     isValid = false;
   }
-  if (!/^[a-zA-ZÀ-ž\s]+$/.test(descriptionValue)) {
+  if (!/^[-a-zA-ZÀ-ž\s0-9/"!,–]+$/.test(descriptionValue)) {
     document.getElementById(descriptionId).classList.add("error");
     const errDivDescription = document.getElementById(errorDescriptionId);
     errDivDescription.textContent = "Please enter a discription.";
@@ -529,7 +528,6 @@ function validateTask(
     errDivCategory.textContent = "Please enter a Category.";
     errDivCategory.style.display = "flex";
     isValid = false;
-
-}
-return isValid;
+  }
+  return isValid;
 }

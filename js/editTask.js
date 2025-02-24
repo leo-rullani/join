@@ -17,6 +17,20 @@ window.editTask = editTask;
  * @returns {Promise<void>}
  */
 async function updateTask(taskId) {
+  if (
+    !validateTask(
+      "overlay-edit-task-title-input",
+      "overlay-edit-task-textarea",
+      "overlay-edit-date",
+      "overlay-edit-task-category",
+      "errorEditTitle",
+      "errorEditDescription",
+      "errorEditDate",
+      "errorEditCategory"
+    )
+  ) {
+    return;
+  }
   const ref = `${window.databaseURL}/tasks/${taskId}.json`;
   const formElements = getFormElements();
   if (!formElements) return;
