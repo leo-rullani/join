@@ -672,15 +672,15 @@
     left: 50%;
     transform: translate(-50%, 150%); 
     opacity: 0;
-    padding: 15px;
+    padding: 15px 20px;
     border-radius: 20px;
     background-color: #2a3647;
     color: #fff;
     text-align: center;
-    white-space: nowrap;
+    width: 30%;
     transition: transform 0.4s ease, opacity 0.4s ease;
     z-index: 100000;
-    font-size: 14px;
+    font-size: 12px;
   }
 
   #add_notification.show {
