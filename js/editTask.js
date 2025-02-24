@@ -175,7 +175,6 @@ function fillEditFormData(task) {
   renderEditOverlaySubtasksList();
   window.editAssignedContacts = [...(task.assignees || [])];
   editShowAvatars();
-  populateSubtasksList(task.subtasks || []);
   window.oldBoardCategory = task.boardCategory;
 }
 
@@ -297,6 +296,7 @@ function editAddSubtask(event) {
   const val = input.value.trim();
   if (!val) return;
   window.editOverlaySubtasksList.unshift(val);
+  window.globalSubtasks.unshift(val);
   input.value = "";
   document
     .getElementById("overlay-edit-task-subtasks-icon-plus")
@@ -362,8 +362,14 @@ function confirmEditOverlaySubtask(index, event) {
     "overlay-edit-task-subtasks-input-edit"
   );
   const val = input.value.trim();
-  if (!val) return;
-  window.editOverlaySubtasksList[index] = val;
+  if (!val) {
+    window.editOverlaySubtasksList.splice(index, 1);
+    window.globalSubtasks.splice(index, 1);
+    renderEditOverlaySubtasksList();
+    return;
+  }
+  window.editOverlaySubtasksList.splice(index, 1, val);
+  window.globalSubtasks.splice(index, 1, val);
   renderEditOverlaySubtasksList();
 }
 window.confirmEditOverlaySubtask = confirmEditOverlaySubtask;
@@ -377,6 +383,7 @@ window.confirmEditOverlaySubtask = confirmEditOverlaySubtask;
 function removeEditOverlaySubtask(index, event) {
   event.stopPropagation();
   window.editOverlaySubtasksList.splice(index, 1);
+  window.globalSubtasks.splice(index, 1);
   renderEditOverlaySubtasksList();
 }
 window.removeEditOverlaySubtask = removeEditOverlaySubtask;

@@ -12,7 +12,7 @@ window.createEditOverlaySubtaskTemplate = function (name, i) {
       <div class="edit-task-subtasks-icons">
         <img class="add-task-edit" src="/assets/icons/add-subtask-edit.svg" onclick="editOverlaySubtask(${i}, event)">
         <div class="add-tasks-border"></div>
-        <img class="add-task-trash" src="/assets/icons/add-subtask-delete.svg" onclick="editRemoveSubtask(this)">
+        <img class="add-task-trash" src="/assets/icons/add-subtask-delete.svg" onclick="removeEditOverlaySubtask(${i}, event)">
       </div>
     </li>
   `;

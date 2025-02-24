@@ -398,8 +398,14 @@ function confirmTaskSubtasksList(i, event) {
   event.preventDefault();
   const input = document.getElementById("add-task-subtasks-input-edit");
   const val = input.value.trim();
-  if (!val) return;
+  if (!val) {
+    window.subtasksList.splice(i, 1);
+    window.globalSubtasks.splice(i, 1);
+    addTaskSubtasksList();
+    return;
+  }
   window.subtasksList.splice(i, 1, val);
+  window.globalSubtasks.splice(i, 1, val);
   addTaskSubtasksList();
 }
 window.confirmTaskSubtasksList = confirmTaskSubtasksList;

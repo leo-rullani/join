@@ -247,8 +247,13 @@ function overlayConfirmEditSubtask(index, event) {
   event.preventDefault();
   const input = document.getElementById("overlay-add-task-subtasks-input-edit");
   const newVal = input.value.trim();
-  if (!newVal) return;
-  window.overlaySubtasksList[index] = newVal;
+  if (!newVal) {
+    window.overlaySubtasksList.splice(index, 1);
+    window.globalSubtasks.splice(index, 1);
+    overlayAddTaskSubtasksList();
+    return;
+  }
+  window.overlaySubtasksList.splice(index, 1, newVal);
   overlayAddTaskSubtasksList();
 }
 window.overlayConfirmEditSubtask = overlayConfirmEditSubtask;
