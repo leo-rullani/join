@@ -1875,3 +1875,34 @@
     background-color: #f6f7f8;
   }
 }
+
+@media (max-width: 860px) {
+  #add_notification {
+    right: auto;
+    bottom: auto;
+    position: fixed;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, 150%); 
+    opacity: 0;
+    padding: 15px 20px;
+    border-radius: 20px;
+    background-color: #2a3647;
+    color: #fff;
+    text-align: center;
+    width: 30%;
+    transition: transform 0.4s ease, opacity 0.4s ease;
+    z-index: 1000000000000;
+    font-size: 12px;
+  }
+
+  #add_notification.show {
+    transform: translate(-50%, -50%);
+    opacity: 1;
+  }
+
+  #add_notification.hide {
+    transform: translate(-50%, -50%);
+    opacity: 0;
+  }
+}
