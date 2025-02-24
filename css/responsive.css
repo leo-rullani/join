@@ -1644,6 +1644,12 @@
     left: 120px;
     bottom: 58px;
   }
+
+  .add-task-urgent,
+  .add-task-medium,
+  .add-task-low {
+    width: 125px;
+  }
 }
 
 @media (max-width: 860px) {
@@ -1669,7 +1675,7 @@
   .add-task-urgent,
   .add-task-medium,
   .add-task-low {
-    width: 100%;
+    width: 127px;
   }
 
   .checkbox-dropdown ul li label {
@@ -1720,7 +1726,17 @@
   .add-task-urgent,
   .add-task-medium,
   .add-task-low {
-    width: 84%;
+    width: 83px;
+    height: 45px;
+    font-size: 12px;
+  }
+
+  .add-task-urgent-medium-low-container{
+    display: flex;
+  }
+
+  .add-task-important{
+    gap: 4px;
   }
 
   .add-task-subtasks-icon-plus {
