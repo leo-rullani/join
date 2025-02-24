@@ -362,19 +362,19 @@ input:focus {
   display: none;
 }
 
-.add-task-title-input.error{
+.add-task-title-input.error {
   border-color: #ff7a8b;
 }
 
-.add-task-due-date-input.error{
+.add-task-due-date-input.error {
   border-color: #ff7a8b;
 }
 
-.add-task-textarea.error{
+.add-task-textarea.error {
   border-color: #ff7a8b;
 }
 
-.add-task-category-input.error{
+.add-task-category-input.error {
   border-color: #ff7a8b;
 }
 
@@ -712,7 +712,7 @@ li:hover {
   background: #fff;
   padding: 0;
   list-style: none;
-  max-height: 250px;
+  max-height: 225px;
   overflow-y: auto;
   position: absolute;
   top: 100%;
@@ -907,7 +907,7 @@ form {
   position: fixed;
   top: 50%;
   left: 50%;
-  transform: translateX(-50%); 
+  transform: translateX(-50%);
   opacity: 0;
   background-color: #2a3647;
   color: #fff;
@@ -919,12 +919,12 @@ form {
 }
 
 #add_notification.show {
-  transform: translate(-50%, -50%); 
+  transform: translate(-50%, -50%);
   opacity: 1;
 }
 
 #add_notification.hide {
-  transform: translate(-50%, -200%); 
+  transform: translate(-50%, -200%);
   opacity: 0;
 }
 

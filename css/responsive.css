@@ -1731,11 +1731,11 @@
     font-size: 12px;
   }
 
-  .add-task-urgent-medium-low-container{
+  .add-task-urgent-medium-low-container {
     display: flex;
   }
 
-  .add-task-important{
+  .add-task-important {
     gap: 4px;
   }
 
@@ -1808,10 +1808,6 @@
 
   .privacypolicy_header {
     height: 84vh;
-  }
-
-  h1 {
-    font-size: 32px !important;
   }
 
   h2 {
@@ -1894,7 +1890,7 @@
     position: fixed;
     top: 50%;
     left: 50%;
-    transform: translate(-50%, 150%); 
+    transform: translate(-50%, 150%);
     opacity: 0;
     padding: 15px 20px;
     border-radius: 20px;
@@ -1903,7 +1899,6 @@
     text-align: center;
     width: 30%;
     transition: transform 0.4s ease, opacity 0.4s ease;
-    z-index: 1000000000000;
     font-size: 12px;
   }
 
