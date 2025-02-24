@@ -154,15 +154,17 @@ input:focus {
 }
 
 .add-task-urgent-medium-low-container {
-  display: flex;
-  flex-direction: column;
   gap: 8px;
-  margin: 10px;
+  margin-left: 10px;
 }
 
 .add-task-urgent-medium-low-buttons {
   display: flex;
   gap: 8px;
+}
+
+.prio-title {
+  margin-left: 10px;
 }
 
 .add-task-urgent,
@@ -172,6 +174,7 @@ input:focus {
   align-items: center;
   flex: 1;
   height: 56px;
+  width: 116px;
   border-radius: 10px;
   font-size: 16px;
   border: 1px solid #bbb9b9;

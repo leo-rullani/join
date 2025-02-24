@@ -1666,11 +1666,6 @@
   .add-task-textarea {
     width: 93% !important;
   }
-
-  .add-task-urgent-medium-low-buttons {
-    flex-direction: column;
-  }
-
   .add-task-urgent,
   .add-task-medium,
   .add-task-low {
