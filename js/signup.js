@@ -138,7 +138,7 @@ function handleUserRegistration(userData, newUserKey) {
     "loggedInUser",
     JSON.stringify({ ...userData, userId: newUserKey })
   );
-  showToast("You signed up successfully!");
+  showToast("Sign up successfull!");
   setTimeout(() => (window.location.href = "/html/summary.html"), 2000);
 }
 
