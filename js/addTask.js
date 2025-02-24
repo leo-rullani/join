@@ -60,6 +60,20 @@ window.addTaskDueDate = addTaskDueDate;
  * @returns {void}
  */
 function addTaskCreateTask() {
+  if (
+    !validateTask(
+      "add-task-title-input",
+      "add-task-textarea",
+      "date",
+      "add-task-category",
+      "errorTitle",
+      "errorDescription",
+      "errorDate",
+      "errorCategory"
+    )
+  ) {
+    return;
+  }
   const taskId = "task_" + Date.now();
   const title = addTaskTitle();
   const desc = addTaskDescription();
@@ -469,3 +483,53 @@ function addTaskClearFormular(event) {
   addTaskClearFormularReset();
 }
 window.addTaskClearFormular = addTaskClearFormular;
+
+
+function validateTask(
+  titleId,
+  descriptionId,
+  dateId,
+  categoryId,
+  errorTitleId,
+  errorDescriptionId,
+  errorDateId,
+  errorCategoryId
+) {
+  const titleValue = document.getElementById(titleId).value.trim();
+  const descriptionValue = document.getElementById(descriptionId).value.trim();
+  const dateValue = document.getElementById(dateId).value.trim();
+  const categoryValue = document.getElementById(categoryId).value.trim();
+
+  let isValid = true;
+
+  if (!/^[a-zA-ZÀ-ž\s]+$/.test(titleValue)) {
+    document.getElementById(titleId).classList.add("error");
+    const errDivTitle = document.getElementById(errorTitleId);
+    errDivTitle.textContent = "Please enter a Title.";
+    errDivTitle.style.display = "flex";
+    isValid = false;
+  }
+  if (!/^[a-zA-ZÀ-ž\s]+$/.test(descriptionValue)) {
+    document.getElementById(descriptionId).classList.add("error");
+    const errDivDescription = document.getElementById(errorDescriptionId);
+    errDivDescription.textContent = "Please enter a discription.";
+    errDivDescription.style.display = "flex";
+    isValid = false;
+  }
+  if (!/^[0-9.-]+$/.test(dateValue)) {
+    document.getElementById(dateId).classList.add("error");
+    const errDivDate = document.getElementById(errorDateId);
+    errDivDate.textContent = "Please enter a Date.";
+    errDivDate.style.display = "flex";
+    isValid = false;
+  }
+  if (!/^[a-zA-ZÀ-ž\s]+$/.test(categoryValue)) {
+    document.getElementById(categoryId).classList.add("error");
+    const errDivCategory = document.getElementById(errorCategoryId);
+    errDivCategory.textContent = "Please enter a Category.";
+    errDivCategory.style.display = "flex";
+    isValid = false;
+
+}
+return isValid;
+}

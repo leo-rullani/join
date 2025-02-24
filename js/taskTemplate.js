@@ -280,6 +280,7 @@ window.taskEditTemplate = function (t) {
           autocomplete="off"
           placeholder="Enter a title"
         />
+        <div id="errorEditTitle" class="error-message"></div>
       </div>
 
       <!-- Description -->
@@ -293,6 +294,7 @@ window.taskEditTemplate = function (t) {
           class="add-task-overlay-textarea"
           placeholder="Enter a description"
         ></textarea>
+        <div id="errorEditDescription" class="error-message"></div>
       </div>
 
       <!-- Assigned to -->
@@ -328,6 +330,7 @@ window.taskEditTemplate = function (t) {
           id="overlay-edit-date"
           name="overlay-edit-date"
         />
+        <div id="errorEditDate" class="error-message"></div>
       </div>
 
       <!-- Priority -->
@@ -419,6 +422,7 @@ window.taskEditTemplate = function (t) {
             </li>
           </ul>
         </div>
+        <div id="errorEditCategory" class="error-message"></div>
       </div>
 
       <!-- Subtasks -->

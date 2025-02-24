@@ -142,7 +142,7 @@
         <!-- Overlay für neues Task (Add Task) -->
         <div class="add_task_overlay" id="addTaskOverlay">
             <div class="overlay_content">
-                <form id="overlay-add-task-form" onsubmit="overlayAddTaskCreateTask(); return false;"
+                <form novalidate id="overlay-add-task-form" onsubmit="overlayAddTaskCreateTask(); return false;"
                     class="add-task-overlay-content">
                     <div class="add-task-overlay-h1-container">
                         <h1>Add Task</h1>
@@ -160,6 +160,7 @@
                                 </label>
                                 <input required id="overlay-add-task-title-input" class="add-task-overlay-title-input"
                                     type="text" autocomplete="off" placeholder="Enter a title" value="" />
+                                    <div id="errorOverlayTitle" class="error-message"></div>
                             </div>
 
                             <!-- Description -->
@@ -169,6 +170,7 @@
                                 </label>
                                 <textarea required id="overlay-add-task-textarea" class="add-task-overlay-textarea"
                                     placeholder="Enter a description"></textarea>
+                                    <div id="errorOverlayDescription" class="error-message"></div>
                             </div>
 
                             <!-- Assigned to -->
@@ -195,6 +197,7 @@
                                 </label>
                                 <input required type="date" class="add-task-overlay-due-date-input" id="overlay-date"
                                     name="overlay-date" />
+                                    <div id="errorOverlayDate" class="error-message"></div>
                             </div>
 
                             <!-- Priority -->
@@ -257,6 +260,7 @@
                                         </li>
                                     </ul>
                                 </div>
+                                <div id="errorOverlayCategory" class="error-message"></div>
                             </div>
 
                             <!-- Subtasks -->

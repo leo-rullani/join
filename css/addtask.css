@@ -222,7 +222,6 @@ input:focus {
   padding: 12px 21px 12px 21px;
   border-radius: 10px;
   border: 1px solid #bbb9b9;
-  width: 100%;
 }
 
 .add-task-category-input option:hover {
@@ -353,6 +352,30 @@ input:focus {
   height: 26px;
   border: 1px solid #bbb9b9;
   margin-right: 0px;
+}
+
+.error-message {
+  color: #ff7a8b;
+  font-size: 12px;
+  text-align: left;
+  padding-top: 0px;
+  display: none;
+}
+
+.add-task-title-input.error{
+  border-color: #ff7a8b;
+}
+
+.add-task-due-date-input.error{
+  border-color: #ff7a8b;
+}
+
+.add-task-textarea.error{
+  border-color: #ff7a8b;
+}
+
+.add-task-category-input.error{
+  border-color: #ff7a8b;
 }
 
 .add-task-subtasks-icon-plus button {

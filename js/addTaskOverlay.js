@@ -4,6 +4,20 @@
  * @returns {Promise<void>}
  */
 async function overlayAddTaskCreateTask() {
+  if (
+    !validateTask(
+      "overlay-add-task-title-input",
+      "overlay-add-task-textarea",
+      "overlay-date",
+      "overlay-add-task-category",
+      "errorOverlayTitle",
+      "errorOverlayDescription",
+      "errorOverlayDate",
+      "errorOverlayCategory"
+    )
+  ) {
+    return;
+  }
   const newTask = createNewTask();
   const ref = `${window.databaseURL}/tasks/${newTask.id}.json`;
 
