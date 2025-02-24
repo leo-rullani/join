@@ -135,7 +135,7 @@
 .initial_name_content {
   display: flex;
   align-items: center;
-  margin-bottom: 50px;
+  margin-bottom: 30px;
 }
 
 .contact_name {
@@ -171,6 +171,10 @@
 .contact_links a:hover {
   cursor: pointer;
   color: #29abe2ff;
+}
+
+.contact-details {
+  margin-bottom: 30px;
 }
 
 .contact-details p {

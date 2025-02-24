@@ -425,7 +425,7 @@
 
   .contact_overlay.active .overlay-content {
     transform: translateY(0);
-    scale: 0.9;
+    scale: 0.7;
   }
 
   .contact_overlay.closing .overlay-content {
@@ -673,7 +673,7 @@
   }
 
   #contact-info {
-    margin-top: 50px;
+    margin-top: 20px;
   }
 
   .big-initials {
