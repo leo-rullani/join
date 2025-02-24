@@ -220,7 +220,7 @@ function addTaskShowAvatars() {
   });
   if (contacts.length > max) {
     const leftover = contacts.length - max;
-    container.innerHTML += `<div class="avatar-addtaskoverlay">+${leftover} others</div>`;
+    container.innerHTML += `<div class="avatar-addtaskoverlay">+${leftover} </div>`;
   }
 }
 window.addTaskShowAvatars = addTaskShowAvatars;

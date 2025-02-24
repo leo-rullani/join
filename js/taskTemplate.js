@@ -48,7 +48,9 @@ window.generateTaskHTML = function (t, s, a, p) {
     const max = 3;
     t.assignees.forEach((person, idx) => {
       if (idx < max) {
-        tmp += `<div class="avatar" style="background:${assignColor(person)};">
+        tmp += `<div class="avatar-circle" style="background:${assignColor(
+          person
+        )};">
                   ${getUserInitials(person)}
                 </div>`;
       }
@@ -56,7 +58,7 @@ window.generateTaskHTML = function (t, s, a, p) {
     // Wenn mehr als 3
     if (t.assignees.length > max) {
       let leftover = t.assignees.length - max;
-      tmp += `<div class="avatar" style="background:#999;">+${leftover} others</div>`;
+      tmp += `<div class="avatar-circle" style="background:#999;">+${leftover}</div>`;
     }
     // Das neue HTML
     finalAssigneesHTML = tmp;

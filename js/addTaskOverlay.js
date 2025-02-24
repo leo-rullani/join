@@ -399,7 +399,7 @@ function overlayShowAvatars() {
     const leftover = contacts.length - maxVisible;
     div.innerHTML += `
     <div class="avatar-addtaskoverlay">
-      +${leftover} others
+      +${leftover}
     </div>`;
   }
 }
