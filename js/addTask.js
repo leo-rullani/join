@@ -424,35 +424,54 @@ function addSubtasksPlus(event) {
 window.addSubtasksPlus = addSubtasksPlus;
 
 /**
- * Toggles subtask plus/check icons.
- * @returns {void}
+ * Wird aufgerufen, sobald man das Input oder das Plus-Symbol anklickt.
+ * - Wechselt Icons (Plus → Check).
+ * - Aktiviert einen globalen Klick-Listener, um Outside-Klick zu erkennen.
  */
 function addTaskSubtasksClicked() {
+  // Plus ausblenden, Check-Bereich einblenden
   document
     .getElementById("add-task-subtasks-icon-plus")
     .classList.add("d-none");
   document
     .getElementById("add-task-subtasks-icon-plus-check")
     .classList.remove("d-none");
+
+  // Klick-Listener aktivieren
+  document.addEventListener("click", handleOutsideClickSubtasks);
 }
-window.addTaskSubtasksClicked = addTaskSubtasksClicked;
 
 /**
- * Clears the subtask input.
- * @param {Event} event
- * @returns {void}
+ * Schließt das Subtask-Eingabefeld wieder (Icons zurück, Input leeren).
  */
-function clearSubtasks(event) {
-  event.preventDefault();
+function closeSubtaskInput() {
+  // Check ausblenden, Plus wieder zeigen
   document
     .getElementById("add-task-subtasks-icon-plus")
     .classList.remove("d-none");
   document
     .getElementById("add-task-subtasks-icon-plus-check")
     .classList.add("d-none");
+
+  // Eingabefeld leeren
   document.getElementById("add-task-subtasks-input").value = "";
 }
-window.clearSubtasks = clearSubtasks;
+
+/**
+ * Wird bei jedem Klick auf das gesamte Dokument aufgerufen.
+ * Prüft, ob wir den Container angeklickt haben oder nicht.
+ */
+function handleOutsideClickSubtasks(event) {
+  const container = document.getElementById("add-task-subtasks-container");
+  if (!container) return;
+
+  // Falls der Klick NICHT innerhalb des Containers stattfand → schliessen:
+  if (!container.contains(event.target)) {
+    closeSubtaskInput();
+    // WICHTIG: Event-Listener entfernen, damit wir nicht permanent lauschen.
+    document.removeEventListener("click", handleOutsideClickSubtasks);
+  }
+}
 
 /**
  * Resets the add-task form.

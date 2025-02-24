@@ -58,7 +58,8 @@
         <section class="add-task-main-content">
             <div class="add_task_container">
                 <!-- Dein ursprüngliches Formular mit IDs -->
-                <form novalidate onsubmit="addTaskCreateTask(); return false;" class="add-task-all-content" id="add-task-form">
+                <form novalidate onsubmit="addTaskCreateTask(); return false;" class="add-task-all-content"
+                    id="add-task-form">
                     <div class="add-task-h1-container">
                         <h1 class="add-task-h1">Add Task</h1>
                     </div>
@@ -149,7 +150,8 @@
                                         <label for="add-task-category">
                                             Category <span class="add-task-required">*</span>
                                         </label>
-                                        <input required type="text" id="add-task-category" class="add-task-category-input" autocomplete="off"
+                                        <input required type="text" id="add-task-category"
+                                            class="add-task-category-input" autocomplete="off"
                                             placeholder="Select task category" />
                                     </div>
                                     <ul>
@@ -173,16 +175,15 @@
                                 </div>
                                 <div id="errorCategory" class="error-message"></div>
                             </div>
-                            
+
 
                             <!-- Subtasks -->
                             <div class="add-task-subtasks">
-                                <div class="add-task-subtasks-input-container">
+                                <div id="add-task-subtasks-container" class="add-task-subtasks-input-container">
                                     <label for="add-task-subtasks-input">Subtasks</label>
-                                    <input id="add-task-subtasks-input" name="add-task-subtasks-input"
-                                        class="add-task-subtasks-input" type="text" placeholder="Add new subtask"
-                                        autocomplete="off" onclick="addTaskSubtasksClicked()"
-                                        onkeypress="addTaskSubtasks(event)" />
+                                    <input id="add-task-subtasks-input" class="add-task-subtasks-input" type="text"
+                                        placeholder="Add new subtask" onclick="addTaskSubtasksClicked()"
+                                        onkeypress="addTaskSubtasks(event)" autocomplete="off" />
                                     <div id="add-task-subtasks-icon-plus" class="add-task-subtasks-icon-plus">
                                         <button onclick="addSubtasksPlus(event)" id="add-task-subtasks-input-plus">
                                             <img class="add-task-subtasks-input-plus"
@@ -206,6 +207,7 @@
                                     </div>
                                 </div>
                             </div>
+
                             <div id="add-task-subtasks-choosen" class="add-task-subtasks-choosen">
                                 <ul id="add-task-subtasks-list" class="add-task-subtasks-list"></ul>
                             </div>
