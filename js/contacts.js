@@ -249,7 +249,16 @@ function getContactInitials(fullName) {
 
 async function saveContactToDatabase(event) {
   event.preventDefault();
-  if (!validateContact("name", "email", "phone", "addErrorMessage")) {
+  if (
+    !validateContact(
+      "name",
+      "email",
+      "phone",
+      "errorName",
+      "errorEmail",
+      "errorPhone"
+    )
+  ) {
     return;
   }
   try {
@@ -348,12 +357,19 @@ function getContactFormData() {
  * @param {string} nameId - The ID of the name input field
  * @param {string} emailId - The ID of the email input field
  * @param {string} phoneId - The ID of the phone input field
- * @param {string} errorContainerId - The ID of the element used to display error messages
+ * @param {string} errorNameId   - The ID of the ErrorDiv for Name
+ * @param {string} errorEmailId  - The ID of the ErrorDiv for Email
+ * @param {string} errorPhoneId  - The ID of the ErrorDiv for Phone
  * @returns {boolean} True if all fields are valid, otherwise false
  */
-function validateContact(nameId, emailId, phoneId, errorContainerId) {
-  clearErrorStyles(nameId, emailId, phoneId, errorContainerId);
-
+function validateContact(
+  nameId,
+  emailId,
+  phoneId,
+  errorNameId,
+  errorEmailId,
+  errorPhoneId
+) {
   const nameValue = document.getElementById(nameId).value.trim();
   const emailValue = document.getElementById(emailId).value.trim();
   const phoneValue = document.getElementById(phoneId).value.trim();
@@ -362,63 +378,55 @@ function validateContact(nameId, emailId, phoneId, errorContainerId) {
 
   if (!/^[a-zA-ZÀ-ž\s]+$/.test(nameValue)) {
     document.getElementById(nameId).classList.add("error");
+    const errDivName = document.getElementById(errorNameId);
+    errDivName.textContent = "Name may only contain letters and spaces.";
+    errDivName.style.display = "flex";
     isValid = false;
   }
-  if (!emailValue.includes("@")) {
+  if (!/^[^\s@]+@[^\s@]+\.[A-Za-z]{2,}$/.test(emailValue)) {
     document.getElementById(emailId).classList.add("error");
+    const errDivEmail = document.getElementById(errorEmailId);
+    errDivEmail.textContent = "Please enter a valid email address.";
+    errDivEmail.style.display = "flex";
     isValid = false;
   }
   if (!/^[0-9+]+$/.test(phoneValue)) {
     document.getElementById(phoneId).classList.add("error");
+    const errDivPhone = document.getElementById(errorPhoneId);
+    errDivPhone.textContent = "Phone number may only contain digits and '+'.";
+    errDivPhone.style.display = "flex";
     isValid = false;
   }
 
-  if (!isValid) {
-    const errDiv = document.getElementById(errorContainerId);
-    errDiv.textContent = "Please check your input.(Name(A-Z) Phone(0-9))";
-    errDiv.style.display = "block";
-    return false;
-  }
-  return true;
+  return isValid;
 }
 
-/**
- * Displays a generic error message in the "errorContactMessage" element.
- * @param {string} message - The message to display
- */
-function showError(message) {
-  const errDiv = document.getElementById("errorContactMessage");
-  errDiv.textContent = message;
-  errDiv.style.display = "block";
+function clearAddFormErrors() {
+  document.getElementById("name").value = "";
+  document.getElementById("email").value = "";
+  document.getElementById("phone").value = "";
+  document.getElementById("name").classList.remove("error");
+  document.getElementById("email").classList.remove("error");
+  document.getElementById("phone").classList.remove("error");
+  document.getElementById("errorName").textContent = "";
+  document.getElementById("errorName").style.display = "none";
+  document.getElementById("errorEmail").textContent = "";
+  document.getElementById("errorEmail").style.display = "none";
+  document.getElementById("errorPhone").textContent = "";
+  document.getElementById("errorPhone").style.display = "none";
 }
 
-/**
- * Displays a generic error message in the "editErrorMessage" element.
- * @param {string} message - The message to display
- */
-function showEditError(message) {
-  const errDiv = document.getElementById("editErrorMessage");
-  errDiv.textContent = message;
-  errDiv.style.display = "block";
+function clearEditFormErrors() {
+  document.getElementById("editName").classList.remove("error");
+  document.getElementById("editEmail").classList.remove("error");
+  document.getElementById("editPhone").classList.remove("error");
+  document.getElementById("editErrorName").textContent = "";
+  document.getElementById("editErrorName").style.display = "none";
+  document.getElementById("editErrorEmail").textContent = "";
+  document.getElementById("editErrorEmail").style.display = "none";
+  document.getElementById("editErrorPhone").textContent = "";
+  document.getElementById("editErrorPhone").style.display = "none";
 }
-
-/**
- * Removes the error styling from the specified fields and hides the error container.
- * @param {string} nameId - The ID of the name input field
- * @param {string} emailId - The ID of the email input field
- * @param {string} phoneId - The ID of the phone input field
- * @param {string} errorContainerId - The ID of the element used to display error messages
- */
-function clearErrorStyles(nameId, emailId, phoneId, errorContainerId) {
-  document.getElementById(nameId).classList.remove("error");
-  document.getElementById(emailId).classList.remove("error");
-  document.getElementById(phoneId).classList.remove("error");
-
-  const errDiv = document.getElementById(errorContainerId);
-  errDiv.textContent = "";
-  errDiv.style.display = "none";
-}
-
 /**
  * Clears the contact form inputs.
  * @returns {void}
@@ -492,7 +500,14 @@ async function updateContact(contactId, name, email, phone) {
 async function submitEditForm(event) {
   event.preventDefault();
   if (
-    !validateContact("editName", "editEmail", "editPhone", "editErrorMessage")
+    !validateContact(
+      "editName",
+      "editEmail",
+      "editPhone",
+      "editErrorName",
+      "editErrorEmail",
+      "editErrorPhone"
+    )
   ) {
     return;
   }

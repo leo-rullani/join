@@ -254,14 +254,16 @@
                             <div class="editContact_right">
                                 <div id="initials-edit"></div>
                                 <div class="form_add">
-                                    <form id="editContactForm" onsubmit="submitEditForm(event)">
+                                    <form novalidate id="editContactForm" onsubmit="submitEditForm(event)">
                                         <input required class="icon_name" type="name" name="name" id="editName"
                                             placeholder="Name"><br>
+                                        <div id="editErrorName" class="error-message"></div>
                                         <input required class="icon_email" type="email" name="email" id="editEmail"
                                             placeholder="Email"><br>
+                                        <div id="editErrorEmail" class="error-message"></div>
                                         <input required class="icon_phone" type="phone" name="phone" id="editPhone"
                                             placeholder="Phone"><br>
-                                        <div id="editErrorMessage" class="error-message"></div>
+                                        <div id="editErrorPhone" class="error-message"></div>
                                         <div class="button_div">
                                             <button type="button" class="btn-cancel" id="contactDeleteButton">Delete
                                                 ✖</button>
@@ -287,14 +289,16 @@
                     <div class="addContact_right">
                         <div><img class="addContact_right_img" src="/assets/icons/contact_pic.svg" alt=""></div>
                         <div class="form_add">
-                            <form onsubmit="return saveContactToDatabase(event)">
+                            <form novalidate onsubmit="return saveContactToDatabase(event)">
                                 <input required class="icon_name" type="name" name="name" id="name"
                                     placeholder="Name"><br>
+                                <div id="errorName" class="error-message"></div>
                                 <input required class="icon_email" type="email" name="email" id="email"
                                     placeholder="Email"><br>
+                                <div id="errorEmail" class="error-message"></div>
                                 <input required class="icon_phone" type="phone" name="phone" id="phone"
                                     placeholder="Phone"><br>
-                                <div id="addErrorMessage" class="error-message"></div>
+                                <div id="errorPhone" class="error-message"></div>
                                 <div class="button_div"> <button type="button" class="btn-cancel"
                                         onclick="closeOverlay()">Cancel
                                         ✖</button> <button class="btn-create" type="submit">Create

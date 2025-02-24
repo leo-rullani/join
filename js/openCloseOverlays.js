@@ -16,13 +16,6 @@ function openEditOverlay(contactId, name, email, phone) {
 }
 
 /**
- * Closes the edit overlay.
- */
-function closeEditOverlay() {
-  document.getElementById("editOverlay").style.display = "none";
-}
-
-/**
  * Opens the main overlay.
  */
 function openOverlay() {
@@ -35,6 +28,7 @@ function openOverlay() {
  * Closes the main overlay with animation.
  */
 function closeOverlay() {
+  clearAddFormErrors();
   let overlay = document.getElementById("overlay");
   overlay.classList.add("closing");
   setTimeout(() => {
@@ -78,6 +72,7 @@ function openEditOverlay(contactId, name, email, phone) {
  * Closes the edit overlay with animation.
  */
 function closeEditOverlay() {
+  clearEditFormErrors();
   let overlay = document.getElementById("editOverlay");
   overlay.classList.add("closing");
   setTimeout(() => {

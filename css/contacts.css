@@ -625,7 +625,7 @@
 
 .error-message {
   color: #ff7a8b;
-  font-size: 14px;
+  font-size: 12px;
   text-align: left;
   margin: 5px 0 5px 0;
   margin-top: -20px;
@@ -637,6 +637,9 @@
   border-color: #ff4057;
 }
 .icon_phone.error {
+  border-color: #ff4057;
+}
+.icon_email.error {
   border-color: #ff4057;
 }
 
@@ -674,7 +677,7 @@
     position: fixed;
     top: 50%;
     left: 50%;
-    transform: translate(-50%, 150%); 
+    transform: translate(-50%, 150%);
     opacity: 0;
     padding: 15px 20px;
     border-radius: 20px;
