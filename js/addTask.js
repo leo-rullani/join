@@ -453,11 +453,11 @@ window.clearSubtasks = clearSubtasks;
  * @returns {void}
  */
 function addTaskClearFormularReset() {
+  const selectedContacts = document.querySelectorAll("li.selectedContact");
   window.globalSubtasks = [];
   window.subtasksList = [];
   document.getElementById("add-task-title-input").value = "";
   document.getElementById("add-task-textarea").value = "";
-  addTaskAssignedToUnCheck();
   document.getElementById("date").value = "";
   document.getElementById("add-task-category").value = "";
   document.getElementById("add-task-assigned-avatar").innerHTML = "";
@@ -470,6 +470,13 @@ function addTaskClearFormularReset() {
     .getElementById("add-task-subtasks-icon-plus-check")
     .classList.add("d-none");
   addTaskPrioToggleButton("medium", "add-task-urgent-medium-low-buttons");
+
+  selectedContacts.forEach((li) => {
+    li.classList.remove("selectedContact");
+  });
+
+  window.assignedContacts = [];
+  addTaskAssignedToUnCheck();
 }
 window.addTaskClearFormularReset = addTaskClearFormularReset;
 
