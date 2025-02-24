@@ -876,25 +876,25 @@ form {
 
 #add_notification {
   position: fixed;
+  top: 50%;
   left: 50%;
-  bottom: 0;
-  transform: translateX(0%) translateY(150%);
+  transform: translateX(-50%); 
   opacity: 0;
   background-color: #2a3647;
   color: #fff;
-  padding: 20px 20px;
+  padding: 20px;
   border-radius: 20px;
-  transition: transform 0.4s ease, opacity 0.4s ease;
+  transition: all 0.7s ease;
   z-index: 100000;
 }
 
 #add_notification.show {
-  transform: translateX(0%) translateY(-700%);
+  transform: translate(-50%, -50%); 
   opacity: 1;
 }
 
 #add_notification.hide {
-  transform: translateX(200%) translateY(0);
+  transform: translate(-50%, -200%); 
   opacity: 0;
 }
 
