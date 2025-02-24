@@ -1726,9 +1726,9 @@
   .add-task-urgent,
   .add-task-medium,
   .add-task-low {
-    width: 83px;
+    width: 74px;
     height: 45px;
-    font-size: 12px;
+    font-size: 8px;
   }
 
   .add-task-urgent-medium-low-container {
