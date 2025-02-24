@@ -476,11 +476,27 @@ function editShowAvatars() {
   const div = document.getElementById("overlay-edit-task-assigned-avatar");
   if (!div) return;
   div.innerHTML = "";
-  window.editAssignedContacts.forEach((name) => {
-    const bg = assignColor(name);
-    div.innerHTML += `<div class="avatar" style="background:${bg}">${getUserInitials(
-      name
-    )}</div>`;
+
+  const contacts = window.editAssignedContacts || [];
+  const maxVisible = 3;
+
+  // 1) Bis zu 3 echte Avatare
+  contacts.forEach((name, i) => {
+    if (i < maxVisible) {
+      const bg = assignColor(name);
+      div.innerHTML += `
+        <div class="avatar" style="background:${bg}">
+          ${getUserInitials(name)}
+        </div>`;
+    }
   });
+
+  if (contacts.length > maxVisible) {
+    const leftover = contacts.length - maxVisible;
+    div.innerHTML += `
+      <div class="avatar-addtaskoverlay">
+        +${leftover} others
+      </div>`;
+  }
 }
 window.editShowAvatars = editShowAvatars;

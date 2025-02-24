@@ -728,7 +728,7 @@ input[type="radio"] {
 }
 
 .avatar {
-  display: inline-flex;
+  display: inline-flex; 
   justify-content: center;
   align-items: center;
   height: 42px;
@@ -738,6 +738,7 @@ input[type="radio"] {
   border: 0.1rem solid #fff;
   font-size: 75%;
   color: #fff;
+  background-color: #2a3647; 
 }
 
 .checkbox-dropdown ul li,
@@ -771,6 +772,19 @@ input[type="radio"] {
   width: 24px;
   height: 24px;
   display: flex;
+}
+
+.avatar-addtaskoverlay {
+  display: flex; 
+  justify-content: center;
+  align-items: center;
+  height: 42px;
+  width: 42px;
+  border-radius: 50%;
+  background-color: #a0a0a0;
+  color: #fff;           /* Schrift weiß */
+  text-align: center;
+  font-size: 11px;
 }
 
 .confirmation {

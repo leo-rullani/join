@@ -187,19 +187,27 @@ function toggleContactSelection(contactName) {
 window.toggleContactSelection = toggleContactSelection;
 
 /**
- * Displays assigned contact avatars.
- * @returns {void}
+ * Displays assigned contact avatars, up to 3.
+ * If more than 3, adds a "+X others" avatar.
  */
 function addTaskShowAvatars() {
   const container = document.getElementById("add-task-assigned-avatar");
   if (!container) return;
   container.innerHTML = "";
-  window.assignedContacts.forEach((c) => {
-    const col = assignColor(c);
-    container.innerHTML += `<div class="avatar" style="background:${col}">${getUserInitials(
-      c
-    )}</div>`;
+  const contacts = window.assignedContacts || [];
+  const max = 3;
+  contacts.forEach((c, i) => {
+    if (i < max)
+      container.innerHTML += `<div class="avatar" style="background:${assignColor(
+        c
+      )}">
+      ${getUserInitials(c)}
+    </div>`;
   });
+  if (contacts.length > max) {
+    const leftover = contacts.length - max;
+    container.innerHTML += `<div class="avatar-addtaskoverlay">+${leftover} others</div>`;
+  }
 }
 window.addTaskShowAvatars = addTaskShowAvatars;
 

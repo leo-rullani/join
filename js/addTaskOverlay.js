@@ -363,17 +363,29 @@ window.overlayToggleContactSelection = overlayToggleContactSelection;
 
 /**
  * Displays assigned contact avatars in overlay.
- * @returns {void}
+ * Shows up to 3. If there are more, adds a "+X others" avatar.
  */
 function overlayShowAvatars() {
   const div = document.getElementById("overlay-add-task-assigned-avatar");
   if (!div) return;
   div.innerHTML = "";
-  window.overlayAssignedContacts.forEach((contact) => {
-    const bg = assignColor(contact);
-    div.innerHTML += `<div class="avatar" style="background-color:${bg};">${getUserInitials(
-      contact
-    )}</div>`;
+
+  const contacts = window.overlayAssignedContacts || [];
+  const maxVisible = 7;
+  contacts.forEach((contact, i) => {
+    if (i < maxVisible) {
+      const bg = assignColor(contact);
+      div.innerHTML += `<div class="avatar" style="background-color:${bg};">
+        ${getUserInitials(contact)}
+      </div>`;
+    }
   });
+
+  if (contacts.length > maxVisible) {
+    const leftover = contacts.length - maxVisible;
+    div.innerHTML += `
+    <div class="avatar-addtaskoverlay">
+      +${leftover} others
+    </div>`;
+  }
 }
-window.overlayShowAvatars = overlayShowAvatars;
