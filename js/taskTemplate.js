@@ -23,22 +23,46 @@ window.createTaskTemplate = function (t) {
 
 /**
  * Generates the HTML structure for a task card.
- * @param {object} t - Task object.
+ * @param {object} t - Task object (enthält t.assignees als Array).
  * @param {string} s - Subtask HTML.
- * @param {string} a - Assignee HTML.
+ * @param {string} a - (Falls vorhanden) fertiges Assignee-HTML oder leerer String.
  * @param {number} p - Progress percentage.
  * @returns {string} - The task card HTML.
  */
 window.generateTaskHTML = function (t, s, a, p) {
-  let c = t.category === "Technical Task" ? "#20d7c1" : "#0038ff",
-    i = getPriorityIcon(t.priority);
+  // Kategorie + Priority-Icon wie gehabt
+  let c = t.category === "Technical Task" ? "#20d7c1" : "#0038ff";
+  let i = getPriorityIcon(t.priority);
 
+  // Kurz warten, dann Transition für Progress-Balken
   setTimeout(() => {
     document.querySelectorAll(".progress-bar-fill").forEach((b) => {
       b.style.transition = "width 0.5s ease-in-out";
     });
   }, 10);
 
+  // --- NEU: Assignees auf max. 3 + "+X others" reduzieren ---
+  let finalAssigneesHTML = a || ""; // Falls du a noch brauchst
+  if (Array.isArray(t.assignees)) {
+    let tmp = "";
+    const max = 3;
+    t.assignees.forEach((person, idx) => {
+      if (idx < max) {
+        tmp += `<div class="avatar" style="background:${assignColor(person)};">
+                  ${getUserInitials(person)}
+                </div>`;
+      }
+    });
+    // Wenn mehr als 3
+    if (t.assignees.length > max) {
+      let leftover = t.assignees.length - max;
+      tmp += `<div class="avatar" style="background:#999;">+${leftover} others</div>`;
+    }
+    // Das neue HTML
+    finalAssigneesHTML = tmp;
+  }
+
+  // HTML-Gerüst wie gehabt
   return `
     <div 
       class="task" 
@@ -48,7 +72,6 @@ window.generateTaskHTML = function (t, s, a, p) {
       <div class="task-label" style="background-color:${c};">
         ${t.category || "Uncategorized"}
       </div>
-
       <h3 class="task-title">${t.title || "No Title"}</h3>
       <p class="task-description">${t.description || ""}</p>
 
@@ -56,7 +79,9 @@ window.generateTaskHTML = function (t, s, a, p) {
       ${s}
 
       <div class="task-footer">
-        <div class="task-assignees">${a}</div>
+        <div class="task-assignees">
+          ${finalAssigneesHTML}
+        </div>
         <div class="task-priority-icon">
           <img src="${i}" alt="${t.priority}">
         </div>

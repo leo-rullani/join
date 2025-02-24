@@ -371,7 +371,7 @@ function overlayShowAvatars() {
   div.innerHTML = "";
 
   const contacts = window.overlayAssignedContacts || [];
-  const maxVisible = 7;
+  const maxVisible = 3;
   contacts.forEach((contact, i) => {
     if (i < maxVisible) {
       const bg = assignColor(contact);

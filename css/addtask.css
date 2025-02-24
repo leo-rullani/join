@@ -739,6 +739,8 @@ input[type="radio"] {
   border: 0.1rem solid #fff;
   font-size: 75%;
   color: #fff;
+  font-size: 11px;
+  text-align: center;
 }
 
 .checkbox-dropdown ul li,
