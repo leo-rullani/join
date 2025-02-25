@@ -43,6 +43,7 @@ function getTaskListContainer(element) {
  */
 function allowDrop(e) {
   e.preventDefault();
+  e.stopPropagation();
   scrollContainer(e);
 }
 
@@ -52,12 +53,11 @@ function allowDrop(e) {
  */
 function scrollContainer(e) {
   const container = document.getElementById("tasks-container");
-  const containerRect = container.getBoundingClientRect();
+  const rect = container.getBoundingClientRect();
 
-  const y = e.clientY;
-  if (y < containerRect.top + 50) {
+  if (e.clientY < rect.top + 50) {
     container.scrollTop -= 10;
-  } else if (y > containerRect.bottom - 50) {
+  } else if (e.clientY > rect.bottom - 50) {
     container.scrollTop += 10;
   }
 }

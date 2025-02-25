@@ -1579,6 +1579,7 @@
   .add-task-all-content {
     left: 40px;
     top: 0px;
+    margin: 0 auto;
   }
 
   .add-task-main-content {
@@ -1658,19 +1659,20 @@
     margin-left: -23px;
     bottom: 50px;
   }
+
+  .add-task-all-content {
+    margin-left: 50px;
+  }
 }
 
 @media (max-width: 530px) {
- 
-
   .checkbox-dropdown ul li label {
     font-size: 12px;
   }
 }
 
 @media (max-width: 480px) {
-
-  .add-task-h1-container{
+  .add-task-h1-container {
     margin-left: -14px;
   }
 
@@ -1716,8 +1718,8 @@
   .add-task-urgent,
   .add-task-medium,
   .add-task-low {
-    width: 74px;
-    height: 45px;
+    width: 84px;
+    height: 41px;
     font-size: 10px;
   }
 
@@ -1769,6 +1771,10 @@
   .checkbox-dropdown ul {
     width: 77%;
     width: 85%;
+  }
+
+  .add-task-all-content {
+    margin-left: 20px;
   }
 
   .add-task-subtasks-icon-plus-check img {
@@ -1900,5 +1906,12 @@
   #add_notification.hide {
     transform: translate(-50%, -50%);
     opacity: 0;
+  }
+}
+
+@media (max-width: 330px) {
+  .add-task-all-content {
+    left: 20px;
+    margin-left: 20px;
   }
 }
