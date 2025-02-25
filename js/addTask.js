@@ -563,3 +563,55 @@ function validateTask(
   }
   return isValid;
 }
+
+function addTaskSubtasksClicked() {
+  document.getElementById("add-task-subtasks-icon-plus").classList.add("d-none");
+  document.getElementById("add-task-subtasks-icon-plus-check").classList.remove("d-none");
+
+  // Listener auf document für Klicks ausserhalb
+  document.addEventListener("click", handleOutsideClickSubtasks);
+}
+
+/*
+ 
+Schließt das Subtask-Eingabefeld (Icons zurück, Input leeren).*/
+function closeSubtaskInput() {
+  document.getElementById("add-task-subtasks-icon-plus").classList.remove("d-none");
+  document.getElementById("add-task-subtasks-icon-plus-check").classList.add("d-none");
+  document.getElementById("add-task-subtasks-input").value = "";
+}
+
+/*
+ 
+Wird bei jedem Klick auf das gesamte Dokument aufgerufen
+(nachdem addTaskSubtasksClicked() den Listener angemeldet hat).
+Prüft, ob wir innerhalb oder ausserhalb des Containers geklickt haben.*/
+function handleOutsideClickSubtasks(event) {
+  const container = document.getElementById("add-task-subtasks-container");
+  if (!container) return;
+
+  // Prüfen, ob es AUSSERHALB war:
+  if (!container.contains(event.target)) {
+    closeSubtaskInput();
+    // WICHTIG: den Listener entfernen, sonst bleibt er aktiv
+    document.removeEventListener("click", handleOutsideClickSubtasks);
+  }
+}
+
+/**
+ 
+Klick auf das X-Icon.
+Da der X-Button wahrscheinlich auch im selben Container sitzt,
+verhindern wir, dass der Document-Listener es als "Außerhalb" ansieht.*/
+function clearSubtasks(event) {
+  // 1. Klick nicht weiterreichen
+  event.stopPropagation();
+
+  // 2. Hier kannst du definieren, was das X tun soll:
+  //    Eingabefeld leeren, Icons zurück:
+  closeSubtaskInput();
+
+  // 3. Und weil wir das Input manuell schließen,
+  //    können wir den Outside-Listener entfernen:
+  document.removeEventListener("click", handleOutsideClickSubtasks);
+}
