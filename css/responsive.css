@@ -1601,7 +1601,7 @@
   }
 
   .add-task-right-side {
-    margin: 30px 40px 30px 0;
+    margin: 0 40px 30px 0;
   }
 
   .add-task-bottom {
@@ -1661,22 +1661,7 @@
 }
 
 @media (max-width: 530px) {
-  .add-task-main-content input {
-    width: 90%;
-  }
-
-  .add-task-subtasks-input {
-    width: 71% !important;
-  }
-
-  .add-task-textarea {
-    width: 93% !important;
-  }
-  .add-task-urgent,
-  .add-task-medium,
-  .add-task-low {
-    width: 127px;
-  }
+ 
 
   .checkbox-dropdown ul li label {
     font-size: 12px;
@@ -1684,6 +1669,11 @@
 }
 
 @media (max-width: 480px) {
+
+  .add-task-h1-container{
+    margin-left: -14px;
+  }
+
   .add-task-main-content input {
     width: 70%;
     font-size: 14px;
@@ -1728,7 +1718,7 @@
   .add-task-low {
     width: 74px;
     height: 45px;
-    font-size: 8px;
+    font-size: 10px;
   }
 
   .add-task-urgent-medium-low-container {
