@@ -533,14 +533,14 @@ function validateTask(
 
   let isValid = true;
 
-  if (!/^[-.()_a-zA-ZÀ-ž\s0-9/"!,–]+$/.test(titleValue)) {
+  if (!/^[-&.()_a-zA-ZÀ-ž\s0-9/"!,–]+$/.test(titleValue)) {
     document.getElementById(titleId).classList.add("error");
     const errDivTitle = document.getElementById(errorTitleId);
     errDivTitle.textContent = "Please enter a Title.";
     errDivTitle.style.display = "flex";
     isValid = false;
   }
-  if (!/^[-.()_a-zA-ZÀ-ž\s0-9/"!,–]+$/.test(descriptionValue)) {
+  if (!/^[-&.()_a-zA-ZÀ-ž\s0-9/"!,–]+$/.test(descriptionValue)) {
     document.getElementById(descriptionId).classList.add("error");
     const errDivDescription = document.getElementById(errorDescriptionId);
     errDivDescription.textContent = "Please enter a description.";
@@ -565,8 +565,12 @@ function validateTask(
 }
 
 function addTaskSubtasksClicked() {
-  document.getElementById("add-task-subtasks-icon-plus").classList.add("d-none");
-  document.getElementById("add-task-subtasks-icon-plus-check").classList.remove("d-none");
+  document
+    .getElementById("add-task-subtasks-icon-plus")
+    .classList.add("d-none");
+  document
+    .getElementById("add-task-subtasks-icon-plus-check")
+    .classList.remove("d-none");
 
   // Listener auf document für Klicks ausserhalb
   document.addEventListener("click", handleOutsideClickSubtasks);
@@ -576,8 +580,12 @@ function addTaskSubtasksClicked() {
  
 Schließt das Subtask-Eingabefeld (Icons zurück, Input leeren).*/
 function closeSubtaskInput() {
-  document.getElementById("add-task-subtasks-icon-plus").classList.remove("d-none");
-  document.getElementById("add-task-subtasks-icon-plus-check").classList.add("d-none");
+  document
+    .getElementById("add-task-subtasks-icon-plus")
+    .classList.remove("d-none");
+  document
+    .getElementById("add-task-subtasks-icon-plus-check")
+    .classList.add("d-none");
   document.getElementById("add-task-subtasks-input").value = "";
 }
 
