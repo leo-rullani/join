@@ -533,17 +533,17 @@ function validateTask(
 
   let isValid = true;
 
-  if (!/^[-a-zA-ZÀ-ž\s0-9/"!,–]+$/.test(titleValue)) {
+  if (!/^[-.()_a-zA-ZÀ-ž\s0-9/"!,–]+$/.test(titleValue)) {
     document.getElementById(titleId).classList.add("error");
     const errDivTitle = document.getElementById(errorTitleId);
     errDivTitle.textContent = "Please enter a Title.";
     errDivTitle.style.display = "flex";
     isValid = false;
   }
-  if (!/^[-a-zA-ZÀ-ž\s0-9/"!,–]+$/.test(descriptionValue)) {
+  if (!/^[-.()_a-zA-ZÀ-ž\s0-9/"!,–]+$/.test(descriptionValue)) {
     document.getElementById(descriptionId).classList.add("error");
     const errDivDescription = document.getElementById(errorDescriptionId);
-    errDivDescription.textContent = "Please enter a discription.";
+    errDivDescription.textContent = "Please enter a description.";
     errDivDescription.style.display = "flex";
     isValid = false;
   }
