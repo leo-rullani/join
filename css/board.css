@@ -146,7 +146,6 @@
   justify-content: flex-start;
   align-items: flex-start;
   width: 280px;
-  padding-right: 100px;
   min-height: 200px;
   max-height: fit-content;
 }
@@ -842,7 +841,7 @@
   }
 }
 
-@media (max-width: 650px) {
+@media (max-width: 659px) {
   .board_header {
     flex-direction: column;
     align-items: flex-start;
@@ -863,7 +862,7 @@
   .btn_add_task {
     order: 2;
     align-self: flex-end;
-    margin-top: -37px;
+    margin-top: -52px;
     width: 44px;
     height: 44px;
     padding: 0;
@@ -906,7 +905,7 @@
     margin-bottom: 0px;
   }
   .task_list:has(.task) {
-    margin-bottom: 40px;
+    margin-bottom: 60px;
     min-height: 0px;
   }
 }
@@ -921,11 +920,6 @@
 @media (max-width: 650px) {
   .help-link {
     display: flex !important;
-  }
-}
-@media (max-width: 1020px) {
-  .column_wrapper {
-    padding-right: 50px;
   }
 }
 @media (max-width: 900px) {
@@ -978,7 +972,7 @@
     .btn_add_task {
       order: 2;
       align-self: flex-end;
-      margin-top: -37px;
+      margin-top: -52px;
       width: 44px;
       height: 44px;
       padding: 0;
@@ -1102,6 +1096,6 @@
 
 @media (max-width: 860px) {
   .task_list:has(.task) {
-    padding-bottom: 20px; 
+    padding-bottom: 80px; 
   }
 }
