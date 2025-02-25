@@ -15,12 +15,10 @@ async function overlayAddTaskCreateTask() {
       "errorOverlayDate",
       "errorOverlayCategory"
     )
-  ) {
+  )
     return;
-  }
   const newTask = createNewTask();
   const ref = `${window.databaseURL}/tasks/${newTask.id}.json`;
-
   try {
     const resp = await fetch(ref, {
       method: "PUT",
@@ -34,32 +32,37 @@ async function overlayAddTaskCreateTask() {
 }
 
 /**
- * Creates a new task object from the input values.
+ * Retrieves input values for the new task.
+ * @returns {Object} An object with taskId, title, description, date, and category.
+ */
+function getTaskInputs() {
+  return {
+    taskId: "task_" + Date.now(),
+    title: document.getElementById("overlay-add-task-title-input").value.trim(),
+    description: document
+      .getElementById("overlay-add-task-textarea")
+      .value.trim(),
+    date: document.getElementById("overlay-date").value,
+    category: document.getElementById("overlay-add-task-category").value.trim(),
+  };
+}
+
+/**
+ * Creates a new task object using input values and additional data.
  * @returns {Object} The new task object.
  */
 function createNewTask() {
-  const taskId = "task_" + Date.now();
-  const title = document
-    .getElementById("overlay-add-task-title-input")
-    .value.trim();
-  const description = document
-    .getElementById("overlay-add-task-textarea")
-    .value.trim();
+  const inputs = getTaskInputs();
   const names = window.overlayAssignedContacts.slice();
-  const date = document.getElementById("overlay-date").value;
   const priority = overlayGetPriority();
-  const category = document
-    .getElementById("overlay-add-task-category")
-    .value.trim();
-
   return {
-    id: taskId,
-    title,
-    description,
+    id: inputs.taskId,
+    title: inputs.title,
+    description: inputs.description,
     assignees: names,
-    date,
-    priority,
-    category,
+    date: inputs.date,
+    priority: priority,
+    category: inputs.category,
     boardCategory: "todo",
     subtasks: window.overlaySubtasksList.map((st) => ({
       name: st,
@@ -70,8 +73,8 @@ function createNewTask() {
 
 /**
  * Handles the response from the fetch request.
- * @param {Response} resp - The response from the fetch call.
- * @param {Object} newTask - The newly created task object.
+ * @param {Response} resp - The fetch response.
+ * @param {Object} newTask - The newly created task.
  */
 async function handleResponse(resp, newTask) {
   if (resp.ok) {
@@ -84,11 +87,8 @@ async function handleResponse(resp, newTask) {
   }
 }
 
-window.overlayAddTaskCreateTask = overlayAddTaskCreateTask;
-
 /**
  * Clears the overlay form fields.
- * @returns {void}
  */
 function overlayClearForm() {
   document.getElementById("overlay-add-task-title-input").value = "";
@@ -105,33 +105,29 @@ function overlayClearForm() {
   const container = document.getElementById("overlay-add-task-contact");
   if (container) container.innerHTML = "";
 }
-window.overlayClearForm = overlayClearForm;
 
 /**
  * Sets overlay priority via button click.
- * @param {string} prio
- * @param {string} containerId
- * @param {Event} event
- * @returns {void}
+ * @param {string} prio - The selected priority.
+ * @param {string} containerId - The container ID.
+ * @param {Event} event - The click event.
  */
 function overlayAddTaskPrio(prio, containerId, event) {
   event.preventDefault();
   overlayAddTaskPrioToggleButton(prio, containerId);
 }
-window.overlayAddTaskPrio = overlayAddTaskPrio;
 
 /**
  * Toggles overlay priority buttons.
- * @param {string} prio
- * @param {string} containerId
- * @returns {void}
+ * @param {string} prio - The priority.
+ * @param {string} containerId - The container ID.
  */
 function overlayAddTaskPrioToggleButton(prio, containerId) {
   const container = document.getElementById(containerId);
   const btns = container.querySelectorAll("button");
   btns.forEach((btn) => {
-    const icon = btn.querySelector("img");
     btn.classList.remove("add-task-clicked");
+    const icon = btn.querySelector("img");
     if (icon) icon.src = `/assets/icons/${btn.dataset.priority}.svg`;
   });
   const active = container.querySelector(`button[data-priority="${prio}"]`);
@@ -141,11 +137,10 @@ function overlayAddTaskPrioToggleButton(prio, containerId) {
     if (icon) icon.src = `/assets/icons/${prio}_white.svg`;
   }
 }
-window.overlayAddTaskPrioToggleButton = overlayAddTaskPrioToggleButton;
 
 /**
  * Retrieves the selected overlay priority.
- * @returns {string}
+ * @returns {string} The priority.
  */
 function overlayGetPriority() {
   const container = document.getElementById(
@@ -154,21 +149,17 @@ function overlayGetPriority() {
   const active = container.querySelector(".add-task-clicked");
   return active ? active.dataset.priority : "medium";
 }
-window.overlayGetPriority = overlayGetPriority;
 
 /**
  * Sets the overlay task category.
- * @param {string} value
- * @returns {void}
+ * @param {string} value - The category value.
  */
 function overlayAddTaskChoseCategory(value) {
   document.getElementById("overlay-add-task-category").value = value;
 }
-window.overlayAddTaskChoseCategory = overlayAddTaskChoseCategory;
 
 /**
  * Toggles subtask icon display in overlay.
- * @returns {void}
  */
 function overlayAddTaskSubtasksClicked() {
   document
@@ -178,12 +169,10 @@ function overlayAddTaskSubtasksClicked() {
     .getElementById("overlay-add-task-subtasks-icon-plus-check")
     .classList.remove("d-none");
 }
-window.overlayAddTaskSubtasksClicked = overlayAddTaskSubtasksClicked;
 
 /**
  * Adds a subtask in overlay.
- * @param {Event} event
- * @returns {void}
+ * @param {Event} event - The event.
  */
 function overlayAddTaskSubtasks(event) {
   if (event.type === "keypress" && event.key !== "Enter") return;
@@ -201,11 +190,9 @@ function overlayAddTaskSubtasks(event) {
     .classList.add("d-none");
   overlayAddTaskSubtasksList();
 }
-window.overlayAddTaskSubtasks = overlayAddTaskSubtasks;
 
 /**
  * Renders overlay subtasks list.
- * @returns {void}
  */
 function overlayAddTaskSubtasksList() {
   const ul = document.getElementById("overlay-add-task-subtasks-list");
@@ -214,33 +201,28 @@ function overlayAddTaskSubtasksList() {
     ul.innerHTML += overlaySubTaskTemplate(window.overlaySubtasksList[i], i);
   }
 }
-window.overlayAddTaskSubtasksList = overlayAddTaskSubtasksList;
 
 /**
  * Allows editing an overlay subtask.
- * @param {number} index
- * @param {Event} event
- * @returns {void}
+ * @param {number} index - The subtask index.
+ * @param {Event} event - The event.
  */
 function overlayEditTaskSubtasksList(index, event) {
   event.stopPropagation();
   const ul = document.getElementById("overlay-add-task-subtasks-list");
   ul.innerHTML = "";
   for (let i = 0; i < window.overlaySubtasksList.length; i++) {
-    if (i === index) {
-      ul.innerHTML += overlayEditTaskSubtasksListTemplate(i);
-    } else {
-      ul.innerHTML += overlaySubTaskTemplate(i);
-    }
+    ul.innerHTML +=
+      i === index
+        ? overlayEditTaskSubtasksListTemplate(i)
+        : overlaySubTaskTemplate(i);
   }
 }
-window.overlayEditTaskSubtasksList = overlayEditTaskSubtasksList;
 
 /**
  * Confirms editing of an overlay subtask.
- * @param {number} index
- * @param {Event} event
- * @returns {void}
+ * @param {number} index - The subtask index.
+ * @param {Event} event - The event.
  */
 function overlayConfirmEditSubtask(index, event) {
   if (event.type === "keypress" && event.key !== "Enter") return;
@@ -256,36 +238,30 @@ function overlayConfirmEditSubtask(index, event) {
   window.overlaySubtasksList.splice(index, 1, newVal);
   overlayAddTaskSubtasksList();
 }
-window.overlayConfirmEditSubtask = overlayConfirmEditSubtask;
 
 /**
  * Removes an overlay subtask.
- * @param {number} index
- * @param {Event} event
- * @returns {void}
+ * @param {number} index - The subtask index.
+ * @param {Event} event - The event.
  */
 function overlayRemoveOverlaySubtask(index, event) {
   event.stopPropagation();
   window.overlaySubtasksList.splice(index, 1);
   overlayAddTaskSubtasksList();
 }
-window.overlayRemoveOverlaySubtask = overlayRemoveOverlaySubtask;
 
 /**
- * Removes an overlay subtask (old method).
- * @param {HTMLElement} el
- * @returns {void}
+ * Removes an overlay subtask (legacy).
+ * @param {HTMLElement} el - The element to remove.
  */
 function overlayRemoveSubtask(el) {
   const li = el.closest("li");
   if (li) li.remove();
 }
-window.overlayRemoveSubtask = overlayRemoveSubtask;
 
 /**
  * Focuses the overlay subtask input.
- * @param {Event} event
- * @returns {void}
+ * @param {Event} event - The event.
  */
 function overlayAddSubtasksPlus(event) {
   event.preventDefault();
@@ -296,12 +272,10 @@ function overlayAddSubtasksPlus(event) {
     input.select();
   }
 }
-window.overlayAddSubtasksPlus = overlayAddSubtasksPlus;
 
 /**
  * Clears the overlay subtask input.
- * @param {Event} event
- * @returns {void}
+ * @param {Event} event - The event.
  */
 function overlayClearSubtasks(event) {
   event.preventDefault();
@@ -314,11 +288,9 @@ function overlayClearSubtasks(event) {
   const input = document.getElementById("overlay-add-task-subtasks-input");
   if (input) input.value = "";
 }
-window.overlayClearSubtasks = overlayClearSubtasks;
 
 /**
  * Displays the contact list in overlay.
- * @returns {void}
  */
 function overlayShowContactList() {
   const container = document.getElementById("overlay-add-task-contact");
@@ -330,11 +302,9 @@ function overlayShowContactList() {
     container.innerHTML += overlayShowContactListTemplate(chk, i, bg, contact);
   });
 }
-window.overlayShowContactList = overlayShowContactList;
 
 /**
  * Filters contacts in overlay.
- * @returns {void}
  */
 function overlayAddTaskAssignedToSearch() {
   const search = document
@@ -354,57 +324,60 @@ function overlayAddTaskAssignedToSearch() {
     );
   });
 }
-window.overlayAddTaskAssignedToSearch = overlayAddTaskAssignedToSearch;
 
 /**
  * Toggles contact selection in overlay.
- * @param {string} contactName
- * @returns {void}
+ * @param {string} contactName - The contact name.
  */
 function overlayToggleContactSelection(contactName) {
   const idx = window.overlayAssignedContacts.indexOf(contactName);
-  if (idx >= 0) {
-    window.overlayAssignedContacts.splice(idx, 1);
-  } else {
-    window.overlayAssignedContacts.push(contactName);
-  }
+  if (idx >= 0) window.overlayAssignedContacts.splice(idx, 1);
+  else window.overlayAssignedContacts.push(contactName);
   overlayShowAvatars();
   const searchValue = document
     .getElementById("overlay-find-person")
     .value.trim();
-  if (searchValue) {
-    overlayAddTaskAssignedToSearch();
-  } else {
-    overlayShowContactList();
-  }
+  if (searchValue) overlayAddTaskAssignedToSearch();
+  else overlayShowContactList();
 }
-window.overlayToggleContactSelection = overlayToggleContactSelection;
 
 /**
- * Displays assigned contact avatars in overlay.
- * Shows up to 3. If there are more, adds a "+X others" avatar.
+ * Returns the HTML for a single overlay avatar.
+ * @param {string} contact - The contact name.
+ * @returns {string} The avatar HTML.
+ */
+function createOverlayAvatarHtml(contact) {
+  const bg = assignColor(contact);
+  return `<div class="avatar" style="background-color:${bg};">
+    ${getUserInitials(contact)}
+  </div>`;
+}
+
+/**
+ * Returns the HTML for the leftover avatar indicator.
+ * @param {number} leftover - The number of remaining contacts.
+ * @returns {string} The leftover avatar HTML.
+ */
+function createOverlayLeftoverAvatarHtml(leftover) {
+  return `<div class="avatar-addtaskoverlay">
+      +${leftover}
+    </div>`;
+}
+
+/**
+ * Clears the overlay avatar container and renders avatars.
  */
 function overlayShowAvatars() {
   const div = document.getElementById("overlay-add-task-assigned-avatar");
   if (!div) return;
   div.innerHTML = "";
-
   const contacts = window.overlayAssignedContacts || [];
   const maxVisible = 3;
-  contacts.forEach((contact, i) => {
-    if (i < maxVisible) {
-      const bg = assignColor(contact);
-      div.innerHTML += `<div class="avatar" style="background-color:${bg};">
-        ${getUserInitials(contact)}
-      </div>`;
-    }
-  });
-
+  for (let i = 0; i < contacts.length && i < maxVisible; i++) {
+    div.innerHTML += createOverlayAvatarHtml(contacts[i]);
+  }
   if (contacts.length > maxVisible) {
     const leftover = contacts.length - maxVisible;
-    div.innerHTML += `
-    <div class="avatar-addtaskoverlay">
-      +${leftover}
-    </div>`;
+    div.innerHTML += createOverlayLeftoverAvatarHtml(leftover);
   }
 }

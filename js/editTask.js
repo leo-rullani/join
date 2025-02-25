@@ -1,7 +1,7 @@
 "use strict";
 /**
  * Opens the edit overlay for a task.
- * @param {string} taskId
+ * @param {string} taskId - The task ID.
  * @returns {void}
  */
 function editTask(taskId) {
@@ -12,158 +12,9 @@ function editTask(taskId) {
 window.editTask = editTask;
 
 /**
- * Updates an edited task in Firebase.
- * @param {string} taskId
- * @returns {Promise<void>}
- */
-async function updateTask(taskId) {
-  if (
-    !validateTask(
-      "overlay-edit-task-title-input",
-      "overlay-edit-task-textarea",
-      "overlay-edit-date",
-      "overlay-edit-task-category",
-      "errorEditTitle",
-      "errorEditDescription",
-      "errorEditDate",
-      "errorEditCategory"
-    )
-  ) {
-    return;
-  }
-  const ref = `${window.databaseURL}/tasks/${taskId}.json`;
-  const formElements = getFormElements();
-  if (!formElements) return;
-
-  const { title, description, date, category } = getTaskDetails(formElements);
-  const priority = getEditTaskPriority();
-  const overlaySubtasks = getOverlaySubtasks();
-  const assignees = window.editAssignedContacts.slice();
-
-  const updatedTask = createUpdatedTask(
-    taskId,
-    title,
-    description,
-    assignees,
-    date,
-    priority,
-    category,
-    overlaySubtasks
-  );
-
-  try {
-    const resp = await fetch(ref, {
-      method: "PUT",
-      headers: { "Content-Type": "application/json" },
-      body: JSON.stringify(updatedTask),
-    });
-    handleUpdateResponse(resp, updatedTask, taskId);
-  } catch (err) {
-    console.error("Error updating task:", err);
-  }
-}
-
-/**
- * Retrieves the form elements for editing the task.
- * @returns {Object|null} The form elements or null if missing.
- */
-function getFormElements() {
-  const titleEl = document.getElementById("overlay-edit-task-title-input");
-  const descEl = document.getElementById("overlay-edit-task-textarea");
-  const dateEl = document.getElementById("overlay-edit-date");
-  const catEl = document.getElementById("overlay-edit-task-category");
-
-  if (!titleEl || !descEl || !dateEl || !catEl) {
-    console.error("Missing edit form elements");
-    return null;
-  }
-
-  return { titleEl, descEl, dateEl, catEl };
-}
-
-/**
- * Extracts task details from the form elements.
- * @param {Object} elements - The form elements.
- * @returns {Object} The extracted task details.
- */
-function getTaskDetails(elements) {
-  return {
-    title: elements.titleEl.value.trim(),
-    description: elements.descEl.value.trim(),
-    date: elements.dateEl.value,
-    category: elements.catEl.value.trim(),
-  };
-}
-
-/**
- * Retrieves the subtasks from the overlay.
- * @returns {Array} The array of overlay subtasks.
- */
-function getOverlaySubtasks() {
-  const spans = document.querySelectorAll(
-    "#overlay-edit-task-subtasks-list li span"
-  );
-  return Array.from(spans).map((s) => s.textContent.trim());
-}
-
-/**
- * Creates the updated task object.
- * @param {string} taskId - The ID of the task.
- * @param {string} title - The task title.
- * @param {string} description - The task description.
- * @param {Array} assignees - The list of assignees.
- * @param {string} date - The task date.
- * @param {string} priority - The task priority.
- * @param {string} category - The task category.
- * @param {Array} overlaySubtasks - The list of subtasks.
- * @returns {Object} The updated task object.
- */
-function createUpdatedTask(
-  taskId,
-  title,
-  description,
-  assignees,
-  date,
-  priority,
-  category,
-  overlaySubtasks
-) {
-  return {
-    id: taskId,
-    title,
-    description,
-    assignees,
-    date,
-    priority,
-    category,
-    boardCategory: window.oldBoardCategory || "todo",
-    subtasks: overlaySubtasks.map((st) => ({ name: st, done: false })),
-  };
-}
-
-/**
- * Handles the response from the update request.
- * @param {Response} resp - The response from the fetch request.
- * @param {Object} updatedTask - The updated task object.
- * @param {string} taskId - The ID of the task.
- */
-async function handleUpdateResponse(resp, updatedTask, taskId) {
-  if (resp.ok) {
-    showToast("Task updated!");
-    await displayTasks();
-    window.editingMode = false;
-    window.editingTaskId = null;
-    openBoardOverlay(taskId);
-  } else {
-    console.error("Update failed with status:", resp.status);
-  }
-}
-
-window.updateTask = updateTask;
-
-/**
  * Fills the edit form with task data.
- * @param {Object} task - The task object containing details to fill in the form.
+ * @param {Object} task - The task object.
+ * @returns {void}
  */
 function fillEditFormData(task) {
   setTaskDetails(task);
@@ -177,10 +28,12 @@ function fillEditFormData(task) {
   editShowAvatars();
   window.oldBoardCategory = task.boardCategory;
 }
+window.fillEditFormData = fillEditFormData;
 
 /**
- * Sets the basic task details in the form.
- * @param {Object} task - The task object containing title, description, date, and category.
+ * Sets basic task details in the edit form.
+ * @param {Object} task - The task object.
+ * @returns {void}
  */
 function setTaskDetails(task) {
   document.getElementById("overlay-edit-task-title-input").value = task.title;
@@ -190,10 +43,12 @@ function setTaskDetails(task) {
   document.getElementById("overlay-edit-task-category").value =
     task.category || "";
 }
+window.setTaskDetails = setTaskDetails;
 
 /**
  * Populates the subtasks list in the edit overlay.
- * @param {Array} subtasks - The array of subtask objects to populate the list.
+ * @param {Array} subtasks - Array of subtasks.
+ * @returns {void}
  */
 function populateSubtasksList(subtasks) {
   const ul = document.getElementById("overlay-edit-task-subtasks-list");
@@ -204,13 +59,13 @@ function populateSubtasksList(subtasks) {
     ul.appendChild(li);
   });
 }
+window.populateSubtasksList = populateSubtasksList;
 
-window.fillEditFormData = fillEditFormData;
 /**
- * Sets task priority in edit overlay.
- * @param {string} prio
- * @param {string} containerId
- * @param {Event} event
+ * Sets task priority in the edit overlay.
+ * @param {string} prio - The priority.
+ * @param {string} containerId - The container ID.
+ * @param {Event} event - The event.
  * @returns {void}
  */
 function editSetTaskPrio(prio, containerId, event) {
@@ -220,9 +75,9 @@ function editSetTaskPrio(prio, containerId, event) {
 window.editSetTaskPrio = editSetTaskPrio;
 
 /**
- * Toggles priority buttons in edit overlay.
- * @param {string} prio
- * @param {string} containerId
+ * Toggles priority buttons in the edit overlay.
+ * @param {string} prio - The priority.
+ * @param {string} containerId - The container ID.
  * @returns {void}
  */
 function editTogglePrioButton(prio, containerId) {
@@ -244,8 +99,8 @@ function editTogglePrioButton(prio, containerId) {
 window.editTogglePrioButton = editTogglePrioButton;
 
 /**
- * Retrieves the selected priority in edit overlay.
- * @returns {string}
+ * Retrieves the selected priority in the edit overlay.
+ * @returns {string} The selected priority.
  */
 function getEditTaskPriority() {
   const container = document.getElementById(
@@ -258,9 +113,9 @@ function getEditTaskPriority() {
 window.getEditTaskPriority = getEditTaskPriority;
 
 /**
- * Sets the category in edit overlay.
- * @param {string} value
- * @param {Event} event
+ * Sets the category in the edit overlay.
+ * @param {string} value - The category value.
+ * @param {Event} event - The event.
  * @returns {void}
  */
 function editSetCategory(value, event) {
@@ -270,7 +125,7 @@ function editSetCategory(value, event) {
 window.editSetCategory = editSetCategory;
 
 /**
- * Toggles subtask icon display in edit overlay.
+ * Toggles subtasks icon display in the edit overlay.
  * @returns {void}
  */
 function editSubtasksClicked() {
@@ -284,8 +139,8 @@ function editSubtasksClicked() {
 window.editSubtasksClicked = editSubtasksClicked;
 
 /**
- * Adds a new subtask in edit overlay.
- * @param {Event} event
+ * Adds a new subtask in the edit overlay.
+ * @param {Event} event - The event.
  * @returns {void}
  */
 function editAddSubtask(event) {
@@ -326,8 +181,8 @@ window.renderEditOverlaySubtasksList = renderEditOverlaySubtasksList;
 
 /**
  * Switches a subtask into edit mode.
- * @param {number} index
- * @param {Event} event
+ * @param {number} index - The subtask index.
+ * @param {Event} event - The event.
  * @returns {void}
  */
 function editOverlaySubtask(index, event) {
@@ -350,9 +205,9 @@ function editOverlaySubtask(index, event) {
 window.editOverlaySubtask = editOverlaySubtask;
 
 /**
- * Confirms an edited subtask in edit overlay.
- * @param {number} index
- * @param {Event} event
+ * Confirms an edited subtask in the edit overlay.
+ * @param {number} index - The subtask index.
+ * @param {Event} event - The event.
  * @returns {void}
  */
 function confirmEditOverlaySubtask(index, event) {
@@ -375,9 +230,9 @@ function confirmEditOverlaySubtask(index, event) {
 window.confirmEditOverlaySubtask = confirmEditOverlaySubtask;
 
 /**
- * Removes an edited subtask from edit overlay.
- * @param {number} index
- * @param {Event} event
+ * Removes an edited subtask from the edit overlay.
+ * @param {number} index - The subtask index.
+ * @param {Event} event - The event.
  * @returns {void}
  */
 function removeEditOverlaySubtask(index, event) {
@@ -390,7 +245,7 @@ window.removeEditOverlaySubtask = removeEditOverlaySubtask;
 
 /**
  * Removes a subtask element (legacy).
- * @param {HTMLElement} el
+ * @param {HTMLElement} el - The element to remove.
  * @returns {void}
  */
 function editRemoveSubtask(el) {
@@ -400,8 +255,8 @@ function editRemoveSubtask(el) {
 window.editRemoveSubtask = editRemoveSubtask;
 
 /**
- * Focuses the subtask input in edit overlay.
- * @param {Event} event
+ * Focuses the subtask input in the edit overlay.
+ * @param {Event} event - The event.
  * @returns {void}
  */
 function editSubtasksPlus(event) {
@@ -416,8 +271,8 @@ function editSubtasksPlus(event) {
 window.editSubtasksPlus = editSubtasksPlus;
 
 /**
- * Clears the subtask input in edit overlay.
- * @param {Event} event
+ * Clears the subtask input in the edit overlay.
+ * @param {Event} event - The event.
  * @returns {void}
  */
 function editClearSubtasksInput(event) {
@@ -434,7 +289,7 @@ function editClearSubtasksInput(event) {
 window.editClearSubtasksInput = editClearSubtasksInput;
 
 /**
- * Displays the contact list in edit overlay.
+ * Displays the contact list in the edit overlay.
  * @returns {void}
  */
 function editShowContactList() {
@@ -450,7 +305,7 @@ function editShowContactList() {
 window.editShowContactList = editShowContactList;
 
 /**
- * Filters contacts in edit overlay.
+ * Filters contacts in the edit overlay.
  * @returns {void}
  */
 function editAssignedToSearch() {
@@ -469,8 +324,8 @@ function editAssignedToSearch() {
 window.editAssignedToSearch = editAssignedToSearch;
 
 /**
- * Toggles contact selection in edit overlay.
- * @param {string} contactName
+ * Toggles contact selection in the edit overlay.
+ * @param {string} contactName - The contact name.
  * @returns {void}
  */
 function editToggleContactSelection(contactName) {
@@ -481,43 +336,50 @@ function editToggleContactSelection(contactName) {
   const searchValue = document
     .getElementById("overlay-find-person")
     .value.trim();
-  if (searchValue) {
-    editAssignedToSearch();
-  } else {
-    editShowContactList();
-  }
+  if (searchValue) editAssignedToSearch();
+  else editShowContactList();
 }
 window.editToggleContactSelection = editToggleContactSelection;
 
 /**
- * Displays assigned contact avatars in edit overlay.
+ * Returns the HTML for a single avatar.
+ * @param {string} name - The contact name.
+ * @returns {string} The avatar HTML.
+ */
+function createAvatarHtml(name) {
+  const bg = assignColor(name);
+  return `<div class="avatar" style="background:${bg}">${getUserInitials(
+    name
+  )}</div>`;
+}
+
+/**
+ * Returns the HTML for the leftover avatar indicator.
+ * @param {number} leftover - Number of additional contacts.
+ * @returns {string} The leftover avatar HTML.
+ */
+function createLeftoverAvatarHtml(leftover) {
+  return `<div class="avatar-addtaskoverlay">+${leftover}</div>`;
+}
+
+/**
+ * Clears the avatar container and renders avatars based on assigned contacts.
  * @returns {void}
  */
 function editShowAvatars() {
-  const div = document.getElementById("overlay-edit-task-assigned-avatar");
-  if (!div) return;
-  div.innerHTML = "";
-
+  const container = document.getElementById(
+    "overlay-edit-task-assigned-avatar"
+  );
+  if (!container) return;
+  container.innerHTML = "";
   const contacts = window.editAssignedContacts || [];
   const maxVisible = 3;
-
-  // 1) Bis zu 3 echte Avatare
-  contacts.forEach((name, i) => {
-    if (i < maxVisible) {
-      const bg = assignColor(name);
-      div.innerHTML += `
-        <div class="avatar" style="background:${bg}">
-          ${getUserInitials(name)}
-        </div>`;
-    }
-  });
-
+  for (let i = 0; i < contacts.length && i < maxVisible; i++) {
+    container.innerHTML += createAvatarHtml(contacts[i]);
+  }
   if (contacts.length > maxVisible) {
     const leftover = contacts.length - maxVisible;
-    div.innerHTML += `
-      <div class="avatar-addtaskoverlay">
-        +${leftover}
-      </div>`;
+    container.innerHTML += createLeftoverAvatarHtml(leftover);
   }
 }
 window.editShowAvatars = editShowAvatars;

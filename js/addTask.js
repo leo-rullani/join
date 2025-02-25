@@ -56,31 +56,34 @@ function addTaskDueDate() {
 window.addTaskDueDate = addTaskDueDate;
 
 /**
- * Creates a new task and saves it to Firebase.
- * @returns {void}
+ * Validates the add task form.
+ * @returns {boolean} True if the form is valid, otherwise false.
  */
-function addTaskCreateTask() {
-  if (
-    !validateTask(
-      "add-task-title-input",
-      "add-task-textarea",
-      "date",
-      "add-task-category",
-      "errorTitle",
-      "errorDescription",
-      "errorDate",
-      "errorCategory"
-    )
-  ) {
-    return;
-  }
+function checkAddTaskValidation() {
+  return validateTask(
+    "add-task-title-input",
+    "add-task-textarea",
+    "date",
+    "add-task-category",
+    "errorTitle",
+    "errorDescription",
+    "errorDate",
+    "errorCategory"
+  );
+}
+
+/**
+ * Builds a new task object from form inputs.
+ * @returns {Object} The new task object.
+ */
+function buildNewTaskObject() {
   const taskId = "task_" + Date.now();
   const title = addTaskTitle();
   const desc = addTaskDescription();
   const names = window.assignedContacts.slice();
   const date = addTaskDueDate();
   const subtasks = window.globalSubtasks || [];
-  const newTask = {
+  return {
     id: taskId,
     title: title,
     description: desc,
@@ -91,8 +94,16 @@ function addTaskCreateTask() {
     boardCategory: "todo",
     subtasks: subtasks.map((sb) => ({ name: sb, done: false })),
   };
-  const ref = `${window.databaseURL}/tasks/${taskId}.json`;
-  fetch(ref, {
+}
+
+/**
+ * Sends the new task to the server.
+ * @param {Object} newTask - The task object to send.
+ * @returns {Promise<void>}
+ */
+function sendNewTask(newTask) {
+  const ref = `${window.databaseURL}/tasks/${newTask.id}.json`;
+  return fetch(ref, {
     method: "PUT",
     headers: { "Content-Type": "application/json" },
     body: JSON.stringify(newTask),
@@ -106,6 +117,16 @@ function addTaskCreateTask() {
       }
     })
     .catch((err) => console.error("Error:", err));
+}
+
+/**
+ * Creates a new task from the add task form.
+ * @returns {Promise<void>}
+ */
+async function addTaskCreateTask() {
+  if (!checkAddTaskValidation()) return;
+  const newTask = buildNewTaskObject();
+  await sendNewTask(newTask);
 }
 window.addTaskCreateTask = addTaskCreateTask;
 
@@ -201,8 +222,29 @@ function toggleContactSelection(contactName) {
 window.toggleContactSelection = toggleContactSelection;
 
 /**
- * Displays assigned contact avatars, up to 3.
- * If more than 3, adds a "+X others" avatar.
+ * Returns the HTML for a single task avatar.
+ * @param {string} contact - The contact name.
+ * @returns {string} The HTML string for the avatar.
+ */
+function createTaskAvatarHtml(contact) {
+  const bg = assignColor(contact);
+  return `<div class="avatar" style="background:${bg}">${getUserInitials(
+    contact
+  )}</div>`;
+}
+
+/**
+ * Returns the HTML for the leftover avatar indicator.
+ * @param {number} leftover - The number of extra contacts.
+ * @returns {string} The HTML string for the leftover indicator.
+ */
+function createTaskLeftoverAvatarHtml(leftover) {
+  return `<div class="avatar-addtaskoverlay">+${leftover}</div>`;
+}
+
+/**
+ * Clears the assigned avatars container and renders avatars for assigned contacts.
+ * @returns {void}
  */
 function addTaskShowAvatars() {
   const container = document.getElementById("add-task-assigned-avatar");
@@ -210,17 +252,12 @@ function addTaskShowAvatars() {
   container.innerHTML = "";
   const contacts = window.assignedContacts || [];
   const max = 3;
-  contacts.forEach((c, i) => {
-    if (i < max)
-      container.innerHTML += `<div class="avatar" style="background:${assignColor(
-        c
-      )}">
-      ${getUserInitials(c)}
-    </div>`;
-  });
+  for (let i = 0; i < contacts.length && i < max; i++) {
+    container.innerHTML += createTaskAvatarHtml(contacts[i]);
+  }
   if (contacts.length > max) {
     const leftover = contacts.length - max;
-    container.innerHTML += `<div class="avatar-addtaskoverlay">+${leftover} </div>`;
+    container.innerHTML += createTaskLeftoverAvatarHtml(leftover);
   }
 }
 window.addTaskShowAvatars = addTaskShowAvatars;
@@ -467,13 +504,10 @@ function handleOutsideClickSubtasks(event) {
 }
 
 /**
- * Resets the add-task form.
+ * Clears all task input fields.
  * @returns {void}
  */
-function addTaskClearFormularReset() {
-  const selectedContacts = document.querySelectorAll("li.selectedContact");
-  window.globalSubtasks = [];
-  window.subtasksList = [];
+function clearTaskInputs() {
   document.getElementById("add-task-title-input").value = "";
   document.getElementById("add-task-textarea").value = "";
   document.getElementById("date").value = "";
@@ -481,6 +515,13 @@ function addTaskClearFormularReset() {
   document.getElementById("add-task-assigned-avatar").innerHTML = "";
   document.getElementById("add-task-subtasks-input").value = "";
   document.getElementById("add-task-subtasks-list").innerHTML = "";
+}
+
+/**
+ * Resets task icons and priority toggle.
+ * @returns {void}
+ */
+function resetTaskIcons() {
   document
     .getElementById("add-task-subtasks-icon-plus")
     .classList.remove("d-none");
@@ -488,11 +529,27 @@ function addTaskClearFormularReset() {
     .getElementById("add-task-subtasks-icon-plus-check")
     .classList.add("d-none");
   addTaskPrioToggleButton("medium", "add-task-urgent-medium-low-buttons");
+}
 
-  selectedContacts.forEach((li) => {
-    li.classList.remove("selectedContact");
-  });
+/**
+ * Clears selected contact styling.
+ * @returns {void}
+ */
+function clearSelectedContacts() {
+  const selected = document.querySelectorAll("li.selectedContact");
+  selected.forEach((li) => li.classList.remove("selectedContact"));
+}
 
+/**
+ * Clears global task arrays and resets the add task form.
+ * @returns {void}
+ */
+function addTaskClearFormularReset() {
+  window.globalSubtasks = [];
+  window.subtasksList = [];
+  clearTaskInputs();
+  resetTaskIcons();
+  clearSelectedContacts();
   window.assignedContacts = [];
   addTaskAssignedToUnCheck();
 }
@@ -509,6 +566,31 @@ function addTaskClearFormular(event) {
 }
 window.addTaskClearFormular = addTaskClearFormular;
 
+/**
+ * Validates a single field by checking its value against a regex.
+ * Adds an error class and message if validation fails.
+ * @param {string} fieldId - The DOM id of the input field.
+ * @param {string} errorFieldId - The DOM id of the error message container.
+ * @param {RegExp} regex - The regular expression for validation.
+ * @param {string} errorMsg - The error message to display.
+ * @returns {boolean} True if the field is valid, false otherwise.
+ */
+function validateField(fieldId, errorFieldId, regex, errorMsg) {
+  const value = document.getElementById(fieldId).value.trim();
+  if (!regex.test(value)) {
+    document.getElementById(fieldId).classList.add("error");
+    const errDiv = document.getElementById(errorFieldId);
+    errDiv.textContent = errorMsg;
+    errDiv.style.display = "flex";
+    return false;
+  }
+  return true;
+}
+
+/**
+ * Validates task fields.
+ * @returns {boolean} True if all fields are valid.
+ */
 function validateTask(
   titleId,
   descriptionId,
@@ -519,42 +601,28 @@ function validateTask(
   errorDateId,
   errorCategoryId
 ) {
-  const titleValue = document.getElementById(titleId).value.trim();
-  const descriptionValue = document.getElementById(descriptionId).value.trim();
-  const dateValue = document.getElementById(dateId).value.trim();
-  const categoryValue = document.getElementById(categoryId).value.trim();
-
-  let isValid = true;
-
-  if (!/^[-&.()_a-zA-ZÀ-ž\s0-9/"!,–]+$/.test(titleValue)) {
-    document.getElementById(titleId).classList.add("error");
-    const errDivTitle = document.getElementById(errorTitleId);
-    errDivTitle.textContent = "Please enter a Title.";
-    errDivTitle.style.display = "flex";
-    isValid = false;
-  }
-  if (!/^[-&.()_a-zA-ZÀ-ž\s0-9/"!,–]+$/.test(descriptionValue)) {
-    document.getElementById(descriptionId).classList.add("error");
-    const errDivDescription = document.getElementById(errorDescriptionId);
-    errDivDescription.textContent = "Please enter a description.";
-    errDivDescription.style.display = "flex";
-    isValid = false;
-  }
-  if (!/^[0-9.-]+$/.test(dateValue)) {
-    document.getElementById(dateId).classList.add("error");
-    const errDivDate = document.getElementById(errorDateId);
-    errDivDate.textContent = "Please enter a Date.";
-    errDivDate.style.display = "flex";
-    isValid = false;
-  }
-  if (!/^[a-zA-ZÀ-ž\s]+$/.test(categoryValue)) {
-    document.getElementById(categoryId).classList.add("error");
-    const errDivCategory = document.getElementById(errorCategoryId);
-    errDivCategory.textContent = "Please enter a Category.";
-    errDivCategory.style.display = "flex";
-    isValid = false;
-  }
-  return isValid;
+  const vals = [
+    [
+      titleId,
+      errorTitleId,
+      /^[-&.()_a-zA-ZÀ-ž\s0-9/"!,–]+$/,
+      "Please enter a Title.",
+    ],
+    [
+      descriptionId,
+      errorDescriptionId,
+      /^[-&.()_a-zA-ZÀ-ž\s0-9/"!,–]+$/,
+      "Please enter a description.",
+    ],
+    [dateId, errorDateId, /^[0-9.-]+$/, "Please enter a Date."],
+    [
+      categoryId,
+      errorCategoryId,
+      /^[a-zA-ZÀ-ž\s]+$/,
+      "Please enter a Category.",
+    ],
+  ];
+  return vals.every((v) => validateField(v[0], v[1], v[2], v[3]));
 }
 
 function addTaskSubtasksClicked() {
@@ -581,7 +649,7 @@ function closeSubtaskInput() {
 }
 
 /*
- * Called on every click on the entire document 
+ * Called on every click on the entire document
  * (after addTaskSubtasksClicked() has registered the listener).
  * Checks whether the click occurred inside or outside the container.
  */
@@ -596,7 +664,7 @@ function handleOutsideClickSubtasks(event) {
 
 /**
  * Click on the X icon.
- * Since the X button is likely inside the same container, 
+ * Since the X button is likely inside the same container,
  * we prevent the document listener from treating it as "outside."
  */
 function clearSubtasks(event) {

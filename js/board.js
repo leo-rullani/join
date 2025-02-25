@@ -85,10 +85,8 @@ function dragEnd(e) {
  */
 function drop(e) {
   e.preventDefault();
-  // Container ermitteln
   const container = getTaskListContainer(e.target);
   if (!container) return;
-  // Visuelle Hervorhebung wieder entfernen
   container.classList.remove("drag-over");
   const data = e.dataTransfer.getData("text");
   const dragged = document.getElementById(data);

@@ -323,6 +323,7 @@
   height: 80px;
   resize: none;
   font-family: "Inter";
+  scrollbar-width: none;
 }
 
 .add-task-overlay-assigned-to {
