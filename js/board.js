@@ -139,3 +139,15 @@ function handleSearch(e) {
     task.style.display = txt.includes(q) ? "" : "none";
   });
 }
+
+let currentTaskId = null;
+
+function openMobileMenu(taskId) {
+  currentTaskId = taskId;
+  document.getElementById('mobile-drag-menu').style.display = 'block';
+}
+
+function closeMobileMenu() {
+  document.getElementById('mobile-drag-menu').style.display = 'none';
+  currentTaskId = null;
+}

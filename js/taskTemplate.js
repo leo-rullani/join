@@ -685,3 +685,15 @@ function overlaySubTaskTemplate(subtaskName, index) {
   `;
 }
 window.overlaySubTaskTemplate = overlaySubTaskTemplate;
+
+function createTaskHTML(t) {
+  return `
+    <div class="task" draggable="true" ondragstart="startDragging('${t.id}')" id="${t.id}">
+      <h3>${t.title}</h3>
+      <p>${t.description}</p>
+
+      <!-- Drei-Punkte-Button -->
+      <div class="mobile-task-menu-btn" onclick="openMobileMenu('${t.id}')"></div>
+    </div>
+  `;
+}

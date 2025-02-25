@@ -1123,3 +1123,20 @@
     padding-bottom: 5px; 
   }
 }
+
+@media (max-width: 500px) {
+  .task {
+    position: relative;
+  }
+
+  .mobile-task-menu-btn {
+    position: absolute;
+    top: 8px;
+    right: 8px;
+    width: 24px;
+    height: 24px;
+    cursor: pointer;
+    background: url("/assets/icons/dots-vertical.svg") no-repeat center;
+    background-size: contain;
+  }
+}
