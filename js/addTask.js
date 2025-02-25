@@ -424,12 +424,11 @@ function addSubtasksPlus(event) {
 window.addSubtasksPlus = addSubtasksPlus;
 
 /**
- * Wird aufgerufen, sobald man das Input oder das Plus-Symbol anklickt.
- * - Wechselt Icons (Plus → Check).
- * - Aktiviert einen globalen Klick-Listener, um Outside-Klick zu erkennen.
+ * Called when the input field or the plus icon is clicked.
+ * - Switches icons (Plus → Check).
+ * - Activates a global click listener to detect outside clicks.
  */
 function addTaskSubtasksClicked() {
-  // Plus ausblenden, Check-Bereich einblenden
   document
     .getElementById("add-task-subtasks-icon-plus")
     .classList.add("d-none");
@@ -437,38 +436,32 @@ function addTaskSubtasksClicked() {
     .getElementById("add-task-subtasks-icon-plus-check")
     .classList.remove("d-none");
 
-  // Klick-Listener aktivieren
   document.addEventListener("click", handleOutsideClickSubtasks);
 }
 
 /**
- * Schließt das Subtask-Eingabefeld wieder (Icons zurück, Input leeren).
+ * Closes the subtask input field (resets icons, clears input).
  */
 function closeSubtaskInput() {
-  // Check ausblenden, Plus wieder zeigen
   document
     .getElementById("add-task-subtasks-icon-plus")
     .classList.remove("d-none");
   document
     .getElementById("add-task-subtasks-icon-plus-check")
     .classList.add("d-none");
-
-  // Eingabefeld leeren
   document.getElementById("add-task-subtasks-input").value = "";
 }
 
 /**
- * Wird bei jedem Klick auf das gesamte Dokument aufgerufen.
- * Prüft, ob wir den Container angeklickt haben oder nicht.
+ * Called on every click on the entire document.
+ * Checks whether the container was clicked or not.
  */
 function handleOutsideClickSubtasks(event) {
   const container = document.getElementById("add-task-subtasks-container");
   if (!container) return;
 
-  // Falls der Klick NICHT innerhalb des Containers stattfand → schliessen:
   if (!container.contains(event.target)) {
     closeSubtaskInput();
-    // WICHTIG: Event-Listener entfernen, damit wir nicht permanent lauschen.
     document.removeEventListener("click", handleOutsideClickSubtasks);
   }
 }
@@ -571,14 +564,12 @@ function addTaskSubtasksClicked() {
   document
     .getElementById("add-task-subtasks-icon-plus-check")
     .classList.remove("d-none");
-
-  // Listener auf document für Klicks ausserhalb
   document.addEventListener("click", handleOutsideClickSubtasks);
 }
 
 /*
- 
-Schließt das Subtask-Eingabefeld (Icons zurück, Input leeren).*/
+ * Closes the subtask input field (resets icons, clears input).
+ */
 function closeSubtaskInput() {
   document
     .getElementById("add-task-subtasks-icon-plus")
@@ -590,36 +581,26 @@ function closeSubtaskInput() {
 }
 
 /*
- 
-Wird bei jedem Klick auf das gesamte Dokument aufgerufen
-(nachdem addTaskSubtasksClicked() den Listener angemeldet hat).
-Prüft, ob wir innerhalb oder ausserhalb des Containers geklickt haben.*/
+ * Called on every click on the entire document 
+ * (after addTaskSubtasksClicked() has registered the listener).
+ * Checks whether the click occurred inside or outside the container.
+ */
 function handleOutsideClickSubtasks(event) {
   const container = document.getElementById("add-task-subtasks-container");
   if (!container) return;
-
-  // Prüfen, ob es AUSSERHALB war:
   if (!container.contains(event.target)) {
     closeSubtaskInput();
-    // WICHTIG: den Listener entfernen, sonst bleibt er aktiv
     document.removeEventListener("click", handleOutsideClickSubtasks);
   }
 }
 
 /**
- 
-Klick auf das X-Icon.
-Da der X-Button wahrscheinlich auch im selben Container sitzt,
-verhindern wir, dass der Document-Listener es als "Außerhalb" ansieht.*/
+ * Click on the X icon.
+ * Since the X button is likely inside the same container, 
+ * we prevent the document listener from treating it as "outside."
+ */
 function clearSubtasks(event) {
-  // 1. Klick nicht weiterreichen
   event.stopPropagation();
-
-  // 2. Hier kannst du definieren, was das X tun soll:
-  //    Eingabefeld leeren, Icons zurück:
   closeSubtaskInput();
-
-  // 3. Und weil wir das Input manuell schließen,
-  //    können wir den Outside-Listener entfernen:
   document.removeEventListener("click", handleOutsideClickSubtasks);
 }
