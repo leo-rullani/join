@@ -328,13 +328,15 @@ var DragDropTouch;
       var _this = this;
       if (this._img) {
         requestAnimationFrame(function () {
-          var pt = _this._getPoint(e, true),
-            s = _this._img.style;
-          s.position = "absolute";
-          s.pointerEvents = "none";
-          s.zIndex = "999999";
-          s.left = Math.round(pt.x - _this._imgOffset.x) + "px";
-          s.top = Math.round(pt.y - _this._imgOffset.y) + "px";
+          try {
+            var pt = _this._getPoint(e, true),
+              s = _this._img.style;
+            s.position = "absolute";
+            s.pointerEvents = "none";
+            s.zIndex = "999999";
+            s.left = Math.round(pt.x - _this._imgOffset.x) + "px";
+            s.top = Math.round(pt.y - _this._imgOffset.y) + "px";
+          } catch (err) {}
         });
       }
     };
