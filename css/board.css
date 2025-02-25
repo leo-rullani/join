@@ -220,6 +220,11 @@
   position: relative;
 }
 
+.task_list.drag-over {
+  border: 2px dashed #28abe2 !important;
+  padding: 10px 10px 10px 10px;
+}
+
 .task:active {
   cursor: grabbing;
 }
@@ -820,6 +825,10 @@
   .help_text_link {
     display: flex !important;
   }
+  .task_list.drag-over {
+    border: none !important;
+    padding: 0px 0px 20px 0px;
+  }
 }
 
 @media (max-width: 780px) {
@@ -1032,6 +1041,7 @@
     .board_section {
       height: auto;
       overflow-y: auto;
+      top: 60px;
     }
     .board_content {
       min-width: auto;
@@ -1114,13 +1124,13 @@
 
 @media (max-width: 860px) {
   .task_list:has(.task) {
-    padding-bottom: 50px; 
+    padding-bottom: 50px;
   }
 }
 
 @media (max-width: 500px) {
   .task_list:has(.task) {
-    padding-bottom: 5px; 
+    padding-bottom: 5px;
   }
 }
 

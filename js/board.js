@@ -1,12 +1,40 @@
 "use strict";
 let draggedTaskId = null;
-
+let dragCounter = 0;
 /**
  * Initializes the board on load.
  */
 async function initBoard() {
   await loadContacts();
   displayTasks();
+}
+
+/**
+ * Wird auf dem Container aufgerufen, wenn etwas in ihn gezogen wird.
+ */
+function dragEnter(e) {
+  e.preventDefault();
+  dragCounter++;
+  if (dragCounter === 1) {
+    e.currentTarget.classList.add("drag-over");
+  }
+}
+/**
+ * Wird auf dem Container aufgerufen, wenn etwas das Element verlässt.
+ */
+function dragLeave(e) {
+  e.preventDefault();
+  dragCounter--;
+  if (dragCounter === 0) {
+    e.currentTarget.classList.remove("drag-over");
+  }
+}
+
+function getTaskListContainer(element) {
+  while (element && !element.classList?.contains("task_list")) {
+    element = element.parentElement;
+  }
+  return element;
 }
 
 /**
@@ -26,9 +54,10 @@ function scrollContainer(e) {
   const container = document.getElementById("tasks-container");
   const containerRect = container.getBoundingClientRect();
 
-  if (e.clientY < containerRect.top + 50) {
+  const y = e.clientY;
+  if (y < containerRect.top + 50) {
     container.scrollTop -= 10;
-  } else if (e.clientY > containerRect.bottom - 50) {
+  } else if (y > containerRect.bottom - 50) {
     container.scrollTop += 10;
   }
 }
@@ -56,16 +85,19 @@ function dragEnd(e) {
  */
 function drop(e) {
   e.preventDefault();
+  // Container ermitteln
+  const container = getTaskListContainer(e.target);
+  if (!container) return;
+  // Visuelle Hervorhebung wieder entfernen
+  container.classList.remove("drag-over");
   const data = e.dataTransfer.getData("text");
   const dragged = document.getElementById(data);
-  const target = e.target;
-
-  if (target.classList.contains("task_list")) {
-    const position = calculateDropPosition(e, target);
-    insertAt(target, dragged, position);
-    const newBoardCategory = target.parentElement.id;
-    updateTaskBoardCategory(dragged.id, newBoardCategory);
-  }
+  const position = calculateDropPosition(e, container);
+  insertAt(container, dragged, position);
+  const newBoardCategory = container.parentElement.id;
+  updateTaskBoardCategory(dragged.id, newBoardCategory);
+  dragCounter = 0;
+  e.currentTarget.classList.remove("drag-over");
 }
 
 /**
@@ -144,10 +176,10 @@ let currentTaskId = null;
 
 function openMobileMenu(taskId) {
   currentTaskId = taskId;
-  document.getElementById('mobile-drag-menu').style.display = 'block';
+  document.getElementById("mobile-drag-menu").style.display = "block";
 }
 
 function closeMobileMenu() {
-  document.getElementById('mobile-drag-menu').style.display = 'none';
+  document.getElementById("mobile-drag-menu").style.display = "none";
   currentTaskId = null;
 }
