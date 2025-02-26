@@ -352,6 +352,7 @@
     margin-left: 0px;
     padding: 25px;
     font-size: 12px;
+    border-radius: 12px;
   }
 
   .policy_docs_privacy:hover {
@@ -1178,7 +1179,7 @@
     align-items: flex-start;
     width: auto;
     margin-left: 20px;
-    margin-top: 100px;
+    margin-top: 75px;
   }
 
   .summary_details_header {
@@ -1795,11 +1796,11 @@
   }
 }
 
-@media (max-width: 650px) {
+@media (max-width: 1000px) {
   .privacypolicy_content {
     padding-left: 40px;
     padding-right: 40px;
-    padding-bottom: 20px;
+    padding-bottom: 60px;
   }
 
   .privacypolicy_header {
@@ -1860,6 +1861,7 @@
   .legalnotice_content {
     padding-left: 12px;
     padding-right: 12px;
+    padding-bottom: 60px;
   }
 
   .help_content {
