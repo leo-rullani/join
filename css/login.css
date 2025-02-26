@@ -262,7 +262,7 @@ h2 {
     font-size: 40px;
   }
   .logo-container img {
-    width: 100px;
+    width: 100px !important;
   }
 
   .button-container button {
@@ -294,7 +294,6 @@ h2 {
     width: 20px;
     cursor: pointer;
   }
-}
 
 @media (max-width: 500px) {
   body {

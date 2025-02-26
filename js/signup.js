@@ -20,12 +20,8 @@ function init() {
   const logoContainer = document.querySelector(".logo-container"),
     formContainer = document.querySelector(".form-container"),
     footer = document.querySelector(".footer");
-  if (window.innerWidth <= 500) {
-    footer.classList.add("hidden");
-  } else {
-    formContainer.classList.remove("hidden");
-    footer.classList.remove("hidden");
-  }
+  formContainer.classList.remove("hidden");
+  footer.classList.remove("hidden");
 }
 
 /**
