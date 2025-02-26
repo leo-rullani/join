@@ -310,7 +310,7 @@ window.editShowContactList = editShowContactList;
  */
 function editAssignedToSearch() {
   const search = document
-    .getElementById("overlay-find-person")
+    .getElementById("edit-find-person")
     .value.toLowerCase();
   const container = document.getElementById("overlay-edit-task-contact");
   container.innerHTML = "";

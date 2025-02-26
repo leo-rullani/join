@@ -77,15 +77,42 @@ function initLogoAnimation(logo, form) {
  * @param {HTMLElement} logo - The logo container element.
  * @param {HTMLElement} form - The form element to display.
  */
-function runSkipAnimation(logo, form) {
+function runSkipAnimation(logo, form, signupButton) {
+  signupButton = document.getElementById("signBTN");
   logo.classList.add("fixed-logo");
   logo.classList.remove("logo-container");
+  blueAnimation(logo);
+  whiteAnimation(logo);
+  form.classList.remove("hidden");
+  form.classList.add("visible");
+}
+
+/**
+ * Applies a white animation effect by changing the background color
+ * and logo image for smaller screens.
+ *
+ * @param {HTMLElement} logo - The logo element that contains the image.
+ */
+function whiteAnimation(logo) {
+  if (window.innerWidth <= 500) {
+    document.body.style.backgroundColor = "#F6F7F8";
+    logo.querySelector("img").src = "/assets/img/join-logo-blue.svg";
+    document.querySelector(".top-right").classList.remove("hidden");
+    document.querySelector(".footer").classList.remove("hidden");
+  }
+}
+
+/**
+ * Applies a blue animation effect by changing the background color
+ * and logo image for smaller screens.
+ *
+ * @param {HTMLElement} logo - The logo element that contains the image.
+ */
+function blueAnimation(logo) {
   if (window.innerWidth <= 500) {
     document.body.style.backgroundColor = "#2b3647";
     logo.querySelector("img").src = "/assets/img/join-logo-white.svg";
   }
-  form.classList.remove("hidden");
-  form.classList.add("visible");
 }
 
 /**
@@ -94,18 +121,10 @@ function runSkipAnimation(logo, form) {
  * @param {HTMLElement} form - The form element to display after animation.
  */
 function runFullAnimation(logo, form) {
-  if (window.innerWidth <= 500) {
-    document.body.style.backgroundColor = "#2b3647";
-    logo.querySelector("img").src = "/assets/img/join-logo-white.svg";
-  }
+  blueAnimation(logo);
   setTimeout(() => logo.classList.add("move-logo"), 500);
   logo.addEventListener("transitionend", () => {
-    if (window.innerWidth <= 500) {
-      document.body.style.backgroundColor = "#F6F7F8";
-      logo.querySelector("img").src = "/assets/img/join-logo-blue.svg";
-      document.querySelector(".top-right").classList.remove("hidden");
-      document.querySelector(".footer").classList.remove("hidden");
-    }
+    whiteAnimation(logo);
     form.classList.remove("hidden");
     form.classList.add("visible");
   });

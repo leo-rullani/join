@@ -175,11 +175,7 @@ function validateEmail() {
  * @param {{ userName: string, userEmail: string, password: string }} userData - The user data to save.
  * @param {string} newUserKey - The new user's unique key.
  */
-function handleUserRegistration(userData, newUserKey) {
-  sessionStorage.setItem(
-    "loggedInUser",
-    JSON.stringify({ ...userData, userId: newUserKey })
-  );
+function handleUserRegistration() {
   showToast("Sign up successfull!");
   setTimeout(() => (window.location.href = "/html/login.html"), 2000);
 }

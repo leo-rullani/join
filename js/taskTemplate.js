@@ -299,7 +299,7 @@ window.taskEditTemplate = function (t) {
             <input
               type="text"
               name="overlay-find-person"
-              id="overlay-find-person"
+              id="edit-find-person"
               autocomplete="off"
               placeholder="Select contacts to assign"
               onclick="editShowContactList()"

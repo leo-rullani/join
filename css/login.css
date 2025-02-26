@@ -62,7 +62,6 @@ body {
 .signup-btn:hover {
   background-color: #28abe2;
 }
-
 .form-container {
   opacity: 0;
   transition: opacity 0.5s ease-in-out;
@@ -265,6 +264,10 @@ h2 {
     width: 100px !important;
   }
 
+  .fixed-logo img {
+    width: 100px !important;
+  }
+
   .button-container button {
     width: auto;
     min-width: 150px;
@@ -286,14 +289,14 @@ h2 {
     margin-bottom: -16px;
   }
 }
-  .input-icon {
-    position: absolute;
-    right: -15px;
-    top: 50%;
-    transform: translateY(-50%);
-    width: 20px;
-    cursor: pointer;
-  }
+.input-icon {
+  position: absolute;
+  right: -15px;
+  top: 50%;
+  transform: translateY(-50%);
+  width: 20px;
+  cursor: pointer;
+}
 
 @media (max-width: 500px) {
   body {
@@ -309,8 +312,8 @@ h2 {
 
 @media (max-width: 360px) {
   .login-box {
-  padding: 15px 15px;
-  margin-top: -40px;
-  scale: 0.9;
+    padding: 15px 15px;
+    margin-top: -40px;
+    scale: 0.9;
   }
 }
