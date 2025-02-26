@@ -1188,6 +1188,7 @@
 
   .summary_cards {
     margin-left: 2.5px;
+    margin-top: 20px;
   }
 
   .summary_longbox {
@@ -1834,7 +1835,7 @@
   }
 }
 
-@media (max-width: 450px) {
+@media (max-width: 500px) {
   .privacypolicy_content {
     padding-left: 12px;
     padding-right: 12px;
@@ -1843,6 +1844,7 @@
   .privacypolicy_content {
     padding-left: 12px;
     padding-right: 12px;
+    padding-bottom: 100px;
   }
 
   p {
@@ -1861,7 +1863,7 @@
   .legalnotice_content {
     padding-left: 12px;
     padding-right: 12px;
-    padding-bottom: 60px;
+    padding-bottom: 100px;
   }
 
   .help_content {

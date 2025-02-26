@@ -153,6 +153,11 @@ ul {
   background-color: #2c4972;
 }
 
+.contact_email-privacy {
+  font-size: 16px; 
+  color: #29abe2ff;
+}
+
 @media (max-width: 861px) {
   .privacypolicy_title {
     display: none;
