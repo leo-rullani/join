@@ -781,12 +781,6 @@
   text-decoration: none;
 }
 
-@media (max-width: 1750px) {
-  .board_container {
-    gap: 100px;
-  }
-}
-
 @media (max-width: 1000px) {
   .board_container {
     gap: 50px;
