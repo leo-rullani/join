@@ -22,7 +22,7 @@ header {
   display: flex;
   justify-content: flex-end;
   align-items: center;
-  z-index: 0;
+  z-index: 999;
 }
 
 .header_content {
@@ -112,7 +112,7 @@ header {
   flex-direction: column;
   align-items: center;
   position: relative;
-  z-index: 1;
+  z-index: 999999;
 }
 
 .logo {
