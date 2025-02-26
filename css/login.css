@@ -115,7 +115,7 @@ h2 {
 }
 
 .input-container input {
-  width: 95%;
+  width: 93%;
   padding: 12px 45px 12px 15px;
   border: 1px solid #d1d1d1;
   border-radius: 6px;
@@ -135,7 +135,7 @@ h2 {
 
 .input-icon {
   position: absolute;
-  right: -35px;
+  right: -25px;
   top: 50%;
   transform: translateY(-50%);
   width: 20px;
@@ -286,39 +286,6 @@ h2 {
     margin-bottom: -16px;
   }
 }
-
-@media (max-width: 375px) {
-  .input-container input {
-    width: 95%;
-  }
-  .input-icon {
-    position: absolute;
-    right: -35px;
-    top: 50%;
-    transform: translateY(-50%);
-    width: 20px;
-    cursor: pointer;
-  }
-}
-
-@media (max-width: 350px) {
-  .input-container input {
-    width: 90%;
-  }
-  .input-icon {
-    position: absolute;
-    right: -25px;
-    top: 50%;
-    transform: translateY(-50%);
-    width: 20px;
-    cursor: pointer;
-  }
-}
-
-@media (max-width: 330px) {
-  .input-container input {
-    width: 90%;
-  }
   .input-icon {
     position: absolute;
     right: -15px;
@@ -338,5 +305,13 @@ h2 {
 @media (max-width: 600px) {
   .notification {
     font-size: 12px;
+  }
+}
+
+@media (max-width: 360px) {
+  .login-box {
+  padding: 15px 15px;
+  margin-top: -40px;
+  scale: 0.9;
   }
 }
