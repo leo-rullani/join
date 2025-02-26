@@ -48,6 +48,7 @@
   flex-direction: column;
   padding-left: 100px;
   padding-right: 180px;
+  padding-bottom: 100px;
 }
 
 .how_to_use_content {
@@ -121,4 +122,9 @@ li::before {
 
 .help_text_link {
   display: none !important;
+}
+
+.contact_email-help {
+  font-size: 16px;
+  color: #29abe2ff;
 }
