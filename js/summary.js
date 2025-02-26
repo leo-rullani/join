@@ -6,20 +6,58 @@
  */
 async function initSummaryPage() {
   await getTaskSummary();
-  const headerName = document.getElementById("userName"),
-    greetingDiv = document.getElementById("userName"),
-    userData = sessionStorage.getItem("loggedInUser");
-  if (!headerName || !greetingDiv) {
+  const elements = getUserElements();
+  if (!elements.headerName || !elements.greetingDiv) {
     console.error("Elements not found!");
     return;
   }
-  const isGuest = !userData,
+  const userInfo = getUserInfo();
+  updateUserElements(elements, userInfo);
+  finalizeInitialization();
+}
+
+/**
+ * Retrieves the DOM elements required for the summary page.
+ * @returns {Object} An object containing headerName and greetingDiv elements.
+ */
+function getUserElements() {
+  const headerName = document.getElementById("userName"),
+    greetingDiv = document.getElementById("userName");
+  return { headerName, greetingDiv };
+}
+
+/**
+ * Retrieves and parses user information from session storage.
+ * @returns {Object} An object containing userName and textColor.
+ */
+function getUserInfo() {
+  const userData = sessionStorage.getItem("loggedInUser"),
+    isGuest = !userData,
     user = isGuest ? { userName: "Guest" } : JSON.parse(userData),
     userName = user.userName || "User",
     { textColor } = getProfileData(isGuest);
+  return { userName, textColor };
+}
+
+/**
+ * Updates the header and greeting elements with the user information.
+ * @param {Object} elements - Contains headerName and greetingDiv.
+ * @param {Object} userInfo - Contains userName and textColor.
+ */
+function updateUserElements(
+  { headerName, greetingDiv },
+  { userName, textColor }
+) {
   headerName.style.color = textColor;
   greetingDiv.textContent = userName;
   headerName.textContent = userName;
+}
+
+/**
+ * Finalizes the page initialization by setting the greeting,
+ * initializing overlay checks, and making the body visible.
+ */
+function finalizeInitialization() {
   setGreeting();
   initOverlayCheck();
   document.body.style.visibility = "visible";
@@ -154,20 +192,38 @@ function initOverlayCheck() {
 }
 
 /**
- * Displays the greeting overlay and hides it after a delay.
+ * Retrieves the greeting overlay and related elements from the DOM.
+ * @returns {Object|null} Object containing overlay and text elements, or null if the overlay is not found.
  */
-function showGreetingOverlay() {
+function getGreetingElements() {
   const ov = document.getElementById("greetingOverlay");
-  if (!ov) return;
+  if (!ov) return null;
   const ogt = document.getElementById("overlayGreetingText"),
     ogn = document.getElementById("overlayGreetingName"),
     gt = document.getElementById("greeting_text"),
     un = document.getElementById("userName");
-  if (ogt && gt) ogt.textContent = gt.textContent;
+  return { ov, ogt, ogn, gt, un };
+}
+
+/**
+ * Updates the greeting overlay content based on the main page elements.
+ * @param {Object} elems - The object containing overlay text elements.
+ */
+function updateGreetingContent({ ogt, ogn, gt, un }) {
+  if (ogt && gt) {
+    ogt.textContent = gt.textContent;
+  }
   if (ogn && un) {
     ogn.textContent = un.textContent;
     ogn.style.color = un.style.color;
   }
+}
+
+/**
+ * Animates the greeting overlay with a fade out effect.
+ * @param {HTMLElement} ov - The greeting overlay element.
+ */
+function animateGreetingOverlay(ov) {
   ov.classList.remove("hidden");
   setTimeout(() => {
     ov.classList.add("fadeOut");
@@ -179,24 +235,44 @@ function showGreetingOverlay() {
 }
 
 /**
- * Logs out the user or redirects a guest to the login page.
+ * Displays the greeting overlay by updating its content and triggering the fade-out animation.
  */
-function logout() {
+function showGreetingOverlay() {
+  const elems = getGreetingElements();
+  if (!elems) return;
+  updateGreetingContent(elems);
+  animateGreetingOverlay(elems.ov);
+}
+
+/**
+ * Retrieves the logged in user from session storage.
+ * @returns {Object|null} The user object, or null if not logged in.
+ */
+function getLoggedInUser() {
   const ud = sessionStorage.getItem("loggedInUser");
-  if (!ud) {
-    window.location.href = "/html/login.html";
-    return;
-  }
-  const u = JSON.parse(ud),
-    n = u.userName || "User",
-    ov = document.getElementById("goodNightOverlay"),
+  if (!ud) return null;
+  return JSON.parse(ud);
+}
+
+/**
+ * Retrieves logout overlay elements from the DOM.
+ * @returns {Object|null} Object containing overlay, text, and name elements, or null if any are missing.
+ */
+function getLogoutElements() {
+  const ov = document.getElementById("goodNightOverlay"),
     gnt = document.getElementById("goodNightText"),
     gnn = document.getElementById("goodNightName");
-  if (!ov || !gnt || !gnn) {
-    window.location.href = "/html/login.html";
-    return;
-  }
-  gnn.textContent = n;
+  if (!ov || !gnt || !gnn) return null;
+  return { ov, gnt, gnn };
+}
+
+/**
+ * Animates the logout overlay and completes the logout process.
+ * @param {Object} elements - Contains overlay (ov) and name element (gnn).
+ * @param {string} userName - The user's name to display.
+ */
+function animateLogoutOverlay({ ov, gnn }, userName) {
+  gnn.textContent = userName;
   ov.classList.remove("hidden");
   setTimeout(() => {
     ov.classList.add("fadeOut");
@@ -207,6 +283,24 @@ function logout() {
       window.location.href = "/html/login.html";
     }, 500);
   }, 2000);
+}
+
+/**
+ * Logs out the current user by animating the overlay and redirecting to the login page.
+ */
+function logout() {
+  const user = getLoggedInUser();
+  if (!user) {
+    window.location.href = "/html/login.html";
+    return;
+  }
+  const userName = user.userName || "User";
+  const elements = getLogoutElements();
+  if (!elements) {
+    window.location.href = "/html/login.html";
+    return;
+  }
+  animateLogoutOverlay(elements, userName);
 }
 
 /**

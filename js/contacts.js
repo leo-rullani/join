@@ -320,11 +320,8 @@ window.clearAddFormErrors = function () {
   document.getElementById("name").classList.remove("error");
   document.getElementById("email").classList.remove("error");
   document.getElementById("phone").classList.remove("error");
-  document.getElementById("errorName").textContent = "";
   document.getElementById("errorName").style.display = "none";
-  document.getElementById("errorEmail").textContent = "";
   document.getElementById("errorEmail").style.display = "none";
-  document.getElementById("errorPhone").textContent = "";
   document.getElementById("errorPhone").style.display = "none";
 };
 
@@ -332,11 +329,8 @@ window.clearEditFormErrors = function () {
   document.getElementById("editName").classList.remove("error");
   document.getElementById("editEmail").classList.remove("error");
   document.getElementById("editPhone").classList.remove("error");
-  document.getElementById("editErrorName").textContent = "";
   document.getElementById("editErrorName").style.display = "none";
-  document.getElementById("editErrorEmail").textContent = "";
   document.getElementById("editErrorEmail").style.display = "none";
-  document.getElementById("editErrorPhone").textContent = "";
   document.getElementById("editErrorPhone").style.display = "none";
 };
 

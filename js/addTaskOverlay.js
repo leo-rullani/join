@@ -1,34 +1,57 @@
 "use strict";
 /**
- * Creates a new task from the overlay form.
+ * Validates the overlay task fields.
+ * @returns {boolean} True if the task fields are valid, false otherwise.
+ */
+function isOverlayTaskValid() {
+  return validateTask(
+    "overlay-add-task-title-input",
+    "overlay-add-task-textarea",
+    "overlay-date",
+    "overlay-add-task-category",
+    "errorOverlayTitle",
+    "errorOverlayDescription",
+    "errorOverlayDate",
+    "errorOverlayCategory"
+  );
+}
+
+/**
+ * Sends the new task to the database using a PUT request.
+ * @param {Object} newTask - The task object to be stored.
+ * @returns {Promise<Response>} The response from the fetch request.
+ */
+async function putTaskToDatabase(newTask) {
+  const ref = `${window.databaseURL}/tasks/${newTask.id}.json`;
+  return await fetch(ref, {
+    method: "PUT",
+    headers: { "Content-Type": "application/json" },
+    body: JSON.stringify(newTask),
+  });
+}
+
+/**
+ * Processes the new task by sending it to the database and handling the response.
+ * @param {Object} newTask - The task object to process.
  * @returns {Promise<void>}
  */
-async function overlayAddTaskCreateTask() {
-  if (
-    !validateTask(
-      "overlay-add-task-title-input",
-      "overlay-add-task-textarea",
-      "overlay-date",
-      "overlay-add-task-category",
-      "errorOverlayTitle",
-      "errorOverlayDescription",
-      "errorOverlayDate",
-      "errorOverlayCategory"
-    )
-  )
-    return;
-  const newTask = createNewTask();
-  const ref = `${window.databaseURL}/tasks/${newTask.id}.json`;
+async function processNewTask(newTask) {
   try {
-    const resp = await fetch(ref, {
-      method: "PUT",
-      headers: { "Content-Type": "application/json" },
-      body: JSON.stringify(newTask),
-    });
+    const resp = await putTaskToDatabase(newTask);
     await handleResponse(resp, newTask);
   } catch (err) {
     console.error("Error (Overlay):", err);
   }
+}
+
+/**
+ * Creates a new task from the overlay form and sends it to the database.
+ * @returns {Promise<void>}
+ */
+async function overlayAddTaskCreateTask() {
+  if (!isOverlayTaskValid()) return;
+  const newTask = createNewTask();
+  await processNewTask(newTask);
 }
 
 /**

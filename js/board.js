@@ -1,8 +1,10 @@
 "use strict";
 let draggedTaskId = null;
 let dragCounter = 0;
+
 /**
- * Initializes the board on load.
+ * Initializes the board by loading contacts and displaying tasks.
+ * @returns {Promise<void>}
  */
 async function initBoard() {
   await loadContacts();
@@ -10,7 +12,8 @@ async function initBoard() {
 }
 
 /**
- * Wird auf dem Container aufgerufen, wenn etwas in ihn gezogen wird.
+ * Handles the drag enter event on a container.
+ * @param {Event} e - The drag event.
  */
 function dragEnter(e) {
   e.preventDefault();
@@ -19,8 +22,10 @@ function dragEnter(e) {
     e.currentTarget.classList.add("drag-over");
   }
 }
+
 /**
- * Wird auf dem Container aufgerufen, wenn etwas das Element verlässt.
+ * Handles the drag leave event on a container.
+ * @param {Event} e - The drag event.
  */
 function dragLeave(e) {
   e.preventDefault();
@@ -30,6 +35,11 @@ function dragLeave(e) {
   }
 }
 
+/**
+ * Finds the task list container element starting from the given element.
+ * @param {HTMLElement} element - The starting element.
+ * @returns {HTMLElement|null} The task list container element, or null if not found.
+ */
 function getTaskListContainer(element) {
   while (element && !element.classList?.contains("task_list")) {
     element = element.parentElement;
@@ -38,7 +48,7 @@ function getTaskListContainer(element) {
 }
 
 /**
- * Allows drag-and-drop functionality.
+ * Allows dropping by preventing default behavior and handling scrolling.
  * @param {Event} e - The drag event.
  */
 function allowDrop(e) {
@@ -48,13 +58,12 @@ function allowDrop(e) {
 }
 
 /**
- * Scrolls the tasks container based on mouse position.
+ * Scrolls the tasks container based on the mouse position during a drag event.
  * @param {Event} e - The drag event.
  */
 function scrollContainer(e) {
   const container = document.getElementById("tasks-container");
   const rect = container.getBoundingClientRect();
-
   if (e.clientY < rect.top + 50) {
     container.scrollTop -= 10;
   } else if (e.clientY > rect.bottom - 50) {
@@ -63,7 +72,7 @@ function scrollContainer(e) {
 }
 
 /**
- * Starts the drag operation.
+ * Initiates the drag operation for a task element.
  * @param {Event} e - The drag event.
  */
 function drag(e) {
@@ -72,7 +81,7 @@ function drag(e) {
 }
 
 /**
- * Ends the drag operation.
+ * Ends the drag operation for a task element.
  * @param {Event} e - The drag event.
  */
 function dragEnd(e) {
@@ -80,7 +89,7 @@ function dragEnd(e) {
 }
 
 /**
- * Processes the drop operation.
+ * Processes the drop event by inserting the dragged task into its new position.
  * @param {Event} e - The drop event.
  */
 function drop(e) {
@@ -99,16 +108,15 @@ function drop(e) {
 }
 
 /**
- * Calculates the drop position in the target container.
+ * Calculates the index position for dropping a task within the target container.
  * @param {Event} e - The drop event.
- * @param {HTMLElement} target - The target container.
- * @returns {number} The position index to insert the dragged task.
+ * @param {HTMLElement} target - The target container element.
+ * @returns {number} The index position to insert the dragged task.
  */
 function calculateDropPosition(e, target) {
   const rect = target.getBoundingClientRect();
   const offsetY = e.clientY - rect.top;
   const children = target.children;
-
   let position = 0;
   for (let i = 0; i < children.length; i++) {
     const childRect = children[i].getBoundingClientRect();
@@ -121,13 +129,13 @@ function calculateDropPosition(e, target) {
 }
 
 /**
- * Updates the board category of the dragged task.
+ * Updates the board category of a task in the database.
  * @param {string} taskId - The ID of the task.
- * @param {string} newBoardCategory - The new category for the task.
+ * @param {string} newBoardCategory - The new board category.
+ * @returns {Promise<void>}
  */
 async function updateTaskBoardCategory(taskId, newBoardCategory) {
   const taskRef = `${databaseURL}/tasks/${taskId}.json`;
-
   const response = await fetch(taskRef, {
     method: "PATCH",
     headers: {
@@ -135,18 +143,16 @@ async function updateTaskBoardCategory(taskId, newBoardCategory) {
     },
     body: JSON.stringify({ boardCategory: newBoardCategory }),
   });
-
-  if (response.ok) {
-  } else {
+  if (!response.ok) {
     console.error("Error updating boardCategory");
   }
 }
 
 /**
- * Inserts the dragged task at the specified position.
- * @param {HTMLElement} target - The target container.
+ * Inserts the dragged task element into the target container at the specified position.
+ * @param {HTMLElement} target - The target container element.
  * @param {HTMLElement} dragged - The dragged task element.
- * @param {number} position - The position index to insert at.
+ * @param {number} position - The index position at which to insert the element.
  */
 function insertAt(target, dragged, position) {
   const children = target.children;
@@ -158,7 +164,7 @@ function insertAt(target, dragged, position) {
 }
 
 /**
- * Handles the search functionality for tasks.
+ * Filters tasks based on the search query.
  * @param {Event} e - The input event.
  */
 function handleSearch(e) {
@@ -172,11 +178,18 @@ function handleSearch(e) {
 
 let currentTaskId = null;
 
+/**
+ * Opens the mobile menu for a specific task.
+ * @param {string} taskId - The ID of the task.
+ */
 function openMobileMenu(taskId) {
   currentTaskId = taskId;
   document.getElementById("mobile-drag-menu").style.display = "block";
 }
 
+/**
+ * Closes the mobile menu.
+ */
 function closeMobileMenu() {
   document.getElementById("mobile-drag-menu").style.display = "none";
   currentTaskId = null;

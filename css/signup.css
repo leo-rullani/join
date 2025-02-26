@@ -13,14 +13,7 @@ body {
 
 .logo-container {
   position: absolute;
-  top: 50%;
-  left: 50%;
-  transform: translate(-50%, -50%) scale(0.85);
-  transition: all 0.5s ease-in-out;
-}
-
-.logo-container.move-logo {
-  top: 0px;
+  top: -16px;
   left: 0px;
   transform: scale(0.4);
 }
@@ -28,21 +21,6 @@ body {
 .logo {
   width: 180px;
   height: auto;
-}
-
-.form-container {
-  opacity: 0;
-  transition: opacity 0.5s ease-in-out;
-}
-.form-container.hidden {
-  display: none;
-}
-.form-container.visible {
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  flex-direction: column;
-  opacity: 1;
 }
 
 .signup-box {

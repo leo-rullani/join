@@ -1,4 +1,10 @@
 /**
+ * Firebase database URL.
+ */
+window.databaseURL =
+  "https://join-5d739-default-rtdb.europe-west1.firebasedatabase.app";
+
+/**
  * Global color map for assignColor.
  */
 window.colorCodes = {
@@ -142,13 +148,6 @@ window.updateSubtaskStatus = function (i, id, c) {
     updateSubtaskInFirebase(id, i, c);
   }
 };
-
-/**
- * Firebase database URL.
- */
-window.databaseURL =
-  "https://join-5d739-default-rtdb.europe-west1.firebasedatabase.app";
-
 /**
  * Updates a subtask status in Firebase.
  * @param {string} id - Task ID.

@@ -26,29 +26,6 @@ function init() {
     formContainer.classList.remove("hidden");
     footer.classList.remove("hidden");
   }
-  initLogoAnimation(logoContainer, formContainer);
-}
-
-/**
- * Animates the logo for small screens, then reveals the form and footer.
- * @param {HTMLElement} logoContainer - Container holding the logo
- * @param {HTMLElement} formContainer - Container holding the form
- */
-function initLogoAnimation(logoContainer, formContainer) {
-  if (window.innerWidth <= 500) {
-    document.body.style.backgroundColor = "#2b3647";
-    logoContainer.querySelector("img").src = "/assets/img/join-logo-white.svg";
-  }
-  setTimeout(() => logoContainer.classList.add("move-logo"), 500);
-  logoContainer.addEventListener("transitionend", () => {
-    if (window.innerWidth <= 500) {
-      document.body.style.backgroundColor = "#F6F7F8";
-      logoContainer.querySelector("img").src = "/assets/img/logo.png";
-      document.querySelector(".footer").classList.remove("hidden");
-    }
-    formContainer.classList.remove("hidden");
-    formContainer.classList.add("visible");
-  });
 }
 
 /**
@@ -72,32 +49,76 @@ async function registerUser(userData) {
 }
 
 /**
- * Validates form fields, checks password match, and sends data to the server.
- * @param {Event} event - The form submit event
+ * Retrieves all required form elements by their IDs.
+ * @returns {Object} Object containing form elements.
+ */
+function getFormElements() {
+  return {
+    name: document.getElementById("name"),
+    email: document.getElementById("email"),
+    password: document.getElementById("password"),
+    confirmPassword: document.getElementById("confirm-password"),
+    policyCheckbox: document.getElementById("policy-checkbox"),
+    errorMessage: document.getElementById("errorMessage"),
+  };
+}
+
+/**
+ * Extracts and trims user data from form fields.
+ * @param {HTMLElement} name - The input element for the user's name.
+ * @param {HTMLElement} email - The input element for the user's email.
+ * @param {HTMLElement} password - The input element for the user's password.
+ * @returns {Object} User data object.
+ */
+function getUserData(name, email, password) {
+  return {
+    userName: name.value.trim(),
+    userEmail: email.value.trim(),
+    password: password.value.trim(),
+  };
+}
+
+/**
+ * Validates the sign-up form fields.
+ * @param {Object} elems - The form elements.
+ * @returns {boolean} True if form is valid, false otherwise.
+ */
+function isFormValid({
+  email,
+  password,
+  confirmPassword,
+  policyCheckbox,
+  errorMessage,
+}) {
+  return (
+    validateEmail(email, errorMessage) &&
+    validatePasswords(password, confirmPassword, errorMessage) &&
+    validatePolicy(policyCheckbox)
+  );
+}
+
+/**
+ * Processes user registration and handles the registration response.
+ * @param {Object} userData - The user's data.
+ * @param {HTMLElement} errorMessage - The element to display errors.
+ */
+function processRegistration(userData, errorMessage) {
+  registerUser(userData)
+    .then((newUserKey) => handleUserRegistration(userData, newUserKey))
+    .catch((error) => handleError(error, errorMessage));
+}
+
+/**
+ * Handles the sign-up form submission event.
+ * @param {Event} event - The event object.
  */
 function signUp(event) {
   event.preventDefault();
-  const n = document.getElementById("name"),
-    e = document.getElementById("email"),
-    p = document.getElementById("password"),
-    c = document.getElementById("confirm-password"),
-    chk = document.getElementById("policy-checkbox"),
-    err = document.getElementById("errorMessage");
-
-  clearErrorStyles(p, c, err);
-
-  if (!validatePasswords(p, c, err)) return;
-  if (!validatePolicy(chk)) return;
-
-  const userData = {
-    userName: n.value.trim(),
-    userEmail: e.value.trim(),
-    password: p.value.trim(),
-  };
-
-  registerUser(userData)
-    .then((newUserKey) => handleUserRegistration(userData, newUserKey))
-    .catch((er) => handleError(er, err));
+  const elems = getFormElements();
+  clearErrorStyles(elems.password, elems.confirmPassword, elems.errorMessage);
+  if (!isFormValid(elems)) return;
+  const userData = getUserData(elems.name, elems.email, elems.password);
+  processRegistration(userData, elems.errorMessage);
 }
 
 /**
@@ -126,6 +147,31 @@ function validatePolicy(chk) {
     return false;
   }
   return true;
+}
+/**
+ * Validates the email address entered in the form.
+ *
+ * @function validateEmail
+ * @returns {boolean} True if the email is valid; otherwise, false.
+ *
+ * @description This function checks if the email field is empty or if it does not match the
+ * specified email pattern. It updates the error message displayed to the user accordingly.
+ */
+function validateEmail() {
+  const { email, errorMessage } = getFormElements();
+  const emailValue = email.value.trim();
+
+  const emailPattern = /^[^\s@]+@[^\s@]+\.[A-Za-z]{2,}$/;
+  if (!emailValue) {
+    errorMessage.textContent = "Email cannot be empty.";
+    return false;
+  } else if (!emailPattern.test(emailValue)) {
+    errorMessage.textContent = "Please enter a valid email address.";
+    return false;
+  } else {
+    errorMessage.textContent = "";
+    return true;
+  }
 }
 
 /**

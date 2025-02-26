@@ -16,14 +16,13 @@
         <div class="logo-container">
             <img src="/assets/img/logo.png" alt="Join Logo" class="logo" />
         </div>
-
         <!-- form-container: start (arrow) -->
         <div class="form-container hidden">
             <div class="signup-box" id="signupBox">
                 <!-- title + arrow -->
                 <div class="signup-header">
                     <div class="arrow-container">
-                        <a href="/html/login.html" class="back-arrow" title="Back to Login">←</a>
+                        <a href="login.html?skipAnimation=true" class="back-arrow" title="Back to Login">←</a>
                     </div>
                     <h2>Sign up</h2>
                     <div class="dummy"></div>
@@ -31,7 +30,7 @@
                 <div class="underline"></div>
 
                 <!-- input + form -->
-                <form onsubmit="signUp(event); return false;">
+                <form novalidate onsubmit="signUp(event); return false;">
                     <div class="input-container">
                         <input type="text" id="name" placeholder="Name" required />
                         <img src="/assets/icons/person.svg" class="input-icon" alt="Name Icon" id="nameIcon" />
@@ -83,7 +82,7 @@
         <!-- scripts -->
         <script src="/js/signup.js"></script>
         <script src="/js/summary.js"></script>
-        
+
     </body>
 
 </html>

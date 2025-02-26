@@ -5,6 +5,11 @@ const dummyUsers = [{ email: "test@user.com", password: "test123" }];
 
 document.addEventListener("DOMContentLoaded", init);
 
+/**
+ * Initializes the application by setting up the UI and event listeners.
+ * Retrieves DOM elements, user data, handles screen size adjustments,
+ * initializes logo animations, and sets up input focus clearing.
+ */
 function init() {
   const {
     logoContainer,
@@ -22,6 +27,12 @@ function init() {
   initFocusClear(passwordInput, errorDiv);
 }
 
+/**
+ * Retrieves and returns the essential DOM elements for the application.
+ * @returns {Object} An object containing references to the logo container,
+ * form container, top-right element, footer, guest login button,
+ * email input, password input, and error message div.
+ */
 function getElements() {
   return {
     logoContainer: document.querySelector(".logo-container"),
@@ -51,11 +62,38 @@ function handleScreenSize(topRight, footer) {
 }
 
 /**
- * Initializes logo animation.
- * @param {HTMLElement} logo - The logo container
- * @param {HTMLElement} form - The form container
+ * Initializes the logo animation based on the "skipAnimation" URL parameter.
+ * @param {HTMLElement} logo - The logo container element.
+ * @param {HTMLElement} form - The form element to display.
  */
 function initLogoAnimation(logo, form) {
+  const params = new URLSearchParams(window.location.search);
+  const skipAnimation = params.get("skipAnimation") === "true";
+  skipAnimation ? runSkipAnimation(logo, form) : runFullAnimation(logo, form);
+}
+
+/**
+ * Skips the logo animation and sets the final state directly.
+ * @param {HTMLElement} logo - The logo container element.
+ * @param {HTMLElement} form - The form element to display.
+ */
+function runSkipAnimation(logo, form) {
+  logo.classList.add("fixed-logo");
+  logo.classList.remove("logo-container");
+  if (window.innerWidth <= 500) {
+    document.body.style.backgroundColor = "#2b3647";
+    logo.querySelector("img").src = "/assets/img/join-logo-white.svg";
+  }
+  form.classList.remove("hidden");
+  form.classList.add("visible");
+}
+
+/**
+ * Runs the full logo animation.
+ * @param {HTMLElement} logo - The logo container element.
+ * @param {HTMLElement} form - The form element to display after animation.
+ */
+function runFullAnimation(logo, form) {
   if (window.innerWidth <= 500) {
     document.body.style.backgroundColor = "#2b3647";
     logo.querySelector("img").src = "/assets/img/join-logo-white.svg";

@@ -197,27 +197,43 @@ function setupEditMode(contentDiv, task) {
 }
 
 /**
- * Closes the board overlay with animation.
+ * Handles the end of the animation for the board overlay content.
+ * @param {HTMLElement} overlay - The board overlay element.
+ * @param {HTMLElement} content - The board overlay content element.
+ */
+function handleAnimationEnd(overlay, content) {
+  overlay.classList.remove("board_overlay_show");
+  overlay.style.display = "none";
+  overlay.innerHTML = "";
+}
+
+/**
+ * Animates the board overlay content with a slide-out effect.
+ * @param {HTMLElement} overlay - The board overlay element.
+ * @param {HTMLElement} content - The board overlay content element.
+ */
+function animateBoardOverlay(overlay, content) {
+  content.style.animationName = "slideOutToRight";
+  content.addEventListener(
+    "animationend",
+    () => handleAnimationEnd(overlay, content),
+    { once: true }
+  );
+}
+
+/**
+ * Closes the board overlay by checking for content and either hiding it
+ * directly or animating its closure.
  */
 function closeBoardOverlay() {
   const overlay = document.getElementById("boardOverlay");
+  if (!overlay) return;
   const content = overlay.querySelector(".board_overlay_content");
   if (!content) {
     overlay.style.display = "none";
     return;
   }
-
-  content.style.animationName = "slideOutToRight";
-  content.addEventListener(
-    "animationend",
-    function handler() {
-      overlay.classList.remove("board_overlay_show");
-      overlay.style.display = "none";
-      content.removeEventListener("animationend", handler);
-      overlay.innerHTML = "";
-    },
-    { once: true }
-  );
+  animateBoardOverlay(overlay, content);
 }
 
 /**
@@ -241,30 +257,62 @@ function openAddTaskOverlay() {
 }
 
 /**
- * Closes the add task overlay with animation.
+ * Retrieves the add task overlay element from the DOM.
+ * @returns {HTMLElement|null} The add task overlay element.
  */
-function closeAddTaskOverlay() {
-  const overlay = document.getElementById("addTaskOverlay");
-  if (!overlay) return;
+function getAddTaskOverlay() {
+  return document.getElementById("addTaskOverlay");
+}
 
-  const content = overlay.querySelector(".overlay_content");
-  if (!content) {
-    overlay.classList.remove("active");
-    return;
-  }
+/**
+ * Retrieves the overlay content element from the given overlay.
+ * @param {HTMLElement} overlay - The overlay element.
+ * @returns {HTMLElement|null} The content element.
+ */
+function getOverlayContent(overlay) {
+  return overlay.querySelector(".overlay_content");
+}
 
+/**
+ * Handles the animation end event by updating the overlay and content classes.
+ * @param {HTMLElement} overlay - The overlay element.
+ * @param {HTMLElement} content - The content element.
+ */
+function onContentAnimationEnd(overlay, content) {
+  overlay.classList.remove("active");
+  content.classList.remove("slide-out");
+}
+
+/**
+ * Animates the closing of the overlay content with a slide-out effect.
+ * @param {HTMLElement} overlay - The overlay element.
+ * @param {HTMLElement} content - The content element.
+ */
+function animateOverlayContent(overlay, content) {
   content.classList.remove("slide-in");
   content.classList.add("slide-out");
-
   content.addEventListener(
     "animationend",
     function handler() {
-      overlay.classList.remove("active");
-      content.classList.remove("slide-out");
+      onContentAnimationEnd(overlay, content);
       content.removeEventListener("animationend", handler);
     },
     { once: true }
   );
+}
+
+/**
+ * Closes the add task overlay by triggering a slide-out animation or hiding it directly.
+ */
+function closeAddTaskOverlay() {
+  const overlay = getAddTaskOverlay();
+  if (!overlay) return;
+  const content = getOverlayContent(overlay);
+  if (!content) {
+    overlay.classList.remove("active");
+    return;
+  }
+  animateOverlayContent(overlay, content);
 }
 
 /**

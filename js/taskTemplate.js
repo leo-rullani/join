@@ -30,19 +30,15 @@ window.createTaskTemplate = function (t) {
  * @returns {string} - The task card HTML.
  */
 window.generateTaskHTML = function (t, s, a, p) {
-  // Kategorie + Priority-Icon wie gehabt
   let c = t.category === "Technical Task" ? "#20d7c1" : "#0038ff";
   let i = getPriorityIcon(t.priority);
 
-  // Kurz warten, dann Transition für Progress-Balken
   setTimeout(() => {
     document.querySelectorAll(".progress-bar-fill").forEach((b) => {
       b.style.transition = "width 0.5s ease-in-out";
     });
   }, 10);
-
-  // --- NEU: Assignees auf max. 3 + "+X others" reduzieren ---
-  let finalAssigneesHTML = a || ""; // Falls du a noch brauchst
+  let finalAssigneesHTML = a || "";
   if (Array.isArray(t.assignees)) {
     let tmp = "";
     const max = 3;
@@ -55,16 +51,12 @@ window.generateTaskHTML = function (t, s, a, p) {
                 </div>`;
       }
     });
-    // Wenn mehr als 3
     if (t.assignees.length > max) {
       let leftover = t.assignees.length - max;
       tmp += `<div class="avatar-circle" style="background:#999;">+${leftover}</div>`;
     }
-    // Das neue HTML
     finalAssigneesHTML = tmp;
   }
-
-  // HTML-Gerüst wie gehabt
   return `
     <div 
       class="task" 

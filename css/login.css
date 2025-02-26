@@ -3,7 +3,7 @@ body {
   justify-content: center;
   align-items: center;
   height: 100vh;
-  background-color: #F6F7F8;
+  background-color: #f6f7f8;
   overflow: hidden;
   flex-direction: column;
   transition: all 0.5s ease-in-out;
@@ -20,18 +20,30 @@ body {
 }
 
 .logo-container.move-logo {
-  top: 0px;     
-  left: 0px;    
-  transform: scale(0.4); 
+  top: 0px;
+  left: 0px;
+  transform: scale(0.4);
+}
+
+.logo {
+  width: 180px;
+  height: auto;
+}
+
+.fixed-logo {
+  position: absolute;
+  top: -16px;
+  left: 0px;
+  transform: scale(0.4);
 }
 
 .top-right {
   position: absolute;
   top: 75px;
-  right: 40px; 
+  right: 40px;
   display: flex;
   align-items: center;
-  gap: 30px; 
+  gap: 30px;
 }
 
 .signup-btn {
@@ -48,7 +60,7 @@ body {
 }
 
 .signup-btn:hover {
-  background-color: #28ABE2; 
+  background-color: #28abe2;
 }
 
 .form-container {
@@ -92,7 +104,7 @@ h2 {
 .underline {
   width: 120px;
   height: 2.5px;
-  background-color: #28ABE2;
+  background-color: #28abe2;
   margin: 4px auto 24px;
 }
 
@@ -114,7 +126,7 @@ h2 {
 
 .input-container input:focus {
   outline: none;
-  border-color: #28ABE2;
+  border-color: #28abe2;
 }
 
 .input-container input.error {
@@ -127,7 +139,7 @@ h2 {
   top: 50%;
   transform: translateY(-50%);
   width: 20px;
-  cursor: pointer; 
+  cursor: pointer;
 }
 
 .error-message {
@@ -145,7 +157,9 @@ h2 {
   margin-top: 20px;
 }
 
-.button, .login-btn, .guest-btn {
+.button,
+.login-btn,
+.guest-btn {
   padding: 10px 15px;
   font-size: 16px;
   font-weight: bold;
@@ -156,15 +170,17 @@ h2 {
   margin-top: 24px;
 }
 
-.button, .login-btn {
+.button,
+.login-btn {
   background-color: #2b3647;
   color: white;
   border: none;
   margin-top: 24px;
 }
 
-.button:hover, .login-btn:hover {
-  background-color: #28ABE2;
+.button:hover,
+.login-btn:hover {
+  background-color: #28abe2;
 }
 
 .guest-btn {
@@ -174,8 +190,8 @@ h2 {
 }
 
 .guest-btn:hover {
-  color: #28ABE2;
-  border-color: #28ABE2;
+  color: #28abe2;
+  border-color: #28abe2;
   box-shadow: 0 4px 10px rgba(40, 171, 226, 0.5);
 }
 
@@ -197,7 +213,7 @@ h2 {
 }
 
 .footer a:hover {
-  color: #28ABE2;
+  color: #28abe2;
   font-weight: bold;
   transform: scale(1.05);
 }
@@ -214,7 +230,7 @@ h2 {
 .notification {
   position: fixed;
   left: 50%;
-  bottom: -120px; 
+  bottom: -120px;
   transform: translateX(-50%);
   background-color: #2b3647;
   color: #fff;
@@ -250,8 +266,8 @@ h2 {
   }
 
   .button-container button {
-    width: auto; 
-    min-width: 150px; 
+    width: auto;
+    min-width: 150px;
     max-width: 200px;
   }
   .top-right {
@@ -265,10 +281,10 @@ h2 {
   .login-box {
     padding: 20px 20px;
     margin-top: -40px;
- }
- .footer {
-  margin-bottom: -16px;
- }
+  }
+  .footer {
+    margin-bottom: -16px;
+  }
 }
 
 @media (max-width: 375px) {
