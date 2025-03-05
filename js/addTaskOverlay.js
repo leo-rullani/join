@@ -15,7 +15,6 @@ function isOverlayTaskValid() {
     "errorOverlayCategory"
   );
 }
-
 /**
  * Sends the new task to the database using a PUT request.
  * @param {Object} newTask - The task object to be stored.
