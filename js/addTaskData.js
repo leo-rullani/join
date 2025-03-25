@@ -296,20 +296,20 @@ function validateTask(
     [
       titleId,
       errorTitleId,
-      /^[-&.()_a-zA-ZÀ-ž\s0-9/"!,–]+$/,
+      /^[-&.()-–_a-zA-ZÀ-ž\s0-9/"!,–]+$/,
       "Please enter a Title.",
     ],
     [
       descriptionId,
       errorDescriptionId,
-      /^[-&.()_a-zA-ZÀ-ž\s0-9/"!,–]+$/,
+      /^[-&.()-–_a-zA-ZÀ-ž\s0-9/"!,–]+$/,
       "Please enter a description.",
     ],
-    [dateId, errorDateId, /^[0-9.-]+$/, "Please enter a Date."],
+    [dateId, errorDateId, /^[0-9.-–-]+$/, "Please enter a Date."],
     [
       categoryId,
       errorCategoryId,
-      /^[a-zA-ZÀ-ž\s]+$/,
+      /^[a-zA-ZÀ-ž\-–s]+$/,
       "Please enter a Category.",
     ],
   ];
