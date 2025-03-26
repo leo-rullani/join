@@ -309,7 +309,7 @@ function validateTask(
     [
       categoryId,
       errorCategoryId,
-      /^[a-zA-ZÀ-ž\-–s]+$/,
+      /^[a-zA-ZÀ-ž\s]+$/,
       "Please enter a Category.",
     ],
   ];
